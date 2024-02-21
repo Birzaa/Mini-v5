@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:35:11 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/21 15:43:22 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:45:08 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ t_stack	*lexer(char *input)
 	{
 		i = get_token(input, i, &state, lst);
 	}
+	free(input);
 	return (lst);
 }
