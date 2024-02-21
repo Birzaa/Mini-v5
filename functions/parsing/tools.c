@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:44:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/21 12:51:06 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:42:07 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@ int	ft_isspace(char c)
 {
 	if (c >= 9 && c <= 13)
 		return (1);
-	if (c == ' ')
+	if (c == 32)
 		return (1);
 	return (0);
 }
