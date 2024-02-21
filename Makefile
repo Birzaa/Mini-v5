@@ -16,7 +16,10 @@ NAME = minishell
 HEADER_DIR = ./includes/
 OBJ_DIR = objects/
 SRC_DIR = functions/
-SRC = $(SRC_DIR)main.c \
+SRC = 	$(SRC_DIR)main.c \
+		$(SRC_DIR)env/env.c \
+		$(SRC_DIR)tools/env/env_utils.c \
+
 
 OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
 

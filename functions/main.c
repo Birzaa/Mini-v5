@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/21 11:46:40 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:02:36 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 int	main(int ac, char **av, char **env)
 {
 	char	*input;
+	t_data	data;
 
+	data.env = get_env(env);
 	(void)av;
 	if (ac != 1 || !*env)
 		return (1);

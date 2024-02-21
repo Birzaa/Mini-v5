@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/21 12:33:00 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:02:31 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,17 @@
 # include <readline/readline.h>
 # include <stdio.h>
 
-
 // ------------------------------------------------------> Structure
 
 // ------------------------> Lexer
 
-enum					e_state
+enum				e_state
 {
 	IN_DQUOTE,
 	IN_QUOTE,
 	GENERAL,
 };
-enum					e_token
+enum				e_token
 {
 	WORD = -1,
 	WHITE_SPACE = ' ',
@@ -52,42 +51,51 @@ enum					e_token
 
 typedef struct s_node
 {
-	char				*content;
-	int					len;
-	enum e_token		type;
-	enum e_state		state;
-	struct s_node		*next;
-	struct s_node		*prev;
-}						t_node;
+	char			*content;
+	int				len;
+	enum e_token	type;
+	enum e_state	state;
+	struct s_node	*next;
+	struct s_node	*prev;
+}					t_node;
 
 typedef struct s_stack
 {
-	t_node				*head;
-	t_node				*tail;
-	int					size;
-}						t_stack;
+	t_node			*head;
+	t_node			*tail;
+	int				size;
+}					t_stack;
 
 // env
 typedef struct s_env
 {
-	char 		*str;
-	struct t_env *next;
-	
-}	t_env;
+	char			*content;
+	struct s_env	*next;
+
+}					t_env;
 
 // ------------------------> Data
 
 typedef struct s_data
 {
-	t_stack				*lex;
-	t_env				*env;
-}						t_data;
+	t_stack			*lex;
+	t_env			*env;
+}					t_data;
 
 // ----------------------------------------------------> Functions...
+
+// function/env.c
+t_env				*get_env(char **env);
+
+// tools/env/env_utils.c
+void				print_env(t_env *env);
+t_env				*ft_envlast(t_env *env);
+t_env				*ft_env_new(void *content);
+void				ft_env_add_back(t_env **env, t_env *new);
 
 // ------------------------> Main
 
 // ------------------------>TRAAAASH
-void					print_lst(t_stack *lst);
+/* void					print_lst(t_stack *lst); */
 
 #endif

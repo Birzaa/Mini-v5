@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:00:41 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/21 11:39:30 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/21 13:28:39 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_lst(t_stack *lst)
+/* void	print_lst(t_stack *lst)
 {
-}
+} */

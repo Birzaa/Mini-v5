@@ -6,13 +6,27 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:16:30 by abougrai          #+#    #+#             */
-/*   Updated: 2024/02/21 12:33:07 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:58:55 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	get_env(char **env)
+t_env	*get_env(char **env)
 {
-	t_env
+	int		i;
+	t_env	*envp;
+	t_env	*tmp;
+
+	i = 0;
+	envp = NULL;
+	tmp = NULL;
+	while (env[i])
+	{
+		tmp = ft_env_new(env[i]);
+		ft_env_add_back(&envp, tmp);
+		i++;
+	}
+	/* print_env(envp); */
+	return (envp);
 }
