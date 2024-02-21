@@ -1,0 +1,21 @@
+# custom files
+custom/
+
+# temp files directories
+cache/
+log/
+*.swp
+.DS_Store
+
+# editor configs
+.vscode
+.idea
+a.out
+*.o
+*.so
+*.a
+main
+*.a
+*.o
+minishell
+objects/
