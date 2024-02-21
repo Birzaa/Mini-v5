@@ -1,43 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/24 15:00:41 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/21 13:48:08 by thenwood         ###   ########.fr       */
+/*   Created: 2024/02/21 12:52:18 by thenwood          #+#    #+#             */
+/*   Updated: 2024/02/21 13:23:45 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_node(t_node *node);
-
-void	print_list(t_stack *list)
-{
-	t_node	*node;
-	int		i;
-
-	i = 0;
-	node = list->head;
-	while (i < list->size)
-	{
-		print_node(node);
-		node = node->next;
-		i++;
-	}
-}
-
-void	print_node(t_node *node)
+int	word_token(enum e_state state, char *input, t_stack *lst)
 {
 	int	i;
 
 	i = 0;
-	printf("content: ");
-	while (i < node->len)
-		putchar(node->content[i++]);
-	printf(", len: %i", node->len);
-	printf(", state: %i", node->state);
-	printf(", token: %i\n", node->type);
+	while (input[i])
+		i++;
+	lst_add_back(lst, new_node(input, i, WORD, state));
+	return (i);
 }

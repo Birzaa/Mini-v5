@@ -1,43 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/24 15:00:41 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/21 13:48:08 by thenwood         ###   ########.fr       */
+/*   Created: 2024/02/21 12:35:11 by thenwood          #+#    #+#             */
+/*   Updated: 2024/02/21 13:46:57 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_node(t_node *node);
-
-void	print_list(t_stack *list)
+int	get_token(char *input, int i, enum e_state *state, t_stack *lst)
 {
-	t_node	*node;
-	int		i;
-
-	i = 0;
-	node = list->head;
-	while (i < list->size)
-	{
-		print_node(node);
-		node = node->next;
-		i++;
-	}
+	if (!is_charset(input[i]))
+		i += word_token(*state, input, lst);
+	return (i);
 }
 
-void	print_node(t_node *node)
+t_stack	*lexer(char *input)
 {
-	int	i;
+	int				i;
+	enum e_state	state;
+	t_stack			*lst;
 
 	i = 0;
-	printf("content: ");
-	while (i < node->len)
-		putchar(node->content[i++]);
-	printf(", len: %i", node->len);
-	printf(", state: %i", node->state);
-	printf(", token: %i\n", node->type);
+	lst = NULL;
+	state = GENERAL;
+	lst = malloc_lst(lst);
+	if (!lst)
+		return (NULL);
+	while (input[i])
+	{
+		i = get_token(input, i, &state, lst);
+	}
+	return (lst);
 }
