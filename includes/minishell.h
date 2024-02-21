@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/21 17:40:35 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/22 00:21:32 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include "../libft/includes/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <stdio.h>
 # include <signal.h>
+# include <stdio.h>
 
 // ------------------------------------------------------> Structure
 
@@ -85,18 +85,35 @@ typedef struct s_data
 
 typedef struct s_signal
 {
+}					t_signal;
 
-} t_signal;
+// ----------------------------------------------------> BUILTINS...
+// builtins/export
+void				export_no_arg(t_env *env);
+void				export(t_env **env, char *content);
+
+// builtins/unset
+void				del_node_env(t_env *target, t_env *previous);
+void				pop_node_env(t_env *env);
+void				unset(t_env *env, char *name);
+
 // ----------------------------------------------------> Functions...
 
 // function/env.c
 t_env				*get_env(char **env);
 
-// tools/env/env_utils.c
-void				print_env(t_env *env);
-t_env				*ft_envlast(t_env *env);
+// tools/env/env_utils1.c
+t_env				*ft_env_last(t_env *env);
 t_env				*ft_env_new(void *content);
-void				ft_env_add_back(t_env **env, t_env *new);
+void				print_env(t_env *env);
+void				free_env(t_env *env);
+void				add_back_env(t_env **env, t_env *new);
+
+// tools/env/env_utils2.c
+t_env				*ft_sort_env(t_env *env, int (*cmp)(char *, char *));
+
+// tools/str
+int					ft_strcmp(char *s1, char *s2);
 
 // ------------------------> Parsing
 t_stack				*lexer(char *input);
@@ -120,6 +137,5 @@ int					ft_isspace(char c);
 
 // ------------------------>TRAAAASH
 void				print_list(t_stack *lst);
-
 
 #endif

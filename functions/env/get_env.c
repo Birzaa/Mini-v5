@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:16:30 by abougrai          #+#    #+#             */
-/*   Updated: 2024/02/21 16:55:43 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/21 20:59:37 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,14 @@ t_env	*get_env(char **env)
 	while (env[i])
 	{
 		tmp = ft_env_new(env[i]);
-		ft_env_add_back(&envp, tmp);
+		if (!tmp)
+		{
+			free_env(envp);
+			return (NULL);
+		}
+		add_back_env(&envp, tmp);
 		i++;
 	}
-	print_env(envp);
 	return (envp);
 }
+/* print_env(envp); */

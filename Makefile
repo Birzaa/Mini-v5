@@ -23,8 +23,10 @@ SRC = $(SRC_DIR)main.c \
 	$(PARSING_DIR)token.c \
 	$(PARSING_DIR)tools.c \
 	$(PARSING_DIR)lst_tools.c \
-	$(SRC_DIR)env/env.c \
-	$(SRC_DIR)tools/env/env_utils.c \
+	$(SRC_DIR)env/get_env.c \
+	$(SRC_DIR)tools/str/ft_strcmp.c \
+	$(SRC_DIR)tools/env/env_utils1.c \
+	$(SRC_DIR)tools/env/env_utils2.c \
 	$(TRASH_DIR)print.c \
 
 OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
