@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:52:18 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/21 15:20:21 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:37:36 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	word_token(enum e_state state, char *input, t_stack *lst)
 	lst_add_back(lst, new_node(input, i, WORD, state));
 	return (i);
 }
-/* 
+/*
 	1 = DQUOTE
 */
 void	quote_token(enum e_state *state, char *input, t_stack *lst, int quote)
@@ -52,4 +52,28 @@ void	quote_token(enum e_state *state, char *input, t_stack *lst, int quote)
 	}
 	else
 		lst_add_back(lst, new_node(input, 1, e_type, *state));
+}
+
+int	redir_token(enum e_state *state, char *input, t_stack *lst, int i)
+{
+	int	j;
+
+	j = i;
+	if (input[i] == '>')
+	{
+		if (input[i + 1] == '>')
+			lst_add_back(lst, new_node(input + i++, 2, DREDIR_OUT, *state));
+		else
+			lst_add_back(lst, new_node(input + i, 2, REDIR_OUT, *state));
+		i++;
+	}
+	else if (input[i] == '<')
+	{
+		if (input[i + 1] == '<')
+			lst_add_back(lst, new_node(input + i++, 2, HERE_DOC, *state));
+		else
+			lst_add_back(lst, new_node(input + i, 2, REDIR_IN, *state));
+		i++;
+	}
+	return (i - j);
 }

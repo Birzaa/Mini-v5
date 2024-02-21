@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/21 14:37:02 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:38:49 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,13 @@ t_stack				*malloc_lst(t_stack *stack);
 
 //------> Get right token
 int					word_token(enum e_state state, char *input, t_stack *lst);
-void					quote_token(enum e_state *state, char *input, t_stack *lst,
+void				quote_token(enum e_state *state, char *input, t_stack *lst,
 						int quote);
+int					redir_token(enum e_state *state, char *input, t_stack *lst,
+						int i);
+
 //------> Tools
-int	ft_isspace(char c);
+int					ft_isspace(char c);
 
 // ------------------------>TRAAAASH
 void				print_list(t_stack *lst);
