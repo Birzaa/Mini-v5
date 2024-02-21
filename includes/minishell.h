@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/21 16:52:07 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:40:35 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
+# include <signal.h>
 
 // ------------------------------------------------------> Structure
 
@@ -82,6 +83,10 @@ typedef struct s_data
 	t_env			*env;
 }					t_data;
 
+typedef struct s_signal
+{
+
+} t_signal;
 // ----------------------------------------------------> Functions...
 
 // function/env.c
@@ -115,5 +120,6 @@ int					ft_isspace(char c);
 
 // ------------------------>TRAAAASH
 void				print_list(t_stack *lst);
+
 
 #endif
