@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/21 11:41:16 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:14:48 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <readline/readline.h>
 # include <stdio.h>
 
-typedef union u_union	t_union;
 
 // ------------------------------------------------------> Structure
 
@@ -68,11 +67,20 @@ typedef struct s_stack
 	int					size;
 }						t_stack;
 
+// env
+typedef struct s_env
+{
+	char 		*str;
+	struct t_env *next;
+	
+}	t_env;
+
 // ------------------------> Data
 
 typedef struct s_data
 {
 	t_stack				*lex;
+	t_env				*env;
 }						t_data;
 
 // ----------------------------------------------------> Functions...
