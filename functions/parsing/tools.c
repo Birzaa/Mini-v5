@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/21 15:45:19 by thenwood         ###   ########.fr       */
+/*   Created: 2024/02/21 12:44:40 by thenwood          #+#    #+#             */
+/*   Updated: 2024/02/21 14:42:07 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-int	main(int ac, char **av, char **env)
+int	ft_isspace(char c)
 {
-	char	*input;
-	t_data	data;
-
-	(void)av;
-	if (ac != 1 || !*env)
+	if (c >= 9 && c <= 13)
 		return (1);
-	while (1)
-	{
-		input = readline(ORANGE "\U0001F58A  ~>: " RESET);
-		if (input)
-			add_history(input);
-		data.lex = lexer(input);
-		print_list(data.lex);
-	}
+	if (c == 32)
+		return (1);
+	return (0);
+}
+
+int	is_charset(char c)
+{
+	if (c == '\'' || c == '\"' || c == '<' || c == '>' || c == '|' || c == '$'
+		|| ft_isspace(c) || c == '\n' || c == '\0')
+		return (1);
 	return (0);
 }

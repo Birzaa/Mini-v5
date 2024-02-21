@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/21 12:33:00 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/21 16:45:01 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,17 @@
 # include <readline/readline.h>
 # include <stdio.h>
 
-
 // ------------------------------------------------------> Structure
 
 // ------------------------> Lexer
 
-enum					e_state
+enum				e_state
 {
 	IN_DQUOTE,
 	IN_QUOTE,
 	GENERAL,
 };
-enum					e_token
+enum				e_token
 {
 	WORD = -1,
 	WHITE_SPACE = ' ',
@@ -52,42 +51,60 @@ enum					e_token
 
 typedef struct s_node
 {
-	char				*content;
-	int					len;
-	enum e_token		type;
-	enum e_state		state;
-	struct s_node		*next;
-	struct s_node		*prev;
-}						t_node;
+	char			*content;
+	int				len;
+	enum e_token	type;
+	enum e_state	state;
+	struct s_node	*next;
+	struct s_node	*prev;
+}					t_node;
 
 typedef struct s_stack
 {
-	t_node				*head;
-	t_node				*tail;
-	int					size;
-}						t_stack;
+	t_node			*head;
+	t_node			*tail;
+	int				size;
+}					t_stack;
 
 // env
 typedef struct s_env
 {
-	char 		*str;
-	struct t_env *next;
-	
-}	t_env;
+	char			*str;
+	struct t_env	*next;
+
+}					t_env;
 
 // ------------------------> Data
 
 typedef struct s_data
 {
-	t_stack				*lex;
-	t_env				*env;
-}						t_data;
+	t_stack			*lex;
+	t_env			*env;
+}					t_data;
 
 // ----------------------------------------------------> Functions...
 
-// ------------------------> Main
+// ------------------------> Parsing
+t_stack				*lexer(char *input);
+int					is_charset(char c);
+
+//------> list
+t_node				*new_node(char *content, int len, enum e_token type,
+						enum e_state state);
+void				lst_add_back(t_stack *lst, t_node *node);
+t_stack				*malloc_lst(t_stack *stack);
+
+//------> Get right token
+int					word_token(enum e_state state, char *input, t_stack *lst);
+void				quote_token(enum e_state *state, char *input, t_stack *lst,
+						int quote);
+int					redir_token(enum e_state *state, char *input, t_stack *lst,
+						int i);
+
+//------> Tools
+int					ft_isspace(char c);
 
 // ------------------------>TRAAAASH
-void					print_lst(t_stack *lst);
+void				print_list(t_stack *lst);
 
 #endif
