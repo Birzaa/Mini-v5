@@ -22,7 +22,7 @@ SRC = $(SRC_DIR)main.c \
 	$(PARSING_DIR)lexer.c \
 	$(PARSING_DIR)token.c \
 	$(PARSING_DIR)tools.c \
-	$(PARSING_DIR)create_lst/lst_tools.c \
+	$(PARSING_DIR)lst_tools.c \
 	$(TRASH_DIR)print.c \
 
 OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
