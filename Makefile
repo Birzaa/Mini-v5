@@ -16,10 +16,16 @@ NAME = minishell
 HEADER_DIR = ./includes/
 OBJ_DIR = objects/
 SRC_DIR = functions/
-SRC = 	$(SRC_DIR)main.c \
-		$(SRC_DIR)env/env.c \
-		$(SRC_DIR)tools/env/env_utils.c \
-
+PARSING_DIR = functions/parsing/
+TRASH_DIR = functions/TRAAASH/
+SRC = $(SRC_DIR)main.c \
+	$(PARSING_DIR)lexer.c \
+	$(PARSING_DIR)token.c \
+	$(PARSING_DIR)tools.c \
+	$(PARSING_DIR)lst_tools.c \
+	$(SRC_DIR)env/env.c \
+	$(SRC_DIR)tools/env/env_utils.c \
+	$(TRASH_DIR)print.c \
 
 OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
 

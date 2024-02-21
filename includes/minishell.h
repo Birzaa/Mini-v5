@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/21 15:02:31 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/21 16:52:07 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,27 @@ t_env				*ft_envlast(t_env *env);
 t_env				*ft_env_new(void *content);
 void				ft_env_add_back(t_env **env, t_env *new);
 
-// ------------------------> Main
+// ------------------------> Parsing
+t_stack				*lexer(char *input);
+int					is_charset(char c);
+
+//------> list
+t_node				*new_node(char *content, int len, enum e_token type,
+						enum e_state state);
+void				lst_add_back(t_stack *lst, t_node *node);
+t_stack				*malloc_lst(t_stack *stack);
+
+//------> Get right token
+int					word_token(enum e_state state, char *input, t_stack *lst);
+void				quote_token(enum e_state *state, char *input, t_stack *lst,
+						int quote);
+int					redir_token(enum e_state *state, char *input, t_stack *lst,
+						int i);
+
+//------> Tools
+int					ft_isspace(char c);
 
 // ------------------------>TRAAAASH
-/* void					print_lst(t_stack *lst); */
+void				print_list(t_stack *lst);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/21 15:02:36 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/21 16:50:11 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	main(int ac, char **av, char **env)
 		input = readline(ORANGE "\U0001F58A  ~>: " RESET);
 		if (input)
 			add_history(input);
-		free(input);
+		data.lex = lexer(input);
+		print_list(data.lex);
 	}
 	return (0);
 }

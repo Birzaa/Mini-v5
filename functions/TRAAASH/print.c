@@ -6,12 +6,38 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:00:41 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/21 13:28:39 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/21 16:48:00 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* void	print_lst(t_stack *lst)
+void	print_node(t_node *node);
+
+void	print_list(t_stack *list)
 {
-} */
+	t_node	*node;
+	int		i;
+
+	i = 0;
+	node = list->head;
+	while (i < list->size)
+	{
+		print_node(node);
+		node = node->next;
+		i++;
+	}
+}
+
+void	print_node(t_node *node)
+{
+	int	i;
+
+	i = 0;
+	printf("content: ");
+	while (i < node->len)
+		putchar(node->content[i++]);
+	printf(", len: %i", node->len);
+	printf(", state: %i", node->state);
+	printf(", token: %i\n", node->type);
+}
