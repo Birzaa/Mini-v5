@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:55:20 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/22 17:41:51 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/22 22:31:08 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ void	parser(t_stack *lst)
 	cmd = malloc(sizeof(t_cmd));
 	cmd->node = lst->head;
 	i = 0;
-	while (i < lst->size)
+	while (i < lst->size && cmd->node)
 	{
-		cmd->cmd = ft_strjoin(cmd->node->content, " ");
-		printf("%s\n", cmd->cmd);
+		//cmd->cmd = ft_strjoin(cmd->node->content, " ");
 		if (cmd->node->type == PIPE_LINE)
 		{
 			cmd = cmd->next;
