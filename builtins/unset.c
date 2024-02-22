@@ -1,8 +1,5 @@
 #include "minishell.h"
 
-// else if(!target->next) si le node a del est a la fin de env
-// else si le node a del dans le milieu de env
-
 void	unset(t_env *env, char *s)
 {
 	t_env	*previous;
