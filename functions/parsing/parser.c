@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/22 16:11:08 by thenwood         ###   ########.fr       */
+/*   Created: 2024/02/22 15:55:20 by thenwood          #+#    #+#             */
+/*   Updated: 2024/02/22 17:41:51 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+void	parser(t_stack *lst)
 {
-	char	*input;
-	t_data	data;
+	t_cmd	*cmd;
+	int		i;
 
-	(void)av;
-	if (ac != 1 || !*env)
-		return (1);
-	data.env = get_env(env);
-	while (1)
+	cmd = malloc(sizeof(t_cmd));
+	cmd->node = lst->head;
+	i = 0;
+	while (i < lst->size)
 	{
-		input = readline(ORANGE "\U0001F58A  ~>: " RESET);
-		if (input)
-			add_history(input);
-		data.lex = lexer(input);
-		print_list(data.lex);
-		parser(data.lex);
+		cmd->cmd = ft_strjoin(cmd->node->content, " ");
+		printf("%s\n", cmd->cmd);
+		if (cmd->node->type == PIPE_LINE)
+		{
+			cmd = cmd->next;
+		}
+		cmd->node = cmd->node->next;
+		i++;
 	}
-	return (0);
 }
