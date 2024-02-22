@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:16:30 by abougrai          #+#    #+#             */
-/*   Updated: 2024/02/21 20:59:37 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:44:53 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,3 @@ t_env	*get_env(char **env)
 	}
 	return (envp);
 }
-/* print_env(envp); */

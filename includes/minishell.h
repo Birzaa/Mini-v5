@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/22 00:21:32 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:40:22 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_stack
 typedef struct s_env
 {
 	char			*content;
+	int				size;
 	struct s_env	*next;
 
 }					t_env;
@@ -111,6 +112,10 @@ void				add_back_env(t_env **env, t_env *new);
 
 // tools/env/env_utils2.c
 t_env				*ft_sort_env(t_env *env, int (*cmp)(char *, char *));
+int					ft_envsize(t_env *env);
+void				del_node_env(t_env *target, t_env *previous);
+void				swap_content_env(t_env *node1, t_env *node2);
+void				pop_node_env(t_env *env);
 
 // tools/str
 int					ft_strcmp(char *s1, char *s2);

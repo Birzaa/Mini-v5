@@ -2,6 +2,8 @@
 
 void	print_env(t_env *env)
 {
+	if (!env->content && !env->next)
+		return ;
 	while (env)
 	{
 		printf("%s\n", env->content);
