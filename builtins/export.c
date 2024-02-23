@@ -4,7 +4,7 @@
 export sans	arg = write all env variables sorted with "export " at front
 export avec	arg = add the var in env variables , check les cas d'erreur*/
 
-/* char *content correspond a par exemple "capart=ilest22h07" */
+// export prend &data->env et capart=bonjour
 void	export_no_arg(t_env *env)
 {
 	env = ft_sort_env(env, ft_strcmp);

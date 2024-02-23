@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/22 12:40:22 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/23 14:22:47 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_data
 
 typedef struct s_signal
 {
+	pid_t			pid;
 }					t_signal;
 
 // ----------------------------------------------------> BUILTINS...
@@ -102,6 +103,13 @@ void				unset(t_env *env, char *name);
 
 // function/env.c
 t_env				*get_env(char **env);
+
+// function/expansion
+char				*ft_strcpy_value_env(char *value, int len_n, int len_value);
+char				*get_name_expansion(t_env *env, char *n);
+
+// function/random
+void				print_test(void);
 
 // tools/env/env_utils1.c
 t_env				*ft_env_last(t_env *env);

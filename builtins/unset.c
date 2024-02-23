@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+// unset prend data->env et le nom d'une var env
 void	unset(t_env *env, char *s)
 {
 	t_env	*previous;
