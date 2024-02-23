@@ -6,7 +6,11 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/02/23 14:22:47 by abougrai         ###   ########.fr       */
+=======
+/*   Updated: 2024/02/23 00:24:48 by abougrai         ###   ########.fr       */
+>>>>>>> fe1f45d9365bab5c8904de7aa6e320272f2fbe1e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +90,9 @@ typedef struct s_data
 
 typedef struct s_signal
 {
+	
 	pid_t			pid;
-}					t_signal;
+}					t_sig;
 
 // ----------------------------------------------------> BUILTINS...
 // builtins/export
