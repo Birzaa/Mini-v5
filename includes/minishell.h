@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/02/23 14:22:47 by abougrai         ###   ########.fr       */
-=======
-/*   Updated: 2024/02/23 00:24:48 by abougrai         ###   ########.fr       */
->>>>>>> fe1f45d9365bab5c8904de7aa6e320272f2fbe1e
+/*   Updated: 2024/02/23 16:17:56 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +76,13 @@ typedef struct s_env
 
 }					t_env;
 
+typedef struct s_cmd
+{
+	char			*cmd;
+	struct s_cmd	*next;
+	struct s_node	*node;
+}					t_cmd;
+
 // ------------------------> Data
 
 typedef struct s_data
@@ -136,6 +139,7 @@ int					ft_strcmp(char *s1, char *s2);
 // ------------------------> Parsing
 t_stack				*lexer(char *input);
 int					is_charset(char c);
+void				parser(t_stack *lst);
 
 //------> list
 t_node				*new_node(char *content, int len, enum e_token type,
