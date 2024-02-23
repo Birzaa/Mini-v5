@@ -21,6 +21,7 @@ TRASH_DIR = functions/TRAAASH/
 SRC = $(SRC_DIR)main.c \
 	$(PARSING_DIR)lexer.c \
 	$(PARSING_DIR)token.c \
+	$(PARSING_DIR)parser.c \
 	$(PARSING_DIR)tools.c \
 	$(PARSING_DIR)lst_tools.c \
 	$(SRC_DIR)env/get_env.c \
