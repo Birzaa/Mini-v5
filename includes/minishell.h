@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/23 10:21:01 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/24 19:03:22 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,19 @@ typedef struct s_stack
 typedef struct s_env
 {
 	char			*content;
+	int				size;
 	struct s_env	*next;
 
 }					t_env;
 
+// ------------------------> Data
+
 typedef struct s_cmd
 {
-	char			*cmd;
+	char			*content;
 	struct s_cmd	*next;
 	struct s_node	*node;
 }					t_cmd;
-
-// ------------------------> Data
 
 typedef struct s_data
 {
@@ -92,7 +93,8 @@ typedef struct s_data
 
 typedef struct s_signal
 {
-}					t_signal;
+	pid_t			pid;
+}					t_sig;
 
 // ----------------------------------------------------> BUILTINS...
 // builtins/export
@@ -109,6 +111,13 @@ void				unset(t_env *env, char *name);
 // function/env.c
 t_env				*get_env(char **env);
 
+// function/expansion
+char				*ft_strcpy_value_env(char *value, int len_n, int len_value);
+char				*get_name_expansion(t_env *env, char *n);
+
+// function/random
+void				print_test(void);
+
 // tools/env/env_utils1.c
 t_env				*ft_env_last(t_env *env);
 t_env				*ft_env_new(void *content);
@@ -118,6 +127,10 @@ void				add_back_env(t_env **env, t_env *new);
 
 // tools/env/env_utils2.c
 t_env				*ft_sort_env(t_env *env, int (*cmp)(char *, char *));
+int					ft_envsize(t_env *env);
+void				del_node_env(t_env *target, t_env *previous);
+void				swap_content_env(t_env *node1, t_env *node2);
+void				pop_node_env(t_env *env);
 
 // tools/str
 int					ft_strcmp(char *s1, char *s2);
@@ -145,5 +158,11 @@ int					ft_isspace(char c);
 
 // ------------------------>TRAAAASH
 void				print_list(t_stack *lst);
+
+// test
+t_cmd				*new_node_cmd(char *content);
+t_cmd				*ft_cmd_last(t_cmd *cmd);
+void				add_back_cmd(t_cmd **cmd, t_cmd *new);
+void				print_node(t_node *node);
 
 #endif

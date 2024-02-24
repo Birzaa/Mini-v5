@@ -4,7 +4,8 @@
 export sans	arg = write all env variables sorted with "export " at front
 export avec	arg = add the var in env variables , check les cas d'erreur*/
 
-void		export_no_arg(t_env *env);
+// export prend &data->env et capart=bonjour
+void	export_no_arg(t_env *env)
 {
 	env = ft_sort_env(env, ft_strcmp);
 	while (env)
@@ -14,13 +15,12 @@ void		export_no_arg(t_env *env);
 	}
 }
 
-/* char *content correspond a par exemple "capart=ilest22h07" */
-void		export(t_env **env, char *content);
+void	export(t_env **env, char *content)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = ft_env_new(content);
 	if (!tmp)
 		return ;
-	ft_env_add_back(env, tmp);
+	add_back_env(env, tmp);
 }
