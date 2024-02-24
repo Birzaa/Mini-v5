@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/23 17:39:34 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/24 16:59:51 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,16 +159,11 @@ int					ft_isspace(char c);
 // ------------------------>TRAAAASH
 void				print_list(t_stack *lst);
 
-
-
-
-
-//test
-t_cmd	*new_node_cmd(char *content);
-t_cmd	*ft_cmd_last(t_cmd *cmd);
-void	add_back_cmd(t_cmd **cmd, t_cmd *new);
-void	parser(t_stack *data);
-void	print_node(t_node *node);
-
+// test
+t_cmd				*new_node_cmd(char *content);
+t_cmd				*ft_cmd_last(t_cmd *cmd);
+void				add_back_cmd(t_cmd **cmd, t_cmd *new);
+void				parser(t_stack *data);
+void				print_node(t_node *node);
 
 #endif

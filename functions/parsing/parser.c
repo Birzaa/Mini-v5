@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:55:20 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/23 18:32:36 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/24 14:55:29 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	parser(t_stack *lex)
 	}
 	printf("\n\n\n");
 }
+
 
 /* void	parser(t_stack *lex)
 {

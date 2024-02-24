@@ -22,5 +22,5 @@ void	export(t_env **env, char *content)
 	tmp = ft_env_new(content);
 	if (!tmp)
 		return ;
-	ft_env_add_back(env, tmp);
+	add_back_env(env, tmp);
 }

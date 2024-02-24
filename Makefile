@@ -17,6 +17,7 @@ HEADER_DIR = ./includes/
 OBJ_DIR = objects/
 SRC_DIR = functions/
 PARSING_DIR = functions/parsing/
+BUILTINS_DIR = builtins/
 TRASH_DIR = functions/TRAAASH/
 SRC = $(SRC_DIR)main.c \
 	$(PARSING_DIR)lexer.c \
@@ -29,6 +30,9 @@ SRC = $(SRC_DIR)main.c \
 	$(SRC_DIR)tools/str/ft_strcmp.c \
 	$(SRC_DIR)tools/env/env_utils1.c \
 	$(SRC_DIR)tools/env/env_utils2.c \
+	$(BUILTINS_DIR)export.c \
+	$(BUILTINS_DIR)unset.c \
+	$(BUILTINS_DIR)env.c \
 	$(TRASH_DIR)print.c \
 	$(TRASH_DIR)print_test.c \
 
