@@ -19,12 +19,15 @@ SRC_DIR = functions/
 PARSING_DIR = functions/parsing/
 BUILTINS_DIR = builtins/
 TRASH_DIR = functions/TRAAASH/
+TOOL_DIR = functions/tools/
 SRC = $(SRC_DIR)main.c \
 	$(PARSING_DIR)lexer.c \
 	$(PARSING_DIR)token.c \
 	$(PARSING_DIR)tools.c \
 	$(PARSING_DIR)lst_tools.c \
 	$(PARSING_DIR)parser.c \
+	$(PARSING_DIR)error_syntax.c \
+	$(PARSING_DIR)syntax.c \
 	$(SRC_DIR)env/get_env.c \
 	$(SRC_DIR)expansion/expansion.c \
 	$(SRC_DIR)tools/str/ft_strcmp.c \
@@ -35,6 +38,7 @@ SRC = $(SRC_DIR)main.c \
 	$(BUILTINS_DIR)env.c \
 	$(TRASH_DIR)print.c \
 	$(TRASH_DIR)print_test.c \
+	$(TOOL_DIR)lst/free.c \
 
 OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
 

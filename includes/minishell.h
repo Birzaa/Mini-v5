@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/25 16:48:36 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/25 22:06:02 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@
 
 // ------------------------> Lexer
 
-enum				e_state
+enum					e_state
 {
 	IN_DQUOTE,
 	IN_QUOTE,
 	GENERAL,
 };
-enum				e_token
+enum					e_token
 {
 	WORD = -1,
 	WHITE_SPACE = ' ',
@@ -52,121 +52,130 @@ enum				e_token
 
 typedef struct s_node
 {
-	char			*content;
-	int				len;
-	enum e_token	type;
-	enum e_state	state;
-	struct s_node	*next;
-	struct s_node	*prev;
-}					t_node;
+	char				*content;
+	int					len;
+	enum e_token		type;
+	enum e_state		state;
+	struct s_node		*next;
+	struct s_node		*prev;
+}						t_node;
 
 typedef struct s_stack
 {
-	t_node			*head;
-	t_node			*tail;
-	int				size;
-}					t_stack;
+	t_node				*head;
+	t_node				*tail;
+	int					size;
+}						t_stack;
 
 // env
 typedef struct s_env
 {
-	char			*content;
-	int				size;
-	struct s_env	*next;
+	char				*content;
+	int					size;
+	struct s_env		*next;
 
-}					t_env;
+}						t_env;
+
+// ------------------------> Commande parsing
+
+typedef struct s_cmd_word
+{
+	char				*content;
+	enum e_token		type;
+	enum e_state		state;
+	struct s_cmd_word	*next;
+}						t_cmd_word;
+
+typedef struct s_cmd
+{
+	t_cmd_word			*words;
+	struct s_cmd		*next;
+}						t_cmd;
 
 // ------------------------> Data
-typedef struct s_cmd_word {
-    char *content; // Contenu du mot
-    enum e_token type; // Propriété type définie dans la structure s_node
-    enum e_state state; // Propriété state définie dans la structure s_node
-    struct s_cmd_word *next; // Pointeur vers le prochain mot dans la commande
-} t_cmd_word;
-
-typedef struct s_cmd {
-    t_cmd_word *words; // Liste des mots de la commande
-    struct s_cmd *next; // Pointeur vers la prochaine commande
-} t_cmd;
 
 typedef struct s_data
 {
-	t_stack			*lex;
-	t_env			*env;
-}					t_data;
+	t_stack				*lex;
+	t_env				*env;
+}						t_data;
 
 typedef struct s_signal
 {
-	pid_t			pid;
-}					t_sig;
+	pid_t				pid;
+}						t_sig;
 
 // ----------------------------------------------------> BUILTINS...
 // builtins/export
-void				export_no_arg(t_env *env);
-void				export(t_env **env, char *content);
+void					export_no_arg(t_env *env);
+void					export(t_env **env, char *content);
 
 // builtins/unset
-void				del_node_env(t_env *target, t_env *previous);
-void				pop_node_env(t_env *env);
-void				unset(t_env *env, char *name);
+void					del_node_env(t_env *target, t_env *previous);
+void					pop_node_env(t_env *env);
+void					unset(t_env *env, char *name);
 
 // ----------------------------------------------------> Functions...
 
 // function/env.c
-t_env				*get_env(char **env);
+t_env					*get_env(char **env);
 
 // function/expansion
-char				*ft_strcpy_value_env(char *value, int len_n, int len_value);
-char				*get_name_expansion(t_env *env, char *n);
+char					*ft_strcpy_value_env(char *value, int len_n,
+							int len_value);
+char					*get_name_expansion(t_env *env, char *n);
 
 // function/random
-void				print_test(void);
+void					print_test(void);
 
 // tools/env/env_utils1.c
-t_env				*ft_env_last(t_env *env);
-t_env				*ft_env_new(void *content);
-void				print_env(t_env *env);
-void				free_env(t_env *env);
-void				add_back_env(t_env **env, t_env *new);
+t_env					*ft_env_last(t_env *env);
+t_env					*ft_env_new(void *content);
+void					print_env(t_env *env);
+void					free_env(t_env *env);
+void					add_back_env(t_env **env, t_env *new);
 
 // tools/env/env_utils2.c
-t_env				*ft_sort_env(t_env *env, int (*cmp)(char *, char *));
-int					ft_envsize(t_env *env);
-void				del_node_env(t_env *target, t_env *previous);
-void				swap_content_env(t_env *node1, t_env *node2);
-void				pop_node_env(t_env *env);
+t_env					*ft_sort_env(t_env *env, int (*cmp)(char *, char *));
+int						ft_envsize(t_env *env);
+void					del_node_env(t_env *target, t_env *previous);
+void					swap_content_env(t_env *node1, t_env *node2);
+void					pop_node_env(t_env *env);
 
 // tools/str
-int					ft_strcmp(char *s1, char *s2);
+int						ft_strcmp(char *s1, char *s2);
 
 // ------------------------> Parsing
-t_stack				*lexer(char *input);
-int					is_charset(char c);
-void				parser(t_stack *lst);
+t_stack					*lexer(char *input);
+int						is_charset(char c);
+void					parser(t_stack *lst);
+
+//------> Syntax error
+int						is_invalid_pipe(t_node *node);
+int						ft_perror(char *str, char *option);
+int						error_cmd(t_stack *lst);
+int						is_redir(enum e_token type);
+int						is_invalid_redir(t_node *node);
 
 //------> list
-t_node				*new_node(char *content, int len, enum e_token type,
-						enum e_state state);
-void				lst_add_back(t_stack *lst, t_node *node);
-t_stack				*malloc_lst(t_stack *stack);
+t_node					*new_node(char *content, int len, enum e_token type,
+							enum e_state state);
+void					lst_add_back(t_stack *lst, t_node *node);
+t_stack					*malloc_lst(t_stack *stack);
 
 //------> Get right token
-int					word_token(enum e_state state, char *input, t_stack *lst);
-void				quote_token(enum e_state *state, char *input, t_stack *lst,
-						int quote);
-int					redir_token(enum e_state *state, char *input, t_stack *lst,
-						int i);
+int						word_token(enum e_state state, char *input,
+							t_stack *lst);
+void					quote_token(enum e_state *state, char *input,
+							t_stack *lst, int quote);
+int						redir_token(enum e_state *state, char *input,
+							t_stack *lst, int i);
 
 //------> Tools
-int					ft_isspace(char c);
+int						ft_isspace(char c);
+void					free_list(t_stack *list);
 
 // ------------------------>TRAAAASH
-void				print_list(t_stack *lst);
-
-// test
-t_cmd				*new_node_cmd(char *content);
-t_cmd				*ft_cmd_last(t_cmd *cmd);
-void				add_back_cmd(t_cmd **cmd, t_cmd *new);
-void				print_node(t_node *node);
+void					print_list(t_stack *lst);
 
 #endif
