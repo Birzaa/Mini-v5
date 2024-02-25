@@ -6,23 +6,11 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:55:20 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/25 07:47:44 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/25 08:00:26 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	print_list2(t_cmd *cmd)
-{
-	t_cmd	*temp;
-
-	temp = cmd;
-	while (cmd)
-	{
-		printf("%s", temp->cmd);
-		temp = temp->next;
-	}
-}
 
 void	parser(t_stack *lst)
 {
@@ -31,6 +19,7 @@ void	parser(t_stack *lst)
 	t_cmd	*next_cmd;
 	t_cmd	*head;
 
+	(void)head;
 	cmd = malloc(sizeof(t_cmd));
 	cmd->node = lst->head;
 	cmd->next = NULL;
@@ -55,8 +44,8 @@ void	parser(t_stack *lst)
 		i++;
 	}
 }
-
-/* 	while (cmd)
+/*
+	while (cmd)
 	{
 		printf("%s\n", cmd->content);
 		cmd = cmd->next;
@@ -99,7 +88,7 @@ void	add_back_cmd(t_cmd **cmd, t_cmd *new)
 	}
 }
 
-void	parser(t_stack *lex)
+void	capart(t_stack *lex)
 {
 	t_node	*node;
 	t_cmd	*cmd;
@@ -137,27 +126,4 @@ void	parser(t_stack *lex)
 		i++;
 	}
 	printf("\n\n\n");
-}
-
-
-/* void	parser(t_stack *lex)
-{
-	t_node	*node;
-	t_cmd	*cmd;
-	char	*new_cmd;
-	char	**tab_cmd;
-	int		i;
-
-	i = 0;
-	new_cmd = "";
-	(void)cmd;
-	node = lex->head;
-	tab_cmd = ft_split(node->content, '|');
-	while (tab_cmd[i])
-	{
-		printf("%s\n", tab_cmd[i++]);
-	}
-	printf("\n\n\n");
-}*/
-
-// cmd1 | cmd2 | cmd3
+} */

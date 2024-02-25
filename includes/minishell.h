@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/25 07:44:33 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/25 08:00:41 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,6 @@ typedef struct s_cmd
 
 // ------------------------> Data
 
-typedef struct s_cmd
-{
-	char			*content;
-	struct s_cmd	*next;
-	struct s_node	*node;
-
-}					t_cmd;
-
 typedef struct s_data
 {
 	t_stack			*lex;
@@ -152,8 +144,7 @@ void				refresh_pwd(t_env *env);
 void				refresh_env(t_env *env);
 
 // tools/env/env_utils4.c
-void free_multiple_env(t_env *env1, t_env *env2);
-
+void				free_multiple_env(t_env *env1, t_env *env2);
 
 // tools/str
 int					ft_strcmp(char *s1, char *s2);
@@ -187,7 +178,6 @@ void				print_list(t_stack *lst);
 t_cmd				*new_node_cmd(char *content);
 t_cmd				*ft_cmd_last(t_cmd *cmd);
 void				add_back_cmd(t_cmd **cmd, t_cmd *new);
-void				parser(t_stack *data);
 void				print_node(t_node *node);
 
 #endif

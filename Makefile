@@ -25,7 +25,6 @@ SRC = $(SRC_DIR)main.c \
 	$(PARSING_DIR)parser.c \
 	$(PARSING_DIR)tools.c \
 	$(PARSING_DIR)lst_tools.c \
-	$(PARSING_DIR)parser.c \
 	$(SRC_DIR)env/get_env.c \
 	$(SRC_DIR)expansion/expansion.c \
 	$(SRC_DIR)tools/str/ft_strcmp.c \
