@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/24 16:59:51 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/25 07:16:44 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ typedef struct s_stack
 typedef struct s_env
 {
 	char			*content;
+	char			*name;
+	char			*value;
 	int				size;
 	struct s_env	*next;
 
@@ -94,8 +96,10 @@ typedef struct s_data
 
 typedef struct s_signal
 {
+	int				sigint;
+	int				sigquit;
 	pid_t			pid;
-}					t_sig;
+}					t_signal;
 
 // ----------------------------------------------------> BUILTINS...
 // builtins/export
@@ -133,8 +137,20 @@ void				del_node_env(t_env *target, t_env *previous);
 void				swap_content_env(t_env *node1, t_env *node2);
 void				pop_node_env(t_env *env);
 
+// tools/env/env_utils3.c
+char				*ft_get_name_env(char *content);
+char				*ft_get_value_env(char *content);
+void				refresh_oldpwd(t_env *env);
+void				refresh_pwd(t_env *env);
+void				refresh_env(t_env *env);
+
+// tools/env/env_utils4.c
+void free_multiple_env(t_env *env1, t_env *env2);
+
+
 // tools/str
 int					ft_strcmp(char *s1, char *s2);
+char				*ft_strcpy(char *s1, char *s2);
 
 // ------------------------> Parsing
 t_stack				*lexer(char *input);

@@ -28,8 +28,11 @@ SRC = $(SRC_DIR)main.c \
 	$(SRC_DIR)env/get_env.c \
 	$(SRC_DIR)expansion/expansion.c \
 	$(SRC_DIR)tools/str/ft_strcmp.c \
+	$(SRC_DIR)tools/str/ft_strcpy.c \
 	$(SRC_DIR)tools/env/env_utils1.c \
 	$(SRC_DIR)tools/env/env_utils2.c \
+	$(SRC_DIR)tools/env/env_utils3.c \
+	$(SRC_DIR)tools/env/env_utils4.c \
 	$(BUILTINS_DIR)export.c \
 	$(BUILTINS_DIR)unset.c \
 	$(BUILTINS_DIR)env.c \
@@ -61,6 +64,9 @@ run : ${NAME}
 
 valgrind : ${NAME}
 	@ valgrind ./${NAME}
+
+runv : ${NAME}
+	@ valgrind --leak-check=full --suppressions=supp.supp ./${NAME}
 
 clean:
 	@rm -rf $(OBJ_DIR)

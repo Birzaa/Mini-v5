@@ -41,3 +41,20 @@ char	*get_name_expansion(t_env *env, char *n)
 	name = ft_calloc(1, 1);
 	return (name);
 }
+
+// 2eme version de l'env expand avec directemet name et value
+/* char	*get_name_expansion_bis(t_env *env, char *n)
+{
+	int		len_n;
+	char	*name;
+
+	len_n = ft_strlen(n);
+	while (env)
+	{
+		if (!ft_strncmp(env->name, n, len_n) && env->content[len_n] == '=')
+			return (env->value);
+		env = env->next;
+	}
+	name = ft_calloc(1, 1);
+	return (name);
+} */
