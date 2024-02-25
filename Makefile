@@ -33,9 +33,10 @@ SRC = $(SRC_DIR)main.c \
 	$(SRC_DIR)tools/env/env_utils2.c \
 	$(SRC_DIR)tools/env/env_utils3.c \
 	$(SRC_DIR)tools/env/env_utils4.c \
+	$(BUILTINS_DIR)env.c \
+	$(BUILTINS_DIR)exit.c \
 	$(BUILTINS_DIR)export.c \
 	$(BUILTINS_DIR)unset.c \
-	$(BUILTINS_DIR)env.c \
 	$(TRASH_DIR)print.c \
 	$(TRASH_DIR)print_test.c \
 

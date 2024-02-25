@@ -1,10 +1,8 @@
 #include "minishell.h"
 
-/* void	ft_exit(char **command)
+void	ft_exit(t_data *data)
 {
-	if (strcmp(command[0], "exit") == 0 || strcmp(command[0], "\"exit\"") == 0)
-	{
-		free_tab(command);
-		exit(0);
-	}
-} */
+	// free tout ce qu'il y a a free
+	free_env(data->env);
+	exit(0);
+}

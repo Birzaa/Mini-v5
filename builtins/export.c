@@ -19,7 +19,7 @@ void	export_no_arg(t_env *env)
 	refresh_env(env);
 	while (env)
 	{
-		tmp = ft_env_new(env->content);
+		tmp = ft_env_new(env->content, env->created);
 		if (!tmp)
 		{
 			free_multiple_env(env, env_cpy);
@@ -42,7 +42,7 @@ void	export(t_env **env, char *content)
 {
 	t_env	*tmp;
 
-	tmp = ft_env_new(content);
+	tmp = ft_env_new(content, (*env)->created);
 	if (!tmp)
 		return ;
 	add_back_env(env, tmp);

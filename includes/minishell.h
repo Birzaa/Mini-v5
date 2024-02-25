@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/25 08:00:41 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/25 10:46:54 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 # define RESET "\033[0m"
 # define BLUE "\033[1;34m"
 # define EQUAL 0
+
+# define COLORS_ENV "LS_COLORS="
+# define SHLVL_ENV "SHLVL=1"
+# define PATH_ENV "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+# define _ENV "_=/usr/bin/env"
 
 # include "../libft/includes/libft.h"
 # include <readline/history.h>
@@ -73,7 +78,7 @@ typedef struct s_env
 	char			*content;
 	char			*name;
 	char			*value;
-	int				size;
+	int				created;
 	struct s_env	*next;
 
 }					t_env;
@@ -101,6 +106,10 @@ typedef struct s_signal
 }					t_signal;
 
 // ----------------------------------------------------> BUILTINS...
+
+// builtins/exit
+void				ft_exit(t_data *data);
+
 // builtins/export
 void				export_no_arg(t_env *env);
 void				export(t_env **env, char *content);
@@ -114,6 +123,9 @@ void				unset(t_env *env, char *name);
 
 // function/env.c
 t_env				*get_env(char **env);
+t_env				*create_env(void);
+t_env				*create_env_part1(t_env *env);
+t_env				*create_env_part2(t_env *env);
 
 // function/expansion
 char				*ft_strcpy_value_env(char *value, int len_n, int len_value);
@@ -124,7 +136,7 @@ void				print_test(void);
 
 // tools/env/env_utils1.c
 t_env				*ft_env_last(t_env *env);
-t_env				*ft_env_new(void *content);
+t_env				*ft_env_new(void *content, int created);
 void				print_env(t_env *env);
 void				free_env(t_env *env);
 void				add_back_env(t_env **env, t_env *new);

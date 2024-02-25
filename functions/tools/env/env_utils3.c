@@ -102,9 +102,10 @@ void	refresh_env(t_env *env)
 	tail = ft_env_last(env);
 	tmp = env;
 	check = 0;
-	refresh_oldpwd(env);
+	if (tmp->created)
+		refresh_oldpwd(env);
 	refresh_pwd(env);
-	while (tmp)
+	while (tmp && !tmp->created)
 	{
 		if (!ft_strncmp("_", tmp->content, 1) && ft_strncmp(tail->content,
 				tmp->content, 1))
