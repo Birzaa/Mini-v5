@@ -6,112 +6,179 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:55:20 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/24 19:03:31 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/25 18:13:28 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void add_cmd_cmd(t_node *info, t_cmd **head)
-{
+/* void add_cmd_cmd(t_node *info, t_cmd **head) {
     // Vérifier si le contenu est déjà alloué
-    if (*head == NULL || (*head)->content == NULL) {
+    if (*head == NULL || (*head)->words == NULL) {
         // Si c'est la première commande ou si la commande précédente a été terminée
         // Allouer de la mémoire pour la nouvelle commande
-        t_cmd *new_node = malloc(sizeof(t_cmd));
-        if (!new_node) {
-            fprintf(stderr, "Erreur lors de l'allocation mémoire pour le nouveau nœud.\n");
+        t_cmd *new_cmd = malloc(sizeof(t_cmd));
+        if (!new_cmd) {
+            fprintf(stderr, "Erreur nouveau nœud.\n");
             exit(EXIT_FAILURE);
         }
 
-        new_node->content = malloc(info->len + 1);
-        if (!new_node->content) {
-            fprintf(stderr, "Erreur lors de l'allocation mémoire pour la commande.\n");
-            exit(EXIT_FAILURE);
-        }
-        
-        // Copier le contenu du token actuel
-        strncpy(new_node->content, info->content, info->len);
-        new_node->content[info->len] = '\0'; // Assurez-vous que la chaîne est correctement terminée
-        new_node->next = NULL;
+        // Initialiser la liste de mots de la nouvelle commande
+        new_cmd->words = NULL;
+        new_cmd->next = NULL;
 
         // Ajouter le nouveau nœud à la fin de la liste
         if (*head == NULL) {
-            *head = new_node;
+            *head = new_cmd;
         } else {
             t_cmd *current = *head;
             while (current->next != NULL) {
                 current = current->next;
             }
-            current->next = new_node;
+            current->next = new_cmd;
         }
 
         // Mettre à jour le pointeur vers le dernier nœud de commande
-        *head = new_node;
+        *head = new_cmd;
+        
+    }
+
+    // Créer un nouveau mot de commande
+    t_cmd_word *new_word = malloc(sizeof(t_cmd_word));
+    if (!new_word) {
+        fprintf(stderr, "Erreur mot de commande.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Remplir les champs du mot
+    new_word->content = malloc(info->len + 1);
+    strncpy(new_word->content, info->content, info->len);
+    new_word->content[info->len] = '\0';
+    new_word->type = info->type;
+    new_word->state = info->state;
+    new_word->next = NULL;
+
+    // Ajouter le mot à la liste des mots de la commande
+    if ((*head)->words == NULL) {
+        (*head)->words = new_word;
     } else {
-        // Concaténer le contenu du token actuel à la commande existante
-        // Recherchez la dernière commande dans la liste
-        t_cmd *current = *head;
+        t_cmd_word *current = (*head)->words;
         while (current->next != NULL) {
             current = current->next;
         }
+        current->next = new_word;
+    }
+} */
 
-        // Allouer de la mémoire pour la nouvelle taille de la commande
-        size_t new_len = strlen(current->content) + info->len + 2; // +2 pour l'espace et le caractère nul
-        current->content = realloc(current->content, new_len);
-        if (!current->content) {
-            fprintf(stderr, "Erreur lors de la réallocation mémoire pour la commande.\n");
+
+void add_cmd_cmd(t_node *info, t_cmd **head) {
+    // Vérifier si le contenu est déjà alloué
+    if (*head == NULL) {
+        // Si c'est la première commande, allouer de la mémoire pour la nouvelle commande
+        t_cmd *new_cmd = malloc(sizeof(t_cmd));
+        if (!new_cmd) {
+            fprintf(stderr, "Erreur lors de l'allocation mémoire pour la nouvelle commande.\n");
             exit(EXIT_FAILURE);
         }
+        new_cmd->words = NULL;
+        new_cmd->next = NULL;
+        *head = new_cmd;
+    }
+    
+    // Créer un nouveau mot de commande
+    t_cmd_word *new_word = malloc(sizeof(t_cmd_word));
+    if (!new_word) {
+        fprintf(stderr, "Erreur lors de l'allocation mémoire pour le nouveau mot de commande.\n");
+        exit(EXIT_FAILURE);
+    }
 
-        // Concaténer le contenu du token actuel
-        strncat(current->content, info->content, info->len);
+    // Remplir les champs du mot
+    new_word->content = malloc(info->len + 1);
+    strncpy(new_word->content, info->content, info->len);
+    new_word->content[info->len] = '\0';
+    new_word->type = info->type;
+    new_word->state = info->state;
+    new_word->next = NULL;
+
+    // Ajouter le mot à la liste des mots de la commande
+    if ((*head)->words == NULL) {
+        (*head)->words = new_word;
+    } else {
+        t_cmd_word *current = (*head)->words;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = new_word;
     }
 }
 
-void	print_cmd_list(t_cmd *head)
-{
-	t_cmd	*current;
-	int i = 0;
 
-	current = head;
-	while (current != NULL)
-	{
-		printf("CMD[%d] : '%s'\n", i,current->content);
-		i++;
-		current = current->next;
-	}
+void print_cmd_list(t_cmd *head) {
+    t_cmd *current = head;
+    int i = 0;
+
+    while (current) {
+        t_cmd_word *word = current->words;
+        printf("CMD[%d]:\n", i);
+        while (word) {
+            printf("Content: %s, Type: %d, State: %d\n", word->content, word->type, word->state);
+            word = word->next;
+        }
+        i++;
+        current = current->next;
+        printf("\n");
+    }
 }
 
-void parser(t_stack *lst)
-{
-    t_cmd *cmd = NULL; // Pointeur de liste de commandes initialisé à NULL
-    t_cmd *first_cmd = NULL; // Pointeur vers le premier nœud de commande
-    t_node *current_node = lst->head; // Démarre à la tête de la pile
+void parser(t_stack *lst) {
+    t_cmd *cmd = NULL; // Pointeur vers la première commande
+    t_cmd *current_cmd = NULL; // Pointeur vers la commande en cours
 
-    while (current_node)
-    {
+    // Parcourir la pile
+    t_node *current_node = lst->head;
+    while (current_node) {
+        // Si le type de noeud n'est pas PIPE_LINE, ajouter le mot à la commande courante
         if (current_node->type != PIPE_LINE) {
-            // Si le type de nœud n'est pas PIPE_LINE, ajoutez le contenu à la liste de commandes
-            if (cmd == NULL) {
-                // Si c'est la première commande, allouez de la mémoire pour la liste de commandes
-                cmd = malloc(sizeof(t_cmd));
-                if (!cmd) {
-                    fprintf(stderr, "Erreur lors de l'allocation mémoire pour la liste de commandes.\n");
+            if (!current_cmd) {
+                // Si c'est la première commande, créer une nouvelle commande
+                t_cmd *new_cmd = malloc(sizeof(t_cmd));
+                if (!new_cmd) {
+                    fprintf(stderr, "Erreur commande.\n");
                     exit(EXIT_FAILURE);
                 }
-                cmd->content = NULL;
-                cmd->next = NULL;
-                first_cmd = cmd; // Mettez à jour le pointeur vers le premier nœud de commande
+                new_cmd->words = NULL;
+                new_cmd->next = NULL;
+                current_cmd = new_cmd;
+                if (!cmd) {
+                    // Si c'est également la première commande de toutes, mettre à jour cmd
+                    cmd = current_cmd;
+                }
             }
-            add_cmd_cmd(current_node, &cmd); // Ajoutez la commande à la liste de commandes
+            // Ajouter le mot à la commande courante
+            add_cmd_cmd(current_node, &current_cmd);
         } else {
-            cmd = first_cmd; // Revenez au premier nœud de commande pour afficher toutes les commandes
+            // Si c'est un PIPE_LINE, créer une nouvelle commande et passer à celle-ci
+            t_cmd *new_cmd = malloc(sizeof(t_cmd));
+            if (!new_cmd) {
+                fprintf(stderr, "Erreur commande.\n");
+                exit(EXIT_FAILURE);
+            }
+            new_cmd->words = NULL;
+            new_cmd->next = NULL;
+            if (!cmd) {
+                cmd = new_cmd;
+            }
+            if (current_cmd) {
+                current_cmd->next = new_cmd;
+            }
+            current_cmd = new_cmd;
         }
         current_node = current_node->next;
     }
-    print_cmd_list(first_cmd); // Imprimez la liste des commandes après avoir terminé la boucle
+    print_cmd_list(cmd);
 }
+
+
 
 
 

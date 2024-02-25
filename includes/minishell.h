@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/24 19:03:22 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:48:36 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,17 @@ typedef struct s_env
 }					t_env;
 
 // ------------------------> Data
+typedef struct s_cmd_word {
+    char *content; // Contenu du mot
+    enum e_token type; // Propriété type définie dans la structure s_node
+    enum e_state state; // Propriété state définie dans la structure s_node
+    struct s_cmd_word *next; // Pointeur vers le prochain mot dans la commande
+} t_cmd_word;
 
-typedef struct s_cmd
-{
-	char			*content;
-	struct s_cmd	*next;
-	struct s_node	*node;
-}					t_cmd;
+typedef struct s_cmd {
+    t_cmd_word *words; // Liste des mots de la commande
+    struct s_cmd *next; // Pointeur vers la prochaine commande
+} t_cmd;
 
 typedef struct s_data
 {
