@@ -2,6 +2,7 @@
 
 void	print_env(t_env *env)
 {
+	refresh_env(env);
 	if (!env->content && !env->next)
 		return ;
 	while (env)
@@ -31,6 +32,12 @@ t_env	*ft_env_new(void *content)
 		return (NULL);
 	elem->content = content;
 	elem->next = NULL;
+	elem->name = ft_get_name_env(content);
+	if (!elem->name)
+		return (NULL);
+	elem->value = ft_get_value_env(content);
+	if (!elem->value)
+		return (NULL);
 	return (elem);
 }
 
@@ -58,6 +65,10 @@ void	free_env(t_env *env)
 	{
 		tmp = env;
 		env = env->next;
+		if (tmp->name)
+			free(tmp->name);
+		if (tmp->value)
+			free(tmp->value);
 		free(tmp);
 	}
 }

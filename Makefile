@@ -17,18 +17,26 @@ HEADER_DIR = ./includes/
 OBJ_DIR = objects/
 SRC_DIR = functions/
 PARSING_DIR = functions/parsing/
+BUILTINS_DIR = builtins/
 TRASH_DIR = functions/TRAAASH/
 SRC = $(SRC_DIR)main.c \
 	$(PARSING_DIR)lexer.c \
 	$(PARSING_DIR)token.c \
+	$(PARSING_DIR)parser.c \
 	$(PARSING_DIR)tools.c \
 	$(PARSING_DIR)lst_tools.c \
 	$(PARSING_DIR)parser.c \
 	$(SRC_DIR)env/get_env.c \
 	$(SRC_DIR)expansion/expansion.c \
 	$(SRC_DIR)tools/str/ft_strcmp.c \
+	$(SRC_DIR)tools/str/ft_strcpy.c \
 	$(SRC_DIR)tools/env/env_utils1.c \
 	$(SRC_DIR)tools/env/env_utils2.c \
+	$(SRC_DIR)tools/env/env_utils3.c \
+	$(SRC_DIR)tools/env/env_utils4.c \
+	$(BUILTINS_DIR)export.c \
+	$(BUILTINS_DIR)unset.c \
+	$(BUILTINS_DIR)env.c \
 	$(TRASH_DIR)print.c \
 	$(TRASH_DIR)print_test.c \
 
@@ -57,6 +65,9 @@ run : ${NAME}
 
 valgrind : ${NAME}
 	@ valgrind ./${NAME}
+
+runv : ${NAME}
+	@ valgrind --leak-check=full --suppressions=supp.supp ./${NAME}
 
 clean:
 	@rm -rf $(OBJ_DIR)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/23 16:17:56 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/25 07:44:33 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ typedef struct s_stack
 typedef struct s_env
 {
 	char			*content;
+	char			*name;
+	char			*value;
 	int				size;
 	struct s_env	*next;
 
@@ -85,6 +87,14 @@ typedef struct s_cmd
 
 // ------------------------> Data
 
+typedef struct s_cmd
+{
+	char			*content;
+	struct s_cmd	*next;
+	struct s_node	*node;
+
+}					t_cmd;
+
 typedef struct s_data
 {
 	t_stack			*lex;
@@ -93,9 +103,10 @@ typedef struct s_data
 
 typedef struct s_signal
 {
-	
+	int				sigint;
+	int				sigquit;
 	pid_t			pid;
-}					t_sig;
+}					t_signal;
 
 // ----------------------------------------------------> BUILTINS...
 // builtins/export
@@ -133,8 +144,20 @@ void				del_node_env(t_env *target, t_env *previous);
 void				swap_content_env(t_env *node1, t_env *node2);
 void				pop_node_env(t_env *env);
 
+// tools/env/env_utils3.c
+char				*ft_get_name_env(char *content);
+char				*ft_get_value_env(char *content);
+void				refresh_oldpwd(t_env *env);
+void				refresh_pwd(t_env *env);
+void				refresh_env(t_env *env);
+
+// tools/env/env_utils4.c
+void free_multiple_env(t_env *env1, t_env *env2);
+
+
 // tools/str
 int					ft_strcmp(char *s1, char *s2);
+char				*ft_strcpy(char *s1, char *s2);
 
 // ------------------------> Parsing
 t_stack				*lexer(char *input);
@@ -159,5 +182,12 @@ int					ft_isspace(char c);
 
 // ------------------------>TRAAAASH
 void				print_list(t_stack *lst);
+
+// test
+t_cmd				*new_node_cmd(char *content);
+t_cmd				*ft_cmd_last(t_cmd *cmd);
+void				add_back_cmd(t_cmd **cmd, t_cmd *new);
+void				parser(t_stack *data);
+void				print_node(t_node *node);
 
 #endif
