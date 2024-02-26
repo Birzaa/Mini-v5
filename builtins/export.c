@@ -11,12 +11,13 @@ void	replace_export(t_env **env, char *content)
 {
 	t_env	*tmp;
 	int len_c = ft_strlen(content);
-
+	(void)len_c;
+	(void)tmp;
 	tmp = (*env);
-	while (ft_strncmp())
+	/* while (ft_strncmp())
 	{
 		tmp = tmp->next;
-	}
+	} */
 
 }
 
