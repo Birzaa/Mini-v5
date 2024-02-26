@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/25 22:06:46 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:18:08 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,13 @@ int	main(int ac, char **av, char **env)
 			parser(data.lex);
 			/* EXECUTION
 				WAIT
+				free lexer + parser
 			*/
-			free_list(data.lex);
 		}
 		else
-			free_list(data.lex);
-			
+		{
+			/* free le lexer */
+		}
 	}
 	return (0);
 }
