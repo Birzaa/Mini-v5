@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/26 12:54:11 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:33:23 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,22 @@ int	main(int ac, char **av, char **env)
 			export_no_arg(data.env);
 		if (!ft_strcmp(input, "env"))
 			print_env(data.env);
-		if (!ft_strncmp(input, "export BONJOUR=capart",21))
+		if (!ft_strncmp(input, "export BONJOUR=capart", 21))
 			export(&data.env, str);
 		if (!ft_strncmp(input, "unset BONJOUR", 13))
 			unset(data.env, "BONJOUR");
-			
-		/* data.lex = lexer(input);
-		print_list(data.lex);
-		parser(data.lex); */
+		data.lex = lexer(input);
+		if (!error_cmd(data.lex))
+		{
+			parser(data.lex);
+			/* EXECUTION
+				WAIT
+				free lexer + parser
+			*/
+		}
+		else
+		{
+			/* free le lexer */
+		}
 	}
-	return (0);
 }

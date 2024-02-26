@@ -1,43 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/24 15:00:41 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/25 21:37:09 by thenwood         ###   ########.fr       */
+/*   Created: 2024/02/25 22:05:02 by thenwood          #+#    #+#             */
+/*   Updated: 2024/02/25 22:05:32 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_node(t_node *node);
-
-void	print_list(t_stack *list)
+void	free_list(t_stack *list)
 {
-	t_node	*node;
-	int		i;
+	t_node	*tmp;
 
-	i = 0;
-	node = list->head;
-	while (i < list->size)
+	tmp = list->head;
+	while (tmp)
 	{
-		print_node(node);
-		node = node->next;
-		i++;
+		free(tmp->content);
+		free(tmp);
+		tmp = tmp->next;
 	}
-}
-
-void	print_node(t_node *node)
-{
-	int	i;
-
-	i = 0;
-	printf("content: ");
-	while (i < node->len)
-		putchar(node->content[i++]);
-	printf(", len: %i", node->len);
-	printf(", state: %i", node->state);
-	printf(", token: %i\n", node->type);
+	free(list);
 }
