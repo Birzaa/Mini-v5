@@ -6,6 +6,19 @@ export avec	arg = add the var in env variables , check les cas d'erreur*/
 
 // export prend &data->env et capart=bonjour
 // export a fix, no arg, faut mettre les values entre ""
+void	print_export(char *content)
+{
+	int	i;
+
+	i = 0;
+	while (content[i] != '=')
+		write(1, &content[i++], 1);
+	write(1, &content[i++], 1);
+	write(1, "\"", 1);
+	while (content[i])
+		write(1, &content[i++], 1);
+	write(1, "\"\n", 2);
+}
 
 void	export_no_arg(t_env *env)
 {
@@ -27,15 +40,13 @@ void	export_no_arg(t_env *env)
 		env = env->next;
 	}
 	env_cpy = ft_sort_env(env_cpy, ft_strcmp);
-	print_env(env_cpy);
 	tmp = env_cpy;
-	print_env(tmp);
-	while (env_cpy)
+	while (tmp)
 	{
-		printf("export %s=\"%s\"\n", env_cpy->name, env_cpy->value);
-		env_cpy = env_cpy->next;
+		print_export(tmp->content);
+		tmp = tmp->next;
 	}
-	free_env(tmp);
+	free_env(env_cpy);
 }
 
 void	export(t_env **env, char *content)

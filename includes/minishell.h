@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/26 02:05:16 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:41:52 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define OLDPWD_ENV "OLDPWD="
 # define COLORS_ENV "LS_COLORS="
 # define SHLVL_ENV "SHLVL=1"
-# define PATH_ENV "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+# define PTH "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 # define _ENV "_=/usr/bin/env"
 
 # include "../libft/includes/libft.h"
@@ -111,7 +111,7 @@ typedef struct s_signal
 void				ft_exit(t_data *data);
 
 // builtins/export
-void				print_export(t_env *env_cpy);
+void				print_export(char *content);
 void				export_no_arg(t_env *env);
 void				export(t_env **env, char *content);
 
@@ -137,7 +137,7 @@ void				print_test(void);
 
 // tools/env/env_utils1.c
 t_env				*ft_env_last(t_env *env);
-t_env				*ft_env_new(void *content/* , int created */);
+t_env				*ft_env_new(void *content);
 void				print_env(t_env *env);
 void				free_env(t_env *env);
 void				add_back_env(t_env **env, t_env *new);
