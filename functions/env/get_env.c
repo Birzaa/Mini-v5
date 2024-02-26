@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:16:30 by abougrai          #+#    #+#             */
-/*   Updated: 2024/02/26 02:29:54 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:56:55 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	create_env_part2(t_env **env, int *error)
 	add_back_env(env, tmp1);
 	tmp2 = ft_env_new(ft_strdup(SHLVL_ENV));
 	add_back_env(env, tmp2);
-	tmp3 = ft_env_new(ft_strdup(PATH_ENV));
+	tmp3 = ft_env_new(ft_strdup(PTH));
 	add_back_env(env, tmp3);
 	tmp4 = ft_env_new(ft_strdup(_ENV));
 	add_back_env(env, tmp4);

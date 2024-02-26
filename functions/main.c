@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/26 02:12:41 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:54:11 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@ int	main(int ac, char **av, char **env)
 {
 	char	*input;
 	t_data	data;
+	char	str[] = "BONJOUR=capart";
 
 	(void)data;
 	(void)av;
 	(void)env;
 	if (ac != 1)
 		return (1);
-/* 	else if (!*env)
-		data.env = create_env(); */
+	/* 	else if (!*env)
+			data.env = create_env(); */
 	data.env = get_env(env);
 	while (1)
 	{
@@ -38,6 +39,11 @@ int	main(int ac, char **av, char **env)
 			export_no_arg(data.env);
 		if (!ft_strcmp(input, "env"))
 			print_env(data.env);
+		if (!ft_strncmp(input, "export BONJOUR=capart",21))
+			export(&data.env, str);
+		if (!ft_strncmp(input, "unset BONJOUR", 13))
+			unset(data.env, "BONJOUR");
+			
 		/* data.lex = lexer(input);
 		print_list(data.lex);
 		parser(data.lex); */

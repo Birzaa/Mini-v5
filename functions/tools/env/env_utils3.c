@@ -48,7 +48,8 @@ char	*ft_get_value_env(char *content)
 
 void	refresh_oldpwd(t_env *env)
 {
-	t_env	*oldpwd;
+	(void)env;
+	/* t_env	*oldpwd;
 	t_env	*tmp;
 
 	oldpwd = env;
@@ -65,13 +66,14 @@ void	refresh_oldpwd(t_env *env)
 				return ;
 			break ;
 		}
-		oldpwd = oldpwd->next;
-	}
+		oldpwd = oldpwd->next; 
+	}*/
 }
 
 void	refresh_pwd(t_env *env)
 {
-	t_env	*tmp;
+	(void)env;
+/* 	t_env	*tmp;
 	char	*pwd;
 
 	tmp = env;
@@ -88,7 +90,7 @@ void	refresh_pwd(t_env *env)
 			break ;
 		}
 		tmp = tmp->next;
-	}
+	} */
 }
 
 void	refresh_env(t_env *env)

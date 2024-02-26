@@ -32,12 +32,12 @@ t_env	*ft_env_new(void *content)
 		return (NULL);
 	elem->content = content;
 	elem->next = NULL;
-	elem->name = ft_get_name_env(content);
+	/* elem->name = ft_get_name_env(content);
 	if (!elem->name)
 		return (NULL);
 	elem->value = ft_get_value_env(content);
 	if (!elem->value)
-		return (NULL);
+		return (NULL); */
 	return (elem);
 }
 
@@ -65,10 +65,10 @@ void	free_env(t_env *env)
 	{
 		tmp = env;
 		env = env->next;
-		if (tmp->name)
+	/* 	if (tmp->name)
 			free(tmp->name);
 		if (tmp->value)
-			free(tmp->value);
+			free(tmp->value); */
 		free(tmp);
 	}
 }

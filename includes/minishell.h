@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/26 12:41:52 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/26 14:05:30 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ typedef struct s_stack
 typedef struct s_env
 {
 	char			*content;
-	char			*name;
-	char			*value;
+	/* 	char			*name;
+		char			*value; */
 	struct s_env	*next;
 
 }					t_env;
@@ -111,6 +111,7 @@ typedef struct s_signal
 void				ft_exit(t_data *data);
 
 // builtins/export
+int					check_export_exit(t_env *env, char *content);
 void				print_export(char *content);
 void				export_no_arg(t_env *env);
 void				export(t_env **env, char *content);

@@ -6,6 +6,36 @@ export avec	arg = add the var in env variables , check les cas d'erreur*/
 
 // export prend &data->env et capart=bonjour
 // export a fix, no arg, faut mettre les values entre ""
+
+void	replace_export(t_env **env, char *content)
+{
+	t_env	*tmp;
+	int len_c = ft_strlen(content);
+
+	tmp = (*env);
+	while (ft_strncmp())
+	{
+		tmp = tmp->next;
+	}
+
+}
+
+int	check_export_exit(t_env *env, char *content)
+{
+	t_env	*tmp;
+	int		len_c;
+
+	len_c = ft_strlen(content);
+	tmp = env;
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->content, content, len_c))
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 void	print_export(char *content)
 {
 	int	i;
@@ -53,8 +83,15 @@ void	export(t_env **env, char *content)
 {
 	t_env	*tmp;
 
-	tmp = ft_env_new(content);
-	if (!tmp)
+	// check if variable already exist if yes just return
+	if (!check_export_exit((*env), content))
+	{
+		tmp = ft_env_new(content);
+		if (!tmp)
+			return ;
+		add_back_env(env, tmp);
 		return ;
-	add_back_env(env, tmp);
+	}
+	else
+		replace_export(env, content);
 }
