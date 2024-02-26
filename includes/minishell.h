@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/26 18:32:18 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/26 22:31:36 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,23 @@ typedef struct s_cmd
 {
 	t_cmd_word			*words;
 	struct s_cmd		*next;
+	int					fd;
+	int					saved_stdout;
 }						t_cmd;
 
 // ------------------------> Data
 
+typedef struct s_redir
+{
+	size_t				current_file;
+	int					i;
+	int					len;
+}						t_redir;
+
 typedef struct s_data
 {
 	t_stack				*lex;
+	t_cmd				*cmd;
 	t_env				*env;
 }						t_data;
 
@@ -201,6 +211,17 @@ int						redir_token(enum e_state *state, char *input,
 //------> Tools
 int						ft_isspace(char c);
 void					free_list(t_stack *list);
+
+// ------------------------>TRAAAASH
+void					redirection_out(t_cmd *shell);
+void					create_all_file(char **fileNames, size_t fileCount,
+							t_cmd *shell);
+char					*ft_stuck(char *command, t_redir *redir,
+							char *output_file);
+void					put_in_tab_filename(char **fileNames, t_redir *redir,
+							char *fileName);
+void					free_tab_size(char **tab, size_t size);
+char					*ft_strncpy(char *dest, char *src, unsigned int n);
 
 // ------------------------>TRAAAASH
 void					print_list(t_stack *lst);

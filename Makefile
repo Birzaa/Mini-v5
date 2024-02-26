@@ -17,6 +17,7 @@ HEADER_DIR = ./includes/
 OBJ_DIR = objects/
 SRC_DIR = functions/
 PARSING_DIR = functions/parsing/
+REDIRECTION_DIR = functions/redirection/
 BUILTINS_DIR = builtins/
 TRASH_DIR = functions/TRAAASH/
 TOOL_DIR = functions/tools/
@@ -42,6 +43,8 @@ SRC = $(SRC_DIR)main.c \
 	$(BUILTINS_DIR)unset.c \
 	$(TRASH_DIR)print.c \
 	$(TRASH_DIR)print_test.c \
+	$(REDIRECTION_DIR)redirection.c \
+	$(REDIRECTION_DIR)redirection_scnd.c \
 	$(TOOL_DIR)lst/free.c \
 
 OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))

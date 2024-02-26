@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:55:20 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/26 18:25:30 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/26 22:30:31 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ void parser(t_stack *lst) {
         current_node = current_node->next;
     }
     print_cmd_list(cmd);
+    redirection_out(cmd);
 }
 
 
