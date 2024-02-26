@@ -69,6 +69,12 @@ valgrind : ${NAME}
 runv : ${NAME}
 	@ valgrind --leak-check=full --suppressions=supp.supp ./${NAME}
 
+env : ${NAME}
+	@env -i ./${NAME}
+
+envv : ${NAME}
+	@env -i valgrind --leak-check=full --suppressions=supp.supp ./${NAME}
+
 clean:
 	@rm -rf $(OBJ_DIR)
 	@make -s clean -C ./libft

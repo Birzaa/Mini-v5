@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:16:30 by abougrai          #+#    #+#             */
-/*   Updated: 2024/02/25 10:46:33 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/26 02:29:54 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_env	*get_env(char **env)
 	tmp = NULL;
 	while (env[i])
 	{
-		tmp = ft_env_new(env[i], 0);
+		tmp = ft_env_new(env[i]);
 		if (!tmp)
 		{
 			free_env(envp);
@@ -38,17 +38,20 @@ t_env	*get_env(char **env)
 
 t_env	*create_env(void)
 {
+	int		error;
 	t_env	*env;
 
+	error = 0;
 	env = NULL;
 	env = create_env_part1(env);
 	if (!env)
 		return (NULL);
-	/* env = create_env_part2(env);
+	create_env_part2(&env, &error);
+	if (error)
 	{
 		free_env(env);
 		return (NULL);
-	} */
+	}
 	return (env);
 }
 t_env	*create_env_part1(t_env *env)
@@ -57,7 +60,6 @@ t_env	*create_env_part1(t_env *env)
 	char	*pwd;
 	char	*newpwd;
 
-	env = NULL;
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		return (NULL);
@@ -68,28 +70,34 @@ t_env	*create_env_part1(t_env *env)
 		free(pwd);
 	}
 	free(pwd);
-	tmp = ft_env_new(newpwd, 1);
+	tmp = ft_env_new(newpwd);
 	if (!tmp)
 	{
 		free(newpwd);
 		return (NULL);
 	}
 	add_back_env(&env, tmp);
-	free(newpwd);
 	return (env);
 }
 
-/* t_env	*create_env_part2(t_env *env)
+void	create_env_part2(t_env **env, int *error)
 {
-	t_env	*tmp;
+	t_env	*tmp1;
+	t_env	*tmp2;
+	t_env	*tmp3;
+	t_env	*tmp4;
 
-	tmp = ft_env_new(ft_strdup(COLORS_ENV), 1);
-	add_back_env(&env, tmp);
-	tmp = ft_env_new(ft_strdup(SHLVL_ENV), 1);
-	add_back_env(&env, tmp);
-	tmp = ft_env_new(ft_strdup(PATH_ENV), 1);
-	add_back_env(&env, tmp);
-	tmp = ft_env_new(ft_strdup(_ENV), 1);
-	add_back_env(&env, tmp);
-	return (env);
-} */
+	tmp2 = NULL;
+	tmp3 = NULL;
+	tmp4 = NULL;
+	tmp1 = ft_env_new(ft_strdup(OLDPWD_ENV));
+	add_back_env(env, tmp1);
+	tmp2 = ft_env_new(ft_strdup(SHLVL_ENV));
+	add_back_env(env, tmp2);
+	tmp3 = ft_env_new(ft_strdup(PATH_ENV));
+	add_back_env(env, tmp3);
+	tmp4 = ft_env_new(ft_strdup(_ENV));
+	add_back_env(env, tmp4);
+	if (tmp1 || tmp2 || tmp3 || tmp4)
+		(*error) = 1;
+}

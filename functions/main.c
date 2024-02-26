@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/25 09:59:54 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/02/26 02:12:41 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,15 @@ int	main(int ac, char **av, char **env)
 {
 	char	*input;
 	t_data	data;
-	int		i;
 
-	i = 0;
 	(void)data;
 	(void)av;
-	(void)i;
 	(void)env;
 	if (ac != 1)
 		return (1);
-	data.env = create_env();
-	/* data.env = get_env(env); */
+/* 	else if (!*env)
+		data.env = create_env(); */
+	data.env = get_env(env);
 	while (1)
 	{
 		input = readline(ORANGE "\U0001F58A  ~>: " RESET);

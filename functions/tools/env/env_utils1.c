@@ -23,7 +23,7 @@ t_env	*ft_env_last(t_env *env)
 	return (env);
 }
 
-t_env	*ft_env_new(void *content, int created)
+t_env	*ft_env_new(void *content)
 {
 	t_env	*elem;
 
@@ -38,9 +38,6 @@ t_env	*ft_env_new(void *content, int created)
 	elem->value = ft_get_value_env(content);
 	if (!elem->value)
 		return (NULL);
-	elem->created = 0; 
-	if (created)
-		elem->created = 1;
 	return (elem);
 }
 
@@ -68,8 +65,6 @@ void	free_env(t_env *env)
 	{
 		tmp = env;
 		env = env->next;
-		if (tmp->created)
-			free(tmp->content);
 		if (tmp->name)
 			free(tmp->name);
 		if (tmp->value)
