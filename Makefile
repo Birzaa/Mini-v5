@@ -17,6 +17,8 @@ HEADER_DIR = ./includes/
 OBJ_DIR = objects/
 SRC_DIR = functions/
 PARSING_DIR = functions/parsing/
+REDIRECTION_DIR = functions/redirection/
+EXECUTION_DIR = functions/exec/
 BUILTINS_DIR = builtins/
 TRASH_DIR = functions/TRAAASH/
 TOOL_DIR = functions/tools/
@@ -31,13 +33,22 @@ SRC = $(SRC_DIR)main.c \
 	$(SRC_DIR)env/get_env.c \
 	$(SRC_DIR)expansion/expansion.c \
 	$(SRC_DIR)tools/str/ft_strcmp.c \
+	$(SRC_DIR)tools/str/ft_strcpy.c \
 	$(SRC_DIR)tools/env/env_utils1.c \
 	$(SRC_DIR)tools/env/env_utils2.c \
+	$(SRC_DIR)tools/env/env_utils3.c \
+	$(SRC_DIR)tools/env/env_utils4.c \
+	$(BUILTINS_DIR)env.c \
+	$(BUILTINS_DIR)pwd.c \
+	$(BUILTINS_DIR)exit.c \
 	$(BUILTINS_DIR)export.c \
 	$(BUILTINS_DIR)unset.c \
-	$(BUILTINS_DIR)env.c \
 	$(TRASH_DIR)print.c \
 	$(TRASH_DIR)print_test.c \
+	$(REDIRECTION_DIR)redirection.c \
+	$(REDIRECTION_DIR)redirection_scnd.c \
+	$(EXECUTION_DIR)exec.c \
+	$(EXECUTION_DIR)path.c \
 	$(TOOL_DIR)lst/free.c \
 
 OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
@@ -64,7 +75,16 @@ run : ${NAME}
 	@./${NAME}
 
 valgrind : ${NAME}
-	@ valgrind ./${NAME}
+	@ valgrind --leak-check=full --suppressions=supp.supp ./${NAME}
+
+runv : ${NAME}
+	@ valgrind --leak-check=full --suppressions=supp.supp ./${NAME}
+
+env : ${NAME}
+	@env -i ./${NAME}
+
+envv : ${NAME}
+	@env -i valgrind --leak-check=full --suppressions=supp.supp ./${NAME}
 
 clean:
 	@rm -rf $(OBJ_DIR)

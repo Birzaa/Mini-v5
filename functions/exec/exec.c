@@ -1,0 +1,130 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/27 13:02:46 by thenwood          #+#    #+#             */
+/*   Updated: 2024/02/27 19:06:36 by thenwood         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+char	**get_cmd(t_cmd *head)
+{
+	t_cmd		*current;
+	t_cmd_word	*word;
+	char		**cmd;
+	int			i;
+
+	i = 0;
+	current = head;
+	cmd = malloc(sizeof(char *) * 2);
+	if (!cmd)
+		return (NULL);
+	if (current)
+	{
+		word = current->words;
+		while (word)
+		{
+			if (is_redir(word->type))
+				return (cmd);
+			if (word->type == WORD)
+			{
+				cmd[i] = malloc(ft_strlen(word->content) + 1);
+				if (!cmd[i])
+				{
+					ft_free_tab(cmd);
+					return (NULL);
+				}
+				cmd[i] = ft_strdup(word->content);
+				i++;
+			}
+			word = word->next;
+		}
+	}
+	return (cmd);
+}
+
+void	execute_cmd(char **env, char **valid_cmd)
+{
+	char	*path;
+	char	**find_the_path;
+
+	find_the_path = find_path(env);
+	path = valid_path(find_the_path, valid_cmd[0]);
+	if (execve(path, valid_cmd, env) == -1)
+	{
+		ft_putstr_fd("Command not found : ", 2);
+		ft_putendl_fd(valid_cmd[0], 2);
+		ft_free_tab(valid_cmd);
+		ft_free_tab(find_the_path);
+		exit(EXIT_FAILURE);
+	}
+}
+
+void	execute_builtin(t_cmd *cmd, char **command, t_data *data)
+{
+	(void)data;
+	if (ft_strcmp(command[0], "pwd") == 0)
+		ft_pwd(cmd);
+	else if (ft_strcmp(command[0], "export") == 0)
+	{
+		if (!command[1])
+			export_no_arg(data->env);
+		export(&data->env, command[1]);
+	}
+	else if (ft_strcmp(command[0], "env") == 0)
+		print_env(data->env);
+	else if (ft_strcmp(command[0], "unset") == 0)
+		unset(data->env, command[1]);
+}
+
+int	is_builtin(char *cmd)
+{
+	if (ft_strcmp(cmd, "cd") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "echo") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "env") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "exit") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "export") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "pwd") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "unset") == 0)
+		return (1);
+	return (0);
+}
+
+void	exec(t_cmd *cmd, char **env, t_data *data)
+{
+	pid_t	pid;
+	int		status;
+	char	**command;
+
+	pid = 0;
+	status = 0;
+	command = get_cmd(cmd);
+	pid = fork();
+	if (pid == -1)
+		printf("ERRRRRRRRREUER"); // modifier
+	else if (pid > 0)
+	{
+		waitpid(pid, &status, 0);
+		kill(pid, SIGTERM);
+	}
+	else
+	{
+		redirection_out(cmd);
+		if (is_builtin(command[0]))
+			execute_builtin(cmd, command, data);
+		else
+			execute_cmd(env, command);
+		exit(EXIT_FAILURE);
+	}
+}

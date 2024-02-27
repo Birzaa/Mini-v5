@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/25 22:06:02 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/27 18:42:18 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,19 @@
 # define BLUE "\033[1;34m"
 # define EQUAL 0
 
+# define OLDPWD_ENV "OLDPWD="
+# define COLORS_ENV "LS_COLORS="
+# define SHLVL_ENV "SHLVL=1"
+# define PTH "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+# define _ENV "_=/usr/bin/env"
+
 # include "../libft/includes/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdio.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 // ------------------------------------------------------> Structure
 
@@ -90,23 +98,41 @@ typedef struct s_cmd
 {
 	t_cmd_word			*words;
 	struct s_cmd		*next;
+	int					fd;
+	int					saved_stdout;
 }						t_cmd;
 
 // ------------------------> Data
 
+typedef struct s_redir
+{
+	size_t				current_file;
+	int					i;
+	int					len;
+}						t_redir;
+
 typedef struct s_data
 {
 	t_stack				*lex;
+	t_cmd				*cmd;
 	t_env				*env;
 }						t_data;
 
 typedef struct s_signal
 {
+	int					sigint;
+	int					sigquit;
 	pid_t				pid;
-}						t_sig;
+}						t_signal;
 
 // ----------------------------------------------------> BUILTINS...
+
+// builtins/exit
+void					ft_exit(t_data *data);
+
 // builtins/export
+int						check_export_exit(t_env *env, char *content);
+void					print_export(char *content);
 void					export_no_arg(t_env *env);
 void					export(t_env **env, char *content);
 
@@ -129,6 +155,7 @@ char					*get_name_expansion(t_env *env, char *n);
 void					print_test(void);
 
 // tools/env/env_utils1.c
+t_env					*create_env_part1(t_env *env);
 t_env					*ft_env_last(t_env *env);
 t_env					*ft_env_new(void *content);
 void					print_env(t_env *env);
@@ -136,19 +163,31 @@ void					free_env(t_env *env);
 void					add_back_env(t_env **env, t_env *new);
 
 // tools/env/env_utils2.c
+void					create_env_part2(t_env **env, int *error);
 t_env					*ft_sort_env(t_env *env, int (*cmp)(char *, char *));
 int						ft_envsize(t_env *env);
 void					del_node_env(t_env *target, t_env *previous);
 void					swap_content_env(t_env *node1, t_env *node2);
 void					pop_node_env(t_env *env);
 
+// tools/env/env_utils3.c
+char					*ft_get_name_env(char *content);
+char					*ft_get_value_env(char *content);
+void					refresh_oldpwd(t_env *env);
+void					refresh_pwd(t_env *env);
+void					refresh_env(t_env *env);
+
+// tools/env/env_utils4.c
+void					free_multiple_env(t_env *env1, t_env *env2);
+
 // tools/str
 int						ft_strcmp(char *s1, char *s2);
+char					*ft_strcpy(char *s1, char *s2);
 
 // ------------------------> Parsing
 t_stack					*lexer(char *input);
 int						is_charset(char c);
-void					parser(t_stack *lst);
+t_cmd					*parser(t_stack *lst);
 
 //------> Syntax error
 int						is_invalid_pipe(t_node *node);
@@ -175,7 +214,34 @@ int						redir_token(enum e_state *state, char *input,
 int						ft_isspace(char c);
 void					free_list(t_stack *list);
 
+// ------------------------> Execution
+char					**get_cmd(t_cmd *cmd);
+void					exec(t_cmd *cmd, char **env, t_data *data);
+char					**find_path(char **env);
+char					*valid_path(char **all_paths, char *cmd);
+void					ft_free_tab(char **tab);
+
+// ------------------------> Builtins
+void					ft_pwd(t_cmd *shell);
+
+// ------------------------>TRAAAASH
+void					redirection_out(t_cmd *shell);
+void					create_all_file(char **fileNames, size_t fileCount,
+							t_cmd *shell);
+char					*ft_stuck(char *command, t_redir *redir,
+							char *output_file);
+void					put_in_tab_filename(char **fileNames, t_redir *redir,
+							char *fileName);
+void					free_tab_size(char **tab, size_t size);
+char					*ft_strncpy(char *dest, char *src, unsigned int n);
+
 // ------------------------>TRAAAASH
 void					print_list(t_stack *lst);
+
+// test
+t_cmd					*new_node_cmd(char *content);
+t_cmd					*ft_cmd_last(t_cmd *cmd);
+void					add_back_cmd(t_cmd **cmd, t_cmd *new);
+void					print_node(t_node *node);
 
 #endif

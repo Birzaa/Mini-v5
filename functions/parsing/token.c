@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:52:18 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/21 15:37:36 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/25 08:01:12 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	word_token(enum e_state state, char *input, t_stack *lst)
 /*
 	1 = DQUOTE
 */
+
 void	quote_token(enum e_state *state, char *input, t_stack *lst, int quote)
 {
 	enum e_state	e_state;

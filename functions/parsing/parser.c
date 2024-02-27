@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:55:20 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/25 18:13:28 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/27 16:44:46 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void print_cmd_list(t_cmd *head) {
     }
 }
 
-void parser(t_stack *lst) {
+t_cmd *parser(t_stack *lst) {
     t_cmd *cmd = NULL; // Pointeur vers la première commande
     t_cmd *current_cmd = NULL; // Pointeur vers la commande en cours
 
@@ -175,7 +175,9 @@ void parser(t_stack *lst) {
         }
         current_node = current_node->next;
     }
-    print_cmd_list(cmd);
+    /* print_cmd_list(cmd);
+    redirection_out(cmd); */
+    return cmd;
 }
 
 
