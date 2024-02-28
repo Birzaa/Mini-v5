@@ -7,26 +7,45 @@ export avec	arg = add the var in env variables , check les cas d'erreur*/
 // export prend &data->env et capart=bonjour
 // export a fix, no arg, faut mettre les values entre ""
 
+int	get_len_to_equal(char *content)
+{
+	int	i;
+
+	i = 0;
+	while (content[i] != '=')
+		i++;
+	return (i);
+}
+
 void	replace_export(t_env **env, char *content)
 {
 	t_env	*tmp;
-	int len_c = ft_strlen(content);
-	(void)len_c;
-	(void)tmp;
-	tmp = (*env);
-	/* while (ft_strncmp())
-	{
-		tmp = tmp->next;
-	} */
+	int		len_n;
+	int		len_c;
 
+	len_c = ft_strlen(content);
+	len_n = get_len_to_equal(content);
+	tmp = (*env);
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->content, content, len_n))
+		{
+			if (!ft_strncmp(tmp->content, content, len_c))
+				return ;
+			tmp->content = content;
+			break ;
+		}
+		tmp = tmp->next;
+	}
+	tmp->content = content;
 }
 
-int	check_export_exit(t_env *env, char *content)
+int	check_export_exist(t_env *env, char *content)
 {
 	t_env	*tmp;
 	int		len_c;
 
-	len_c = ft_strlen(content);
+	len_c = get_len_to_equal(content);
 	tmp = env;
 	while (tmp)
 	{
@@ -85,7 +104,7 @@ void	export(t_env **env, char *content)
 	t_env	*tmp;
 
 	// check if variable already exist if yes just return
-	/* if (!check_export_exit((*env), content))
+	if (!check_export_exist((*env), content))
 	{
 		} */
 		tmp = ft_env_new(content);
