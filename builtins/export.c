@@ -45,6 +45,8 @@ int	check_export_exist(t_env *env, char *content)
 	t_env	*tmp;
 	int		len_c;
 
+	if (!content)
+		return (1);
 	len_c = get_len_to_equal(content);
 	tmp = env;
 	while (tmp)
@@ -93,10 +95,11 @@ void	export_no_arg(t_env *env)
 	tmp = env_cpy;
 	while (tmp)
 	{
+		ft_putstr_fd("export ", 1);
 		print_export(tmp->content);
 		tmp = tmp->next;
 	}
-	free_env(env_cpy);
+	free_env(tmp);
 }
 
 void	export(t_env **env, char *content)
@@ -106,14 +109,13 @@ void	export(t_env **env, char *content)
 	// check if variable already exist if yes just return
 	if (!check_export_exist((*env), content))
 	{
-		} */
 		tmp = ft_env_new(content);
 		if (!tmp)
 			return ;
 		add_back_env(env, tmp);
 		print_env((*env));
 		return ;
-	
-	/* else
-		replace_export(env, content); */
+	}
+	else
+		replace_export(env, content);
 }

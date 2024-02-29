@@ -6,7 +6,7 @@ void	unset(t_env *env, char *s)
 	t_env	*previous;
 	t_env	*target;
 	int		len;
-printf("%s\n", s);
+
 	len = ft_strlen(s);
 	if (ft_envsize(env) == 1)
 	{

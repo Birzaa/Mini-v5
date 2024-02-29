@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/27 18:42:18 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:43:07 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,9 @@ void					unset(t_env *env, char *name);
 t_env					*get_env(char **env);
 
 // function/expansion
-char					*ft_strcpy_value_env(char *value, int len_n,
+void					replace_content_env(char *oldpwd, char *pwd);
+
+char					*ft_strdup_value_env(char *value, int len_n,
 							int len_value);
 char					*get_name_expansion(t_env *env, char *n);
 
@@ -178,7 +180,9 @@ void					refresh_pwd(t_env *env);
 void					refresh_env(t_env *env);
 
 // tools/env/env_utils4.c
+char					*ft_strcpy_content_env(char *s1, char *s2);
 void					free_multiple_env(t_env *env1, t_env *env2);
+int						get_len_name(char *n);
 
 // tools/str
 int						ft_strcmp(char *s1, char *s2);
@@ -223,6 +227,8 @@ void					ft_free_tab(char **tab);
 
 // ------------------------> Builtins
 void					ft_pwd(t_cmd *shell);
+char					*get_valid_path(char **command);
+void					ft_cd(char *command, t_data *data);
 
 // ------------------------>TRAAAASH
 void					redirection_out(t_cmd *shell);

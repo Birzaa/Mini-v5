@@ -7,7 +7,8 @@ void	print_env(t_env *env)
 		return ;
 	while (env)
 	{
-		printf("%s\n", env->content);
+		ft_putstr_fd(env->content, 1);
+		ft_putchar_fd('\n', 1);
 		env = env->next;
 	}
 }

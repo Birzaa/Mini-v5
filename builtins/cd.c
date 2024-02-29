@@ -4,7 +4,7 @@
 	Permet d'obtenir le chemin, sans "".
 	ex => cd "functions" = cd functions
  */
-/* char	*get_valid_path(char **command)
+char	*get_valid_path(char **command)
 {
 	char	*valid_path;
 	int		len;
@@ -30,20 +30,19 @@
 	return (valid_path);
 }
 
-void	ft_cd(char **command)
+void	ft_cd(char *command, t_data *data)
 {
 	char	*valid_path;
 
-	if (strcmp(command[0], "cd") == 0 || strcmp(command[0], "\"cd\"") == 0)
+	(void)data;
+	valid_path = command;
+	if (valid_path != NULL)
 	{
-		valid_path = get_valid_path(command);
-		if (valid_path != NULL)
+		if (chdir(valid_path) != 0)
 		{
-			if (chdir(valid_path) != 0)
-			{
-				printf("cd: %s: No such file or directory\n", valid_path);
-			}
-			free(valid_path);
+			printf("cd: %s: No such file or directory\n", valid_path);
 		}
+		/* refresh_env(data->env); */
+		free(valid_path);
 	}
-} */
+}

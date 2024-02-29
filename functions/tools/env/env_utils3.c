@@ -48,49 +48,40 @@ char	*ft_get_value_env(char *content)
 
 void	refresh_oldpwd(t_env *env)
 {
-	(void)env;
-	/* t_env	*oldpwd;
+	t_env	*oldpwd;
 	t_env	*tmp;
 
 	oldpwd = env;
 	tmp = env;
-	while (ft_strncmp(tmp->name, "PWD", 3))
+	while (ft_strncmp(tmp->content, "PWD", 3))
 		tmp = tmp->next;
 	while (oldpwd)
 	{
-		if (!ft_strncmp(oldpwd->name, "OLDPWD", 6))
-		{
-			free(oldpwd->value);
-			oldpwd->value = ft_strdup(tmp->value);
-			if (!oldpwd->value)
-				return ;
-			break ;
-		}
-		oldpwd = oldpwd->next; 
-	}*/
+		if (!ft_strncmp(oldpwd->content, "OLDPWD", 6))
+			replace_content_env(oldpwd->content, tmp->content);
+		oldpwd = oldpwd->next;
+	}
 }
 
 void	refresh_pwd(t_env *env)
 {
-	(void)env;
-/* 	t_env	*tmp;
 	char	*pwd;
+	t_env	*tmp;
 
 	tmp = env;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->name, "PWD", 3))
+		if (!ft_strncmp(tmp->content, "PWD", 3))
 		{
 			pwd = getcwd(NULL, 0);
 			if (!pwd)
 				return ;
-			free(tmp->value);
-			tmp->value = ft_strdup(pwd);
+			tmp->content = ft_strcpy_content_env(tmp->content, pwd);
 			free(pwd);
 			break ;
 		}
 		tmp = tmp->next;
-	} */
+	}
 }
 
 void	refresh_env(t_env *env)
@@ -101,8 +92,8 @@ void	refresh_env(t_env *env)
 
 	if (!env)
 		return ;
-	tail = ft_env_last(env);
 	tmp = env;
+	tail = ft_env_last(env);
 	check = 0;
 	refresh_oldpwd(env);
 	refresh_pwd(env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:46 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/27 19:06:36 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:50:48 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,27 @@ void	execute_cmd(char **env, char **valid_cmd)
 
 void	execute_builtin(t_cmd *cmd, char **command, t_data *data)
 {
-	(void)data;
-	if (ft_strcmp(command[0], "pwd") == 0)
+	if (ft_strcmp(command[0], "cd") == 0)
+		ft_cd(command[1], data);
+	else if (ft_strcmp(command[0], "pwd") == 0)
 		ft_pwd(cmd);
 	else if (ft_strcmp(command[0], "export") == 0)
 	{
 		if (!command[1])
+		{
 			export_no_arg(data->env);
+			return ;
+		}
 		export(&data->env, command[1]);
 	}
 	else if (ft_strcmp(command[0], "env") == 0)
 		print_env(data->env);
 	else if (ft_strcmp(command[0], "unset") == 0)
+	{
+		if (!command[1])
+			return ;
 		unset(data->env, command[1]);
+	}
 }
 
 int	is_builtin(char *cmd)
@@ -103,28 +111,32 @@ int	is_builtin(char *cmd)
 
 void	exec(t_cmd *cmd, char **env, t_data *data)
 {
-	pid_t	pid;
-	int		status;
 	char	**command;
 
-	pid = 0;
-	status = 0;
+	(void)env;
+	/* 	pid_t	pid;
+		int		status; */
 	command = get_cmd(cmd);
-	pid = fork();
-	if (pid == -1)
-		printf("ERRRRRRRRREUER"); // modifier
-	else if (pid > 0)
-	{
-		waitpid(pid, &status, 0);
-		kill(pid, SIGTERM);
-	}
-	else
-	{
-		redirection_out(cmd);
-		if (is_builtin(command[0]))
-			execute_builtin(cmd, command, data);
+	if (is_builtin(command[0]))
+		execute_builtin(cmd, command, data);
+	/* 	pid = 0;
+		status = 0; */
+	/* 	command = get_cmd(cmd); */
+	/* 	pid = fork();
+		if (pid == -1)
+			printf("ERRRRRRRRREUER"); // modifier
+		else if (pid > 0)
+		{
+			waitpid(pid, &status, 0);
+			kill(pid, SIGTERM);
+		}
 		else
-			execute_cmd(env, command);
-		exit(EXIT_FAILURE);
-	}
+		{
+			redirection_out(cmd);
+			if (is_builtin(command[0]))
+				execute_builtin(cmd, command, data);
+			else
+				execute_cmd(env, command);
+			exit(EXIT_FAILURE);
+		} */
 }
