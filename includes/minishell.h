@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/01 17:54:27 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/01 23:06:58 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,21 @@ typedef struct s_env
 
 }						t_env;
 
+// ------------------------> Redirection
+typedef struct s_redir_elem
+{
+	char				*arg;
+	int					len;
+	enum e_token		type;
+	struct s_redir_elem	*next;
+}						t_redir_elem;
+typedef struct s_redir_list
+{
+	struct s_redir_elem	*head;
+	struct s_redir_elem	*tail;
+	int					size;
+}						t_redir_list;
+
 // ------------------------> Commande parsing
 
 typedef struct s_cmd_word
@@ -100,13 +115,14 @@ typedef struct s_cmd
 	struct s_cmd		*next;
 	int					fd;
 	int					saved_stdout;
+	t_redir_list		*redir;
 }						t_cmd;
 
 // ------------------------> Data
 
 typedef struct s_redir
 {
-	size_t				current_file;
+	int					current_file;
 	int					i;
 	int					len;
 }						t_redir;
@@ -125,6 +141,15 @@ typedef struct s_signal
 	pid_t				pid;
 }						t_signal;
 
+// ----------------------------------------------------> Redirection...
+
+//	Redirection out
+t_redir_list			*parsing_redir(t_cmd *data);
+// Tools
+t_redir_list			*init_redir_list(t_redir_list *list);
+t_redir_elem			*new_redir_node(char *arg, enum e_token type, int len);
+void					add_redir_last(t_redir_list *list, t_redir_elem *new);
+void					print_redir_list(t_redir_list *redir);
 // ----------------------------------------------------> BUILTINS...
 
 // builtins/exit
@@ -238,11 +263,11 @@ char					*get_valid_path(char **command);
 void					ft_cd(char *command, t_data *data);
 
 // ------------------------>TRAAAASH
-void					redirection_out(t_cmd *shell);
-void					create_all_file(char **fileNames, size_t fileCount,
+void					redirection_out(t_cmd *shell, t_redir_list *redir);
+void					create_all_file(char **fileNames, int fileCount,
 							t_cmd *shell, int d_redir);
-char					*ft_stuck(char *command, t_redir *redir,
-							char *output_file, int d_redir);
+char					*ft_stuck(t_redir *redir, char *output_file,
+							t_redir_list *redir_two);
 void					put_in_tab_filename(char **fileNames, t_redir *redir,
 							char *fileName);
 void					free_tab_size(char **tab, size_t size);
