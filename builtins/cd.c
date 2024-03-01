@@ -32,17 +32,15 @@ char	*get_valid_path(char **command)
 
 void	ft_cd(char *command, t_data *data)
 {
+	(void)data;
 	char	*valid_path;
 
-	(void)data;
 	valid_path = command;
 	if (valid_path != NULL)
 	{
 		if (chdir(valid_path) != 0)
-		{
 			printf("cd: %s: No such file or directory\n", valid_path);
-		}
-		/* refresh_env(data->env); */
+		refresh_env(data->env, 1);
 		free(valid_path);
 	}
 }

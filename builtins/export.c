@@ -12,6 +12,8 @@ int	get_len_to_equal(char *content)
 	int	i;
 
 	i = 0;
+	if (!ft_at_least_charset(content, "="))
+		return (ft_strlen(content));
 	while (content[i] != '=')
 		i++;
 	return (i);
@@ -30,8 +32,11 @@ void	replace_export(t_env **env, char *content)
 	{
 		if (!ft_strncmp(tmp->content, content, len_n))
 		{
-			if (!ft_strncmp(tmp->content, content, len_c))
-				return ;
+			tmp->content = content;
+			break ;
+		}
+		else if (!ft_strncmp(tmp->content, content, len_c))
+		{
 			tmp->content = content;
 			break ;
 		}
@@ -52,7 +57,14 @@ int	check_export_exist(t_env *env, char *content)
 	while (tmp)
 	{
 		if (!ft_strncmp(tmp->content, content, len_c))
+		{
+			if (ft_strncmp(tmp->content, content, ft_strlen(content)))
+			{
+				tmp->content = content;
+				return (1);
+			}
 			return (1);
+		}
 		tmp = tmp->next;
 	}
 	return (0);
@@ -63,6 +75,12 @@ void	print_export(char *content)
 	int	i;
 
 	i = 0;
+	if (!ft_at_least_charset(content, "="))
+	{
+		ft_putstr_fd(content, 1);
+		ft_putchar_fd('\n', 1);
+		return ;
+	}
 	while (content[i] != '=')
 		write(1, &content[i++], 1);
 	write(1, &content[i++], 1);
@@ -79,7 +97,7 @@ void	export_no_arg(t_env *env)
 
 	tmp = NULL;
 	env_cpy = NULL;
-	refresh_env(env);
+	refresh_env(env, 0);
 	while (env)
 	{
 		tmp = ft_env_new(env->content);
@@ -93,27 +111,25 @@ void	export_no_arg(t_env *env)
 	}
 	env_cpy = ft_sort_env(env_cpy, ft_strcmp);
 	tmp = env_cpy;
-	while (tmp)
+	while (tmp->next)
 	{
 		ft_putstr_fd("export ", 1);
 		print_export(tmp->content);
 		tmp = tmp->next;
 	}
-	free_env(tmp);
+	free_env(env_cpy);
 }
 
 void	export(t_env **env, char *content)
 {
 	t_env	*tmp;
 
-	// check if variable already exist if yes just return
 	if (!check_export_exist((*env), content))
 	{
 		tmp = ft_env_new(content);
 		if (!tmp)
 			return ;
 		add_back_env(env, tmp);
-		print_env((*env));
 		return ;
 	}
 	else

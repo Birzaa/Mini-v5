@@ -38,6 +38,7 @@ SRC = $(SRC_DIR)main.c \
 	$(SRC_DIR)tools/env/env_utils2.c \
 	$(SRC_DIR)tools/env/env_utils3.c \
 	$(SRC_DIR)tools/env/env_utils4.c \
+	$(SRC_DIR)tools/other/ft_at_least_equal.c\
 	$(BUILTINS_DIR)env.c \
 	$(BUILTINS_DIR)pwd.c \
 	$(BUILTINS_DIR)exit.c \

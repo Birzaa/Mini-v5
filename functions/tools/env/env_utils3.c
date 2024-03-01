@@ -63,40 +63,15 @@ void	refresh_oldpwd(t_env *env)
 	}
 }
 
-void	refresh_pwd(t_env *env)
-{
-	char	*pwd;
-	t_env	*tmp;
-
-	tmp = env;
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->content, "PWD", 3))
-		{
-			pwd = getcwd(NULL, 0);
-			if (!pwd)
-				return ;
-			tmp->content = ft_strcpy_content_env(tmp->content, pwd);
-			free(pwd);
-			break ;
-		}
-		tmp = tmp->next;
-	}
-}
-
-void	refresh_env(t_env *env)
+void	refresh_last_node(t_env *env)
 {
 	t_env	*tmp;
 	t_env	*tail;
 	int		check;
 
-	if (!env)
-		return ;
-	tmp = env;
-	tail = ft_env_last(env);
 	check = 0;
-	refresh_oldpwd(env);
-	refresh_pwd(env);
+	tail = ft_env_last(env);
+	tmp = env;
 	while (tmp)
 	{
 		if (!ft_strncmp("_", tmp->content, 1) && ft_strncmp(tail->content,
@@ -110,4 +85,13 @@ void	refresh_env(t_env *env)
 	}
 	if (ft_strcmp(tail->content, "_=/usr/bin/env") && check)
 		tail->content = "_=/usr/bin/env";
+}
+
+void	refresh_env(t_env *env, int cd)
+{
+	if (!env)
+		return ;
+	if (cd)
+		refresh_oldpwd(env);
+	refresh_last_node(env);
 }

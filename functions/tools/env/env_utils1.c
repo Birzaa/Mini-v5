@@ -1,14 +1,22 @@
 #include "minishell.h"
 
+
 void	print_env(t_env *env)
 {
-	refresh_env(env);
+	refresh_env(env, 0);
 	if (!env->content && !env->next)
 		return ;
 	while (env)
 	{
-		ft_putstr_fd(env->content, 1);
-		ft_putchar_fd('\n', 1);
+		if (!ft_strncmp(env->content, "PWD", 3))
+			print_pwd_env();
+		else if (!ft_at_least_charset(env->content, "="))
+			print_test();
+		else
+		{
+			ft_putstr_fd(env->content, 1);
+			ft_putchar_fd('\n', 1);
+		}
 		env = env->next;
 	}
 }
@@ -66,10 +74,10 @@ void	free_env(t_env *env)
 	{
 		tmp = env;
 		env = env->next;
-	/* 	if (tmp->name)
-			free(tmp->name);
-		if (tmp->value)
-			free(tmp->value); */
+		/* 	if (tmp->name)
+				free(tmp->name);
+			if (tmp->value)
+				free(tmp->value); */
 		free(tmp);
 	}
 }

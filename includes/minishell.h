@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/29 15:43:07 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/01 09:21:27 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,16 +177,21 @@ char					*ft_get_name_env(char *content);
 char					*ft_get_value_env(char *content);
 void					refresh_oldpwd(t_env *env);
 void					refresh_pwd(t_env *env);
-void					refresh_env(t_env *env);
+void					refresh_env(t_env *env, int cd);
 
 // tools/env/env_utils4.c
-char					*ft_strcpy_content_env(char *s1, char *s2);
+char					*ft_strcpy_content_env(char *s1, char *s2, char *n);
 void					free_multiple_env(t_env *env1, t_env *env2);
 int						get_len_name(char *n);
+void					print_pwd_env(void);
 
 // tools/str
 int						ft_strcmp(char *s1, char *s2);
 char					*ft_strcpy(char *s1, char *s2);
+
+// tools/other
+int						ft_contain_charset(char c, char *charset);
+int						ft_at_least_charset(char *str, char *charset);
 
 // ------------------------> Parsing
 t_stack					*lexer(char *input);
