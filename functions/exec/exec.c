@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:46 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/01 16:20:25 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/01 17:27:27 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,29 @@ void	execute_cmd(char **env, char **valid_cmd)
 
 void	execute_builtin(t_cmd *cmd, char **command, t_data *data)
 {
-	(void)data;
-	if (ft_strcmp(command[0], "pwd") == 0)
+	if (ft_strcmp(command[0], "cd") == 0)
+		ft_cd(command[1], data);
+	else if (ft_strcmp(command[0], "pwd") == 0)
 		ft_pwd(cmd);
 	else if (ft_strcmp(command[0], "cd") == 0)
 		ft_cd(command);
 	else if (ft_strcmp(command[0], "export") == 0)
 	{
 		if (!command[1])
+		{
 			export_no_arg(data->env);
+			return ;
+		}
 		export(&data->env, command[1]);
 	}
 	else if (ft_strcmp(command[0], "env") == 0)
 		print_env(data->env);
 	else if (ft_strcmp(command[0], "unset") == 0)
+	{
+		if (!command[1])
+			return ;
 		unset(data->env, command[1]);
+	}
 }
 
 int	is_builtin(char *cmd)

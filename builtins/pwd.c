@@ -4,6 +4,7 @@ void	ft_pwd(t_cmd *shell)
 {
 	char	*cwd;
 
+	cwd = NULL;
 	cwd = getcwd(NULL, 0);
 	if (cwd != NULL)
 	{

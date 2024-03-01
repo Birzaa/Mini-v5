@@ -2,12 +2,20 @@
 
 void	print_env(t_env *env)
 {
-	refresh_env(env);
+	refresh_env(env, 0);
 	if (!env->content && !env->next)
 		return ;
 	while (env)
 	{
-		printf("%s\n", env->content);
+		if (!ft_strncmp(env->content, "PWD", 3))
+			print_pwd_env();
+		else if (!ft_at_least_charset(env->content, "="))
+			print_test();
+		else
+		{
+			ft_putstr_fd(env->content, 1);
+			ft_putchar_fd('\n', 1);
+		}
 		env = env->next;
 	}
 }
@@ -32,14 +40,14 @@ t_env	*ft_env_new(void *content)
 		return (NULL);
 	elem->content = content;
 	elem->next = NULL;
-	/* elem->name = ft_get_name_env(content);
-	if (!elem->name)
-		return (NULL);
-	elem->value = ft_get_value_env(content);
-	if (!elem->value)
-		return (NULL); */
 	return (elem);
 }
+/* elem->name = ft_get_name_env(content);
+if (!elem->name)
+	return (NULL);
+elem->value = ft_get_value_env(content);
+if (!elem->value)
+	return (NULL); */
 
 void	add_back_env(t_env **env, t_env *new)
 {
@@ -65,10 +73,11 @@ void	free_env(t_env *env)
 	{
 		tmp = env;
 		env = env->next;
-	/* 	if (tmp->name)
-			free(tmp->name);
-		if (tmp->value)
-			free(tmp->value); */
 		free(tmp);
 	}
 }
+
+/* 	if (tmp->name)
+		free(tmp->name);
+	if (tmp->value)
+		free(tmp->value); */

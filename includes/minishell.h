@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/01 15:29:18 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/01 17:27:13 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ int						check_export_exit(t_env *env, char *content);
 void					print_export(char *content);
 void					export_no_arg(t_env *env);
 void					export(t_env **env, char *content);
+void					replace_export(t_env **env, char *content);
 
 // builtins/unset
 void					del_node_env(t_env *target, t_env *previous);
@@ -150,7 +151,9 @@ void					unset(t_env *env, char *name);
 t_env					*get_env(char **env);
 
 // function/expansion
-char					*ft_strcpy_value_env(char *value, int len_n,
+void					replace_content_env(char *oldpwd, char *pwd);
+
+char					*ft_strdup_value_env(char *value, int len_n,
 							int len_value);
 char					*get_name_expansion(t_env *env, char *n);
 
@@ -178,14 +181,22 @@ char					*ft_get_name_env(char *content);
 char					*ft_get_value_env(char *content);
 void					refresh_oldpwd(t_env *env);
 void					refresh_pwd(t_env *env);
-void					refresh_env(t_env *env);
+void					refresh_env(t_env *env, int cd);
 
 // tools/env/env_utils4.c
+char					*ft_strcpy_content_env(char *s1, char *s2, char *n);
 void					free_multiple_env(t_env *env1, t_env *env2);
+int						get_len_name(char *n);
+void					print_pwd_env(void);
+int						get_len_to_equal(char *content);
 
 // tools/str
 int						ft_strcmp(char *s1, char *s2);
 char					*ft_strcpy(char *s1, char *s2);
+
+// tools/other
+int						ft_contain_charset(char c, char *charset);
+int						ft_at_least_charset(char *str, char *charset);
 
 // ------------------------> Parsing
 t_stack					*lexer(char *input);
@@ -226,6 +237,8 @@ void					ft_free_tab(char **tab);
 
 // ------------------------> Builtins
 void					ft_pwd(t_cmd *shell);
+char					*get_valid_path(char **command);
+void					ft_cd(char *command, t_data *data);
 
 // ------------------------>TRAAAASH
 void					redirection_out(t_cmd *shell);
