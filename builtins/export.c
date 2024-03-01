@@ -7,18 +7,6 @@ export avec	arg = add the var in env variables , check les cas d'erreur*/
 // export prend &data->env et capart=bonjour
 // export a fix, no arg, faut mettre les values entre ""
 
-int	get_len_to_equal(char *content)
-{
-	int	i;
-
-	i = 0;
-	if (!ft_at_least_charset(content, "="))
-		return (ft_strlen(content));
-	while (content[i] != '=')
-		i++;
-	return (i);
-}
-
 void	replace_export(t_env **env, char *content)
 {
 	t_env	*tmp;
@@ -77,10 +65,12 @@ void	print_export(char *content)
 	i = 0;
 	if (!ft_at_least_charset(content, "="))
 	{
+		ft_putstr_fd("export ", 1);
 		ft_putstr_fd(content, 1);
 		ft_putchar_fd('\n', 1);
 		return ;
 	}
+	ft_putstr_fd("export ", 1);
 	while (content[i] != '=')
 		write(1, &content[i++], 1);
 	write(1, &content[i++], 1);
@@ -113,7 +103,6 @@ void	export_no_arg(t_env *env)
 	tmp = env_cpy;
 	while (tmp->next)
 	{
-		ft_putstr_fd("export ", 1);
 		print_export(tmp->content);
 		tmp = tmp->next;
 	}

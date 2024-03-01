@@ -57,6 +57,7 @@ void	unset_without_equal(t_env *env, char *s)
 		target = target->next;
 	}
 }
+
 // unset prend data->env et le nom d'une var env
 void	unset(t_env *env, char *s)
 {

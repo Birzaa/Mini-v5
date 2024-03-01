@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/01 09:21:27 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/01 13:02:20 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ int						check_export_exit(t_env *env, char *content);
 void					print_export(char *content);
 void					export_no_arg(t_env *env);
 void					export(t_env **env, char *content);
+void					replace_export(t_env **env, char *content);
 
 // builtins/unset
 void					del_node_env(t_env *target, t_env *previous);
@@ -184,6 +185,7 @@ char					*ft_strcpy_content_env(char *s1, char *s2, char *n);
 void					free_multiple_env(t_env *env1, t_env *env2);
 int						get_len_name(char *n);
 void					print_pwd_env(void);
+int						get_len_to_equal(char *content);
 
 // tools/str
 int						ft_strcmp(char *s1, char *s2);

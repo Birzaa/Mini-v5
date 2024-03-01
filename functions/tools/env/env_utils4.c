@@ -48,3 +48,15 @@ void	print_pwd_env(void)
 		free(pwd);
 	}
 }
+
+int	get_len_to_equal(char *content)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_at_least_charset(content, "="))
+		return (ft_strlen(content));
+	while (content[i] != '=')
+		i++;
+	return (i);
+}

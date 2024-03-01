@@ -32,9 +32,9 @@ char	*get_valid_path(char **command)
 
 void	ft_cd(char *command, t_data *data)
 {
-	(void)data;
 	char	*valid_path;
 
+	(void)data;
 	valid_path = command;
 	if (valid_path != NULL)
 	{
