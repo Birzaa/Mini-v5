@@ -39,12 +39,18 @@ char	*get_name_expansion(t_env *env, char *n)
 	int		len_value;
 	char	*name;
 
+	len_value = 0;
 	len_n = ft_strlen(n);
 	while (env)
 	{
-		if (!ft_strncmp(env->content, n, len_n) && env->content[len_n] == '=')
+		if (!ft_strncmp(env->content, n, len_n))
 		{
-			len_value = ft_strlen(env->content) - len_n;
+			if (!ft_at_least_charset(env->content, "="))
+			{
+				env->content = n;
+			}
+			if (env->content[len_n] == '=')
+				len_value = ft_strlen(env->content) - len_n;
 			name = ft_strdup_value_env(env->content, len_n + 1, len_value);
 			return (name);
 		}
