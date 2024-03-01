@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 22:11:24 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/01 17:20:17 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/01 18:18:45 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,9 @@ void	create_file_redi(char *command, size_t fileCount, t_cmd *shell,
 	{
 		if (command[redir.i] == '>')
 		{
-			output_file = ft_stuck(command, &redir, output_file);
+			if(d_redir)
+				redir.i++;
+			output_file = ft_stuck(command, &redir, output_file, d_redir);
 			file_name = malloc(redir.len + 1);
 			if (!file_name)
 				free_tab_size(file_names, fileCount);
@@ -92,7 +94,7 @@ void	create_file_redi(char *command, size_t fileCount, t_cmd *shell,
 		}
 		redir.i++;
 	}
-	create_all_file(file_names, fileCount, shell);
+	create_all_file(file_names, fileCount, shell, d_redir);
 }
 
 void	redirection_out(t_cmd *data)

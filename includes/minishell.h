@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/01 17:27:13 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/01 17:54:27 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,6 @@ typedef struct s_signal
 
 // ----------------------------------------------------> BUILTINS...
 
-//cd
-void	ft_cd(char **command);
-
 // builtins/exit
 void					ft_exit(t_data *data);
 
@@ -243,9 +240,9 @@ void					ft_cd(char *command, t_data *data);
 // ------------------------>TRAAAASH
 void					redirection_out(t_cmd *shell);
 void					create_all_file(char **fileNames, size_t fileCount,
-							t_cmd *shell);
+							t_cmd *shell, int d_redir);
 char					*ft_stuck(char *command, t_redir *redir,
-							char *output_file);
+							char *output_file, int d_redir);
 void					put_in_tab_filename(char **fileNames, t_redir *redir,
 							char *fileName);
 void					free_tab_size(char **tab, size_t size);
