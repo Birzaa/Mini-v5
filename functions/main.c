@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/01 18:02:09 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/01 18:19:20 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int ac, char **av, char **env)
 	t_data	data;
 	char	**test;
 
+	test = NULL;
 	exit = "exit";
 	input = NULL;
 	/* char	str[] = "BONJOUR=capart";
@@ -41,8 +42,6 @@ int	main(int ac, char **av, char **env)
 	/* 	else if (!*env)
 			data.env = create_env(); */
 	data.env = get_env(env);
-	test = get_tab_env(data.env);
-	print_tab(test);
 	while (1)
 	{
 		input = readline(ORANGE "\U0001F58A  ~>: " RESET);
@@ -63,8 +62,9 @@ int	main(int ac, char **av, char **env)
 		data.lex = lexer(input);
 		if (!error_cmd(data.lex))
 		{
+			test = get_tab_env(data.env);
 			data.cmd = parser(data.lex);
-			exec(data.cmd, env, &data);
+			exec(data.cmd, test, &data);
 			/* EXECUTION
 				WAIT
 				free lexer + parser
