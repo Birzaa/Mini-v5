@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 22:11:24 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/26 22:47:48 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/01 17:20:17 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,15 @@ char	**malloc_tab(char **file_names, size_t fileCount)
 	}
 	return (file_names);
 }
-void	create_file_redi(char *command, size_t fileCount, t_cmd *shell)
+void	create_file_redi(char *command, size_t fileCount, t_cmd *shell,
+		int d_redir)
 {
 	char	**file_names;
 	char	*file_name;
 	char	*output_file;
 	t_redir	redir;
 
+	(void)d_redir;
 	output_file = NULL;
 	file_names = NULL;
 	redir.i = 0;
@@ -99,14 +101,18 @@ void	redirection_out(t_cmd *data)
 	char		*cmd;
 	t_cmd		*current;
 	t_cmd_word	*word;
+	int			d_redir;
 
 	cmd = "";
+	d_redir = 0;
 	current = data;
 	if (current)
 	{
 		word = current->words;
 		while (word)
 		{
+			if (word->type == DREDIR_OUT)
+				d_redir = 1;
 			cmd = ft_strjoin(cmd, word->content);
 			word = word->next;
 		}
@@ -115,5 +121,5 @@ void	redirection_out(t_cmd *data)
 	data->saved_stdout = 0;
 	file_count = count_files(cmd);
 	if (file_count)
-		create_file_redi(cmd, file_count, data);
+		create_file_redi(cmd, file_count, data, d_redir);
 }

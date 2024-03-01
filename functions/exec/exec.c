@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:46 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/27 19:06:36 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/01 16:20:25 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	execute_builtin(t_cmd *cmd, char **command, t_data *data)
 	(void)data;
 	if (ft_strcmp(command[0], "pwd") == 0)
 		ft_pwd(cmd);
+	else if (ft_strcmp(command[0], "cd") == 0)
+		ft_cd(command);
 	else if (ft_strcmp(command[0], "export") == 0)
 	{
 		if (!command[1])
@@ -103,28 +105,26 @@ int	is_builtin(char *cmd)
 
 void	exec(t_cmd *cmd, char **env, t_data *data)
 {
+	char	**command;
 	pid_t	pid;
 	int		status;
-	char	**command;
 
-	pid = 0;
-	status = 0;
 	command = get_cmd(cmd);
-	pid = fork();
-	if (pid == -1)
-		printf("ERRRRRRRRREUER"); // modifier
-	else if (pid > 0)
-	{
-		waitpid(pid, &status, 0);
-		kill(pid, SIGTERM);
-	}
+	if (is_builtin(command[0]))
+		execute_builtin(cmd, command, data);
 	else
 	{
-		redirection_out(cmd);
-		if (is_builtin(command[0]))
-			execute_builtin(cmd, command, data);
-		else
+		pid = fork();
+		if (pid == -1)
+			fprintf(stderr, "Erreur lors de la création du processus fils.\n");
+				// MODIFIER ERREUR VALEUR RETOUR
+		else if (pid == 0)
+		{
+			redirection_out(cmd);
 			execute_cmd(env, command);
-		exit(EXIT_FAILURE);
+			exit(EXIT_SUCCESS);
+		}
+		else
+			waitpid(pid, &status, 0);
 	}
 }

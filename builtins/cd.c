@@ -28,22 +28,10 @@
 		valid_path[i - 1] = '\0';
 	}
 	return (valid_path);
-}
+} */
 
 void	ft_cd(char **command)
 {
-	char	*valid_path;
-
-	if (strcmp(command[0], "cd") == 0 || strcmp(command[0], "\"cd\"") == 0)
-	{
-		valid_path = get_valid_path(command);
-		if (valid_path != NULL)
-		{
-			if (chdir(valid_path) != 0)
-			{
-				printf("cd: %s: No such file or directory\n", valid_path);
-			}
-			free(valid_path);
-		}
-	}
-} */
+	if (chdir(command[1]) != 0)
+		printf("cd: %s: No such file or directory\n", command[1]);
+}

@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/27 18:42:18 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/01 15:29:18 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,9 @@ typedef struct s_signal
 }						t_signal;
 
 // ----------------------------------------------------> BUILTINS...
+
+//cd
+void	ft_cd(char **command);
 
 // builtins/exit
 void					ft_exit(t_data *data);

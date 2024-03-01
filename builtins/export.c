@@ -106,7 +106,7 @@ void	export(t_env **env, char *content)
 	// check if variable already exist if yes just return
 	if (!check_export_exist((*env), content))
 	{
-	
+		
 		tmp = ft_env_new(content);
 		if (!tmp)
 			return ;
