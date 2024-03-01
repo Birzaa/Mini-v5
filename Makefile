@@ -40,7 +40,6 @@ SRC = $(SRC_DIR)main.c \
 	$(SRC_DIR)tools/env/env_utils4.c \
 	$(SRC_DIR)tools/other/ft_at_least_equal.c\
 	$(BUILTINS_DIR)env.c \
-	$(BUILTINS_DIR)cd.c \
 	$(BUILTINS_DIR)pwd.c \
 	$(BUILTINS_DIR)exit.c \
 	$(BUILTINS_DIR)cd.c \
@@ -50,6 +49,7 @@ SRC = $(SRC_DIR)main.c \
 	$(TRASH_DIR)print_test.c \
 	$(REDIRECTION_DIR)redirection.c \
 	$(REDIRECTION_DIR)redirection_scnd.c \
+	$(EXECUTION_DIR)get_tab_env.c \
 	$(EXECUTION_DIR)exec.c \
 	$(EXECUTION_DIR)path.c \
 	$(TOOL_DIR)lst/free.c \

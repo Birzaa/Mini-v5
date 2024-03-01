@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/01 17:27:13 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/01 17:45:39 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,6 @@ typedef struct s_signal
 
 // ----------------------------------------------------> BUILTINS...
 
-//cd
-void	ft_cd(char **command);
-
 // builtins/exit
 void					ft_exit(t_data *data);
 
@@ -234,6 +231,8 @@ void					exec(t_cmd *cmd, char **env, t_data *data);
 char					**find_path(char **env);
 char					*valid_path(char **all_paths, char *cmd);
 void					ft_free_tab(char **tab);
+
+char					**get_tab_env(t_env *env);
 
 // ------------------------> Builtins
 void					ft_pwd(t_cmd *shell);

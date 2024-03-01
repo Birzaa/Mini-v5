@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:46 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/01 17:27:27 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/01 17:46:44 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	execute_builtin(t_cmd *cmd, char **command, t_data *data)
 	else if (ft_strcmp(command[0], "pwd") == 0)
 		ft_pwd(cmd);
 	else if (ft_strcmp(command[0], "cd") == 0)
-		ft_cd(command);
+		ft_cd(command[1], data);
 	else if (ft_strcmp(command[0], "export") == 0)
 	{
 		if (!command[1])

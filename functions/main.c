@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/01 09:02:05 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/01 18:02:09 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,22 @@
 
 t_signal	g_sig;
 
+void	print_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		printf("%s\n", tab[i++]);
+}
 int	main(int ac, char **av, char **env)
 {
 	char	*input;
-	char *exit;
-	exit = "exit";
+	char	*exit;
 	t_data	data;
+	char	**test;
 
+	exit = "exit";
 	input = NULL;
 	/* char	str[] = "BONJOUR=capart";
 	char	str1[] = "BONJOUR=hello"; */
@@ -32,6 +41,8 @@ int	main(int ac, char **av, char **env)
 	/* 	else if (!*env)
 			data.env = create_env(); */
 	data.env = get_env(env);
+	test = get_tab_env(data.env);
+	print_tab(test);
 	while (1)
 	{
 		input = readline(ORANGE "\U0001F58A  ~>: " RESET);

@@ -28,7 +28,7 @@ char	*get_valid_path(char **command)
 		valid_path[i - 1] = '\0';
 	}
 	return (valid_path);
-} */
+} 
 
 void	ft_cd(char *command, t_data *data)
 {
