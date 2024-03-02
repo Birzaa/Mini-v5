@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:46 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/01 22:54:58 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/02 13:21:32 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,10 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 	pid_t			pid;
 	int				status;
 	t_redir_list	*redir;
-	(void)redir;
+
 	command = get_cmd(cmd);
 	redir = parsing_redir(cmd);
+	redirection_out(cmd, redir);
 	if (is_builtin(command[0]))
 		execute_builtin(cmd, command, data);
 	else
@@ -130,11 +131,14 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 		// MODIFIER ERREUR VALEUR RETOUR
 		else if (pid == 0)
 		{
-			redirection_out(cmd, redir);
 			execute_cmd(env, command);
-			exit(EXIT_SUCCESS);
 		}
 		else
 			waitpid(pid, &status, 0);
+	}
+	if (cmd->fd)
+	{
+		close(cmd->fd);
+		dup2(cmd->saved_stdout, STDOUT_FILENO);
 	}
 }

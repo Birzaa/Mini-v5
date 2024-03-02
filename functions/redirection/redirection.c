@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 22:11:24 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/01 23:05:08 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/02 13:20:03 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	create_file_redi(char *command, int d_redir, t_cmd *shell,
 		redir.i++;
 	}
 	create_all_file(file_names, redir_two->size, shell, d_redir);
+	ft_free_tab(file_names);
 }
 
 void	redirection_out(t_cmd *data, t_redir_list *redir)
@@ -80,4 +81,5 @@ void	redirection_out(t_cmd *data, t_redir_list *redir)
 	data->saved_stdout = 0;
 	if (redir->size)
 		create_file_redi(cmd, d_redir, data, redir);
+	free(cmd);
 }

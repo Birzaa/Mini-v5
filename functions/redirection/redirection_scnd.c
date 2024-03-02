@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:47:35 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/01 23:19:58 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/02 13:19:27 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	create_all_file(char **fileNames, int fileCount, t_cmd *shell,
 
 	shell->saved_stdout = dup(STDOUT_FILENO);
 	j = 0;
-	while (j < fileCount - 1)
+	while (j < fileCount - 2)
 	{
 		file_descriptor = open(fileNames[j], O_WRONLY | O_CREAT | O_TRUNC,
 				0644);
@@ -47,5 +47,4 @@ void	create_all_file(char **fileNames, int fileCount, t_cmd *shell,
 	shell->fd = dup(STDOUT_FILENO);
 	if (dup2(last_file_descriptor, STDOUT_FILENO) == -1)
 		error_close_dup(last_file_descriptor, fileNames);
-	ft_free_tab(fileNames);
 }
