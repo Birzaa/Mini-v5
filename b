@@ -1,0 +1,13 @@
+a
+b
+builtins
+c
+functions
+includes
+libft
+Makefile
+minishell
+objects
+README.md
+supp.supp
+test
