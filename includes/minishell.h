@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/01 23:06:58 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/02 13:33:34 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,6 +275,7 @@ char					*ft_strncpy(char *dest, char *src, unsigned int n);
 
 // ------------------------>TRAAAASH
 void					print_list(t_stack *lst);
+void	ft_free_tab_size(char **tab, int size);
 
 // test
 t_cmd					*new_node_cmd(char *content);
