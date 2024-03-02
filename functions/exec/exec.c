@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:46 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/02 13:21:32 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/02 19:09:49 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	**get_cmd(t_cmd *head)
 		word = current->words;
 		while (word)
 		{
-			if (is_redir(word->type))
+			if (word->type == REDIR_OUT || word->type == DREDIR_OUT)
 				return (cmd);
 			if (word->type == WORD)
 			{
@@ -117,12 +117,19 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 	pid_t			pid;
 	int				status;
 	t_redir_list	*redir;
+	t_redir_in		r_in;
 
+	number_redir_in(cmd, &r_in);
 	command = get_cmd(cmd);
 	redir = parsing_redir(cmd);
 	redirection_out(cmd, redir);
+	(void)redir;
 	if (is_builtin(command[0]))
+	{
+		if (r_in.size)
+			open_redir_in(&r_in);
 		execute_builtin(cmd, command, data);
+	}
 	else
 	{
 		pid = fork();
@@ -131,6 +138,8 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 		// MODIFIER ERREUR VALEUR RETOUR
 		else if (pid == 0)
 		{
+			if (r_in.size)
+				open_redir_in(&r_in);
 			execute_cmd(env, command);
 		}
 		else

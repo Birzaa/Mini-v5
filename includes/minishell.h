@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/02 13:33:34 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/02 18:34:48 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,13 @@ typedef struct s_env
 }						t_env;
 
 // ------------------------> Redirection
+
+typedef struct s_redir_in
+{
+	char				**tab;
+	int					size;
+}						t_redir_in;
+
 typedef struct s_redir_elem
 {
 	char				*arg;
@@ -145,11 +152,18 @@ typedef struct s_signal
 
 //	Redirection out
 t_redir_list			*parsing_redir(t_cmd *data);
+
+//	Redirection in
+void					put_in_tab_file(t_redir_in *r_in, t_cmd *cmd);
+void					number_redir_in(t_cmd *cmd, t_redir_in *r_in);
+void					open_redir_in(t_redir_in *r_in);
+
 // Tools
 t_redir_list			*init_redir_list(t_redir_list *list);
 t_redir_elem			*new_redir_node(char *arg, enum e_token type, int len);
 void					add_redir_last(t_redir_list *list, t_redir_elem *new);
 void					print_redir_list(t_redir_list *redir);
+
 // ----------------------------------------------------> BUILTINS...
 
 // builtins/exit
@@ -275,7 +289,7 @@ char					*ft_strncpy(char *dest, char *src, unsigned int n);
 
 // ------------------------>TRAAAASH
 void					print_list(t_stack *lst);
-void	ft_free_tab_size(char **tab, int size);
+void					ft_free_tab_size(char **tab, int size);
 
 // test
 t_cmd					*new_node_cmd(char *content);
