@@ -6,56 +6,13 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 22:11:24 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/01 17:20:17 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/02 13:39:13 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_strncpy(char *dest, char *src, unsigned int n)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (src[i] != '\0' && i < n)
-	{
-		dest[i] = src[i];
-		++i;
-	}
-	while (i < n)
-	{
-		dest[i] = '\0';
-		i++;
-	}
-	return (dest);
-}
-
-size_t	count_files(char *command)
-{
-	int		i;
-	size_t	file_count;
-
-	i = 0;
-	file_count = 0;
-	while (command[i])
-	{
-		if (command[i] == '>')
-		{
-			while (command[i + 1] == ' ' || command[i + 1] == '\t')
-				i++;
-			while (command[i + 1] != ' ' && command[i + 1] != '\t' && command[i
-				+ 1] != '\0')
-			{
-				i++;
-			}
-			file_count++;
-		}
-		i++;
-	}
-	return (file_count);
-}
-
-char	**malloc_tab(char **file_names, size_t fileCount)
+char	**malloc_tab(char **file_names, int fileCount)
 {
 	file_names = malloc(fileCount * sizeof(char *));
 	if (!file_names)
@@ -65,46 +22,47 @@ char	**malloc_tab(char **file_names, size_t fileCount)
 	}
 	return (file_names);
 }
-void	create_file_redi(char *command, size_t fileCount, t_cmd *shell,
-		int d_redir)
+void	create_file_redi(char *command, int d_redir, t_cmd *shell,
+		t_redir_list *redir_two)
 {
 	char	**file_names;
 	char	*file_name;
-	char	*output_file;
 	t_redir	redir;
 
-	(void)d_redir;
-	output_file = NULL;
 	file_names = NULL;
 	redir.i = 0;
-	file_names = malloc_tab(file_names, fileCount);
+	file_names = malloc_tab(file_names, redir_two->size);
 	redir.current_file = 0;
 	while (command[redir.i])
 	{
 		if (command[redir.i] == '>')
 		{
-			output_file = ft_stuck(command, &redir, output_file);
-			file_name = malloc(redir.len + 1);
+			if (command[redir.i + 1] == '>')
+				redir.i++;
+			file_name = ft_strdup(redir_two->head->arg);
 			if (!file_name)
-				free_tab_size(file_names, fileCount);
-			ft_strncpy(file_name, output_file, redir.len);
-			put_in_tab_filename(file_names, &redir, file_name);
+				ft_free_tab(file_names);
+			file_names[redir.current_file] = file_name;
+			redir.current_file++;
+			redir_two->head = redir_two->head->next;
+			 if (!redir_two->head)
+                break;
 		}
 		redir.i++;
 	}
-	create_all_file(file_names, fileCount, shell);
+	create_all_file(file_names, redir_two->size, shell, d_redir);
+	ft_free_tab_size(file_names, redir_two->size);
 }
 
-void	redirection_out(t_cmd *data)
+void	redirection_out(t_cmd *data, t_redir_list *redir)
 {
-	size_t		file_count;
 	char		*cmd;
 	t_cmd		*current;
 	t_cmd_word	*word;
 	int			d_redir;
 
-	cmd = "";
 	d_redir = 0;
+	cmd = "";
 	current = data;
 	if (current)
 	{
@@ -113,13 +71,15 @@ void	redirection_out(t_cmd *data)
 		{
 			if (word->type == DREDIR_OUT)
 				d_redir = 1;
+			else if (word->type == REDIR_OUT)
+				d_redir = 0;
 			cmd = ft_strjoin(cmd, word->content);
 			word = word->next;
 		}
 	}
 	data->fd = 0;
 	data->saved_stdout = 0;
-	file_count = count_files(cmd);
-	if (file_count)
-		create_file_redi(cmd, file_count, data, d_redir);
+	if (redir->size)
+		create_file_redi(cmd, d_redir, data, redir);
+	free(cmd);
 }

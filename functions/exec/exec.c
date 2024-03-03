@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:46 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/03 10:32:57 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 12:56:53 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,14 @@ int	is_builtin(char *cmd)
 
 void	exec(t_cmd *cmd, char **env, t_data *data)
 {
-	char	**command;
-	pid_t	pid;
-	int		status;
+	char			**command;
+	pid_t			pid;
+	int				status;
+	t_redir_list	*redir;
 
 	command = get_cmd(cmd);
+	redir = parsing_redir(cmd);
+	redirection_out(cmd, redir);
 	if (is_builtin(command[0]))
 		execute_builtin(cmd, command, data);
 	else
@@ -129,11 +132,14 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 		// MODIFIER ERREUR VALEUR RETOUR
 		else if (pid == 0)
 		{
-			redirection_out(cmd);
 			execute_cmd(env, command);
-			exit(EXIT_SUCCESS);
 		}
 		else
 			waitpid(pid, &status, 0);
+	}
+	if (cmd->fd)
+	{
+		close(cmd->fd);
+		dup2(cmd->saved_stdout, STDOUT_FILENO);
 	}
 }
