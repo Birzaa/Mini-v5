@@ -1,23 +1,11 @@
 #include "minishell.h"
 
-void	replace_content_env(char *oldpwd, char *pwd)
-{
-	int	len_oldpwd;
-	int	len_pwd;
-
-	len_oldpwd = get_len_name(oldpwd);
-	len_pwd = get_len_name(pwd);
-	while (pwd[len_pwd])
-		oldpwd[len_oldpwd++] = pwd[len_pwd++];
-	oldpwd[len_oldpwd] = '\0';
-}
-
 char	*ft_strdup_value_env(char *value, int len_n, int len_value)
 {
 	char	*cpy;
 	int		i;
 
-	cpy = ft_calloc(sizeof(char), len_value);
+	cpy = malloc(sizeof(char) * len_value + 1);
 	if (!cpy)
 		return (NULL);
 	i = 0;
@@ -46,12 +34,7 @@ char	*get_name_expansion(t_env *env, char *n)
 		if (!ft_strncmp(env->content, n, len_n))
 		{
 			if (!ft_at_least_charset(env->content, "="))
-			{
-				env->content = ft_strdup(n);
-				if (env->content)
-					return (NULL);
-				return (env->content);
-			}
+				break ;
 			else if (env->content[len_n] == '=')
 				len_value = ft_strlen(env->content) - len_n;
 			name = ft_strdup_value_env(env->content, len_n + 1, len_value);
@@ -60,6 +43,8 @@ char	*get_name_expansion(t_env *env, char *n)
 		env = env->next;
 	}
 	name = ft_calloc(1, 1);
+	if (!name)
+		return (NULL);
 	return (name);
 }
 

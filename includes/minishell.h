@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/01 17:45:39 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 12:15:49 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ typedef struct s_signal
 	pid_t				pid;
 }						t_signal;
 
+
 // ----------------------------------------------------> BUILTINS...
 
 // builtins/exit
@@ -186,6 +187,10 @@ void					free_multiple_env(t_env *env1, t_env *env2);
 int						get_len_name(char *n);
 void					print_pwd_env(void);
 int						get_len_to_equal(char *content);
+
+// tools/env/env_utils5.c
+void	replace_content_env(char *oldpwd, char *pwd);
+
 
 // tools/str
 int						ft_strcmp(char *s1, char *s2);
@@ -252,6 +257,7 @@ char					*ft_strncpy(char *dest, char *src, unsigned int n);
 
 // ------------------------>TRAAAASH
 void					print_list(t_stack *lst);
+void					print_tab(char **tab);
 
 // test
 t_cmd					*new_node_cmd(char *content);

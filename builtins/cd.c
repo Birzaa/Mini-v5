@@ -1,46 +1,27 @@
 #include "minishell.h"
 
-/*
-	Permet d'obtenir le chemin, sans "".
-	ex => cd "functions" = cd functions
- */
-char	*get_valid_path(char **command)
+int	ft_is_home_set(t_env *env)
 {
-	char	*valid_path;
-	int		len;
-	int		i;
+	t_env	*tmp;
 
-	i = 1;
-	len = ft_strlen(command[1]);
-	valid_path = malloc(len);
-	if (valid_path == NULL)
+	tmp = env;
+	while (tmp)
 	{
-		perror("Malloc error");
-		return (NULL);
+		if (!ft_strncmp(tmp->content, "HOME", 4))
+			return (1);
+		tmp = tmp->next;
 	}
-	if (command[1][0] == '"' && command[1][len - 1] == '"')
-	{
-		while (i < len - 1)
-		{
-			valid_path[i - 1] = command[1][i];
-			i++;
-		}
-		valid_path[i - 1] = '\0';
-	}
-	return (valid_path);
-} 
+	return (0);
+}
 
 void	ft_cd(char *command, t_data *data)
 {
-	char	*valid_path;
+	int	home;
 
-	(void)data;
-	valid_path = command;
-	if (valid_path != NULL)
-	{
-		if (chdir(valid_path) != 0)
-			printf("cd: %s: No such file or directory\n", valid_path);
-		refresh_env(data->env, 1);
-		free(valid_path);
-	}
+	(void)home;
+	home = 0;
+	refresh_env(data->env, 1);
+	home = ft_is_home_set(data->env);
+	if (chdir(command) != 0)
+		printf("cd: %s: No such file or directory\n", command);
 }

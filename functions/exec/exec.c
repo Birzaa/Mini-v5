@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:46 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/01 17:46:44 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 10:32:57 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char	**get_cmd(t_cmd *head)
 			}
 			word = word->next;
 		}
+		cmd[i] = '\0';
 	}
 	return (cmd);
 }
@@ -125,7 +126,7 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 		pid = fork();
 		if (pid == -1)
 			fprintf(stderr, "Erreur lors de la création du processus fils.\n");
-				// MODIFIER ERREUR VALEUR RETOUR
+		// MODIFIER ERREUR VALEUR RETOUR
 		else if (pid == 0)
 		{
 			redirection_out(cmd);
