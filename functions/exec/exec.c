@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:46 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/02 19:09:49 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/03 15:04:35 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**get_cmd(t_cmd *head)
 
 	i = 0;
 	current = head;
-	cmd = malloc(sizeof(char *) * 2);
+	cmd = malloc(sizeof(char *) * 3);
 	if (!cmd)
 		return (NULL);
 	if (current)
@@ -30,7 +30,10 @@ char	**get_cmd(t_cmd *head)
 		while (word)
 		{
 			if (word->type == REDIR_OUT || word->type == DREDIR_OUT)
+			{
+				cmd[i++] = NULL;
 				return (cmd);
+			}
 			if (word->type == WORD)
 			{
 				cmd[i] = malloc(ft_strlen(word->content) + 1);
@@ -45,6 +48,7 @@ char	**get_cmd(t_cmd *head)
 			word = word->next;
 		}
 	}
+	cmd[i] = NULL;
 	return (cmd);
 }
 
