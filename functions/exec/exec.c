@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:46 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/03 12:56:53 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 17:48:20 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 	command = get_cmd(cmd);
 	redir = parsing_redir(cmd);
 	redirection_out(cmd, redir);
+	print_tab(command);
 	if (is_builtin(command[0]))
 		execute_builtin(cmd, command, data);
 	else

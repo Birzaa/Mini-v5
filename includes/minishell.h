@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/03 12:57:31 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 17:46:01 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,5 +289,6 @@ t_cmd					*new_node_cmd(char *content);
 t_cmd					*ft_cmd_last(t_cmd *cmd);
 void					add_back_cmd(t_cmd **cmd, t_cmd *new);
 void					print_node(t_node *node);
+void print_cmd_list(t_cmd *head);
 
 #endif
