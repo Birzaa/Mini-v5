@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:46 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/03 12:56:53 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/03 15:43:15 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**get_cmd(t_cmd *head)
 
 	i = 0;
 	current = head;
-	cmd = malloc(sizeof(char *) * 2);
+	cmd = malloc(sizeof(char *) * 3);
 	if (!cmd)
 		return (NULL);
 	if (current)
@@ -29,8 +29,11 @@ char	**get_cmd(t_cmd *head)
 		word = current->words;
 		while (word)
 		{
-			if (is_redir(word->type))
+			if (word->type == REDIR_OUT || word->type == DREDIR_OUT)
+			{
+				cmd[i++] = NULL;
 				return (cmd);
+			}
 			if (word->type == WORD)
 			{
 				cmd[i] = malloc(ft_strlen(word->content) + 1);
@@ -46,6 +49,7 @@ char	**get_cmd(t_cmd *head)
 		}
 		cmd[i] = '\0';
 	}
+	cmd[i] = NULL;
 	return (cmd);
 }
 
@@ -118,12 +122,19 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 	pid_t			pid;
 	int				status;
 	t_redir_list	*redir;
+	t_redir_in		r_in;
 
+	number_redir_in(cmd, &r_in);
 	command = get_cmd(cmd);
 	redir = parsing_redir(cmd);
 	redirection_out(cmd, redir);
+	(void)redir;
 	if (is_builtin(command[0]))
+	{
+		if (r_in.size)
+			open_redir_in(&r_in);
 		execute_builtin(cmd, command, data);
+	}
 	else
 	{
 		pid = fork();
@@ -132,6 +143,8 @@ void	exec(t_cmd *cmd, char **env, t_data *data)
 		// MODIFIER ERREUR VALEUR RETOUR
 		else if (pid == 0)
 		{
+			if (r_in.size)
+				open_redir_in(&r_in);
 			execute_cmd(env, command);
 		}
 		else
