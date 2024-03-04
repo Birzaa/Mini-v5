@@ -91,7 +91,7 @@ env : ${NAME}
 	@env -i ./${NAME}
 
 envv : ${NAME}
-	@env -i valgrind --leak-check=full --suppressions=supp.supp ./${NAME}
+	@env -i valgrind --leak-check=full --show-leak-kinds=all --suppressions=supp.supp ./${NAME}
 
 clean:
 	@rm -rf $(OBJ_DIR)

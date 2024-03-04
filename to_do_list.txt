@@ -1,0 +1,14 @@
+Fix env 
+
+-> empecher premier char != lettre || _
+error message = bash: export: `8dwdqw': not a valid identifier
+
+Fix cd
+
+-> verification du home 
+-> ajout du ~ qui est = a la var d'env HOME
+	exp : cd ~ 
+		(check env HOME=/home/usr/capart)
+	devient -> cd HOME=/home/usr/capart
+si HOME n'est pas set, i
+-> creation d'une ft_getenv  										OK

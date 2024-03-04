@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/04 10:33:23 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 11:59:56 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	main(int ac, char **av, char **env)
 			data.cmd = parser(data.lex);
 			print_cmd_list(data.cmd);
 			exec(data.cmd, envp, &data);
+			ft_free_tab(envp);
 			/* EXECUTION
 				WAIT
 				free lexer + parser

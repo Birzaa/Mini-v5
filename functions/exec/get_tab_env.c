@@ -11,7 +11,7 @@ char	**get_tab_env(t_env *env)
 	i = 0;
 	tmp = env;
 	tab_size = ft_envsize(env);
-	tab_env = malloc(tab_size * sizeof(char *) + 1);
+	tab_env = malloc((tab_size + 1) * sizeof(char *));
 	if (!tab_env)
 		return (NULL);
 	while (tmp)

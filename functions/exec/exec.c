@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:46 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/04 10:33:05 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/04 10:34:40 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	**get_cmd(t_cmd *head)
 			}
 			word = word->next;
 		}
-		cmd[i] = '\0';
+		cmd[i] = NULL;
 	}
 	cmd[i] = NULL;
 	return (cmd);
