@@ -54,6 +54,7 @@ SRC = $(SRC_DIR)main.c \
 	$(REDIRECTION_DIR)redirection_scnd.c \
 	$(EXECUTION_DIR)get_tab_env.c \
 	$(EXECUTION_DIR)exec.c \
+	$(EXECUTION_DIR)redir_in.c \
 	$(EXECUTION_DIR)path.c \
 	$(TOOL_DIR)lst/free.c \
 
