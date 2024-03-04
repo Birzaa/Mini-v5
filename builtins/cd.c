@@ -2,10 +2,8 @@
 
 void	ft_cd_tild(char *command, t_data *data)
 {
-	// get command
-	// join command + value home
-	// gerer erruur
 }
+
 void	ft_cd_home(t_data *data)
 {
 	char	*home;
