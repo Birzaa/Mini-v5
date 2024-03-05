@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/05 16:58:19 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/05 18:56:22 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,23 +308,20 @@ typedef struct s_redir_out
 {
 	char				*file;
 	int					append;
-	t_redir_out			*next;
+	struct t_redir_out	*next;
 }						t_redir_out;
-typedef struct s_redir_in
+typedef struct s_redir_in_2
 {
 	char				*file;
 	int					h_doc;
 	t_redir_in			*next;
-}						t_redir_in;
+}						t_redir_in_2;
 typedef struct s_parsed_cmd
 {
-	char				*cmd;
-	char				*flag;
 	char				**full_cmd;
 	char				*path;
 	t_redir_in			r_in;
 	t_redir_out			r_out;
-	char				*outfile;
 }						t_parsed_cmd;
 
 typedef struct s_command
@@ -334,6 +331,7 @@ typedef struct s_command
 	struct s_command	*next;
 }						t_command;
 
-void					parse(t_data *data);
+void					parse(t_cmd *cmd);
+void					parse_r_in(t_cmd_word *cmd);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/05 17:19:55 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/05 19:06:06 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,25 @@
 	5) Si on rencontre un | nvlle commande
  */
 
-void	parse(t_data *data)
+void	parse(t_cmd *cmd)
 {
 	t_command	*command;
-	t_stack		*cmd;
-	
-	cmd = data->lex->head;
-	while (cmd->head)
+	int			i;
+
+	i = 0;
+	while (cmd)
 	{
-		if (cmd->head->type == PIPE_LINE)
-			command = command->next;
-		while (cmd->head->type == WHITE_SPACE)
-			cmd->head = cmd->head->next;
-		if (cmd->head->type == REDIR_IN)
-			//PARSE REDIR in
-		else if (cmd->head->type == HERE_DOC)
-			//PARSE h_doc
-		else if (cmd->head->type == WORD)
-			// PARSE CMD
-		else if (cmd->head->type == REDIR_IN)
-			//PARSE R_out
-		else if (cmd->head->type == DREDIR_OUT)
-			//Parse D_r_out
-		cmd->head = cmd->head->next;
+		command = malloc(sizeof(t_command));
+		if (!command)
+			return ;
+		while (cmd->words)
+		{
+			if (cmd->words->type == REDIR_IN)
+				parse_r_in(cmd->words);
+			cmd->words = cmd->words->next;
+		}
+		command = command->next;
+		i++;
+		cmd = cmd->next;
 	}
 }
