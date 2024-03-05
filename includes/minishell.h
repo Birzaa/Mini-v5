@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/04 13:04:44 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/05 08:27:09 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ void					print_redir_list(t_redir_list *redir);
 
 
 // builtins/cd
-void	ft_cd_home(t_data *data);
+void	ft_cd_home(char *command, t_data *data);
 int	ft_is_home_set(t_env *env);
 char	*ft_getenv(t_env *env, char *n);
 void	ft_cd(char *command, t_data *data);
