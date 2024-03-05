@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/03 15:44:00 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/05 16:58:19 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,8 +227,7 @@ void					print_pwd_env(void);
 int						get_len_to_equal(char *content);
 
 // tools/env/env_utils5.c
-void	replace_content_env(char *oldpwd, char *pwd);
-
+void					replace_content_env(char *oldpwd, char *pwd);
 
 // tools/str
 int						ft_strcmp(char *s1, char *s2);
@@ -296,12 +295,45 @@ char					*ft_strncpy(char *dest, char *src, unsigned int n);
 // ------------------------>TRAAAASH
 void					print_list(t_stack *lst);
 void					print_tab(char **tab);
-void	ft_free_tab_size(char **tab, int size);
+void					ft_free_tab_size(char **tab, int size);
 
 // test
 t_cmd					*new_node_cmd(char *content);
 t_cmd					*ft_cmd_last(t_cmd *cmd);
 void					add_back_cmd(t_cmd **cmd, t_cmd *new);
 void					print_node(t_node *node);
+
+//********************************************************
+typedef struct s_redir_out
+{
+	char				*file;
+	int					append;
+	t_redir_out			*next;
+}						t_redir_out;
+typedef struct s_redir_in
+{
+	char				*file;
+	int					h_doc;
+	t_redir_in			*next;
+}						t_redir_in;
+typedef struct s_parsed_cmd
+{
+	char				*cmd;
+	char				*flag;
+	char				**full_cmd;
+	char				*path;
+	t_redir_in			r_in;
+	t_redir_out			r_out;
+	char				*outfile;
+}						t_parsed_cmd;
+
+typedef struct s_command
+{
+	t_parsed_cmd		*s_command;
+	int					nb_command;
+	struct s_command	*next;
+}						t_command;
+
+void					parse(t_data *data);
 
 #endif
