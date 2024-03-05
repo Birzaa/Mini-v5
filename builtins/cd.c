@@ -1,31 +1,51 @@
 #include "minishell.h"
 
+/* char *replace_tild_by_home_value(char *cmd, char *home)
+{
+	char *cpy =NULL;
+	int i = 0;
+	int check = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] == '~' && check == 1)
+			return (NULL);
+		if (cmd[i] == '~')
+		{
+			cpy = home;
+			check = 1;
+		}
+		i++;
+		
+	}
+	return (cmd[1])
+} */
+
 void	ft_cd_tild(char *command, t_data *data)
 {
+
 	char	*new_cmd;
 	char	*tmp;
 	char	*home;
-
+	home = NULL;
+	new_cmd = NULL;
 	(void)command;
 	(void)data;
 	(void)home;
 	(void)new_cmd;
 	(void)tmp;
-	home = NULL;
-	new_cmd = NULL;
 	if ((ft_is_home_set(data->env)))
 	{
 		home = ft_getenv(data->env, "HOME");
 		if (!home)
 			return ;
-		ft_strjoin;
-		else if (chdir(&new_cmd))
+		printf("path : %s\n",ft_strjoin(home, &command[1]));
+	/* 	else if (chdir(&new_cmd))
 		{
 			printf("cd: %s: No such file or directory\n", command);
 			// g_ret_value = 1;
 		}
 		free(new_cmd);
-		// g_ret_value = 0;
+		// g_ret_value = 0; */
 	}
 }
 
