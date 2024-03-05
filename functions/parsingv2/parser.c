@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/05 17:16:11 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/05 17:19:55 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ void	parse(t_data *data)
 			//PARSE R_out
 		else if (cmd->head->type == DREDIR_OUT)
 			//Parse D_r_out
+		cmd->head = cmd->head->next;
 	}
 }
