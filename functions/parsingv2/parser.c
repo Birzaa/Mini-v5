@@ -6,11 +6,21 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/05 19:06:06 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/05 22:06:17 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_command	*init_command(t_command *list)
+{
+	list = ft_calloc(sizeof(t_command), 1);
+	if (!list)
+		return (NULL);
+	list->nb_command = 0;
+	list->parsed_cmd = NULL;
+	return (list);
+}
 
 /*
 	ETAPES :
@@ -26,19 +36,23 @@ void	parse(t_cmd *cmd)
 	t_command	*command;
 	int			i;
 
+	command = NULL;
 	i = 0;
+	command = init_command(command);
 	while (cmd)
 	{
-		command = malloc(sizeof(t_command));
 		if (!command)
 			return ;
 		while (cmd->words)
 		{
 			if (cmd->words->type == REDIR_IN)
+			{
 				parse_r_in(cmd->words);
+				// printf("%s\n",command->parsed_cmd->r_in->file);
+			}
 			cmd->words = cmd->words->next;
 		}
-		command = command->next;
+		command->nb_command++;
 		i++;
 		cmd = cmd->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/05 18:56:22 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/05 22:00:41 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,25 +308,25 @@ typedef struct s_redir_out
 {
 	char				*file;
 	int					append;
-	struct t_redir_out	*next;
+	struct s_redir_out	*next;
 }						t_redir_out;
 typedef struct s_redir_in_2
 {
 	char				*file;
 	int					h_doc;
-	t_redir_in			*next;
+	struct s_redir_in_2	*next;
+	struct s_redir_in_2	*current;
 }						t_redir_in_2;
 typedef struct s_parsed_cmd
 {
 	char				**full_cmd;
-	char				*path;
-	t_redir_in			r_in;
-	t_redir_out			r_out;
+	t_redir_in_2		*r_in;
+	t_redir_out			*r_out;
 }						t_parsed_cmd;
 
 typedef struct s_command
 {
-	t_parsed_cmd		*s_command;
+	t_parsed_cmd		*parsed_cmd;
 	int					nb_command;
 	struct s_command	*next;
 }						t_command;
