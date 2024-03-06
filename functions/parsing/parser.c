@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:55:20 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/05 18:36:23 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/06 02:52:11 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ t_cmd *parser(t_stack *lst) {
     }
     /* print_cmd_list(cmd);
     redirection_out(cmd); */
-    parse(cmd);
+    /* parse(cmd); */
     return cmd;
 }
 
