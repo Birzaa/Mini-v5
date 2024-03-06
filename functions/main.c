@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/03 15:43:36 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/06 02:40:25 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@ int	main(int ac, char **av, char **env)
 	char	*input;
 	char	*exit;
 	t_data	data;
-	char	**test;
+	char	**envp;
 
+	envp = NULL;
+	char	**test;
+	(void)test;
 	test = NULL;
 	exit = "exit";
 	input = NULL;
@@ -37,6 +40,7 @@ int	main(int ac, char **av, char **env)
 	(void)data;
 	(void)av;
 	(void)env;
+	(void)envp;
 	if (ac != 1)
 		return (1);
 	/* 	else if (!*env)
@@ -62,13 +66,16 @@ int	main(int ac, char **av, char **env)
 		data.lex = lexer(input);
 		if (!error_cmd(data.lex))
 		{
-			test = get_tab_env(data.env);
+			envp = get_tab_env(data.env);
 			data.cmd = parser(data.lex);
-			exec(data.cmd, test, &data);
-			/* EXECUTION
+			/* print_cmd_list(data.cmd);
+			exec(data.cmd, envp, &data);
+			ft_free_tab(envp); */
+			/*
+				EXECUTION
 				WAIT
 				free lexer + parser
-			*/
+			 */
 		}
 		else
 		{

@@ -17,6 +17,7 @@ HEADER_DIR = ./includes/
 OBJ_DIR = objects/
 SRC_DIR = functions/
 PARSING_DIR = functions/parsing/
+PARSING_DIRV2 = functions/parsingv2/
 REDIRECTION_DIR = functions/redirection/
 EXECUTION_DIR = functions/exec/
 BUILTINS_DIR = builtins/
@@ -28,6 +29,10 @@ SRC = $(SRC_DIR)main.c \
 	$(PARSING_DIR)tools.c \
 	$(PARSING_DIR)lst_tools.c \
 	$(PARSING_DIR)parser.c \
+	$(PARSING_DIRV2)parser.c \
+	$(PARSING_DIRV2)redir_in.c \
+	$(PARSING_DIRV2)redir_out.c \
+	$(PARSING_DIRV2)cmd_next.c \
 	$(PARSING_DIR)error_syntax.c \
 	$(PARSING_DIR)syntax.c \
 	$(PARSING_DIR)redir.c \
@@ -91,7 +96,7 @@ env : ${NAME}
 	@env -i ./${NAME}
 
 envv : ${NAME}
-	@env -i valgrind --leak-check=full --suppressions=supp.supp ./${NAME}
+	@env -i valgrind --leak-check=full --show-leak-kinds=all --suppressions=supp.supp ./${NAME}
 
 clean:
 	@rm -rf $(OBJ_DIR)
