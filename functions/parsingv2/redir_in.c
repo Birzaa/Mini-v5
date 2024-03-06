@@ -62,7 +62,7 @@ void	parse_r_in(t_cmd_word *cmd, t_redir_in_2 **r_in, int h_doc)
 		if (!tmp)
 			return ;
 		add_back_redir(r_in, tmp);
-			cmd = cmd->next;
+		cmd = cmd->next;
 	}
 	return ;
 }

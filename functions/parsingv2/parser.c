@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/06 16:47:17 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/06 22:10:31 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,23 @@ void	skip_dr_out(t_cmd *cmd)
 		cmd->words = cmd->words->next;
 	if (cmd->words->type == WORD && cmd->words->next)
 		cmd->words = cmd->words->next;
-	// printf("content : %s\n", cmd->words->content);
-
 }
 
 void	skip_r_out(t_cmd *cmd)
 {
-	if (cmd->words->type == REDIR_OUT&& cmd->words->next)
+	if (cmd->words->type == REDIR_OUT)
 		cmd->words = cmd->words->next;
-	while (cmd->words->type == WHITE_SPACE&& cmd->words->next)
+	while (cmd->words->type == WHITE_SPACE)
 		cmd->words = cmd->words->next;
-	if (cmd->words->type == WORD && cmd->words->next)
+	if (cmd->words->type == WORD)
 		cmd->words = cmd->words->next;
-	// printf("content : %s\n", cmd->words->content);
-
 }
 
 void	skip_h_doc(t_cmd *cmd)
 {
-	if (cmd->words->type == HERE_DOC&& cmd->words->next)
+	if (cmd->words->type == HERE_DOC && cmd->words->next)
 		cmd->words = cmd->words->next;
-	while (cmd->words->type == WHITE_SPACE&& cmd->words->next)
+	while (cmd->words->type == WHITE_SPACE && cmd->words->next)
 		cmd->words = cmd->words->next;
 	if (cmd->words->type == WORD && cmd->words->next)
 		cmd->words = cmd->words->next;
@@ -72,13 +68,28 @@ void	skip_h_doc(t_cmd *cmd)
 
 void	skip_r_in(t_cmd *cmd)
 {
-	if (cmd->words->type == REDIR_IN&& cmd->words->next)
+	if (cmd->words->type == REDIR_IN && cmd->words->next)
 		cmd->words = cmd->words->next;
-	while (cmd->words->type == WHITE_SPACE&& cmd->words->next)
+	while (cmd->words->type == WHITE_SPACE && cmd->words->next)
 		cmd->words = cmd->words->next;
 	if (cmd->words->type == WORD && cmd->words->next)
 		cmd->words = cmd->words->next;
-	// printf("content : %s\n", cmd->words->content);
+
+}
+
+void	skip_word(t_cmd *cmd)
+{
+	while(cmd->words->next)
+	{
+		while(cmd->words->type == WHITE_SPACE && cmd->words->next)
+			cmd->words = cmd->words->next;
+		if (cmd->words->type != WORD)
+			break;
+		if(cmd->words->next)
+			cmd->words = cmd->words->next;
+		else
+			break;
+	}
 
 }
 
@@ -130,8 +141,9 @@ void	parse(t_cmd *cmd)
 			}
 			else if (cmd->words->type == WORD)
 			{
-				parse_word(cmd->words, command->parsed_cmd->full_cmd);
+				parse_word(cmd->words, command->parsed_cmd);
 			}
+			
 			cmd->words = cmd->words->next;
 		}
 		tmp = ft_command_new();
@@ -149,22 +161,25 @@ void	parse(t_cmd *cmd)
 	while (fdp < command->nb_command)
 	{
 		printf("----------------------------------\n");
-		printf("Commande [%d]:\n", fdp);
+		printf("Commande [%d]:\n\n", fdp);
 		while (head->parsed_cmd->r_in)
 		{
-			printf("Redir in[%d] : %s, is H_doc : %d\n", k++,
+			printf("Redir in[%d] : '%s', is H_doc : %d\n", k++,
 				head->parsed_cmd->r_in->file, head->parsed_cmd->r_in->h_doc);
 			head->parsed_cmd->r_in = head->parsed_cmd->r_in->next;
 		}
+		printf("\n");
 		while (head->parsed_cmd->r_out)
 		{
-			printf("Redir out[%d] : %s, is D_R : %d\n", j++, head->parsed_cmd->r_out->file, head->parsed_cmd->r_out->append);
+			printf("Redir out[%d] : '%s', is D_R : %d\n", j++, head->parsed_cmd->r_out->file, head->parsed_cmd->r_out->append);
 			head->parsed_cmd->r_out = head->parsed_cmd->r_out->next;
 		}
 		if(head->parsed_cmd->full_cmd)
 		{
-			printf("Full cmd :\n");
+			printf("\n");
+			printf("Full cmd : ");
 			print_tab(head->parsed_cmd->full_cmd);
+			printf("\n");
 		}
 		fdp++;
 		head = head->next;

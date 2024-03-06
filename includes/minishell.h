@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/06 16:46:03 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/06 22:09:18 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,6 +350,6 @@ void					parse_r_out(t_cmd_word *cmd, t_redir_out **r_out,
 t_command				*ft_command_last(t_command *cmd);
 t_command				*ft_command_new(void);
 void					add_back_cmd_out(t_command **cmd, t_command *new);
-void					parse_word(t_cmd_word *cmd, char **tab);
+void					parse_word(t_cmd *cmd, t_parsed_cmd *parsed_cmd);
 
 #endif

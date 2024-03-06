@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/06 15:10:49 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/06 19:18:32 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,12 @@ void	print_tab(char **tab)
 
 	i = 0;
 	while (tab[i])
-		{printf("tab[%d] : %s\n", i, tab[i]);
-		i++;}
+	{
+		printf("tab[%d] : %s", i, tab[i]);
+		if (tab[i+1])
+			printf("  |  ");
+		i++;
+	}
 }
 int	main(int ac, char **av, char **env)
 {
@@ -29,9 +33,9 @@ int	main(int ac, char **av, char **env)
 	char	*exit;
 	t_data	data;
 	char	**envp;
+	char	**test;
 
 	envp = NULL;
-	char	**test;
 	(void)test;
 	test = NULL;
 	exit = "exit";
@@ -76,7 +80,7 @@ int	main(int ac, char **av, char **env)
 				EXECUTION
 				WAIT
 				free lexer + parser
-			 */
+				*/
 		}
 		else
 		{
