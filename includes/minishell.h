@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/05 22:00:41 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/06 01:46:47 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,6 +309,7 @@ typedef struct s_redir_out
 	char				*file;
 	int					append;
 	struct s_redir_out	*next;
+	struct s_redir_out	*current;
 }						t_redir_out;
 typedef struct s_redir_in_2
 {
@@ -329,9 +330,19 @@ typedef struct s_command
 	t_parsed_cmd		*parsed_cmd;
 	int					nb_command;
 	struct s_command	*next;
+	struct s_command	*current;
 }						t_command;
 
 void					parse(t_cmd *cmd);
-void					parse_r_in(t_cmd_word *cmd);
+void					parse_r_in(t_cmd_word *cmd, t_redir_in_2 **r_in,
+							int h_doc);
+
+void					parse_r_out(t_cmd_word *cmd, t_redir_out **r_out,
+							int append);
+
+
+t_command	*ft_command_last(t_command *cmd);
+t_command	*ft_command_new(void);
+void	add_back_cmd_out(t_command **cmd, t_command *new);
 
 #endif

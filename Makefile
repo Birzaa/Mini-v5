@@ -31,6 +31,8 @@ SRC = $(SRC_DIR)main.c \
 	$(PARSING_DIR)parser.c \
 	$(PARSING_DIRV2)parser.c \
 	$(PARSING_DIRV2)redir_in.c \
+	$(PARSING_DIRV2)redir_out.c \
+	$(PARSING_DIRV2)cmd_next.c \
 	$(PARSING_DIR)error_syntax.c \
 	$(PARSING_DIR)syntax.c \
 	$(PARSING_DIR)redir.c \

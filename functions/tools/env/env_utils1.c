@@ -35,7 +35,7 @@ t_env	*ft_env_new(void *content)
 {
 	t_env	*elem;
 
-	elem = malloc(sizeof(*elem));
+	elem = malloc(sizeof(t_env));
 	if (!elem)
 		return (NULL);
 	elem->content = content;

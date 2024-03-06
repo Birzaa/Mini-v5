@@ -12,49 +12,56 @@
 
 #include "minishell.h"
 
-t_redir_in_2	*new_r_node(char *content, int h_doc)
+t_redir_in_2	*ft_redir_in_2_last(t_redir_in_2 *redir)
+{
+	while (redir)
+	{
+		if (!redir->next)
+			return (redir);
+		redir = redir->next;
+	}
+	return (redir);
+}
+
+t_redir_in_2	*ft_redir_in_2_new(char *content, int h_doc)
 {
 	t_redir_in_2	*elem;
 
-	elem = ft_calloc(sizeof(t_redir_in_2), 1);
+	elem = malloc(sizeof(t_redir_in_2));
 	if (!elem)
 		return (NULL);
 	elem->file = content;
+	// printf("%s\n",elem->file)
 	elem->h_doc = h_doc;
 	elem->next = NULL;
 	return (elem);
 }
-
-void add_r_last(t_redir_in_2 *list, t_redir_in_2 *new)
+void	add_back_redir(t_redir_in_2 **redir, t_redir_in_2 *new)
 {
-    if (!list->current)
-    {
-        list->next = new;
-        list->current = new;
-    }
-    else
-    {
-        list->current->next = new;
-        list->current = new;
-    }
+	t_redir_in_2	*last;
+
+	if (!*redir)
+		*redir = new;
+	else
+	{
+		last = ft_redir_in_2_last(*redir);
+		last->next = new;
+	}
 }
 
-
-
-
-void	parse_r_in(t_cmd_word *cmd)
+void	parse_r_in(t_cmd_word *cmd, t_redir_in_2 **r_in, int h_doc)
 {
-	t_redir_in_2	*r_in;
+	t_redir_in_2	*tmp;
 
-	r_in = ft_calloc(sizeof(t_redir_in_2), 1);
-	if (!r_in)
-		return ;
 	cmd = cmd->next;
 	while (cmd->type == WHITE_SPACE)
 		cmd = cmd->next;
 	if (cmd->type == WORD)
 	{
-		add_r_last(r_in, new_r_node(cmd->content, 0));
+		tmp = ft_redir_in_2_new(cmd->content, h_doc);
+		if (!tmp)
+			return ;
+		add_back_redir(r_in, tmp);
 	}
-	printf("%s\n",r_in->file);
+	return ;
 }
