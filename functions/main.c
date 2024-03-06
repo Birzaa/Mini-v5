@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/06 02:40:25 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:10:49 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	print_tab(char **tab)
 
 	i = 0;
 	while (tab[i])
-		printf("%s\n", tab[i++]);
+		{printf("tab[%d] : %s\n", i, tab[i]);
+		i++;}
 }
 int	main(int ac, char **av, char **env)
 {

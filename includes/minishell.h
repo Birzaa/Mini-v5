@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/06 02:36:01 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/06 16:46:03 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,13 +166,11 @@ void					print_redir_list(t_redir_list *redir);
 
 // ----------------------------------------------------> BUILTINS...
 
-
 // builtins/cd
-void	ft_cd_home(char *command, t_data *data);
-int	ft_is_home_set(t_env *env);
-char	*ft_getenv(t_env *env, char *n);
-void	ft_cd(char *command, t_data *data);
-
+void					ft_cd_home(char *command, t_data *data);
+int						ft_is_home_set(t_env *env);
+char					*ft_getenv(t_env *env, char *n);
+void					ft_cd(char *command, t_data *data);
 
 // builtins/exit
 void					ft_exit(t_data *data);
@@ -310,7 +308,7 @@ t_cmd					*new_node_cmd(char *content);
 t_cmd					*ft_cmd_last(t_cmd *cmd);
 void					add_back_cmd(t_cmd **cmd, t_cmd *new);
 void					print_node(t_node *node);
-void print_cmd_list(t_cmd *head);
+void					print_cmd_list(t_cmd *head);
 
 //********************************************************
 typedef struct s_redir_out
@@ -349,9 +347,9 @@ void					parse_r_in(t_cmd_word *cmd, t_redir_in_2 **r_in,
 void					parse_r_out(t_cmd_word *cmd, t_redir_out **r_out,
 							int append);
 
-
-t_command	*ft_command_last(t_command *cmd);
-t_command	*ft_command_new(void);
-void	add_back_cmd_out(t_command **cmd, t_command *new);
+t_command				*ft_command_last(t_command *cmd);
+t_command				*ft_command_new(void);
+void					add_back_cmd_out(t_command **cmd, t_command *new);
+void					parse_word(t_cmd_word *cmd, char **tab);
 
 #endif
