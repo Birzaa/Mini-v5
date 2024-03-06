@@ -1,0 +1,34 @@
+t_redir_in_2	*ft_redir_in_2_last(t_redir_in_2 *redir)
+{
+	while (redir->current)
+	{
+		if (!redir->next)
+			return (redir);
+		redir->current = redir->next;
+	}
+	return (redir);
+}
+
+t_redir_in_2	*ft_redir_in_2_new(void *content)
+{
+	t_redir_in_2	*elem;
+
+	elem = malloc(sizeof(*elem));
+	if (!elem)
+		return (NULL);
+	elem->file = content;
+	elem->next = NULL;
+	return (elem);
+}
+void	add_back_redir(t_redir_in_2 **redir, t_redir_in_2 *new)
+{
+	t_redir_in_2	*last;
+
+	if (!*redir)
+		*redir = new;
+	else
+	{
+		last = ft_redir_in_2_last(*redir);
+		last->next = new;
+	}
+}

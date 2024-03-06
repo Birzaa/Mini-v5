@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/05 08:27:09 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/06 02:36:01 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,8 +235,7 @@ void					print_pwd_env(void);
 int						get_len_to_equal(char *content);
 
 // tools/env/env_utils5.c
-void	replace_content_env(char *oldpwd, char *pwd);
-
+void					replace_content_env(char *oldpwd, char *pwd);
 
 // tools/str
 int						ft_strcmp(char *s1, char *s2);
@@ -304,7 +303,7 @@ char					*ft_strncpy(char *dest, char *src, unsigned int n);
 // ------------------------>TRAAAASH
 void					print_list(t_stack *lst);
 void					print_tab(char **tab);
-void	ft_free_tab_size(char **tab, int size);
+void					ft_free_tab_size(char **tab, int size);
 
 // test
 t_cmd					*new_node_cmd(char *content);
@@ -312,5 +311,47 @@ t_cmd					*ft_cmd_last(t_cmd *cmd);
 void					add_back_cmd(t_cmd **cmd, t_cmd *new);
 void					print_node(t_node *node);
 void print_cmd_list(t_cmd *head);
+
+//********************************************************
+typedef struct s_redir_out
+{
+	char				*file;
+	int					append;
+	struct s_redir_out	*next;
+	struct s_redir_out	*current;
+}						t_redir_out;
+typedef struct s_redir_in_2
+{
+	char				*file;
+	int					h_doc;
+	struct s_redir_in_2	*next;
+	struct s_redir_in_2	*current;
+}						t_redir_in_2;
+typedef struct s_parsed_cmd
+{
+	char				**full_cmd;
+	t_redir_in_2		*r_in;
+	t_redir_out			*r_out;
+}						t_parsed_cmd;
+
+typedef struct s_command
+{
+	t_parsed_cmd		*parsed_cmd;
+	int					nb_command;
+	struct s_command	*next;
+	struct s_command	*current;
+}						t_command;
+
+void					parse(t_cmd *cmd);
+void					parse_r_in(t_cmd_word *cmd, t_redir_in_2 **r_in,
+							int h_doc);
+
+void					parse_r_out(t_cmd_word *cmd, t_redir_out **r_out,
+							int append);
+
+
+t_command	*ft_command_last(t_command *cmd);
+t_command	*ft_command_new(void);
+void	add_back_cmd_out(t_command **cmd, t_command *new);
 
 #endif
