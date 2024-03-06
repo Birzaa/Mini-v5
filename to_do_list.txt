@@ -10,5 +10,5 @@ Fix cd
 	exp : cd ~ 
 		(check env HOME=/home/usr/capart)
 	devient -> cd HOME=/home/usr/capart
-si HOME n'est pas set, i
--> creation d'une ft_getenv  										OK
+si HOME n'est pas set, i							OK
+-> creation d'une ft_getenv  						OK
