@@ -19,10 +19,11 @@ void	ctrl_slash(int sig)
 	}
 	else
 	{
-		 if (rl_end == 0) {
-        rl_forced_update_display(); // Mise à jour de l'affichage readline
-        return;
-    }
+		if (rl_end == 0)
+		{
+			rl_forced_update_display(); // Mise à jour de l'affichage readline
+			return ;
+		}
 		return ;
 	}
 	ft_nothing();
