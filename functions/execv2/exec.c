@@ -6,13 +6,13 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/07 19:56:03 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/07 21:09:52 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execution(void)
+void	execution(char **env, t_data *data)
 {
 	
 }
