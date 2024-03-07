@@ -1,12 +1,12 @@
-/* ************t_redir_elem************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   redir_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/05 18:26:51 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/05 21:21:10 by thomas           ###   ########.fr       */
+/*   Created: 2024/03/07 19:17:01 by thenwood          #+#    #+#             */
+/*   Updated: 2024/03/07 19:17:26 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ t_redir_in_2	*ft_redir_in_2_new(char *content, int h_doc)
 	if (!elem)
 		return (NULL);
 	elem->file = content;
-	// printf("%s\n",elem->file)
 	elem->h_doc = h_doc;
 	elem->next = NULL;
 	return (elem);
 }
+
 void	add_back_redir(t_redir_in_2 **redir, t_redir_in_2 *new)
 {
 	t_redir_in_2	*last;
@@ -49,7 +49,8 @@ void	add_back_redir(t_redir_in_2 **redir, t_redir_in_2 *new)
 	}
 }
 
-void	parse_r_in(t_cmd_word *cmd, t_redir_in_2 **r_in, int h_doc)
+void	parse_r_in(t_cmd_word *cmd, t_redir_in_2 **r_in, int h_doc,
+		t_cmd *command)
 {
 	t_redir_in_2	*tmp;
 
@@ -64,5 +65,7 @@ void	parse_r_in(t_cmd_word *cmd, t_redir_in_2 **r_in, int h_doc)
 		add_back_redir(r_in, tmp);
 		cmd = cmd->next;
 	}
+	if (h_doc == 0)
+		skip_r_in(command);
 	return ;
 }

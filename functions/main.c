@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/06 19:18:32 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/07 19:44:51 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,6 @@
 
 t_signal	g_sig;
 
-void	print_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		printf("tab[%d] : %s", i, tab[i]);
-		if (tab[i+1])
-			printf("  |  ");
-		i++;
-	}
-}
 int	main(int ac, char **av, char **env)
 {
 	char	*input;
@@ -73,18 +60,17 @@ int	main(int ac, char **av, char **env)
 		{
 			envp = get_tab_env(data.env);
 			data.cmd = parser(data.lex);
+			data.parsed_cmd = parse(data.cmd);
+			print_parsed_cmd(data.parsed_cmd);
 			/* print_cmd_list(data.cmd);
 			exec(data.cmd, envp, &data);
 			ft_free_tab(envp); */
-			/*
-				EXECUTION
-				WAIT
-				free lexer + parser
-				*/
+			// free_parser(data.parsed_cmd);
+			// free_lexer(data.lex);
 		}
 		else
 		{
-			/* free le lexer */
+			// free_lexer(data.lex);
 		}
 	}
 }

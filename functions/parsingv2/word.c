@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 00:32:29 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/06 16:46:26 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/07 19:18:00 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	get_number_of_flags(t_cmd_word *cmd)
 {
-	int		count;
+	int			count;
 	t_cmd_word	*current;
 
 	count = 0;
@@ -37,36 +37,45 @@ int	get_number_of_flags(t_cmd_word *cmd)
 	return (count);
 }
 
-void	parse_word(t_cmd_word *cmd, char **tab)
+int	put_word_in_tab(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd, int i)
+{
+	if (cmd->type == WORD)
+	{
+		parsed_cmd->full_cmd[i] = malloc(strlen(cmd->content) + 1);
+		if (!parsed_cmd->full_cmd[i])
+		{
+			ft_free_tab(parsed_cmd->full_cmd);
+			return i;
+		}
+		strcpy(parsed_cmd->full_cmd[i], cmd->content);
+		i++;
+	}
+	return (i);
+}
+
+void	parse_word(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd)
 {
 	int	i;
 
 	i = 0;
-	tab = malloc(sizeof(char *) * (get_number_of_flags(cmd) + 1));
-	if (!tab)
+	parsed_cmd->full_cmd = malloc(sizeof(char *) * (get_number_of_flags(cmd)
+				+ 1));
+	if (!parsed_cmd->full_cmd)
 	{
-		free(tab);
+		free(parsed_cmd->full_cmd);
 		return ;
 	}
 	while (cmd)
 	{
-		if (cmd->type != WHITE_SPACE && cmd->type != WORD)
+		while (cmd->type == WHITE_SPACE && cmd->next)
+			cmd = cmd->next;
+		if (cmd->type != WORD)
 			break ;
-		if (cmd->type == WORD)
-		{
-			tab[i] = malloc(sizeof(ft_strlen(cmd->content)));
-			if (!tab[i])
-			{
-				ft_free_tab(tab);
-				return ;
-			}
-			tab[i] = cmd->content;
-			i++;
-		}
+		i = put_word_in_tab(cmd, parsed_cmd, i);
 		if (cmd->next)
 			cmd = cmd->next;
 		else
-			break;
+			break ;
 	}
-	tab[i] = NULL;
+	parsed_cmd->full_cmd[i] = NULL;
 }

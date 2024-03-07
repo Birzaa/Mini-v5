@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/06 22:10:31 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/07 19:12:53 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 t_command	*init_command(t_command *list)
 {
@@ -34,74 +34,40 @@ t_parsed_cmd	*init_redir(t_parsed_cmd *list)
 	return (list);
 }
 
-void	skip_dr_out(t_cmd *cmd)
+void	parse_cmd(t_cmd *cmd, t_command *command)
 {
-	if (cmd->words->type == DREDIR_OUT&& cmd->words->next)
-		cmd->words = cmd->words->next;
-	while (cmd->words->type == WHITE_SPACE&& cmd->words->next)
-		cmd->words = cmd->words->next;
-	if (cmd->words->type == WORD && cmd->words->next)
-		cmd->words = cmd->words->next;
-}
-
-void	skip_r_out(t_cmd *cmd)
-{
-	if (cmd->words->type == REDIR_OUT)
-		cmd->words = cmd->words->next;
-	while (cmd->words->type == WHITE_SPACE)
-		cmd->words = cmd->words->next;
-	if (cmd->words->type == WORD)
-		cmd->words = cmd->words->next;
-}
-
-void	skip_h_doc(t_cmd *cmd)
-{
-	if (cmd->words->type == HERE_DOC && cmd->words->next)
-		cmd->words = cmd->words->next;
-	while (cmd->words->type == WHITE_SPACE && cmd->words->next)
-		cmd->words = cmd->words->next;
-	if (cmd->words->type == WORD && cmd->words->next)
-		cmd->words = cmd->words->next;
-	// printf("content : %s\n", cmd->words->content);
-
-}
-
-void	skip_r_in(t_cmd *cmd)
-{
-	if (cmd->words->type == REDIR_IN && cmd->words->next)
-		cmd->words = cmd->words->next;
-	while (cmd->words->type == WHITE_SPACE && cmd->words->next)
-		cmd->words = cmd->words->next;
-	if (cmd->words->type == WORD && cmd->words->next)
-		cmd->words = cmd->words->next;
-
-}
-
-void	skip_word(t_cmd *cmd)
-{
-	while(cmd->words->next)
+	if (cmd->words->type == REDIR_IN)
+		parse_r_in(cmd->words, &command->parsed_cmd->r_in, 0, cmd);
+	else if (cmd->words->type == HERE_DOC)
 	{
-		while(cmd->words->type == WHITE_SPACE && cmd->words->next)
-			cmd->words = cmd->words->next;
-		if (cmd->words->type != WORD)
-			break;
-		if(cmd->words->next)
-			cmd->words = cmd->words->next;
-		else
-			break;
+		parse_r_in(cmd->words, &command->parsed_cmd->r_in, 1, cmd);
+		skip_h_doc(cmd);
 	}
-
+	else if (cmd->words->type == REDIR_OUT)
+	{
+		parse_r_out(cmd->words, &command->parsed_cmd->r_out, 0);
+		skip_r_out(cmd);
+	}
+	else if (cmd->words->type == DREDIR_OUT)
+	{
+		parse_r_out(cmd->words, &command->parsed_cmd->r_out, 1);
+		skip_dr_out(cmd);
+	}
+	else if (cmd->words->type == WORD)
+	{
+		parse_word(cmd->words, command->parsed_cmd);
+		skip_word(cmd);
+	}
+	if (!is_redir(cmd->words->type))
+		cmd->words = cmd->words->next;
 }
 
-void	parse(t_cmd *cmd)
+t_command	*parse(t_cmd *cmd)
 {
 	t_command	*command;
 	t_command	*head;
 	t_command	*tmp;
 	int			i;
-	int			k;
-	int			j;
-	int			fdp;
 
 	tmp = NULL;
 	command = NULL;
@@ -112,78 +78,15 @@ void	parse(t_cmd *cmd)
 	{
 		command->parsed_cmd = init_redir(command->parsed_cmd);
 		if (!command)
-			return ;
+			return (NULL);
 		while (cmd->words)
-		{
-			if (cmd->words->type == REDIR_IN)
-			{
-				parse_r_in(cmd->words, &command->parsed_cmd->r_in, 0);
-				skip_r_in(cmd);
-				// printf("content : %s\n", cmd->words->content);
-			}
-			else if (cmd->words->type == HERE_DOC)
-			{
-				parse_r_in(cmd->words, &command->parsed_cmd->r_in, 1);
-				skip_h_doc(cmd);
-				/* printf("content : %s\n",cmd->words->content); */
-			}
-			else if (cmd->words->type == REDIR_OUT)
-			{
-				parse_r_out(cmd->words, &command->parsed_cmd->r_out, 0);
-				skip_r_out(cmd);
-				/* printf("content : %s\n",cmd->words->content); */
-			}
-			else if (cmd->words->type == DREDIR_OUT)
-			{
-				parse_r_out(cmd->words, &command->parsed_cmd->r_out, 1);
-				skip_dr_out(cmd);
-				/* printf("content : %s\n",cmd->words->content); */
-			}
-			else if (cmd->words->type == WORD)
-			{
-				parse_word(cmd->words, command->parsed_cmd);
-			}
-			
-			cmd->words = cmd->words->next;
-		}
+			parse_cmd(cmd, command);
 		tmp = ft_command_new();
 		add_back_cmd_out(&command, tmp);
 		command = command->next;
-		command->nb_command++;
-		head->nb_command++;
 		i++;
 		cmd = cmd->next;
 	}
-	k = 0;
-	j = 0;
-	fdp = 0;
-	command->nb_command = i;
-	while (fdp < command->nb_command)
-	{
-		printf("----------------------------------\n");
-		printf("Commande [%d]:\n\n", fdp);
-		while (head->parsed_cmd->r_in)
-		{
-			printf("Redir in[%d] : '%s', is H_doc : %d\n", k++,
-				head->parsed_cmd->r_in->file, head->parsed_cmd->r_in->h_doc);
-			head->parsed_cmd->r_in = head->parsed_cmd->r_in->next;
-		}
-		printf("\n");
-		while (head->parsed_cmd->r_out)
-		{
-			printf("Redir out[%d] : '%s', is D_R : %d\n", j++, head->parsed_cmd->r_out->file, head->parsed_cmd->r_out->append);
-			head->parsed_cmd->r_out = head->parsed_cmd->r_out->next;
-		}
-		if(head->parsed_cmd->full_cmd)
-		{
-			printf("\n");
-			printf("Full cmd : ");
-			print_tab(head->parsed_cmd->full_cmd);
-			printf("\n");
-		}
-		fdp++;
-		head = head->next;
-	}
+	head->nb_command = i;
+	return (head);
 }
-
-//<infile <<eof wc -l > outfile | ls -llllll | ls -a -a -a | ls >>finalfile
