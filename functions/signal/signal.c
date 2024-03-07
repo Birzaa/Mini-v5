@@ -3,19 +3,29 @@
 void	ctrl_c(int sig)
 {
 	(void)sig;
-	printf("\n");
-	printf(ORANGE "\U0001F58A  ~>: " RESET);
+	ft_putstr_fd("\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
 void	ctrl_slash(int sig)
 {
 	(void)sig;
-	/* 	if (g_sig.pid != 0)
-		{
-			kill(g_sig.pid, SIGQUIT);
-		}
-		else */
-	printf(ORANGE "\U0001F58A  ~>: " RESET);
+	if (g_sig.pid != 0)
+	{
+		kill(g_sig.pid, SIGQUIT);
+		printf("Quit (core dumped)\n");
+	}
+	else
+	{
+		 if (rl_end == 0) {
+        rl_forced_update_display(); // Mise à jour de l'affichage readline
+        return;
+    }
+		return ;
+	}
+	ft_nothing();
 }
 
 void	ctrl_d(int sig, t_data *data)
