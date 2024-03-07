@@ -1,66 +1,35 @@
 #include "minishell.h"
 
-int	ft_more_than_one_char(char *str, char c)
-{
-	int	i;
-	int	more;
+// to do list
+// gerer too many args sur cd
+// gerer l'expand env $
 
-	i = 0;
-	more = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-			more++;
-		else if (more > 1)
-			return (1);
-		i++;
-	}
-	return (0);
-}
 void	ft_cd_tild(char *command, t_data *data)
 {
 	char	*new_cmd;
 	char	*tmp;
 	char	*home;
-	int		i;
 
 	home = NULL;
 	new_cmd = "";
-	if (ft_more_than_one_char(command, '~'))
-	{
-		printf("bash: cd: %s: No such file or directory\n", command);
-		return ;
-		// g_ret_value = 1;
-	}
 	if ((ft_is_home_set(data->env)))
 	{
 		home = ft_getenv(data->env, "HOME");
 		if (!home)
 			return ;
-		i = 0;
-		while (command[i])
+		tmp = ft_strjoin(&home[5], command);
+		if (!tmp)
+			return (free(home));
+		new_cmd = ft_strjoin(new_cmd, tmp);
+		if (!new_cmd)
+			return (free(home), free(tmp));
+		else if (chdir(new_cmd))
 		{
-			if (command[i] == '~')
-			{
-				while (command[i] == '~')
-				{
-					i++;
-					tmp = ft_strjoin(&home[5], &command[i]);
-					new_cmd = ft_strjoin(new_cmd, tmp);
-				}
-			}
-			else
-				i++;
-		}
-		printf("end join path : %s\n", new_cmd);
-		if (chdir(new_cmd))
-		{
-			printf("cd: %s: No such file or directory\n", command);
-			free(new_cmd);
-			return ;
+			printf("bash: cd: %s: No such file or directory\n", new_cmd);
+			return (free(new_cmd), free(home), free(tmp));
 			// g_ret_value = 1;
 		}
-		free(new_cmd);
+		return (free(new_cmd), free(home), free(tmp));
 		// g_ret_value = 0; */
 	}
 }
@@ -68,6 +37,7 @@ void	ft_cd_tild(char *command, t_data *data)
 void	ft_cd_home(char *command, t_data *data)
 {
 	char	*home;
+	char	*tmp;
 
 	home = NULL;
 	if ((ft_is_home_set(data->env)))
@@ -75,72 +45,43 @@ void	ft_cd_home(char *command, t_data *data)
 		home = ft_getenv(data->env, "HOME");
 		if (!home)
 			return ;
+		if (!check_value_env(home))
+			return (free(home));
 		else if (chdir(&home[5]))
 		{
-			printf("cd: %s: No such file or directory\n", ft_strjoin(&home[5], command));
+			tmp = ft_strjoin(&home[5], command);
+			if (!tmp)
+				return (free(home));
+			printf("bash: cd: %s: No such file or directory\n", tmp);
 			// g_ret_value = 1;
+			return (free(tmp), free(home));
 		}
 		free(home);
 		// g_ret_value = 0;
 	}
 	else
-		printf("bash: home is not set\n");
+		printf("bash: cd: HOME not set\n");
 	// g_ret_value = 1;
-}
-
-int	ft_is_home_set(t_env *env)
-{
-	t_env	*tmp;
-
-	tmp = env;
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->content, "HOME", 4))
-			return (1);
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
-char	*ft_getenv(t_env *env, char *n)
-{
-	t_env	*tmp;
-	char	*content;
-	int		len_n;
-
-	content = NULL;
-	tmp = env;
-	len_n = ft_strlen(n);
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->content, n, len_n))
-		{
-			content = ft_strdup(tmp->content);
-			if (!content)
-				return (NULL);
-			return (content);
-		}
-		tmp = tmp->next;
-	}
-	return (NULL);
 }
 
 void	ft_cd(char *command, t_data *data)
 {
 	refresh_env(data->env, 1);
+	if (!command)
+		return ;
 	if (!ft_strncmp(command, "~", 2))
 	{
 		ft_cd_home(command, data);
 		return ;
 	}
-	else if (ft_at_least_charset(command, "~"))
+	else if (!ft_strncmp(command, "~/", 2))
 	{
-		ft_cd_tild(command, data);
+		ft_cd_tild(&command[1], data);
 		return ;
 	}
 	if (chdir(command) != 0)
 	{
-		printf("cd: %s: No such file or directory\n", command);
+		printf("bash: cd: %s: No such file or directory\n", command);
 		// g_ret_value = 1;
 	}
 }

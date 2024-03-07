@@ -19,18 +19,13 @@ void	replace_export(t_env **env, char *content)
 	while (tmp)
 	{
 		if (!ft_strncmp(tmp->content, content, len_n))
-		{
-			tmp->content = content;
 			break ;
-		}
 		else if (!ft_strncmp(tmp->content, content, len_c))
-		{
-			tmp->content = content;
 			break ;
-		}
 		tmp = tmp->next;
 	}
-	tmp->content = content;
+	if (ft_at_least_charset(content, "="))
+		tmp->content = content;
 }
 
 int	check_export_exist(t_env *env, char *content)
@@ -113,6 +108,12 @@ void	export(t_env **env, char *content)
 {
 	t_env	*tmp;
 
+// if premiere lettre de content (parse) n'est ni une lettre, ni un underscore
+//	{
+//		printf(bash: export: `%s': not a valid identifier, content(parse));
+// 		g_ret_value = 1;
+//		return ;
+//	}
 	if (!check_export_exist((*env), content))
 	{
 		tmp = ft_env_new(content);

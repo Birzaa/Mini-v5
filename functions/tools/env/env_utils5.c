@@ -11,3 +11,22 @@ void	replace_content_env(char *oldpwd, char *pwd)
 		oldpwd[len_oldpwd++] = pwd[len_pwd++];
 	oldpwd[len_oldpwd] = '\0';
 }
+
+int	check_value_env(char *var)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_at_least_charset(var, "="))
+		return (0);
+	else if (ft_at_least_charset(var, "="))
+	{
+		while (var[i])
+		{
+			if (var[i] == '=' && var[i + 1] != '\0')
+				return (1);
+			i++;
+		}
+	}
+	return (0);
+}

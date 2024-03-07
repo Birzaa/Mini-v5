@@ -1,0 +1,40 @@
+if Z doesnt exist
+command				note	code d'erreur	message error	present		affiche		in env		in export	
+export				?
+export Z			OKL		0								both 		export 					Z	
+export Z=			OKL		0								both		both		Z=			Z=""
+export Z=""			OKL		0								both		both		Z= 		 	Z="" 	
+export Z="capart"	KO		0								both		both		Z=capart 	Z="capart"
+export Z=capart		OKL		0								both		both		Z=capart 	Z="capart" 
+export 9
+export 9=pour
+export _Z=
+
+if Z=
+export Z			OK		0								both		both		Z= 			Z="" 												 								
+export Z=			OKL		0								both		both		Z=  		Z="" 															
+export Z=""			OKL		0								both		both		Z=capart 	Z="" 											
+export Z="capart"	KO		0								both		both		Z=capart 	Z="capart" 					
+export Z=capart		OKL		0								both		both		Z=capart 	Z="capart"															
+
+if Z=value
+export Z			OK		0								both		both		Z=value		Z="value"											 		 						
+export Z=			OKL		0								both		both		Z=			Z=""													
+export Z=""			OKL		0								both		both		Z=			Z=""														
+export Z="capart"	KO		0								both		both		Z=capart	Z="capart"										
+export Z=""capart""	KO		0								both		both		Z=capart	Z="capart"										
+export Z=capart		OKL		0								both		both		Z=capart	Z="capart"														
+
+if Z
+export Z			OKL		0								both		export					Z							 		 						
+export Z=			OKL		0								both		both		Z=			Z=""													
+export Z=""			OKL		0								both		both		Z=			Z=""													
+export Z=""""		OKL		0								both		both		Z=			Z=""													
+export Z="capart"	KO		0								both		both		Z=capart	Z="capart"														
+export Z=capart		OKL		0								both		both		Z=capart	Z=""
+
+other
+export $d	print l'export no arg
+export Z="ca""part"	KO		0								both		both		Z=capart	Z="capart" 	est possible d'avoir ca en argument ? si bon parsing non
+export Z===			OKL		0								both		both		Z===		Z="===" 	
+

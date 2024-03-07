@@ -1,14 +1,60 @@
-Fix env 
+ca c'est surement un dodge
+{
+	"~" tout seul verifie si le HOME exist et s'il est possible d'aller dedans
 
--> empecher premier char != lettre || _
-error message = bash: export: `8dwdqw': not a valid identifier
+	bash: /home/abougrai/file1: Permission denied   	si export HOME=/home/abougrai/file1
+	bash: /home/abougrai: Is a directory				si export HOME=/home/abougrai/
+	bash: : command not found							si export HOME=
 
-Fix cd
+	si on unset le HOME, le bash arrive quand meme a trouve le HOME
+	bash: /home/abougrai: Is a directory				si unset  HOME
+}
 
--> verification du home 
--> ajout du ~ qui est = a la var d'env HOME
-	exp : cd ~ 
-		(check env HOME=/home/usr/capart)
-	devient -> cd HOME=/home/usr/capart
-si HOME n'est pas set, i							OK
--> creation d'une ft_getenv  						OK
+<in progress>
+
+-------->--------> EXPORT
+Fix export:
+
+si Z= exist
+export Z ne fait rien
+si Z=""capart""
+Z=capart
+si Z="ca""part"
+Z=capart
+
+-------->--------> ENV
+Fix env:
+
+-> empecher premier char != lettre ou _ et d'autre truc mais je ne sais pas lesquels
+"error message = bash: export: `8dwdqw': not a valid identifier"
+
+-------->--------> CD
+Fix cd;
+
+gerer too many arg
+gerer l'expand env $ 
+
+-------->--------> EXPANSION ?
+Fix expansion:
+
+faut vraiment mettre les expansion $ dans le parsing je pense
+sinon c'est vraiment trop galere a gerer
+
+-------->--------> SIGNAL
+Fix signal
+
+big fix
+eviter les seg fault quand on envoit un signal dans l'exec
+faire en sorte que les signaux marchent dans les childs et le main
+voir ce qu'il se passe dans un here doc
+mieux comprendre cette merde
+ou liberer un grand G
+
+-------->--------> ECHO
+Start le echo
+
+need parsing
+ca serait bien d'avoir un bon echo et devoir echo les expensions
+
+
+

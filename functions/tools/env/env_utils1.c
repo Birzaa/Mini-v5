@@ -10,7 +10,7 @@ void	print_env(t_env *env)
 		if (!ft_strncmp(env->content, "PWD", 3))
 			print_pwd_env();
 		else if (!ft_at_least_charset(env->content, "="))
-			print_test();
+			ft_nothing();
 		else
 		{
 			ft_putstr_fd(env->content, 1);
