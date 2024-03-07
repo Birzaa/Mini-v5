@@ -22,11 +22,11 @@ Z=capart
 si Z="ca""part"
 Z=capart
 
--------->--------> ENV
-Fix env:
-
--> empecher premier char != lettre ou _ et d'autre truc mais je ne sais pas lesquels
+empecher premier char != lettre ou _ et d'autre truc mais je ne sais pas lesquels
 "error message = bash: export: `8dwdqw': not a valid identifier"
+
+
+fix refresh env je pense quand il y a plus var _= dans l'env (flemme de fou)
 
 -------->--------> CD
 Fix cd;

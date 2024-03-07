@@ -18,10 +18,7 @@ char	**get_tab_env(t_env *env)
 	{
 		temp = ft_strdup(tmp->content);
 		if (!temp)
-		{
-			ft_free_tab(tab_env);
-			return (NULL);
-		}
+			return (ft_free_tab(tab_env), NULL);
 		tab_env[i++] = temp;
 		tmp = tmp->next;
 	}

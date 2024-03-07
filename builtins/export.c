@@ -7,74 +7,6 @@ export avec	arg = add the var in env variables , check les cas d'erreur*/
 // export prend &data->env et capart=bonjour
 // export a fix, no arg, faut mettre les values entre ""
 
-void	replace_export(t_env **env, char *content)
-{
-	t_env	*tmp;
-	int		len_n;
-	int		len_c;
-
-	len_c = ft_strlen(content);
-	len_n = get_len_to_equal(content);
-	tmp = (*env);
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->content, content, len_n))
-			break ;
-		else if (!ft_strncmp(tmp->content, content, len_c))
-			break ;
-		tmp = tmp->next;
-	}
-	if (ft_at_least_charset(content, "="))
-		tmp->content = content;
-}
-
-int	check_export_exist(t_env *env, char *content)
-{
-	t_env	*tmp;
-	int		len_c;
-
-	if (!content)
-		return (1);
-	len_c = get_len_to_equal(content);
-	tmp = env;
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->content, content, len_c))
-		{
-			if (ft_strncmp(tmp->content, content, ft_strlen(content)))
-			{
-				tmp->content = content;
-				return (1);
-			}
-			return (1);
-		}
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
-void	print_export(char *content)
-{
-	int	i;
-
-	i = 0;
-	if (!ft_at_least_charset(content, "="))
-	{
-		ft_putstr_fd("export ", 1);
-		ft_putstr_fd(content, 1);
-		ft_putchar_fd('\n', 1);
-		return ;
-	}
-	ft_putstr_fd("export ", 1);
-	while (content[i] != '=')
-		write(1, &content[i++], 1);
-	write(1, &content[i++], 1);
-	write(1, "\"", 1);
-	while (content[i])
-		write(1, &content[i++], 1);
-	write(1, "\"\n", 2);
-}
-
 void	export_no_arg(t_env *env)
 {
 	t_env	*env_cpy;
@@ -87,10 +19,7 @@ void	export_no_arg(t_env *env)
 	{
 		tmp = ft_env_new(env->content);
 		if (!tmp)
-		{
-			free_multiple_env(env, env_cpy);
-			return ;
-		}
+			return (free_multiple_env(env, env_cpy)) ;
 		add_back_env(&env_cpy, tmp);
 		env = env->next;
 	}
@@ -108,12 +37,18 @@ void	export(t_env **env, char *content)
 {
 	t_env	*tmp;
 
-// if premiere lettre de content (parse) n'est ni une lettre, ni un underscore
-//	{
-//		printf(bash: export: `%s': not a valid identifier, content(parse));
-// 		g_ret_value = 1;
-//		return ;
-//	}
+	/* 	if content est ne chaine de char vide
+		{
+			ft_putstr_fd("bash: export: `': not a valid identifier", 1);
+			//g_ret_value = 1;
+			return ;
+		} */
+	if (ft_export_checking(content))
+	{
+		printf("bash: export: `%s': not a valid identifier\n", content);
+		// 		g_ret_value = 1;
+		return ;
+	}
 	if (!check_export_exist((*env), content))
 	{
 		tmp = ft_env_new(content);

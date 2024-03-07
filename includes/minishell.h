@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/07 04:49:11 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/07 06:02:03 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,11 +184,9 @@ void					ft_cd(char *command, t_data *data);
 void					ft_exit(t_data *data);
 
 // builtins/export
-int						check_export_exit(t_env *env, char *content);
-void					print_export(char *content);
+
 void					export_no_arg(t_env *env);
 void					export(t_env **env, char *content);
-void					replace_export(t_env **env, char *content);
 
 // builtins/unset
 void					del_node_env(t_env *target, t_env *previous);
@@ -248,6 +246,12 @@ int						get_len_to_equal(char *content);
 void					replace_content_env(char *oldpwd, char *pwd);
 int						check_value_env(char *var);
 
+// tools/export/export_utils1.c
+void					replace_export(t_env **env, char *content);
+int						check_export_exist(t_env *env, char *content);
+void					print_export(char *content);
+int						ft_export_checking(char *content);
+
 // tools/str
 int						ft_strcmp(char *s1, char *s2);
 char					*ft_strcpy(char *s1, char *s2);
@@ -255,6 +259,7 @@ char					*ft_strcpy(char *s1, char *s2);
 // tools/other
 int						ft_at_least_charset(char *str, char *charset);
 void					ft_nothing(void);
+int						ft_charcmp(int c, int d);
 
 // ------------------------> Parsing
 t_stack					*lexer(char *input);
