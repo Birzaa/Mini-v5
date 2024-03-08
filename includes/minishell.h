@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/08 13:20:11 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/08 18:56:36 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,7 +363,7 @@ void					print_cmd_list(t_cmd *head);
 
 //********************************************************
 
-t_command				*parse(t_cmd *cmd);
+t_command				*parse(t_cmd *cmd, t_data *data);
 void					parse_r_in(t_cmd_word *cmd, t_redir_in_2 **r_in,
 							int h_doc, t_cmd *command);
 
@@ -381,5 +381,12 @@ void					skip_r_in(t_cmd *cmd);
 void					skip_word(t_cmd *cmd);
 void					free_parser(t_command *head);
 void					free_lexer(t_stack *stack);
+int						redir_expand(enum e_state *state, char *input,
+							t_stack *lst, int i);
+void					parse_env(t_cmd_word *cmd, t_data *data);
+void					skip_env(t_cmd *cmd);
+
+//****************************************************************
+void					test_exp(t_cmd *cmd, t_data *data);
 
 #endif

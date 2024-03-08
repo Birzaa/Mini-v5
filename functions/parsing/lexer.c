@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:35:11 by thenwood          #+#    #+#             */
-/*   Updated: 2024/02/26 18:24:13 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/08 13:43:54 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	get_token(char *input, int i, enum e_state *state, t_stack *lst)
 		i += redir_token(state, input, lst, i);
 	else if (input[i] == '|')
 		lst_add_back(lst, new_node(input + (i++), 1, PIPE_LINE, *state));
+	else if (input[i] == '$')
+		lst_add_back(lst, new_node(input + (i++), 1, ENV, *state));
 	return (i);
 }
 

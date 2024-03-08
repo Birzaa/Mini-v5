@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 00:32:29 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/07 19:18:00 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:37:38 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	put_word_in_tab(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd, int i)
 		if (!parsed_cmd->full_cmd[i])
 		{
 			ft_free_tab(parsed_cmd->full_cmd);
-			return i;
+			return (i);
 		}
 		strcpy(parsed_cmd->full_cmd[i], cmd->content);
 		i++;
