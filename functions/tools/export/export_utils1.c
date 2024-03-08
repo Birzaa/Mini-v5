@@ -67,6 +67,7 @@ void	print_export(char *content)
 		write(1, &content[i++], 1);
 	write(1, "\"\n", 2);
 }
+
 int	ft_export_checking(char *content)
 {
 	int	i;
