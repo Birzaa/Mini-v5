@@ -34,7 +34,8 @@ export Z="capart"	KO		0								both		both		Z=capart	Z="capart"
 export Z=capart		OKL		0								both		both		Z=capart	Z=""
 
 other
-export $d	print l'export no arg
+export $d 			KO																					----> essaye d'export la var																		
 export Z="ca""part"	KO		0								both		both		Z=capart	Z="capart" 	est possible d'avoir ca en argument ? si bon parsing non
 export Z===			OKL		0								both		both		Z===		Z="===" 	
-
+export Ztest"cap"	KO		0								both		export					Ztestcap	tous les " ont l'air d'etre ignored
+						
