@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/10 17:12:18 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/10 18:00:49 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,5 @@ void	init_parse(t_data *data)
 	parsing_quote(data->cmd);
 	data->parsed_cmd = parse(data->cmd);
 	// print_cmd_list(data->cmd);
-	// print_parsed_cmd(data->parsed_cmd);
+	print_parsed_cmd(data->parsed_cmd);
 }

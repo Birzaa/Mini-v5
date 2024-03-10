@@ -20,6 +20,7 @@ PARSING_DIR = functions/parsing/
 PARSING_DIRV2 = functions/parsingv2/
 REDIRECTION_DIR = functions/redirection/
 EXECUTION_DIR = functions/exec/
+EXECUTION_DIRV2 = functions/execv2/
 BUILTINS_DIR = builtins/
 TRASH_DIR = functions/TRAAASH/
 TOOL_DIR = functions/tools/
@@ -71,7 +72,10 @@ SRC = $(SRC_DIR)main.c \
 	$(EXECUTION_DIR)get_tab_env.c \
 	$(EXECUTION_DIR)exec.c \
 	$(EXECUTION_DIR)redir_in.c \
-	$(EXECUTION_DIR)path.c \
+	$(EXECUTION_DIRV2)path.c \
+	$(EXECUTION_DIRV2)exec.c \
+	$(EXECUTION_DIRV2)bin.c \
+	$(EXECUTION_DIRV2)builtin.c \
 	$(TOOL_DIR)lst/free.c \
 	$(TOOL_DIR)free/free_parser.c \
 	$(TOOL_DIR)free/free_lexer.c \
