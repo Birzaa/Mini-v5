@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/08 18:48:39 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/09 20:40:57 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ int	ft_check_env_exist_test(char *content, t_env *env)
 {
 	t_env	*tmp;
 	int		len_c;
-	char	*temp;
 	char	*name_env;
 
-	temp = NULL;
 	if (!content)
 		return (0);
 	len_c = ft_strlen(content);
@@ -38,10 +36,8 @@ char	*ft_get_expand_test(char *content, t_env *env)
 {
 	t_env	*tmp;
 	int		len_c;
-	char	*temp;
 	char	*name_env;
 
-	temp = NULL;
 	if (!content)
 		return (0);
 	len_c = ft_strlen(content);

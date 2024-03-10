@@ -36,7 +36,7 @@ void	ctrl_d(int sig, t_data *data)
 	ft_exit(data);
 }
 
-void	init_signals(void)
+/* void	init_signals(void)
 {
 	struct sigaction	sa;
 
@@ -59,4 +59,4 @@ void	init_signals(void)
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sigaction(SIGTERM, &sa, NULL);
-}
+} */

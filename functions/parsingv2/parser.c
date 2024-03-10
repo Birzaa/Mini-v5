@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/08 19:02:28 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/09 23:56:39 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,8 @@ void	parse_cmd(t_cmd *cmd, t_command *command, t_data *data)
 	}
 	else if (cmd->words->type == ENV)
 	{
-		// change content $ = $ content
-		// del
-		//
+		if (cmd->words->state == IN_QUOTE && cmd->words->next && cmd->words->next->state == 1)
+			handle_no_expand(cmd->words, cmd->words->next);
 		skip_env(cmd);
 	}
 	if (!is_redir(cmd->words->type))
