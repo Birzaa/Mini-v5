@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redir_out.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/07 19:13:29 by thenwood          #+#    #+#             */
+/*   Updated: 2024/03/07 19:13:56 by thenwood         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 t_redir_out	*ft_redir_out_last(t_redir_out *redir)
@@ -23,6 +35,7 @@ t_redir_out	*ft_redir_out_new(char *content, int append)
 	elem->next = NULL;
 	return (elem);
 }
+
 void	add_back_redir_out(t_redir_out **redir, t_redir_out *new)
 {
 	t_redir_out	*last;

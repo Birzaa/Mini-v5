@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/07 06:02:03 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 17:12:09 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,37 @@ typedef struct s_cmd
 	int					saved_stdout;
 	t_redir_list		*redir;
 }						t_cmd;
+// *******************PARSING V2
+
+typedef struct s_redir_out
+{
+	char				*file;
+	int					append;
+	struct s_redir_out	*next;
+	struct s_redir_out	*current;
+}						t_redir_out;
+typedef struct s_redir_in_2
+{
+	char				*file;
+	int					h_doc;
+	struct s_redir_in_2	*next;
+	struct s_redir_in_2	*current;
+}						t_redir_in_2;
+typedef struct s_parsed_cmd
+{
+	char				**full_cmd;
+	t_redir_in_2		*r_in;
+	t_redir_out			*r_out;
+}						t_parsed_cmd;
+
+typedef struct s_command
+{
+	t_parsed_cmd		*parsed_cmd;
+	struct s_command	*head;
+	int					nb_command;
+	struct s_command	*next;
+	struct s_command	*current;
+}						t_command;
 
 // ------------------------> Data
 
@@ -138,6 +169,7 @@ typedef struct s_data
 {
 	t_stack				*lex;
 	t_cmd				*cmd;
+	t_command			*parsed_cmd;
 	t_env				*env;
 }						t_data;
 
@@ -320,6 +352,7 @@ char					*ft_strncpy(char *dest, char *src, unsigned int n);
 void					print_list(t_stack *lst);
 void					print_tab(char **tab);
 void					ft_free_tab_size(char **tab, int size);
+void					print_parsed_cmd(t_command *command);
 
 // test
 t_cmd					*new_node_cmd(char *content);
@@ -329,38 +362,10 @@ void					print_node(t_node *node);
 void					print_cmd_list(t_cmd *head);
 
 //********************************************************
-typedef struct s_redir_out
-{
-	char				*file;
-	int					append;
-	struct s_redir_out	*next;
-	struct s_redir_out	*current;
-}						t_redir_out;
-typedef struct s_redir_in_2
-{
-	char				*file;
-	int					h_doc;
-	struct s_redir_in_2	*next;
-	struct s_redir_in_2	*current;
-}						t_redir_in_2;
-typedef struct s_parsed_cmd
-{
-	char				**full_cmd;
-	t_redir_in_2		*r_in;
-	t_redir_out			*r_out;
-}						t_parsed_cmd;
 
-typedef struct s_command
-{
-	t_parsed_cmd		*parsed_cmd;
-	int					nb_command;
-	struct s_command	*next;
-	struct s_command	*current;
-}						t_command;
-
-void					parse(t_cmd *cmd);
+t_command				*parse(t_cmd *cmd);
 void					parse_r_in(t_cmd_word *cmd, t_redir_in_2 **r_in,
-							int h_doc);
+							int h_doc, t_cmd *command);
 
 void					parse_r_out(t_cmd_word *cmd, t_redir_out **r_out,
 							int append);
@@ -368,5 +373,25 @@ void					parse_r_out(t_cmd_word *cmd, t_redir_out **r_out,
 t_command				*ft_command_last(t_command *cmd);
 t_command				*ft_command_new(void);
 void					add_back_cmd_out(t_command **cmd, t_command *new);
+void					parse_word(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd);
+void					skip_dr_out(t_cmd *cmd);
+void					skip_r_out(t_cmd *cmd);
+void					skip_h_doc(t_cmd *cmd);
+void					skip_r_in(t_cmd *cmd);
+void					skip_word(t_cmd *cmd);
+void					free_parser(t_command *head);
+void					free_lexer(t_stack *stack);
+int						redir_expand(enum e_state *state, char *input,
+							t_stack *lst, int i);
+void					parse_env(t_cmd_word *cmd, t_data *data);
+void					skip_env(t_cmd *cmd);
+void					parsing_quote(t_cmd *cmd);
+void					init_parse(t_data *data);
+t_command				*init_command(t_command *list);
+t_parsed_cmd			*init_redir(t_parsed_cmd *list);
+
+//****************************************************************
+void					test_exp(t_cmd *cmd, t_data *data);
+void					handle_no_expand(t_cmd_word *actual, t_cmd_word *next);
 
 #endif

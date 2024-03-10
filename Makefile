@@ -31,8 +31,14 @@ SRC = $(SRC_DIR)main.c \
 	$(PARSING_DIR)parser.c \
 	$(PARSING_DIRV2)parser.c \
 	$(PARSING_DIRV2)redir_in.c \
+	$(PARSING_DIRV2)quote.c \
 	$(PARSING_DIRV2)redir_out.c \
+	$(PARSING_DIRV2)test_env.c \
+	$(PARSING_DIRV2)skip.c \
 	$(PARSING_DIRV2)cmd_next.c \
+	$(PARSING_DIRV2)word.c \
+	$(PARSING_DIRV2)env.c \
+	$(PARSING_DIRV2)handle_no_expand.c \
 	$(PARSING_DIR)error_syntax.c \
 	$(PARSING_DIR)syntax.c \
 	$(PARSING_DIR)redir.c \
@@ -67,6 +73,8 @@ SRC = $(SRC_DIR)main.c \
 	$(EXECUTION_DIR)redir_in.c \
 	$(EXECUTION_DIR)path.c \
 	$(TOOL_DIR)lst/free.c \
+	$(TOOL_DIR)free/free_parser.c \
+	$(TOOL_DIR)free/free_lexer.c \
 
 OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
 
