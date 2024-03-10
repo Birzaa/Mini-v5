@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/10 17:04:36 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/10 17:12:09 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,7 +363,7 @@ void					print_cmd_list(t_cmd *head);
 
 //********************************************************
 
-t_command				*parse(t_cmd *cmd, t_data *data);
+t_command				*parse(t_cmd *cmd);
 void					parse_r_in(t_cmd_word *cmd, t_redir_in_2 **r_in,
 							int h_doc, t_cmd *command);
 
