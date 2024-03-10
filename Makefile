@@ -31,6 +31,7 @@ SRC = $(SRC_DIR)main.c \
 	$(PARSING_DIR)parser.c \
 	$(PARSING_DIRV2)parser.c \
 	$(PARSING_DIRV2)redir_in.c \
+	$(PARSING_DIRV2)quote.c \
 	$(PARSING_DIRV2)redir_out.c \
 	$(PARSING_DIRV2)test_env.c \
 	$(PARSING_DIRV2)skip.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/09 23:56:01 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 17:04:36 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -385,9 +385,13 @@ int						redir_expand(enum e_state *state, char *input,
 							t_stack *lst, int i);
 void					parse_env(t_cmd_word *cmd, t_data *data);
 void					skip_env(t_cmd *cmd);
+void					parsing_quote(t_cmd *cmd);
+void					init_parse(t_data *data);
+t_command				*init_command(t_command *list);
+t_parsed_cmd			*init_redir(t_parsed_cmd *list);
 
 //****************************************************************
 void					test_exp(t_cmd *cmd, t_data *data);
-void	handle_no_expand(t_cmd_word *actual, t_cmd_word *next);
+void					handle_no_expand(t_cmd_word *actual, t_cmd_word *next);
 
 #endif

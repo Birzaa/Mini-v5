@@ -3,40 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/09 23:56:39 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 17:06:56 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-t_command	*init_command(t_command *list)
+void	parse_cmd_scnd(t_cmd *cmd, t_command *command)
 {
-	list = ft_calloc(sizeof(t_command), 1);
-	if (!list)
-		return (NULL);
-	list->nb_command = 0;
-	list->parsed_cmd = NULL;
-	list->next = NULL;
-	return (list);
-}
-
-t_parsed_cmd	*init_redir(t_parsed_cmd *list)
-{
-	list = ft_calloc(sizeof(t_parsed_cmd), 1);
-	if (!list)
-		return (NULL);
-	list->r_in = NULL;
-	list->r_out = NULL;
-	list->full_cmd = NULL;
-	return (list);
-}
-
-void	parse_cmd(t_cmd *cmd, t_command *command, t_data *data)
-{
-	(void)data;
 	if (cmd->words->type == REDIR_IN)
 		parse_r_in(cmd->words, &command->parsed_cmd->r_in, 0, cmd);
 	else if (cmd->words->type == HERE_DOC)
@@ -54,14 +31,20 @@ void	parse_cmd(t_cmd *cmd, t_command *command, t_data *data)
 		parse_r_out(cmd->words, &command->parsed_cmd->r_out, 1);
 		skip_dr_out(cmd);
 	}
-	else if (cmd->words->type == WORD)
+}
+
+void	parse_cmd(t_cmd *cmd, t_command *command)
+{
+	parse_cmd_scnd(cmd, command);
+	if (cmd->words->type == WORD)
 	{
 		parse_word(cmd->words, command->parsed_cmd);
 		skip_word(cmd);
 	}
 	else if (cmd->words->type == ENV)
 	{
-		if (cmd->words->state == IN_QUOTE && cmd->words->next && cmd->words->next->state == 1)
+		if (cmd->words->state == IN_QUOTE && cmd->words->next
+			&& cmd->words->next->state == 1)
 			handle_no_expand(cmd->words, cmd->words->next);
 		skip_env(cmd);
 	}
@@ -87,7 +70,7 @@ t_command	*parse(t_cmd *cmd, t_data *data)
 		if (!command)
 			return (NULL);
 		while (cmd->words)
-			parse_cmd(cmd, command, data);
+			parse_cmd(cmd, command);
 		tmp = ft_command_new();
 		add_back_cmd_out(&command, tmp);
 		command = command->next;
@@ -98,3 +81,12 @@ t_command	*parse(t_cmd *cmd, t_data *data)
 	return (head);
 }
 
+void	init_parse(t_data *data)
+{
+	data->cmd = parser(data->lex);
+	test_exp(data->cmd, data);
+	parsing_quote(data->cmd);
+	data->parsed_cmd = parse(data->cmd, data);
+	// print_cmd_list(data->cmd);
+	// print_parsed_cmd(data->parsed_cmd);
+}

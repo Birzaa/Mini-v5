@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:00:41 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/08 18:24:21 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/10 16:28:00 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,4 @@ void	print_parsed_cmd(t_command *head)
 	}
 }
 
-//<infile <<eof wc -l > outfile | ls -llllll | ls -a -a -a | ls $HOME > fichier | ls >>finalfile
+//<infile <<eof wc -l > outfile | ls -llllll | ls -a -a -a |echo "''Bonjour' 'tocard''" |ls $HOME > fichier | ls >>finalfile

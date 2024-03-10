@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/08 18:44:11 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/10 17:01:02 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,33 +31,27 @@ int	main(int ac, char **av, char **env)
 	/* 	else if (!*env)
 			data.env = create_env(); */
 	data.env = get_env(env);
-/* 	init_signals(); */
+	/* 	init_signals(); */
 	while (1)
 	{
 		// printf("%d\n", g_sig.pid);
 		input = readline(ORANGE "\U0001F58A  ~>: " RESET);
 		if (!*input)
 			ft_nothing();
-		else 
+		else
 		{
 			add_history(input);
 			if (!ft_strcmp(input, "exit"))
 				ft_exit(&data);
 			data.lex = lexer(input);
-			print_list(data.lex);
+			// print_list(data.lex);
 			if (!error_cmd(data.lex))
 			{
 				envp = get_tab_env(data.env);
-				data.cmd = parser(data.lex);
-				test_exp(data.cmd,&data);
-				// print_cmd_list(data.cmd);
-				data.parsed_cmd = parse(data.cmd, &data);
-				print_parsed_cmd(data.parsed_cmd);
+				init_parse(&data);
 				// exec(data.cmd, envp, &data);
 				ft_free_tab(envp);
-					
 			}
-			
 		}
 	}
 }
