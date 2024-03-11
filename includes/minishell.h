@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/10 17:12:09 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/10 18:40:49 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,9 @@ void					ft_cd_home(char *command, t_data *data);
 int						ft_is_home_set(t_env *env);
 char					*ft_getenv(t_env *env, char *n);
 void					ft_cd(char *command, t_data *data);
+
+// builtins/echo
+void					ft_echo(char **content);
 
 // builtins/exit
 void					ft_exit(t_data *data);

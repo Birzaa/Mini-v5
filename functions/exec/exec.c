@@ -6,10 +6,9 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:46 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/06 12:57:21 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/10 17:46:27 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -82,10 +81,7 @@ void	execute_builtin(t_cmd *cmd, char **command, t_data *data)
 	else if (ft_strcmp(command[0], "export") == 0)
 	{
 		if (!command[1])
-		{
-			export_no_arg(data->env);
-			return ;
-		}
+			return (export_no_arg(data->env));
 		export(&data->env, command[1]);
 	}
 	else if (ft_strcmp(command[0], "env") == 0)
