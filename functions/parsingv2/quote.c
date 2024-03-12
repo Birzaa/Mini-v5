@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/12 17:37:55 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:39:11 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	split_into_single_word(t_cmd_word **cmd, enum e_token token)
 		if (cmd2->state != 2 || cmd2->type == WORD)
 		{
 			tmp = ft_strjoin(tmp, cmd2->content);
-			cmd2->content = " ";
+			cmd2->content = "";
 			cmd2->type = WHITE_SPACE;
 		}
 		if (cmd2->state == 0 && cmd2->next->type == DOUBLE_QUOTE)
@@ -37,9 +37,34 @@ void	split_into_single_word(t_cmd_word **cmd, enum e_token token)
 			if (cmd2->next->type == DOUBLE_QUOTE
 				&& cmd2->next->next->type == DOUBLE_QUOTE)
 			{
-				cmd2 = cmd2->next;
-				while (cmd2->type == DOUBLE_QUOTE)
+				if (cmd2->next)
 					cmd2 = cmd2->next;
+				while (cmd2->type == DOUBLE_QUOTE && cmd2)
+				{
+					if (cmd2->next)
+					{
+						cmd2 = cmd2->next;
+					}
+					else
+						break ;
+				}
+			}
+		}
+		if (cmd2->state == 1 && cmd2->next->type == QOUTE)
+		{
+			if (cmd2->next->type == QOUTE && cmd2->next->next->type == QOUTE)
+			{
+				if (cmd2->next)
+					cmd2 = cmd2->next;
+				while (cmd2->type == QOUTE && cmd2)
+				{
+					if (cmd2->next)
+					{
+						cmd2 = cmd2->next;
+					}
+					else
+						break ;
+				}
 			}
 		}
 		if (cmd2->state == GENERAL && cmd2->type == WHITE_SPACE)
