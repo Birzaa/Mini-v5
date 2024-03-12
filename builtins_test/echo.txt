@@ -1,0 +1,56 @@
+// echo | cat -e
+// echo il etait une fois | cat -e
+// echo "il etait une fois " | cat -e
+// echo 'il etait une fois ' | cat -e
+
+// echo " " | cat -e			KO
+// echo "" | cat -e				OK
+// echo ' ' | cat -e			KO
+// echo '' | cat -e				OK
+
+// echo -n | cat -e									OK
+// echo -n -n -n -n -n -n | cat -e					OK
+// echo -n -n -n -n-n-n | cat -e					OK
+// echo -n-n-n -n -n -n | cat -e					OK
+// echo -n-n | cat -e								OK
+// echo -n -n | cat -e								OK
+
+// echo "-n" | cat -e								KO
+// echo "-n"capart | cat -e							OK
+// echo "-n" capart | cat -e						KO
+// echo '-n' | cat -e								KO
+// echo '-n'capart | cat -e							OK		
+// echo '-n' capart | cat -e						KO
+
+// echo "-n " | cat -e								OK
+// echo "-n "capart | cat -e						OK
+// echo "-n " capart | cat -e						OK
+// echo '-n ' | cat -e								OK
+// echo '-n 'capart | cat -e						OK
+// echo '-n ' capart | cat -e						OK
+
+// echo " -n " | cat -e								OK
+// echo " -n "capart | cat -e						OK
+// echo " -n " capart | cat -e						OK
+// echo ' -n ' | cat -e								OK
+// echo ' -n 'capart | cat -e						OK
+// echo ' -n ' capart | cat -e						OK
+
+// echo " -n" | cat -e								OK
+// echo " -n"capart | cat -e						OK
+// echo " -n" capart | cat -e						OK
+// echo ' -n' | cat -e								OK
+// echo ' -n'capart | cat -e						OK
+// echo ' -n' capart | cat -e						OK
+
+// echo -n-n-n-n-n-n | cat -e						OK
+// echo "-n-n-n-n-n-n" | cat -e						OK
+// echo '-n-n-n-n-n-n' | cat -e						OK
+
+
+echo "capart "" " il etait une fois "" test1 '' 'test2' "'capart   '  " bonjour
+echo -n "capart "" " il etait une fois "" test1 '' 'test2' "'capart   '" bonjour
+echo -n "capart "" " il etait une fois "" test1 '' 'test2' "'capart'" bonjour
+echo -n "capart "" " il etait une fois "" test1 '' 'test2' '"capart   "' bonjour
+echo -n "capart "" " il etait une fois "" test1 '' 'test2' '"capart   "' bonjour
+echo -n "capart "" " il etait une fois "" test1 '' 'test2' '"capart"' bonjour

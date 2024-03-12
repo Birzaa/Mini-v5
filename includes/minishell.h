@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/10 18:40:49 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/12 10:56:29 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -392,6 +392,12 @@ void					parsing_quote(t_cmd *cmd);
 void					init_parse(t_data *data);
 t_command				*init_command(t_command *list);
 t_parsed_cmd			*init_redir(t_parsed_cmd *list);
+
+//***********************EXECUTION*********************************
+void					execution(t_command *head, char **env);
+int						open_redir_in2(t_command *head);
+int						open_redir_out(t_command *head);
+void					execute_cmd(char **env, char **valid_cmd);
 
 //****************************************************************
 void					test_exp(t_cmd *cmd, t_data *data);
