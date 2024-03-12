@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/10 21:26:08 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/11 10:57:46 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	split_into_single_word(t_cmd_word **cmd)
 	tmp = "";
 	while ((*cmd))
 	{
-		if ((*cmd)->state != state)
+		if ((*cmd)->state != state && (*cmd)->type == WHITE_SPACE)
 			break ;
 		tmp = ft_strjoin(tmp, (*cmd)->content);
 		(*cmd)->content = " ";

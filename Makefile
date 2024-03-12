@@ -74,6 +74,7 @@ SRC = $(SRC_DIR)main.c \
 	$(EXECUTION_DIR)redir_in.c \
 	$(EXECUTION_DIRV2)path.c \
 	$(EXECUTION_DIRV2)exec.c \
+	$(EXECUTION_DIRV2)redir.c \
 	$(EXECUTION_DIRV2)bin.c \
 	$(EXECUTION_DIRV2)builtin.c \
 	$(TOOL_DIR)lst/free.c \

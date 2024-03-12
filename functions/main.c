@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/10 17:01:02 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/11 12:25:54 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	main(int ac, char **av, char **env)
 			{
 				envp = get_tab_env(data.env);
 				init_parse(&data);
+				execution(data.parsed_cmd, env);
 				// exec(data.cmd, envp, &data);
 				ft_free_tab(envp);
 			}
