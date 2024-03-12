@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/12 14:01:06 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/12 15:23:34 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	main(int ac, char **av, char **env)
 			if (!ft_strcmp(input, "exit"))
 				ft_exit(&data);
 			data.lex = lexer(input);
-			// print_list(data.lex);
 			if (!error_cmd(data.lex))
 			{
 				envp = get_tab_env(data.env);

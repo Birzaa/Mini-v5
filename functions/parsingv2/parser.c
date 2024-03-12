@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/12 14:00:12 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/12 15:44:08 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	init_parse(t_data *data)
 	test_exp(data->cmd, data);
 	parsing_quote(data->cmd);
 	data->parsed_cmd = parse(data->cmd);
+	print_list(data->lex);
 	// print_cmd_list(data->cmd);
-	// print_parsed_cmd(data->parsed_cmd);
+	print_parsed_cmd(data->parsed_cmd);
 }

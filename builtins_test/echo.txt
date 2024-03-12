@@ -54,3 +54,22 @@ echo -n "capart "" " il etait une fois "" test1 '' 'test2' "'capart'" bonjour
 echo -n "capart "" " il etait une fois "" test1 '' 'test2' '"capart   "' bonjour
 echo -n "capart "" " il etait une fois "" test1 '' 'test2' '"capart   "' bonjour
 echo -n "capart "" " il etait une fois "" test1 '' 'test2' '"capart"' bonjour
+
+""	rien
+
+" " espace
+
+"a" "a"			a a
+"a""a" 			aa
+
+"'a'" "'a'" 	'a' 'a'
+"'a'""'a'" 		'a''a'
+
+'"a"' "'a'"		"a" 'a'
+'"a"'"'a'"		"a"'a'
+
+'"a"' '"a"'		"a" "a"
+'"a"''"a"'		"a""a"
+
+"'a'" '"a"' 	 'a' "a"
+"'a'"'"a"'		'a'"a"
