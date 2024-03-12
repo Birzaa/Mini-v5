@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/12 12:11:22 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:01:06 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,12 @@ int	main(int ac, char **av, char **env)
 			{
 				envp = get_tab_env(data.env);
 				init_parse(&data);
-				if (ft_strcmp(data.parsed_cmd->parsed_cmd->full_cmd[0], "echo") == 0)
-				{
+				if (ft_strcmp(data.parsed_cmd->parsed_cmd->full_cmd[0],
+						"echo") == 0)
 					ft_echo(data.parsed_cmd->parsed_cmd->full_cmd);
-					/* ft_echo2(data.parsed_cmd); */
-				}
-				else if (ft_strcmp(data.parsed_cmd->parsed_cmd->full_cmd[0], "cd") == 0)
-					ft_cd(data.parsed_cmd->parsed_cmd->full_cmd[1], &data);
+				/* else if (ft_strcmp(data.parsed_cmd->parsed_cmd->full_cmd[0],
+						"cd") == 0)
+					ft_cd(data.parsed_cmd->parsed_cmd->full_cmd[1], &data); */
 				// execution(data.parsed_cmd, env);
 				// exec(data.cmd, envp, &data);
 				ft_free_tab(envp);
