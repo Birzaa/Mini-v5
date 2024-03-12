@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/11 18:01:08 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/12 21:08:01 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	pipex(char **cmd, char **env)
 	}
 }
 
-void	execution(t_command *parsed_cmd, char **env)
+/* void	execution(t_command *parsed_cmd, char **env)
 {
 	int	fd_in;
 	int	fd_out;
@@ -54,4 +54,4 @@ void	execution(t_command *parsed_cmd, char **env)
 		parsed_cmd = parsed_cmd->next;
 	}
 	dup2(fd_out, STDOUT_FILENO);
-}
+} */

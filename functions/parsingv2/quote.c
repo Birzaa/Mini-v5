@@ -6,85 +6,47 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/12 18:39:11 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/12 23:22:43 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	split_into_single_word(t_cmd_word **cmd, enum e_token token)
+void	split_into_single_word(t_cmd_word **cmd, enum e_state state)
 {
-	char		*tmp;
-	t_cmd_word	*cmd2;
+	char	*str;
 
-	cmd2 = *cmd;
-	(void)token;
-	tmp = "";
-	while (cmd2)
+	str = "";
+	while ((*cmd)->state == state && (*cmd))
 	{
-		if (cmd2->state == GENERAL && cmd2->type == WHITE_SPACE)
-		{
-			break ;
-		}
-		if (cmd2->state != 2 || cmd2->type == WORD)
-		{
-			tmp = ft_strjoin(tmp, cmd2->content);
-			cmd2->content = "";
-			cmd2->type = WHITE_SPACE;
-		}
-		if (cmd2->state == 0 && cmd2->next->type == DOUBLE_QUOTE)
-		{
-			if (cmd2->next->type == DOUBLE_QUOTE
-				&& cmd2->next->next->type == DOUBLE_QUOTE)
-			{
-				if (cmd2->next)
-					cmd2 = cmd2->next;
-				while (cmd2->type == DOUBLE_QUOTE && cmd2)
-				{
-					if (cmd2->next)
-					{
-						cmd2 = cmd2->next;
-					}
-					else
-						break ;
-				}
-			}
-		}
-		if (cmd2->state == 1 && cmd2->next->type == QOUTE)
-		{
-			if (cmd2->next->type == QOUTE && cmd2->next->next->type == QOUTE)
-			{
-				if (cmd2->next)
-					cmd2 = cmd2->next;
-				while (cmd2->type == QOUTE && cmd2)
-				{
-					if (cmd2->next)
-					{
-						cmd2 = cmd2->next;
-					}
-					else
-						break ;
-				}
-			}
-		}
-		if (cmd2->state == GENERAL && cmd2->type == WHITE_SPACE)
-		{
-			break ;
-		}
-		if ((cmd2)->next)
-			cmd2 = cmd2->next;
-		else
-			break ;
+		str = ft_strjoin(str, (*cmd)->content);
+		(*cmd)->content = "";
+		(*cmd)->type = WHITE_SPACE;
+		(*cmd) = (*cmd)->next;
 	}
-	cmd2->content = ft_strdup(tmp);
-	cmd2->type = WORD;
+	while ((*cmd)->next && ((*cmd)->next->type == WORD
+			|| (*cmd)->next->type == QOUTE || (*cmd)->next->type == DOUBLE_QUOTE
+			|| (*cmd)->next->type == WHITE_SPACE))
+	{
+		if ((*cmd)->next->type == QOUTE || (*cmd)->next->type == DOUBLE_QUOTE)
+			(*cmd) = (*cmd)->next;
+		printf("Content : %s\n", (*cmd)->content);
+		printf("Next Content : %s\n", (*cmd)->next->content);
+		str = ft_strjoin(str, (*cmd)->next->content);
+		(*cmd)->next->content = "";
+		(*cmd)->next->type = WHITE_SPACE;
+		(*cmd) = (*cmd)->next;
+	}
+	printf("str = %s\n", (str));
+	(*cmd)->content = str;
+	(*cmd)->type = WORD;
 }
 
 void	parsing_quote(t_cmd *cmd)
 {
 	t_cmd			*head;
 	t_cmd_word		*tmp_word;
-	enum e_token	token;
+	enum e_state	state;
 
 	head = cmd;
 	while (head)
@@ -96,10 +58,10 @@ void	parsing_quote(t_cmd *cmd)
 			{
 				tmp_word->type = WHITE_SPACE;
 			}
-			token = tmp_word->type;
+			state = tmp_word->state;
 			if (tmp_word->state != GENERAL)
 			{
-				split_into_single_word(&tmp_word, token);
+				split_into_single_word(&tmp_word, state);
 			}
 			tmp_word = tmp_word->next;
 		}
