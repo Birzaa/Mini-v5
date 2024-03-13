@@ -73,3 +73,11 @@ echo -n "capart "" " il etait une fois "" test1 '' 'test2' '"capart"' bonjour
 
 "'a'" '"a"' 	 'a' "a"
 "'a'"'"a"'		'a'"a"
+
+
+
+"'a'""'a'"
+
+reccup le token double quote
+
+'a'""'a'" 	

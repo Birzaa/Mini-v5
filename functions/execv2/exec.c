@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/11 18:01:08 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/12 20:36:57 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	execution(t_command *parsed_cmd, char **env)
 	int	fd_out;
 	int	i;
 
+	(void)fd_in;
 	(void)env;
 	(void)i;
 	i = 0;

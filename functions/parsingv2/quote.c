@@ -3,16 +3,103 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/12 18:39:11 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/13 09:52:29 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	split_into_single_word(t_cmd_word **cmd, enum e_token token)
+{
+	char		*tmp;
+	int			loop;
+	t_cmd_word	*cmd2;
+
+	loop = 0;
+	cmd2 = *cmd;
+	(void)token;
+	tmp = "";
+	while (cmd2 && cmd2->state == IN_DQUOTE)
+	{
+		printf("content [%s]\n", cmd2->content);
+		loop++;
+		tmp = ft_strjoin(tmp, cmd2->content);
+		if (cmd2->next->state == IN_DQUOTE)
+			cmd2 = cmd2->next;
+		else
+			break ;
+	}
+	cmd2->content = ft_strdup(tmp);
+	printf("final [%s]\n", cmd2->content);
+	cmd2->type = WORD;
+}
+
+void	parsing_quote(t_cmd *cmd)
+{
+	int				test;
+	t_cmd			*head;
+	t_cmd_word		*tmp_word;
+	enum e_token	token;
+	char			*tmp;
+
+	tmp = "";
+	test = 0;
+	head = cmd;
+	token = 0;
+	while (head)
+	{
+		tmp_word = head->words;
+		while (tmp_word)
+		{
+			printf("loop [%d] content : {%s} token %c\n", test++,
+				tmp_word->content, (char)token);
+			if ((tmp_word->type == DOUBLE_QUOTE || tmp_word->type == QOUTE)
+				&& tmp_word->state == GENERAL)
+			{
+				if (tmp_word->type == DOUBLE_QUOTE
+					&& tmp_word->next->type == QOUTE
+					&& tmp_word->next->state != GENERAL)
+				{
+					token = tmp_word->type;
+					printf("%d\n", token);
+				}
+				tmp_word->type = WHITE_SPACE;
+				tmp_word = tmp_word->next;
+			}
+			else if (tmp_word->state != GENERAL || tmp_word->type == WORD)
+			{
+				while (tmp_word->state != GENERAL || tmp_word->type == WORD)
+				{
+					printf("ce qu'on veut print : %s\n", tmp_word->content);
+					tmp = ft_strjoin(tmp, tmp_word->content);
+					// split_into_single_word(&tmp_word, token);
+					if (tmp_word->next)
+						tmp_word = tmp_word->next;
+					else if (tmp_word->next->type == token
+						&& tmp_word->next->state == GENERAL)
+					{
+						print_test();
+						tmp_word = tmp_word->next;
+					}
+					else
+					{
+						printf("test\n");
+						break ;
+					}
+				}
+				printf("%s\n", tmp);
+			}
+			else
+				tmp_word = tmp_word->next;
+		}
+		head = head->next;
+	}
+}
+
+/* void	split_into_single_word(t_cmd_word **cmd, enum e_token token)
 {
 	char		*tmp;
 	t_cmd_word	*cmd2;
@@ -22,9 +109,11 @@ void	split_into_single_word(t_cmd_word **cmd, enum e_token token)
 	tmp = "";
 	while (cmd2)
 	{
+		printf("content [%s]\n", cmd2->content);
 		if (cmd2->state == GENERAL && cmd2->type == WHITE_SPACE)
 		{
-			break ;
+			printf("capart\n");
+			return ;
 		}
 		if (cmd2->state != 2 || cmd2->type == WORD)
 		{
@@ -34,11 +123,12 @@ void	split_into_single_word(t_cmd_word **cmd, enum e_token token)
 		}
 		if (cmd2->state == 0 && cmd2->next->type == DOUBLE_QUOTE)
 		{
-			if (cmd2->next->type == DOUBLE_QUOTE
-				&& cmd2->next->next->type == DOUBLE_QUOTE)
+			if (cmd2->next->type == DOUBLE_QUOTE)
 			{
 				if (cmd2->next)
+				{
 					cmd2 = cmd2->next;
+				}
 				while (cmd2->type == DOUBLE_QUOTE && cmd2)
 				{
 					if (cmd2->next)
@@ -46,7 +136,9 @@ void	split_into_single_word(t_cmd_word **cmd, enum e_token token)
 						cmd2 = cmd2->next;
 					}
 					else
+					{
 						break ;
+					}
 				}
 			}
 		}
@@ -78,31 +170,4 @@ void	split_into_single_word(t_cmd_word **cmd, enum e_token token)
 	}
 	cmd2->content = ft_strdup(tmp);
 	cmd2->type = WORD;
-}
-
-void	parsing_quote(t_cmd *cmd)
-{
-	t_cmd			*head;
-	t_cmd_word		*tmp_word;
-	enum e_token	token;
-
-	head = cmd;
-	while (head)
-	{
-		tmp_word = head->words;
-		while (tmp_word)
-		{
-			if ((tmp_word->type == DOUBLE_QUOTE || tmp_word->type == QOUTE))
-			{
-				tmp_word->type = WHITE_SPACE;
-			}
-			token = tmp_word->type;
-			if (tmp_word->state != GENERAL)
-			{
-				split_into_single_word(&tmp_word, token);
-			}
-			tmp_word = tmp_word->next;
-		}
-		head = head->next;
-	}
-}
+} */
