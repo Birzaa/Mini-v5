@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/13 12:25:32 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:51:26 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	parsing_quote(t_cmd *cmd)
 			{
 				split_into_single_word(&tmp_word, 0);
 			}
-			else
 				tmp_word = tmp_word->next;
 		}
 		head = head->next;
