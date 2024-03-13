@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/12 23:22:43 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:49:47 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,33 @@ void	split_into_single_word(t_cmd_word **cmd, enum e_state state)
 		(*cmd) = (*cmd)->next;
 	}
 	while ((*cmd)->next && ((*cmd)->next->type == WORD
-			|| (*cmd)->next->type == QOUTE || (*cmd)->next->type == DOUBLE_QUOTE
-			|| (*cmd)->next->type == WHITE_SPACE))
+			|| (*cmd)->next->type == QOUTE
+			|| (*cmd)->next->type == DOUBLE_QUOTE))
 	{
-		if ((*cmd)->next->type == QOUTE || (*cmd)->next->type == DOUBLE_QUOTE)
+		if (((*cmd)->next->type == QOUTE || (*cmd)->next->type == DOUBLE_QUOTE)
+			&& (*cmd)->next->state != state && (*cmd)->next->next)
 			(*cmd) = (*cmd)->next;
 		printf("Content : %s\n", (*cmd)->content);
 		printf("Next Content : %s\n", (*cmd)->next->content);
-		str = ft_strjoin(str, (*cmd)->next->content);
-		(*cmd)->next->content = "";
-		(*cmd)->next->type = WHITE_SPACE;
+		if ((*cmd)->next->state == 0 || (*cmd)->next->state == 1)
+		{
+			str = ft_strjoin(str, (*cmd)->next->content);
+			printf("str dans la bocle = %s\n", (str));
+			(*cmd)->next->content = "";
+			(*cmd)->next->type = WHITE_SPACE;
+		}
+		else if ((*cmd)->next->type != WHITE_SPACE)
+		{
+			str = ft_strjoin(str, (*cmd)->content);
+			(*cmd)->next->content = "";
+			(*cmd)->next->type = WHITE_SPACE;
+		}
 		(*cmd) = (*cmd)->next;
+		while ((*cmd)->next && (*cmd)->next->type == WHITE_SPACE)
+		{
+			str = ft_strjoin(str, (*cmd)->next->content);
+			(*cmd) = (*cmd)->next;
+		}
 	}
 	printf("str = %s\n", (str));
 	(*cmd)->content = str;
