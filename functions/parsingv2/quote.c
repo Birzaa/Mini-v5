@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/13 12:19:10 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:25:32 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,41 +56,13 @@ void	parsing_quote(t_cmd *cmd)
 		{
 			printf("loop [%d] content : {%s} token %c\n", test++,
 				tmp_word->content, (char)token);
-			if ((tmp_word->type == DOUBLE_QUOTE || tmp_word->type == QOUTE)
-				&& tmp_word->state == GENERAL)
+			if ((tmp_word->type == DOUBLE_QUOTE || tmp_word->type == QOUTE))
 			{
-				if (tmp_word->type == DOUBLE_QUOTE
-					&& tmp_word->next->type == QOUTE
-					&& tmp_word->next->state != GENERAL)
-				{
-					token = tmp_word->type;
-					printf("%d\n", token);
-				}
 				tmp_word->type = WHITE_SPACE;
-				tmp_word = tmp_word->next;
 			}
-			else if (tmp_word->state != GENERAL || tmp_word->type == WORD)
+			if (tmp_word->state != GENERAL)
 			{
-				while (tmp_word->state != GENERAL || tmp_word->type == WORD)
-				{
-					printf("ce qu'on veut print : %s\n", tmp_word->content);
-					tmp = ft_strjoin(tmp, tmp_word->content);
-					// split_into_single_word(&tmp_word, token);
-					if (tmp_word->next)
-						tmp_word = tmp_word->next;
-					else if (tmp_word->next->type == token
-						&& tmp_word->next->state == GENERAL)
-					{
-						print_test();
-						tmp_word = tmp_word->next;
-					}
-					else
-					{
-						printf("test\n");
-						break ;
-					}
-				}
-				printf("%s\n", tmp);
+				split_into_single_word(&tmp_word, 0);
 			}
 			else
 				tmp_word = tmp_word->next;
@@ -98,6 +70,31 @@ void	parsing_quote(t_cmd *cmd)
 		head = head->next;
 	}
 }
+
+/* void	parsing_quote(t_cmd *cmd)
+{
+	t_cmd		*head;
+	t_cmd_word	*tmp_word;
+
+	head = cmd;
+	while (head)
+	{
+		tmp_word = head->words;
+		while (tmp_word)
+		{
+			if ((tmp_word->type == DOUBLE_QUOTE || tmp_word->type == QOUTE))
+			{
+				tmp_word->type = WHITE_SPACE;
+			}
+			if (tmp_word->state != GENERAL)
+			{
+				split_into_single_word(&tmp_word, 0);
+			}
+			tmp_word = tmp_word->next;
+		}
+		head = head->next;
+	}
+} */
 
 /* void	split_into_single_word(t_cmd_word **cmd, enum e_token token)
 {
