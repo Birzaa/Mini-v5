@@ -36,6 +36,7 @@ SRC = $(SRC_DIR)main.c \
 	$(PARSING_DIRV2)redir_out.c \
 	$(PARSING_DIRV2)test_env.c \
 	$(PARSING_DIRV2)skip.c \
+	$(PARSING_DIRV2)index_quote.c \
 	$(PARSING_DIRV2)cmd_next.c \
 	$(PARSING_DIRV2)word.c \
 	$(PARSING_DIRV2)env.c \

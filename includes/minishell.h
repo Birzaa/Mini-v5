@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/12 10:56:29 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:16:21 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_node
 	int					len;
 	enum e_token		type;
 	enum e_state		state;
+	int					index;
 	struct s_node		*next;
 	struct s_node		*prev;
 }						t_node;
@@ -112,6 +113,7 @@ typedef struct s_cmd_word
 {
 	char				*content;
 	enum e_token		type;
+	int					index;
 	enum e_state		state;
 	struct s_cmd_word	*next;
 }						t_cmd_word;
@@ -392,6 +394,8 @@ void					parsing_quote(t_cmd *cmd);
 void					init_parse(t_data *data);
 t_command				*init_command(t_command *list);
 t_parsed_cmd			*init_redir(t_parsed_cmd *list);
+
+void					index_quote(t_stack *list);
 
 //***********************EXECUTION*********************************
 void					execution(t_command *head, char **env);

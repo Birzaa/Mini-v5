@@ -53,8 +53,15 @@ echo -n "capart "" " il etait une fois "" test1 '' 'test2' "'capart   '" bonjour
 echo -n "capart "" " il etait une fois "" test1 '' 'test2' "'capart'" bonjour
 echo -n "capart "" " il etait une fois "" test1 '' 'test2' '"capart   "' bonjour
 echo -n "capart "" " il etait une fois "" test1 '' 'test2' '"capart   "' bonjour
-echo -n "capart "" " il etait une fois "" test1 '' 'test2' '"capart"' bonjour
+echo -n "capart "" " il etait une fois "" test1 '' 'test2' '"capart"' bonjour "'a'"'"a"'Test"a" "test"T
 
+echo "test1"test2
+
+echo "test1"test2 "'a'"b
+
+echo "test1"test2 "'a'"a 'bonjour'"la famille"
+
+echo "test1"test2 "'a'"a 'bonjour'"la famille" ca me casse les couilles "" ""
 ""	rien
 
 " " espace
