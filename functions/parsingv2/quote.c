@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/14 18:29:46 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/14 19:09:51 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,15 @@ void	parsing_quote(t_cmd *cmd)
 			}
 			if ((tmp_word->type == DOUBLE_QUOTE || tmp_word->type == QOUTE))
 			{
-				tmp_word->type = WHITE_SPACE;
+				if (tmp_word->next->type == DOUBLE_QUOTE)
+				{
+					tmp_word->type = WHITE_SPACE;
+					tmp_word = tmp_word->next;
+					tmp_word->content = ft_calloc(1, 1);
+					tmp_word->type = WORD;
+				}
+				else
+					tmp_word->type = WHITE_SPACE;
 			}
 			tmp_word = tmp_word->next;
 		}

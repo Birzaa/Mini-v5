@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/14 17:16:21 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:53:26 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ enum					e_token
 	REDIR_OUT = '>',
 	HERE_DOC,
 	DREDIR_OUT,
+	NTM = 'Z',
 };
 
 typedef struct s_node
