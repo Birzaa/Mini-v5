@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   skip.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:01:09 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/10 14:21:15 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/15 16:44:33 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	skip_r_out(t_cmd *cmd)
 		cmd->words = cmd->words->next;
 	if (cmd->words->type == WORD && cmd->words->next)
 		cmd->words = cmd->words->next;
+	printf("apres le skip : '%s'\n", cmd->words->content);
 }
 
 void	skip_h_doc(t_cmd *cmd)

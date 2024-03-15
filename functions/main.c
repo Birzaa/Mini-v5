@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 14:30:54 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:01:24 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	main(int ac, char **av, char **env)
 						"cd") == 0)
 					ft_cd(data.parsed_cmd->parsed_cmd->full_cmd[1], &data); */
 				// execution(data.parsed_cmd, env);
-				// exec(data.cmd, envp, &data);
 				ft_free_tab(envp);
 			}
 		}
