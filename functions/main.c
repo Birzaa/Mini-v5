@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 14:10:16 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:17:04 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int	main(int ac, char **av, char **env)
 			{
 				envp = get_tab_env(data.env);
 				init_parse(&data);
-				/* if (is_builtin(data.parsed_cmd->parsed_cmd->full_cmd[0]))
-					execute_builtin(data.cmd, data.parsed_cmd->parsed_cmd->full_cmd, &data); */
+				if (is_builtin(data.parsed_cmd->parsed_cmd->full_cmd[0]))
+					execute_builtin(data.cmd, data.parsed_cmd->parsed_cmd->full_cmd, &data);
 				/* else if (ft_strcmp(data.parsed_cmd->parsed_cmd->full_cmd[0],
 						"cd") == 0)
 					ft_cd(data.parsed_cmd->parsed_cmd->full_cmd[1], &data); */
