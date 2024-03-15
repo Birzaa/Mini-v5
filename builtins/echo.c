@@ -25,7 +25,9 @@ void	ft_echo(char **content)
 	{
 		ft_putstr_fd(content[i++], 1);
 		if (content[i])
+		{
 			ft_putstr_fd(" ", 1);
+		}
 	}
 	if (!check)
 		ft_putstr_fd("\n", 1);

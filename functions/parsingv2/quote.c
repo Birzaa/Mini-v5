@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/14 19:09:51 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/15 12:37:10 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,40 @@ void	put_in_one_word(t_cmd_word **cmd, int index)
 	cmd2->type = WORD;
 }
 
+void	quote_next_to_quote(t_cmd_word *tmp_word, int check)
+{
+	if ((tmp_word->type == DOUBLE_QUOTE || tmp_word->type == QOUTE))
+	{
+		if (tmp_word->type == DOUBLE_QUOTE)
+			check = 0;
+		if (tmp_word->type == QOUTE)
+			check = 1;
+		if (tmp_word->next->type == DOUBLE_QUOTE && !check)
+		{
+			tmp_word->type = WHITE_SPACE;
+			tmp_word = tmp_word->next;
+			tmp_word->content = ft_calloc(1, 1);
+			tmp_word->type = WORD;
+		}
+		else if (tmp_word->next->type == QOUTE && check)
+		{
+			tmp_word->type = WHITE_SPACE;
+			tmp_word = tmp_word->next;
+			tmp_word->content = ft_calloc(1, 1);
+			tmp_word->type = WORD;
+		}
+		else
+			tmp_word->type = WHITE_SPACE;
+	}
+}
+
 void	parsing_quote(t_cmd *cmd)
 {
 	t_cmd		*head;
 	t_cmd_word	*tmp_word;
+	int			check;
 
+	check = 0;
 	head = cmd;
 	while (head)
 	{
@@ -58,19 +87,11 @@ void	parsing_quote(t_cmd *cmd)
 			{
 				put_in_one_word(&tmp_word, tmp_word->index);
 			}
-			if ((tmp_word->type == DOUBLE_QUOTE || tmp_word->type == QOUTE))
-			{
-				if (tmp_word->next->type == DOUBLE_QUOTE)
-				{
-					tmp_word->type = WHITE_SPACE;
-					tmp_word = tmp_word->next;
-					tmp_word->content = ft_calloc(1, 1);
-					tmp_word->type = WORD;
-				}
-				else
-					tmp_word->type = WHITE_SPACE;
-			}
-			tmp_word = tmp_word->next;
+			quote_next_to_quote(tmp_word, check);
+			if (tmp_word->next)
+				tmp_word = tmp_word->next;
+			else
+				break ;
 		}
 		head = head->next;
 	}
