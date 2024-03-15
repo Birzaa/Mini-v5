@@ -6,14 +6,14 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 14:19:04 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:31:08 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-void	execute_builtin(t_cmd *cmd, char **command, t_data *data)
+/* void	execute_builtin(t_cmd *cmd, char **command, t_data *data)
 {
 	if (ft_strcmp(command[0], "cd") == 0)
 		ft_cd(command[1], data);
@@ -56,7 +56,7 @@ int	is_builtin(char *cmd)
 	else if (ft_strcmp(cmd, "unset") == 0)
 		return (1);
 	return (0);
-}
+} */
 
 
 void	pipex(char **cmd, char **env)
