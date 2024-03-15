@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:04:14 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/15 13:37:15 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/15 18:24:02 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	open_redir_in2(t_command *head)
 {
 	int	fd;
 
-	fd = 0;
+	fd = STDIN_FILENO;
 	while (head->parsed_cmd->r_in)
 	{
 		if (!head->parsed_cmd->r_in->h_doc)
@@ -36,7 +36,7 @@ int	open_redir_out(t_command *head)
 {
 	int	fd;
 
-	fd = 0;
+	fd = STDOUT_FILENO;
 	while (head->parsed_cmd->r_out)
 	{
 		if (!head->parsed_cmd->r_out->append)

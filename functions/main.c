@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 16:01:24 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:39:46 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	main(int ac, char **av, char **env)
 				/* else if (ft_strcmp(data.parsed_cmd->parsed_cmd->full_cmd[0],
 						"cd") == 0)
 					ft_cd(data.parsed_cmd->parsed_cmd->full_cmd[1], &data); */
-				// execution(data.parsed_cmd, env);
+				execution(data.parsed_cmd, env);
 				ft_free_tab(envp);
 			}
 		}

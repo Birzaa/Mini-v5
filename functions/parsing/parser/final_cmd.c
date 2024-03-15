@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 17:37:55 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:41:55 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_command	*parse(t_cmd *cmd)
 		if (!command)
 			return (NULL);
 		while (cmd->words)
-			{printf("%s\n", cmd->words->content); parse_cmd(cmd, command);}
+			parse_cmd(cmd, command);
 		tmp = ft_command_new();
 		add_back_cmd_out(&command, tmp);
 		command = command->next;
@@ -91,5 +91,5 @@ void	init_parse(t_data *data)
 	data->parsed_cmd = parse(data->cmd);
 	// print_list(data->lex);
 	// print_cmd_list(data->cmd);
-	print_parsed_cmd(data->parsed_cmd);
+	// print_parsed_cmd(data->parsed_cmd);
 }
