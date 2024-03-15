@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/15 13:43:31 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:11:56 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	parsing_quote(t_cmd *cmd)
 		tmp_word = head->words;
 		while (tmp_word)
 		{
-			if ((tmp_word->state != GENERAL || (tmp_word->type == WORD
+			if (tmp_word->next && (tmp_word->state != GENERAL || (tmp_word->type == WORD
 						&& tmp_word->next->type != WHITE_SPACE))
 				&& (tmp_word->type == WORD || tmp_word->type == QOUTE
 					|| tmp_word->type == DOUBLE_QUOTE))

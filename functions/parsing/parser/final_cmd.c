@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   final_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 13:18:16 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:11:33 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ t_command	*parse(t_cmd *cmd)
 
 void	init_parse(t_data *data)
 {
+	parse_space_in_quote(data->lex);
 	index_quote(data->lex);
 	data->cmd = parser(data->lex);
 	test_exp(data->cmd, data);

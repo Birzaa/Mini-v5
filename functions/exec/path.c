@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:37:01 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/02 13:33:24 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:36:15 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ void	ft_free_tab(char **tab)
 
 void	ft_free_tab_size(char **tab, int size)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (i < size)
 	{
 		free(tab[i]);
