@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/15 13:47:55 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:06:38 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ void	put_in_one_word(t_cmd_word **cmd, int index)
 	{
 		if (cmd2->state != 2 || cmd2->type == WORD)
 		{
-			printf("content %s\n", cmd2->content);
 			tmp = ft_strjoin(tmp, cmd2->content);
-			printf("join : %s\n", tmp);
 		}
 		cmd2->content = "";
 		cmd2->type = WHITE_SPACE;
@@ -39,10 +37,7 @@ void	put_in_one_word(t_cmd_word **cmd, int index)
 	}
 	if (cmd2->type == WORD)
 	{
-		print_test();
-		printf("content %s\n", cmd2->content);
 		tmp = ft_strjoin(tmp, cmd2->content);
-		printf("join : %s\n", tmp);
 		cmd2->content = "";
 		cmd2->type = WHITE_SPACE;
 		if (cmd2->next)
