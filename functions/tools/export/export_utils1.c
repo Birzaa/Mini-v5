@@ -51,7 +51,9 @@ void	print_export(char *content)
 	int	i;
 
 	i = 0;
-	if (!ft_at_least_charset(content, "="))
+	if (!ft_strncmp("_=", content, 2))
+		return ;
+	else if (!ft_at_least_charset(content, "="))
 	{
 		ft_putstr_fd("export ", 1);
 		ft_putstr_fd(content, 1);

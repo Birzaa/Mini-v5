@@ -4,7 +4,7 @@
 // gerer too many args sur cd
 // gerer l'expand env $
 
-void	ft_cd_tild(char *command, t_data *data)
+void	ft_cd_tild(t_data *data, char *command)
 {
 	char	*new_cmd;
 	char	*tmp;
@@ -34,7 +34,7 @@ void	ft_cd_tild(char *command, t_data *data)
 	}
 }
 
-void	ft_cd_home(char *command, t_data *data)
+void	ft_cd_home(t_data *data, char *command)
 {
 	char	*home;
 	char	*tmp;
@@ -64,19 +64,19 @@ void	ft_cd_home(char *command, t_data *data)
 	// g_ret_value = 1;
 }
 
-void	ft_cd(char *command, t_data *data)
+void	ft_cd(t_data *data, char *command)
 {
 	refresh_env(data->env, 1);
 	if (!command)
 		return ;
 	if (!ft_strncmp(command, "~", 2))
 	{
-		ft_cd_home(command, data);
+		ft_cd_home(data, command);
 		return ;
 	}
 	else if (!ft_strncmp(command, "~/", 2))
 	{
-		ft_cd_tild(&command[1], data);
+		ft_cd_tild(data, &command[1]);
 		return ;
 	}
 	if (chdir(command) != 0)

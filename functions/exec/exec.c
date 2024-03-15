@@ -6,37 +6,26 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 14:31:08 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/15 18:31:23 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-/* void	execute_builtin(t_cmd *cmd, char **command, t_data *data)
+void	execute_builtin(t_cmd *cmd, char **command, t_data *data)
 {
 	if (ft_strcmp(command[0], "cd") == 0)
-		ft_cd(command[1], data);
+		ft_cd(data, command[1]);
 	else if (ft_strcmp(command[0], "pwd") == 0)
 		ft_pwd(cmd);
-	else if (ft_strcmp(command[0], "cd") == 0)
-		ft_cd(command[1], data);
 	else if (ft_strcmp(command[0], "export") == 0)
-	{
-		if (!command[1])
-			return (export_no_arg(data->env));
-		export(&data->env, command[1]);
-	}
+		export(&data->env, command);
 	else if (ft_strcmp(command[0], "env") == 0)
-		print_env(data->env);
+		ft_env(data, command);
 	else if (ft_strcmp(command[0], "echo") == 0)
 		ft_echo(command);
 	else if (ft_strcmp(command[0], "unset") == 0)
-	{
-		if (!command[1])
-			return ;
-		unset(data->env, command[1]);
-	}
+		unset(data->env, command);
 }
 
 int	is_builtin(char *cmd)
@@ -56,8 +45,7 @@ int	is_builtin(char *cmd)
 	else if (ft_strcmp(cmd, "unset") == 0)
 		return (1);
 	return (0);
-} */
-
+}
 
 void	pipex(char **cmd, char **env)
 {

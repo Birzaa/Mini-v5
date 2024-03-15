@@ -74,9 +74,10 @@ void	refresh_last_node(t_env *env)
 	tmp = env;
 	while (tmp)
 	{
-		if (!ft_strncmp("_", tmp->content, 1) && ft_strncmp(tail->content,
-				tmp->content, 1))
+		if (!ft_strncmp("_=", tmp->content, 2) && ft_strncmp(tail->content,
+				tmp->content, 50))
 		{
+			print_test();
 			swap_content_env(tail, tmp);
 			check = 1;
 			break ;

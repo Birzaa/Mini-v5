@@ -59,10 +59,14 @@ void	unset_without_equal(t_env *env, char *s)
 }
 
 // unset prend data->env et le nom d'une var env
-void	unset(t_env *env, char *s)
+void	unset(t_env *env, char **command)
 {
-	if (!ft_at_least_charset(s, "="))
-		unset_without_equal(env, s);
+	if (!command[1])
+			return ;
+	else if (!ft_strncmp("_", command[1], 2))
+		return ;
+	else if (!ft_at_least_charset(command[1], "="))
+		unset_without_equal(env, command[1]);
 	else
-		unset_with_equal(env, s);
+		unset_with_equal(env, command[1]);
 }

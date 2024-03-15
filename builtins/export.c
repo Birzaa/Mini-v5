@@ -19,13 +19,13 @@ void	export_no_arg(t_env *env)
 	{
 		tmp = ft_env_new(env->content);
 		if (!tmp)
-			return (free_multiple_env(env, env_cpy)) ;
+			return (free_multiple_env(env, env_cpy));
 		add_back_env(&env_cpy, tmp);
 		env = env->next;
 	}
 	env_cpy = ft_sort_env(env_cpy, ft_strcmp);
 	tmp = env_cpy;
-	while (tmp->next)
+	while (tmp)
 	{
 		print_export(tmp->content);
 		tmp = tmp->next;
@@ -33,30 +33,28 @@ void	export_no_arg(t_env *env)
 	free_env(env_cpy);
 }
 
-void	export(t_env **env, char *content)
+void	export(t_env **env, char **cmd)
 {
 	t_env	*tmp;
 
-	/* 	if content est ne chaine de char vide
-		{
-			ft_putstr_fd("bash: export: `': not a valid identifier", 1);
-			//g_ret_value = 1;
-			return ;
-		} */
-	if (ft_export_checking(content))
+	if (!cmd[1])
+		return (export_no_arg((*env)));
+	else if (!ft_strncmp("_", cmd[1], 2) || !ft_strncmp("_=", cmd[1], 2))
+		return ;
+	else if (ft_export_checking(cmd[1]))
 	{
-		printf("bash: export: `%s': not a valid identifier\n", content);
+		printf("bash: export: `%s': not a valid identifier\n", cmd[1]);
 		// 		g_ret_value = 1;
 		return ;
 	}
-	if (!check_export_exist((*env), content))
+	else if (!check_export_exist((*env), cmd[1]))
 	{
-		tmp = ft_env_new(content);
+		tmp = ft_env_new(cmd[1]);
 		if (!tmp)
 			return ;
 		add_back_env(env, tmp);
 		return ;
 	}
 	else
-		replace_export(env, content);
+		replace_export(env, cmd[1]);
 }

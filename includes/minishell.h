@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 14:12:06 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/15 18:30:48 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,26 +169,29 @@ void					init_signals(void);
 // ----------------------------------------------------> BUILTINS...
 
 // builtins/cd
-void					ft_cd_home(char *command, t_data *data);
+void					ft_cd_home(t_data *data, char *command);
 int						ft_is_home_set(t_env *env);
 char					*ft_getenv(t_env *env, char *n);
-void					ft_cd(char *command, t_data *data);
+void					ft_cd(t_data *data, char *command);
 
 // builtins/echo
-void					ft_echo(char **content);
+void					ft_echo(char **command);
 
 // builtins/exit
 void					ft_exit(t_data *data);
 
+// builtins/env
+void					ft_env(t_data *data, char **command);
+
 // builtins/export
 
 void					export_no_arg(t_env *env);
-void					export(t_env **env, char *content);
+void					export(t_env **env, char **command);
 
 // builtins/unset
 void					del_node_env(t_env *target, t_env *previous);
 void					pop_node_env(t_env *env);
-void					unset(t_env *env, char *name);
+void					unset(t_env *env, char **command);
 
 // ----------------------------------------------------> Functions...
 
@@ -300,7 +303,6 @@ char					**get_tab_env(t_env *env);
 // ------------------------> Builtins
 void					ft_pwd(t_cmd *shell);
 char					*get_valid_path(char **command);
-void					ft_cd(char *command, t_data *data);
 
 // ------------------------>TRAAAASH
 void					create_all_file(char **fileNames, int fileCount,
@@ -322,10 +324,9 @@ t_cmd					*ft_cmd_last(t_cmd *cmd);
 void					add_back_cmd(t_cmd **cmd, t_cmd *new);
 void					print_node(t_node *node);
 void					print_cmd_list(t_cmd *head);
-void	execute_builtin(t_cmd *cmd, char **command, t_data *data);
-int	is_builtin(char *cmd);
-
-
+void					execute_builtin(t_cmd *cmd, char **command,
+							t_data *data);
+int						is_builtin(char *cmd);
 
 //********************************************************
 
