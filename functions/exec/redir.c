@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:04:14 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/11 16:49:01 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/15 13:37:15 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	open_redir_in2(t_command *head)
 		if (!head->parsed_cmd->r_in->h_doc)
 			fd = open(head->parsed_cmd->r_in->file, O_RDONLY, 0644);
 		if (fd == -1)
-		{ 
+		{
 			printf("Impossible de in\n");
 			exit(1);
 			// ERREUR
@@ -40,11 +40,13 @@ int	open_redir_out(t_command *head)
 	while (head->parsed_cmd->r_out)
 	{
 		if (!head->parsed_cmd->r_out->append)
-			fd = open(head->parsed_cmd->r_out->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			fd = open(head->parsed_cmd->r_out->file,
+					O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		else
-			fd = open(head->parsed_cmd->r_out->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			fd = open(head->parsed_cmd->r_out->file,
+					O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
-		{ 
+		{
 			printf("Impossible de out\n");
 			exit(1);
 			// ERREUR

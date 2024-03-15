@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/14 18:53:26 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:01:25 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,28 +86,6 @@ typedef struct s_env
 
 }						t_env;
 
-// ------------------------> Redirection
-
-typedef struct s_redir_in
-{
-	char				**tab;
-	int					size;
-}						t_redir_in;
-
-typedef struct s_redir_elem
-{
-	char				*arg;
-	int					len;
-	enum e_token		type;
-	struct s_redir_elem	*next;
-}						t_redir_elem;
-typedef struct s_redir_list
-{
-	struct s_redir_elem	*head;
-	struct s_redir_elem	*tail;
-	int					size;
-}						t_redir_list;
-
 // ------------------------> Commande parsing
 
 typedef struct s_cmd_word
@@ -123,9 +101,6 @@ typedef struct s_cmd
 {
 	t_cmd_word			*words;
 	struct s_cmd		*next;
-	int					fd;
-	int					saved_stdout;
-	t_redir_list		*redir;
 }						t_cmd;
 // *******************PARSING V2
 
@@ -190,22 +165,6 @@ void					ctrl_c(int sig);
 void					ctrl_slash(int sig);
 void					ctrl_d(int sig, t_data *data);
 void					init_signals(void);
-
-// ----------------------------------------------------> Redirection...
-
-//	Redirection out
-t_redir_list			*parsing_redir(t_cmd *data);
-
-//	Redirection in
-void					put_in_tab_file(t_redir_in *r_in, t_cmd *cmd);
-void					number_redir_in(t_cmd *cmd, t_redir_in *r_in);
-void					open_redir_in(t_redir_in *r_in);
-
-// Tools
-t_redir_list			*init_redir_list(t_redir_list *list);
-t_redir_elem			*new_redir_node(char *arg, enum e_token type, int len);
-void					add_redir_last(t_redir_list *list, t_redir_elem *new);
-void					print_redir_list(t_redir_list *redir);
 
 // ----------------------------------------------------> BUILTINS...
 
@@ -344,11 +303,8 @@ char					*get_valid_path(char **command);
 void					ft_cd(char *command, t_data *data);
 
 // ------------------------>TRAAAASH
-void					redirection_out(t_cmd *shell, t_redir_list *redir);
 void					create_all_file(char **fileNames, int fileCount,
 							t_cmd *shell, int d_redir);
-char					*ft_stuck(t_redir *redir, char *output_file,
-							t_redir_list *redir_two);
 void					put_in_tab_filename(char **fileNames, t_redir *redir,
 							char *fileName);
 void					free_tab_size(char **tab, size_t size);
@@ -395,6 +351,7 @@ void					parsing_quote(t_cmd *cmd);
 void					init_parse(t_data *data);
 t_command				*init_command(t_command *list);
 t_parsed_cmd			*init_redir(t_parsed_cmd *list);
+void					parse_space_in_quote(t_stack *list);
 
 void					index_quote(t_stack *list);
 

@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:00:41 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/14 17:01:53 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/15 12:46:13 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,23 @@ void	print_parsed_cmd(t_command *head)
 		fdp++;
 		head = head->next;
 	}
+}
+
+void print_cmd_list(t_cmd *head) {
+    t_cmd *current = head;
+    int i = 0;
+
+    while (current) {
+        t_cmd_word *word = current->words;
+        printf("CMD[%d]:\n", i);
+        while (word) {
+            printf("Content: %s, Type: %d, State: %d\n", word->content, word->type, word->state);
+            word = word->next;
+        }
+        i++;
+        current = current->next;
+        printf("\n");
+    }
 }
 
 //<infile <<eof wc -l > outfile | ls -llllll | ls -a -a -a |echo "''Bonjour' 'tocard''" |ls $HOME > fichier | ls >>finalfile

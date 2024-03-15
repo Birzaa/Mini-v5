@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	ft_pwd(t_cmd *shell)
+/* void	ft_pwd(t_cmd *shell)
 {
 	char	*cwd;
 
@@ -18,4 +18,4 @@ void	ft_pwd(t_cmd *shell)
 			printf("%s\n", cwd);
 		free(cwd);
 	}
-}
+} */

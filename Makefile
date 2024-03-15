@@ -17,34 +17,32 @@ HEADER_DIR = ./includes/
 OBJ_DIR = objects/
 SRC_DIR = functions/
 PARSING_DIR = functions/parsing/
-PARSING_DIRV2 = functions/parsingv2/
-REDIRECTION_DIR = functions/redirection/
+PARSER_DIR = functions/parsing/parser/
+LEXER_DIR = functions/parsing/lexer/
 EXECUTION_DIR = functions/exec/
-EXECUTION_DIRV2 = functions/execv2/
 BUILTINS_DIR = builtins/
 TRASH_DIR = functions/TRAAASH/
 TOOL_DIR = functions/tools/
 SRC = $(SRC_DIR)main.c \
-	$(PARSING_DIR)lexer.c \
-	$(PARSING_DIR)token.c \
-	$(PARSING_DIR)tools.c \
-	$(PARSING_DIR)lst_tools.c \
-	$(PARSING_DIR)parser.c \
-	$(PARSING_DIRV2)parser.c \
-	$(PARSING_DIRV2)redir_in.c \
-	$(PARSING_DIRV2)quote.c \
-	$(PARSING_DIRV2)redir_out.c \
-	$(PARSING_DIRV2)test_env.c \
-	$(PARSING_DIRV2)skip.c \
-	$(PARSING_DIRV2)index_quote.c \
-	$(PARSING_DIRV2)cmd_next.c \
-	$(PARSING_DIRV2)word.c \
-	$(PARSING_DIRV2)env.c \
-	$(PARSING_DIRV2)handle_no_expand.c \
+	$(LEXER_DIR)lexer.c \
+	$(LEXER_DIR)token.c \
+	$(LEXER_DIR)tools.c \
+	$(LEXER_DIR)lst_tools.c \
+	$(PARSER_DIR)parser.c \
+	$(PARSER_DIR)final_cmd.c \
+	$(PARSER_DIR)redir_in.c \
+	$(PARSER_DIR)quote.c \
+	$(PARSER_DIR)space_in_quote.c \
+	$(PARSER_DIR)redir_out.c \
+	$(PARSER_DIR)test_env.c \
+	$(PARSER_DIR)skip.c \
+	$(PARSER_DIR)index_quote.c \
+	$(PARSER_DIR)cmd_next.c \
+	$(PARSER_DIR)word.c \
+	$(PARSER_DIR)env.c \
+	$(PARSER_DIR)handle_no_expand.c \
 	$(PARSING_DIR)error_syntax.c \
 	$(PARSING_DIR)syntax.c \
-	$(PARSING_DIR)redir.c \
-	$(PARSING_DIR)redir_tools.c \
 	$(SRC_DIR)env/get_env.c \
 	$(SRC_DIR)expansion/expansion.c \
 	$(SRC_DIR)tools/str/ft_strcmp.c \
@@ -69,16 +67,12 @@ SRC = $(SRC_DIR)main.c \
 	$(BUILTINS_DIR)unset.c \
 	$(TRASH_DIR)print.c \
 	$(TRASH_DIR)print_test.c \
-	$(REDIRECTION_DIR)redirection.c \
-	$(REDIRECTION_DIR)redirection_scnd.c \
 	$(EXECUTION_DIR)get_tab_env.c \
+	$(EXECUTION_DIR)path.c \
 	$(EXECUTION_DIR)exec.c \
-	$(EXECUTION_DIR)redir_in.c \
-	$(EXECUTION_DIRV2)path.c \
-	$(EXECUTION_DIRV2)exec.c \
-	$(EXECUTION_DIRV2)redir.c \
-	$(EXECUTION_DIRV2)bin.c \
-	$(EXECUTION_DIRV2)builtin.c \
+	$(EXECUTION_DIR)redir.c \
+	$(EXECUTION_DIR)bin.c \
+	$(EXECUTION_DIR)builtin.c \
 	$(TOOL_DIR)lst/free.c \
 	$(TOOL_DIR)free/free_parser.c \
 	$(TOOL_DIR)free/free_lexer.c \
