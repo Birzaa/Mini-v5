@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/15 14:21:43 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:26:45 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ void	put_in_one_word(t_cmd_word **cmd, int index)
 	{
 		if (cmd2->state != 2 || cmd2->type == WORD)
 		{
-			printf("content %s\n", cmd2->content);
 			tmp = ft_strjoin(tmp, cmd2->content);
-			printf("join : %s\n", tmp);
 		}
 		cmd2->content = "";
 		cmd2->type = WHITE_SPACE;
