@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:55:20 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/08 18:42:36 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:16:40 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void add_cmd_cmd(t_node *info, t_cmd **head) {
     new_word->content[info->len] = '\0';
     new_word->type = info->type;
     new_word->state = info->state;
+    new_word->index = info->index;
     new_word->next = NULL;
 
     // Ajouter le mot à la liste des mots de la commande

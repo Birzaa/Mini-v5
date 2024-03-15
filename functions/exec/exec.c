@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:02:46 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/12 11:54:24 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:08:42 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void	execute_builtin(t_cmd *cmd, char **command, t_data *data)
 	}
 	else if (ft_strcmp(command[0], "env") == 0)
 		print_env(data->env);
+	else if (ft_strcmp(command[0], "echo") == 0)
+		ft_echo(command);
 	else if (ft_strcmp(command[0], "unset") == 0)
 	{
 		if (!command[1])

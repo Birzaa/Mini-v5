@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:00:41 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/10 16:28:00 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/14 17:01:53 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	print_node(t_node *node)
 		putchar(node->content[i++]);
 	printf(", len: %i", node->len);
 	printf(", state: %i", node->state);
-	printf(", token: %i\n", node->type);
+	printf(", token: %i", node->type);
+	printf(", index: %i\n", node->index);
 }
 void	print_parsed_cmd(t_command *head)
 {

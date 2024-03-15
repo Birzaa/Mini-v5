@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/12 10:56:29 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/15 12:56:47 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ enum					e_token
 	REDIR_OUT = '>',
 	HERE_DOC,
 	DREDIR_OUT,
+	NTM = 'Z',
 };
 
 typedef struct s_node
@@ -64,6 +65,7 @@ typedef struct s_node
 	int					len;
 	enum e_token		type;
 	enum e_state		state;
+	int					index;
 	struct s_node		*next;
 	struct s_node		*prev;
 }						t_node;
@@ -112,6 +114,7 @@ typedef struct s_cmd_word
 {
 	char				*content;
 	enum e_token		type;
+	int					index;
 	enum e_state		state;
 	struct s_cmd_word	*next;
 }						t_cmd_word;
@@ -363,6 +366,10 @@ t_cmd					*ft_cmd_last(t_cmd *cmd);
 void					add_back_cmd(t_cmd **cmd, t_cmd *new);
 void					print_node(t_node *node);
 void					print_cmd_list(t_cmd *head);
+void	execute_builtin(t_cmd *cmd, char **command, t_data *data);
+int	is_builtin(char *cmd);
+
+
 
 //********************************************************
 
@@ -392,6 +399,8 @@ void					parsing_quote(t_cmd *cmd);
 void					init_parse(t_data *data);
 t_command				*init_command(t_command *list);
 t_parsed_cmd			*init_redir(t_parsed_cmd *list);
+
+void					index_quote(t_stack *list);
 
 //***********************EXECUTION*********************************
 void					execution(t_command *head, char **env);

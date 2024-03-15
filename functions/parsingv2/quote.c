@@ -6,76 +6,104 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/14 13:01:54 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:43:31 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	nb_word_in_quote(t_cmd_word *cmd, enum e_state state)
-{
-	t_cmd_word		*head;
-	unsigned int	count;
-
-	head = cmd;
-	count = 0;
-	while (head)
-	{
-		if (state == head->state)
-			count++;
-		if (head->state == GENERAL && head->type == WHITE_SPACE)
-			break ;
-		head = head->next;
-	}
-	printf("count : %d\n", count);
-	return (count);
-}
-
-void	put_in_one_word(t_cmd_word **cmd, unsigned int nb)
+void	put_in_one_word(t_cmd_word **cmd, int index)
 {
 	char		*tmp;
-	unsigned			i;
+	t_cmd_word	*cmd2;
 
-	i = 0;
+	cmd2 = *cmd;
 	tmp = "";
-	while (i < nb)
+	while (cmd2->next && cmd2->index == index)
 	{
-		tmp = ft_strjoin(tmp, (*cmd)->content);
-		(*cmd)->content = "";
-		(*cmd)->type = WHITE_SPACE;
-		i++;
-		(*cmd) = (*cmd)->next;
+		if (cmd2->state != 2 || cmd2->type == WORD)
+		{
+			printf("content %s\n", cmd2->content);
+			tmp = ft_strjoin(tmp, cmd2->content);
+			printf("join : %s\n", tmp);
+		}
+		cmd2->content = "";
+		cmd2->type = WHITE_SPACE;
+		if (cmd2->next->type == WHITE_SPACE && cmd2->next->state == GENERAL)
+		{
+			cmd2->content = tmp;
+			cmd2->type = WORD;
+			return ;
+		}
+		cmd2 = cmd2->next;
 	}
-	printf("actuel content : %s\n", (*cmd)->content);
-	(*cmd)->content = tmp;
-	(*cmd)->type = WORD;
-	printf("Copie : %s\n", tmp);
+	if (cmd2->type == WORD)
+	{
+		print_test();
+		printf("content %s\n", cmd2->content);
+		tmp = ft_strjoin(tmp, cmd2->content);
+		printf("join : %s\n", tmp);
+		cmd2->content = "";
+		cmd2->type = WHITE_SPACE;
+		if (cmd2->next)
+			cmd2 = cmd2->next;
+	}
+	cmd2->content = tmp;
+	cmd2->type = WORD;
+}
+
+void	quote_next_to_quote(t_cmd_word *tmp_word, int check)
+{
+	if ((tmp_word->type == DOUBLE_QUOTE || tmp_word->type == QOUTE))
+	{
+		if (tmp_word->type == DOUBLE_QUOTE)
+			check = 0;
+		if (tmp_word->type == QOUTE)
+			check = 1;
+		if (tmp_word->next->type == DOUBLE_QUOTE && !check)
+		{
+			tmp_word->type = WHITE_SPACE;
+			tmp_word = tmp_word->next;
+			tmp_word->content = ft_calloc(1, 1);
+			tmp_word->type = WORD;
+		}
+		else if (tmp_word->next->type == QOUTE && check)
+		{
+			tmp_word->type = WHITE_SPACE;
+			tmp_word = tmp_word->next;
+			tmp_word->content = ft_calloc(1, 1);
+			tmp_word->type = WORD;
+		}
+		else
+			tmp_word->type = WHITE_SPACE;
+	}
 }
 
 void	parsing_quote(t_cmd *cmd)
 {
-	t_cmd			*head;
-	t_cmd_word		*tmp_word;
-	enum e_state	state;
-	unsigned int	nb;
+	t_cmd		*head;
+	t_cmd_word	*tmp_word;
+	int			check;
 
+	check = 0;
 	head = cmd;
 	while (head)
 	{
 		tmp_word = head->words;
 		while (tmp_word)
 		{
-			if ((tmp_word->type == DOUBLE_QUOTE || tmp_word->type == QOUTE))
+			if ((tmp_word->state != GENERAL || (tmp_word->type == WORD
+						&& tmp_word->next->type != WHITE_SPACE))
+				&& (tmp_word->type == WORD || tmp_word->type == QOUTE
+					|| tmp_word->type == DOUBLE_QUOTE))
 			{
-				tmp_word->type = WHITE_SPACE;
+				put_in_one_word(&tmp_word, tmp_word->index);
 			}
-			state = tmp_word->state;
-			if (tmp_word->state != GENERAL)
-			{
-				nb = nb_word_in_quote(tmp_word, state);
-				put_in_one_word(&tmp_word, nb);
-			}
-			tmp_word = tmp_word->next;
+			quote_next_to_quote(tmp_word, check);
+			if (tmp_word->next)
+				tmp_word = tmp_word->next;
+			if (!tmp_word->next)
+				break ;
 		}
 		head = head->next;
 	}
