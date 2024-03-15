@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 16:51:22 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:37:55 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,17 @@ void	parse_cmd_scnd(t_cmd *cmd, t_command *command)
 		parse_r_out(cmd->words, &command->parsed_cmd->r_out, 1);
 		skip_dr_out(cmd);
 	}
+	else if (cmd->words->type == WORD)
+	{
+		parse_word(cmd->words, command->parsed_cmd);
+		skip_word(cmd);
+	}
 }
 
 void	parse_cmd(t_cmd *cmd, t_command *command)
 {
 	parse_cmd_scnd(cmd, command);
-	if (cmd->words->type == WORD)
-	{
-		parse_word(cmd->words, command->parsed_cmd);
-		skip_word(cmd);
-	}
-	else if (cmd->words->type == ENV)
+	if (cmd->words->type == ENV)
 	{
 		if (cmd->words->state == IN_QUOTE && cmd->words->next
 			&& cmd->words->next->state == 1)
@@ -83,11 +83,11 @@ t_command	*parse(t_cmd *cmd)
 
 void	init_parse(t_data *data)
 {
-	// parse_space_in_quote(data->lex);
-	// index_quote(data->lex);
+	parse_space_in_quote(data->lex);
+	index_quote(data->lex);
 	data->cmd = parser(data->lex);
 	test_exp(data->cmd, data);
-	// parsing_quote(data->cmd);
+	parsing_quote(data->cmd);
 	data->parsed_cmd = parse(data->cmd);
 	// print_list(data->lex);
 	// print_cmd_list(data->cmd);
