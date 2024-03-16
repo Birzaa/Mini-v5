@@ -50,7 +50,7 @@ void	unset_without_equal(t_env *env, char *s)
 	{
 		if (!ft_strncmp(target->content, s, len))
 		{
-			Z = del_node_env(target, previous);
+			del_node_env(target, previous);
 			break ;
 		}
 		previous = target;
