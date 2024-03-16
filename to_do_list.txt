@@ -12,33 +12,8 @@ ca c'est surement un dodge
 
 <in progress>
 
--------->--------> EXPORT
-Fix export:
-
-si Z= exist
-export Z ne fait rien
-si Z=""capart""
-Z=capart
-si Z="ca""part"
-Z=capart
-
 empecher premier char != lettre ou _ et d'autre truc mais je ne sais pas lesquels
 "error message = bash: export: `8dwdqw': not a valid identifier"
-
-
-fix refresh env je pense quand il y a plus var _= dans l'env (flemme de fou)
-
--------->--------> CD
-Fix cd;
-
-gerer too many arg
-gerer l'expand env $ 
-
--------->--------> EXPANSION ?
-Fix expansion:
-
-faut vraiment mettre les expansion $ dans le parsing je pense
-sinon c'est vraiment trop galere a gerer
 
 -------->--------> SIGNAL
 Fix signal
@@ -50,14 +25,22 @@ voir ce qu'il se passe dans un here doc
 mieux comprendre cette merde
 ou liberer un grand G
 
--------->--------> ECHO
-Start le echo
 
-need parsing
-ca serait bien d'avoir un bon echo et devoir echo les expensions
 
 15 mars 
+----> changer cd
 
-----> changer CD
+16 mars
+IMPORTANT
+!!!! recheck expansion dans parsing !!!! --> probleme de verification de la bonne var env
+erreur potentielle
+leak potentiel
+
+----> tester export
+----> tester env
+----> tester expand + builtins
+----> tester tous les expand
+
+----> revoir unset et export, ca l'air bizarre maitenant 
 
 

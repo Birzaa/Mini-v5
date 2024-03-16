@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 18:30:48 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/16 04:41:15 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,32 +166,15 @@ void					ctrl_slash(int sig);
 void					ctrl_d(int sig, t_data *data);
 void					init_signals(void);
 
-// ----------------------------------------------------> BUILTINS...
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~> Builtins
 
-// builtins/cd
-void					ft_cd_home(t_data *data, char *command);
-int						ft_is_home_set(t_env *env);
-char					*ft_getenv(t_env *env, char *n);
-void					ft_cd(t_data *data, char *command);
-
-// builtins/echo
-void					ft_echo(char **command);
-
-// builtins/exit
-void					ft_exit(t_data *data);
-
-// builtins/env
-void					ft_env(t_data *data, char **command);
-
-// builtins/export
-
-void					export_no_arg(t_env *env);
 void					export(t_env **env, char **command);
-
-// builtins/unset
-void					del_node_env(t_env *target, t_env *previous);
-void					pop_node_env(t_env *env);
 void					unset(t_env *env, char **command);
+void					ft_env(t_data *data, char **command);
+void					ft_cd(t_data *data, char **command);
+void					ft_exit(t_data *data);
+void					ft_pwd(t_data *data);
+void					ft_echo(char **command);
 
 // ----------------------------------------------------> Functions...
 
@@ -199,10 +182,6 @@ void					unset(t_env *env, char **command);
 t_env					*get_env(char **env);
 
 // function/expansion
-void					replace_content_env(char *oldpwd, char *pwd);
-
-char					*ft_strdup_value_env(char *value, int len_n,
-							int len_value);
 char					*get_name_expansion(t_env *env, char *n);
 
 // function/random
@@ -210,7 +189,7 @@ void					print_test(void);
 
 // tools/cd/cd_utils1.c
 int						ft_is_home_set(t_env *env);
-char					*ft_getenv(t_env *env, char *n);
+char					*ft_getenv(t_env *env, char *name);
 
 // tools/env/env_utils1.c
 t_env					*create_env_part1(t_env *env);
@@ -221,26 +200,26 @@ void					free_env(t_env *env);
 void					add_back_env(t_env **env, t_env *new);
 
 // tools/env/env_utils2.c
-void					create_env_part2(t_env **env, int *error);
 t_env					*ft_sort_env(t_env *env, int (*cmp)(char *, char *));
-int						ft_envsize(t_env *env);
+void					create_env_part2(t_env **env, int *error);
 void					del_node_env(t_env *target, t_env *previous);
 void					swap_content_env(t_env *node1, t_env *node2);
 void					pop_node_env(t_env *env);
+int						ft_envsize(t_env *env);
 
 // tools/env/env_utils3.c
-char					*ft_get_name_env(char *content);
-char					*ft_get_value_env(char *content);
+void					refresh_env(t_env *env, int cd);
 void					refresh_oldpwd(t_env *env);
 void					refresh_pwd(t_env *env);
-void					refresh_env(t_env *env, int cd);
+char					*ft_get_name_env(char *content);
+char					*ft_get_value_env(char *content);
 
 // tools/env/env_utils4.c
-char					*ft_strcpy_content_env(char *s1, char *s2, char *n);
 void					free_multiple_env(t_env *env1, t_env *env2);
-int						get_len_name(char *n);
 void					print_pwd_env(void);
+int						get_len_name(char *n);
 int						get_len_to_equal(char *content);
+char					*ft_strcpy_content_env(char *s1, char *s2, char *n);
 
 // tools/env/env_utils5.c
 void					replace_content_env(char *oldpwd, char *pwd);
@@ -248,8 +227,9 @@ int						check_value_env(char *var);
 
 // tools/export/export_utils1.c
 void					replace_export(t_env **env, char *content);
-int						check_export_exist(t_env *env, char *content);
 void					print_export(char *content);
+int						export_exist(t_env *env, char *content);
+int						exp_exist_bis(t_env *env, char *content);
 int						ft_export_checking(char *content);
 
 // tools/str
@@ -301,7 +281,6 @@ void					ft_free_tab(char **tab);
 char					**get_tab_env(t_env *env);
 
 // ------------------------> Builtins
-void					ft_pwd(t_cmd *shell);
 char					*get_valid_path(char **command);
 
 // ------------------------>TRAAAASH

@@ -4,16 +4,16 @@ void	replace_export(t_env **env, char *content)
 {
 	t_env	*tmp;
 	int		len_n;
-	int		len_c;
 
-	len_c = ft_strlen(content);
-	len_n = get_len_to_equal(content);
+	len_n = 0;
+	if (ft_at_least_charset(content, "="))
+		len_n = get_len_to_equal(content);
 	tmp = (*env);
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->content, content, len_n))
+		if (!ft_strncmp(tmp->content, content, len_n) && len_n)
 			break ;
-		else if (!ft_strncmp(tmp->content, content, len_c))
+		else if (!ft_strncmp(tmp->content, content, 50))
 			break ;
 		tmp = tmp->next;
 	}
@@ -21,7 +21,7 @@ void	replace_export(t_env **env, char *content)
 		tmp->content = content;
 }
 
-int	check_export_exist(t_env *env, char *content)
+int	export_exist(t_env *env, char *content)
 {
 	t_env	*tmp;
 	int		len_c;
@@ -39,6 +39,25 @@ int	check_export_exist(t_env *env, char *content)
 				tmp->content = content;
 				return (1);
 			}
+			return (1);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+int	exp_exist_bis(t_env *env, char *content)
+{
+	t_env	*tmp;
+
+	if (!content)
+		return (1);
+	tmp = env;
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->content, content, 50))
+		{
+			tmp->content = content;
 			return (1);
 		}
 		tmp = tmp->next;

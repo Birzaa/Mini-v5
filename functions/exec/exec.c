@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 18:31:23 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/16 03:31:27 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 void	execute_builtin(t_cmd *cmd, char **command, t_data *data)
 {
+	(void)cmd;
 	if (ft_strcmp(command[0], "cd") == 0)
-		ft_cd(data, command[1]);
+		ft_cd(data, command);
 	else if (ft_strcmp(command[0], "pwd") == 0)
-		ft_pwd(cmd);
+		ft_pwd(data);
 	else if (ft_strcmp(command[0], "export") == 0)
 		export(&data->env, command);
 	else if (ft_strcmp(command[0], "env") == 0)

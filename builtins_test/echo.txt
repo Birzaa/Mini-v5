@@ -3,91 +3,84 @@
 // echo "il etait une fois " | cat -e
 // echo 'il etait une fois ' | cat -e
 
-// echo " " | cat -e			OK
-// echo "" | cat -e				j'sais pas
-// echo ' ' | cat -e			KO
-// echo '' | cat -e				OK
+// echo " " | cat -e				OK
+// echo "" | cat -e					OK
+// echo ' ' | cat -e				KO
+// echo '' | cat -e					OK
 
-// echo -n | cat -e									OK
-// echo -n -n -n -n -n -n | cat -e					OK
-// echo -n -n -n -n-n-n | cat -e					OK
-// echo -n-n-n -n -n -n | cat -e					OK
-// echo -n-n | cat -e								OK
-// echo -n -n | cat -e								OK
+// echo a" "a" "a | cat -e			OK
+// echo a""""a | cat -e				OK
+// echo a """"a | cat -e			OK
+// echo a """" a | cat -e			OK
 
-// echo "-n" | cat -e								OK
-// echo "-n"capart | cat -e							OK
-// echo "-n" capart | cat -e						OK
-// echo '-n' | cat -e								OK
-// echo '-n'capart | cat -e							OK		
-// echo '-n' capart | cat -e						OK
+// echo " " | cat -e				OK
+// echo "" | cat -e					OK
+// echo ' ' | cat -e				OK
+// echo '' | cat -e					OK
 
-// echo "-n " | cat -e								OK
-// echo "-n "capart | cat -e						OK
-// echo "-n " capart | cat -e						OK
-// echo '-n ' | cat -e								OK
-// echo '-n 'capart | cat -e						OK
-// echo '-n ' capart | cat -e						OK
+// echo -n | cat -e					OK
+// echo -n -n -n -n -n -n | cat -e	OK
+// echo -n -n -n -n-n-n | cat -e	OK
+// echo -n-n-n -n -n -n | cat -e	OK
+// echo -n-n | cat -e				OK
+// echo -n -n | cat -e				OK
 
-// echo " -n " | cat -e								OK
-// echo " -n "capart | cat -e						OK
-// echo " -n " capart | cat -e						OK
-// echo ' -n ' | cat -e								OK
-// echo ' -n 'capart | cat -e						OK
-// echo ' -n ' capart | cat -e						OK
+// echo "-n" | cat -e				OK
+// echo "-n"capart | cat -e			OK
+// echo "-n" capart | cat -e		OK
+// echo '-n' | cat -e				OK
+// echo '-n'capart | cat -e			OK		
+// echo '-n' capart | cat -e		OK
 
-// echo " -n" | cat -e								OK
-// echo " -n"capart | cat -e						OK
-// echo " -n" capart | cat -e						OK
-// echo ' -n' | cat -e								OK
-// echo ' -n'capart | cat -e						OK
-// echo ' -n' capart | cat -e						OK
+// echo "-n " | cat -e				OK
+// echo "-n "capart | cat -e		OK
+// echo "-n " capart | cat -e		OK
+// echo '-n ' | cat -e				OK
+// echo '-n 'capart | cat -e		OK
+// echo '-n ' capart | cat -e		OK
 
-// echo -n-n-n-n-n-n | cat -e						OK
-// echo "-n-n-n-n-n-n" | cat -e						OK
-// echo '-n-n-n-n-n-n' | cat -e						OK
+// echo " -n " | cat -e				OK
+// echo " -n "capart | cat -e		OK
+// echo " -n " capart | cat -e		OK
+// echo ' -n ' | cat -e				OK
+// echo ' -n 'capart | cat -e		OK
+// echo ' -n ' capart | cat -e		OK
 
+// echo " -n" | cat -e				OK
+// echo " -n"capart | cat -e		OK
+// echo " -n" capart | cat -e		OK
+// echo ' -n' | cat -e				OK
+// echo ' -n'capart | cat -e		OK
+// echo ' -n' capart | cat -e		OK
 
-echo "capart "" " il etait une fois "" test1 '' 'test2' "'capart   '  " bonjour
-echo -n "capart "" " il etait une fois "" test1 '' 'test2' "'capart   '" bonjour
-echo -n "capart "" " il etait une fois "" test1 '' 'test2' "'capart'" bonjour
-echo -n "capart "" " il etait une fois "" test1 '' 'test2' '"capart   "' bonjour
-echo -n "capart "" " il etait une fois "" test1 '' 'test2' '"capart   "' bonjour
-echo -n "capart "" " il etait une fois "" test1 '' 'test2' '"capart"' bonjour "'a'"'"a"'Test"a" "test"T
-
-echo export Z="value" "capart "" " il etait une fois "" test1 '' 'test2' '"capart"' bonjour "'a'"'"a"'Test"a" "test"T
-
-
-echo "test1"test2
-
-echo "test1"test2 "'a'"b
-
-echo "test1"test2 "'a'"a 'bonjour'"la famille"
-
-echo "test1"test2 "'a'"a 'bonjour'"la famille" ca me casse les couilles "" "" test1"23" 4 5 6 "78910test"'dwq'"pourdwqdwq"
-""	rien
-
-" " espace
-
-"a" "a"			a a
-"a""a" 			aa
-
-"'a'" "'a'" 	'a' 'a'
-"'a'""'a'" 		'a''a'
-
-'"a"' "'a'"		"a" 'a'
-'"a"'"'a'"		"a"'a'
-
-'"a"' '"a"'		"a" "a"
-'"a"''"a"'		"a""a"
-
-"'a'" '"a"' 	 'a' "a"
-"'a'"'"a"'		'a'"a"
+// echo -n-n-n-n-n-n | cat -e		OK
+// echo "-n-n-n-n-n-n" | cat -e		OK
+// echo '-n-n-n-n-n-n' | cat -e		OK
 
 
+echo "capart "" " il etait une fois "" test1 '' 'test2' "'capart   '  " bonjour															OK
+echo -n "capart "" " il etait une fois "" test1 '' 'test2' "'capart   '" bonjour														OK
+echo -n "capart "" " il etait une fois "" test1 '' 'test2' "'capart'" bonjour															OK
+echo -n "capart "" " il etait une fois "" test1 '' 'test2' '"capart   "' bonjour														OK
+echo -n "capart "" " il etait une fois "" test1 '' 'test2' '"capart   "' bonjour														OK
+echo -n "capart "" " il etait une fois "" test1 '' 'test2' '"capart"' bonjour "'a'"'"a"'Test"a" "test"T									OK
+echo export Z="value" "capart "" " il etait une fois "" test1 '' 'test2' '"capart"' bonjour "'a'"'"a"'Test"a" "test"T					OK
+echo "test1"test2																														OK
+echo "test1"test2 "'a'"b																												OK
+echo "test1"test2 "'a'"a 'bonjour'"la famille"																							OK
+echo "test1"test2 "'a'"a 'bonjour'"la famille" ca me casse les couilles "" "" test1"23" 4 5 6 "78910test"'dwq'"pourdwqdwq"				OK
+echo -n '-n' "-n" -n-n-n test"1" "test"2 test'3' 'test'4 "test""5" 'test''6' "test"'7' 'test'"8" "'test'"9 '"test"'10 "'test'"'11'		OK
+echo test""12 'test'""13 "test"""""14 'test'''''''"15" test""1""6 test''1''7 test18"$USER"												OK
 
-"'a'""'a'"
-
-reccup le token double quote
-
-'a'""'a'" 	
+""				rien				OK
+" " 			espace				OK
+"a" "a"			a a					OK
+"a""a" 			aa					OK
+"'a'" "'a'" 	'a' 'a'				OK
+"'a'""'a'" 		'a''a'				OK
+'"a"' "'a'"		"a" 'a'				OK
+'"a"'"'a'"		"a"'a'				OK
+'"a"' '"a"'		"a" "a"				OK
+'"a"''"a"'		"a""a"				OK
+"'a'" '"a"' 	'a' "a"				OK
+"'a'"'"a"'		'a'"a"				OK

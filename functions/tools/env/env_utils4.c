@@ -41,7 +41,7 @@ void	print_pwd_env(void)
 	{
 		pwd = getcwd(NULL, 0);
 		if (!pwd)
-			return ;
+			return (perror(""));
 		ft_putstr_fd("PWD=", 1);
 		ft_putstr_fd(pwd, 1);
 		ft_putchar_fd('\n', 1);

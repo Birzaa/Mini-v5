@@ -1,15 +1,18 @@
 #include "minishell.h"
 
-void	ft_pwd(t_cmd *shell)
+void	ft_pwd(t_data *data)
 {
-	(void)shell;
 	char	*cwd;
 
+	(void)data;
 	cwd = NULL;
 	cwd = getcwd(NULL, 0);
-	if (cwd != NULL)
+	if (!cwd)
+		return (perror(""));
+	else if (cwd)
 	{
-		printf("%s\n", cwd);
+		ft_putstr_fd(cwd, 1);
 		free(cwd);
+		// g_ret_value = 0;
 	}
 }

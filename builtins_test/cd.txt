@@ -1,8 +1,8 @@
 command				note	code d'erreur	message error																comment
-cd a b				KO		1				bash: cd: too many arguments												
-cd $HOME			KO		0																							
-cd $NOPATH			KO		1				bash: cd: abc: No such file or directory									(NOPATH=abc)
-cd $NOPATH			KO		1				bash: cd: noexist: No such file or directory								(NOPATH=noexist)
+cd a b				OK		1				bash: cd: too many arguments												
+cd $HOME			OK		0																							
+cd $NOPATH			OK		1				bash: cd: abc: No such file or directory									(NOPATH=abc)
+cd $NOPATH			OK		1				bash: cd: noexist: No such file or directory								(NOPATH=noexist)
 cd $NOVALUEPATH		KO		0																							(NOVALUEPATH=) ca fait rien
 cd $NOVALUEPATH		KO		0																							(NOVALUEPATH) ca fait rien
 cd $PATH			KO		0																							(PATH=/home/)
@@ -12,6 +12,9 @@ cd $HOMEexist		KO		0																							cd dans le home
 cd $HOME/noexist	KO		1				bash: cd: /home/abougrai/noexist: No such file or directory
 cd $HOME$HOME		KO		1				bash: cd: /home/abougrai/home/abougrai: No such file or directory			expand infini
 cd $Z$Z$Z$Z$Z$Z		KO		0																							(Z=) ca fait rien
+cd ""				OK		0																							refresh quand meme le old pwd
+cd 					OK		0																							chaque appel de cd a l'air de tout refresh
+cd " "				OK		1																							sauf quand error apparement, osef
 
 export HOME=/home/abougrai
 cd					OKL		0	

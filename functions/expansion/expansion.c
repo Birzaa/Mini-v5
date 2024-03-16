@@ -44,7 +44,7 @@ char	*get_name_expansion(t_env *env, char *n)
 	}
 	name = ft_calloc(1, 1);
 	if (!name)
-		return (NULL);
+		return (perror(""), NULL);
 	return (name);
 }
 

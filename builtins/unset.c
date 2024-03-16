@@ -50,7 +50,7 @@ void	unset_without_equal(t_env *env, char *s)
 	{
 		if (!ft_strncmp(target->content, s, len))
 		{
-			del_node_env(target, previous);
+			Z = del_node_env(target, previous);
 			break ;
 		}
 		previous = target;
@@ -58,11 +58,10 @@ void	unset_without_equal(t_env *env, char *s)
 	}
 }
 
-// unset prend data->env et le nom d'une var env
 void	unset(t_env *env, char **command)
 {
 	if (!command[1])
-			return ;
+		return ;
 	else if (!ft_strncmp("_", command[1], 2))
 		return ;
 	else if (!ft_at_least_charset(command[1], "="))
