@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 14:12:06 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/17 19:43:24 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,10 +322,9 @@ t_cmd					*ft_cmd_last(t_cmd *cmd);
 void					add_back_cmd(t_cmd **cmd, t_cmd *new);
 void					print_node(t_node *node);
 void					print_cmd_list(t_cmd *head);
-void	execute_builtin(t_cmd *cmd, char **command, t_data *data);
-int	is_builtin(char *cmd);
-
-
+void					execute_builtin(t_cmd *cmd, char **command,
+							t_data *data);
+int						is_builtin(char *cmd);
 
 //********************************************************
 
@@ -360,10 +359,23 @@ void					parse_space_in_quote(t_stack *list);
 void					index_quote(t_stack *list);
 
 //***********************EXECUTION*********************************
+typedef struct s_pipex
+{
+	int					infile;
+	int					outfile;
+	int					*pipe;
+	int					idx;
+	int					nb_cmd;
+	int					saved_in;
+	int					saved_out;
+	pid_t				pid;
+}						t_pipex;
+
 void					execution(t_command *head, char **env);
-int						open_redir_in2(t_command *head);
-int						open_redir_out(t_command *head);
+void					open_redir_in(t_command *head, t_pipex *pipex);
+void					open_redir_out(t_command *head, t_pipex *pipex);
 void					execute_cmd(char **env, char **valid_cmd);
+
 
 //****************************************************************
 void					test_exp(t_cmd *cmd, t_data *data);

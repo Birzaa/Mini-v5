@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 17:39:46 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/17 14:01:26 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int	main(int ac, char **av, char **env)
 				ft_exit(&data);
 			data.lex = lexer(input);
 			// print_list(data.lex);
-			if (!error_cmd(data.lex))
-			{
+		/* 	if (!error_cmd(data.lex))
+			{ */
 				envp = get_tab_env(data.env);
 				init_parse(&data);
 				/* if (is_builtin(data.parsed_cmd->parsed_cmd->full_cmd[0]))
@@ -56,7 +56,7 @@ int	main(int ac, char **av, char **env)
 					ft_cd(data.parsed_cmd->parsed_cmd->full_cmd[1], &data); */
 				execution(data.parsed_cmd, env);
 				ft_free_tab(envp);
-			}
+			// }
 		}
 	}
 }
