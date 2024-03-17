@@ -1,35 +1,91 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_env.c                                         :+:      :+:    :+:   */
+/*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/16 03:53:01 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/17 01:47:06 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_check_env_exist_test(char *content, t_env *env)
+char	**get_all_comb(char *content)
+{
+	int		len;
+	int		i;
+	char	**tab;
+
+	len = 0;
+	tab = NULL;
+	i = 0;
+	len = ft_strlen(content);
+	tab = malloc((len + 1) * sizeof(char *));
+	if (!tab)
+		return (NULL);
+	while (i < len)
+	{
+		tab[i] = malloc((i + 2) * sizeof(char));
+		if (!tab[i])
+		{
+			ft_free_tab(tab);
+			return (NULL);
+		}
+		ft_strncpy(tab[i], content, i + 1);
+		tab[i][i + 1] = '\0';
+		i++;
+	}
+	tab[i] = NULL;
+	return (tab);
+}
+
+int	ft_check_env_exist_test(char *str, t_env *env)
 {
 	t_env	*tmp;
 	int		len_c;
 	char	*name_env;
 
-	if (!content)
+	if (!str)
 		return (0);
-	len_c = ft_strlen(content);
+	len_c = ft_strlen(str);
 	tmp = env;
 	while (tmp)
 	{
 		name_env = ft_get_name_env(tmp->content);
-		if (!ft_strncmp(name_env, content, len_c))
+		if (!ft_strncmp(name_env, str, len_c))
 			return (1);
 		tmp = tmp->next;
 	}
 	return (0);
+}
+
+/* ft_check_comb_env(t_env *env, char **comb, char *content)
+{
+	(void)env;
+	(void)comb;
+	(void)content;
+	return;
+} */
+
+int	check_combn(t_env *env, char *content )
+{
+	char	**comb;
+	int		i;
+
+	comb = NULL;
+	i = 0;
+	(void)i;
+	(void)env;
+	comb = get_all_comb(content);
+	if (!comb)
+		return (0);
+	/* else if (ft_check_comb_env(env, comb, content))
+	{
+		return (ft_free_tab(comb), 1);
+	} */
+	return (ft_free_tab(comb), 0);
 }
 
 char	*ft_get_expand_test(char *content, t_env *env)
@@ -54,24 +110,23 @@ char	*ft_get_expand_test(char *content, t_env *env)
 	return (0);
 }
 
-void	remplacer_env(t_cmd_word *cmd, t_data *data)
+void	expand(t_cmd_word *cmd, t_data *data)
 {
 	char	*tmp;
 
 	cmd = cmd->next;
 	if (!ft_check_env_exist_test(cmd->content, data->env))
 		return ;
+	else if (check_combn(data->env, cmd->content  ))
+	{
+		// l'envoyer dans le get expand
+	}
 	tmp = ft_get_expand_test(cmd->content, data->env);
 	cmd->content = tmp;
 	return ;
 }
 
-void	expand(t_cmd_word *cmd, t_data *data)
-{
-	remplacer_env(cmd, data);
-}
-
-void	test_exp(t_cmd *cmd, t_data *data)
+void	parsing_expand(t_cmd *cmd, t_data *data)
 {
 	t_cmd		*head;
 	t_cmd_word	*tmp_word;

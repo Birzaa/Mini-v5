@@ -1,71 +1,55 @@
 #include "minishell.h"
 
-void	unset_with_equal(t_env *env, char *s)
+void	unset_check(t_env *env, char *s, int check)
 {
-	t_env	*previous;
-	t_env	*target;
-	int		len;
+	int	len_s;
+	int	len;
 
-	len = ft_strlen(s);
-	if (ft_envsize(env) == 1)
+	len = get_len_to_equal(env->content);
+	len_s = get_len_to_equal(s);
+	if (env->next)
 	{
-		if (!ft_strncmp(env->content, s, len) && env->content[len] == '=')
-			env->content = NULL;
-		return ;
-	}
-	if (!ft_strncmp(env->content, s, len) && env->content[len] == '=')
-		swap_content_env(env, env->next);
-	previous = env;
-	target = env->next;
-	while (target)
-	{
-		if (!ft_strncmp(target->content, s, len) && target->content[len] == '=')
-		{
-			del_node_env(target, previous);
-			break ;
-		}
-		previous = target;
-		target = target->next;
+		if (!(ft_strncmp(env->content, s, len_s) && len == len_s && check)
+			|| (!ft_strncmp(env->content, s, len_s) && len == len_s && !check))
+			swap_content_env(env, env->next);
 	}
 }
 
-void	unset_without_equal(t_env *env, char *s)
+void	unset_del(t_env *env, char *s)
 {
-	t_env	*previous;
-	t_env	*target;
-	int		len;
+	t_env	*prev;
+	t_env	*t;
+	int		len_s;
+	int		t_len;
+	int		check;
 
-	len = ft_strlen(s);
-	if (ft_envsize(env) == 1)
+	check = 0;
+	len_s = get_len_to_equal(s);
+	if (ft_at_least_charset(s, "="))
+		check = 1;
+	unset_check(env, s, check);
+	prev = env;
+	t = env->next;
+	while (t)
 	{
-		if (!ft_strncmp(env->content, s, len))
-			env->content = NULL;
-		return ;
-	}
-	if (!ft_strncmp(env->content, s, len))
-		swap_content_env(env, env->next);
-	previous = env;
-	target = env->next;
-	while (target)
-	{
-		if (!ft_strncmp(target->content, s, len))
-		{
-			del_node_env(target, previous);
-			break ;
-		}
-		previous = target;
-		target = target->next;
+		t_len = get_len_to_equal(t->content);
+		if (!ft_strncmp(t->content, s, len_s) && t_len == len_s && check)
+			return (del_node_env(t, prev));
+		else if (!ft_strncmp(t->content, s, len_s) && t_len == len_s && !check)
+			return (del_node_env(t, prev));
+		t = t->next;
+		prev = prev->next;
 	}
 }
 
-void	unset(t_env *env, char **command)
+void	ft_unset(t_env *env, char **command)
 {
 	if (!command[1])
 		return ;
 	else if (!ft_strncmp("_", command[1], 2))
 		return ;
-	else if (!ft_at_least_charset(command[1], "="))
-		unset_without_equal(env, command[1]);
+	else if (ft_envsize(env) == 1)
+		return ;
 	else
-		unset_with_equal(env, command[1]);
+		unset_del(env, command[1]);
 }

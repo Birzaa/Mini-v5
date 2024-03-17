@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/16 03:31:27 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/16 23:52:40 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	execute_builtin(t_cmd *cmd, char **command, t_data *data)
 	else if (ft_strcmp(command[0], "pwd") == 0)
 		ft_pwd(data);
 	else if (ft_strcmp(command[0], "export") == 0)
-		export(&data->env, command);
+		ft_export(&data->env, command);
 	else if (ft_strcmp(command[0], "env") == 0)
 		ft_env(data, command);
 	else if (ft_strcmp(command[0], "echo") == 0)
 		ft_echo(command);
 	else if (ft_strcmp(command[0], "unset") == 0)
-		unset(data->env, command);
+		ft_unset(data->env, command);
 }
 
 int	is_builtin(char *cmd)

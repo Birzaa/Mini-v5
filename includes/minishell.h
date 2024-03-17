@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/16 04:41:15 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/17 01:17:13 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,8 +168,8 @@ void					init_signals(void);
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~> Builtins
 
-void					export(t_env **env, char **command);
-void					unset(t_env *env, char **command);
+void					ft_export(t_env **env, char **command);
+void					ft_unset(t_env *env, char **command);
 void					ft_env(t_data *data, char **command);
 void					ft_cd(t_data *data, char **command);
 void					ft_exit(t_data *data);
@@ -233,6 +233,8 @@ int						exp_exist_bis(t_env *env, char *content);
 int						ft_export_checking(char *content);
 
 // tools/str
+char	*ft_strncpy(char *dest, char *src, unsigned int n);
+
 int						ft_strcmp(char *s1, char *s2);
 char					*ft_strcpy(char *s1, char *s2);
 
@@ -346,7 +348,8 @@ int						open_redir_out(t_command *head);
 void					execute_cmd(char **env, char **valid_cmd);
 
 //****************************************************************
-void					test_exp(t_cmd *cmd, t_data *data);
+void				parsing_expand(t_cmd *cmd, t_data *data);
+
 void					handle_no_expand(t_cmd_word *actual, t_cmd_word *next);
 
 #endif

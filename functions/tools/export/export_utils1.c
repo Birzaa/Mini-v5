@@ -4,21 +4,27 @@ void	replace_export(t_env **env, char *content)
 {
 	t_env	*tmp;
 	int		len_n;
+	int		len_tmp;
+	int		check;
 
-	len_n = 0;
+	len_tmp = 0;
+	check = 0;
 	if (ft_at_least_charset(content, "="))
-		len_n = get_len_to_equal(content);
+		check = 1;
+	len_n = get_len_to_equal(content);
 	tmp = (*env);
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->content, content, len_n) && len_n)
-			break ;
-		else if (!ft_strncmp(tmp->content, content, 50))
-			break ;
+		len_tmp = get_len_to_equal(tmp->content);
+		if (!ft_strncmp(tmp->content, content, len_n) && len_tmp == len_n)
+		{
+			if (!check && ft_at_least_charset(tmp->content, "="))
+				return ;
+			else if (check)
+				tmp->content = content;
+		}
 		tmp = tmp->next;
 	}
-	if (ft_at_least_charset(content, "="))
-		tmp->content = content;
 }
 
 int	export_exist(t_env *env, char *content)
@@ -32,10 +38,13 @@ int	export_exist(t_env *env, char *content)
 	tmp = env;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->content, content, len_c))
+		if (!ft_strncmp(tmp->content, content, len_c + 2))
 		{
+			printf("test 4\n");
+			printf("%d\n", len_c);
 			if (ft_strncmp(tmp->content, content, ft_strlen(content)))
 			{
+				printf("test 5\n");
 				tmp->content = content;
 				return (1);
 			}

@@ -42,5 +42,4 @@ leak potentiel
 ----> tester tous les expand
 
 ----> revoir unset et export, ca l'air bizarre maitenant 
-
-
+unset et export ont l'air carre 

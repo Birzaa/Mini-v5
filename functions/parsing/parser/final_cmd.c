@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 14:11:33 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/17 00:09:27 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	init_parse(t_data *data)
 	parse_space_in_quote(data->lex);
 	index_quote(data->lex);
 	data->cmd = parser(data->lex);
-	test_exp(data->cmd, data);
+	parsing_expand(data->cmd, data);
 	parsing_quote(data->cmd);
 	data->parsed_cmd = parse(data->cmd);
 	print_list(data->lex);

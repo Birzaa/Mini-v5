@@ -42,7 +42,26 @@ void	export_no_arg(t_env *env)
 	free_env(env_cpy);
 }
 
-void	export(t_env **env, char **cmd)
+int	export_exist_capart(t_env *env, char *content)
+{
+	t_env	*tmp;
+	int		len_c;
+	int		len_tmp;
+
+	len_tmp = 0;
+	len_c = get_len_to_equal(content);
+	tmp = env;
+	while (tmp)
+	{
+		len_tmp = get_len_to_equal(tmp->content);
+		if (!ft_strncmp(tmp->content, content, len_c) && len_tmp == len_c)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+void	ft_export(t_env **env, char **cmd)
 {
 	t_env	*tmp;
 
@@ -57,10 +76,7 @@ void	export(t_env **env, char **cmd)
 		// 	g_ret_value = 1;
 		return ;
 	}
-	else if (ft_at_least_charset(cmd[1], "=") && !export_exist((*env), cmd[1]))
-		export_new_add_back(env, tmp, cmd[1]);
-	else if (!ft_at_least_charset(cmd[1], "=") && !exp_exist_bis((*env),
-			cmd[1]))
+	else if (!export_exist_capart((*env), cmd[1]))
 		export_new_add_back(env, tmp, cmd[1]);
 	else
 		replace_export(env, cmd[1]);

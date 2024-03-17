@@ -4,25 +4,25 @@ export				?
 export Z			OKL		0								both 		export 					Z	
 export Z=			OKL		0								both		both		Z=			Z=""
 export Z=""			OKL		0								both		both		Z= 		 	Z="" 	
-export Z="capart"	KO		0								both		both		Z=capart 	Z="capart"
+export Z="capart"	OK		0								both		both		Z=capart 	Z="capart"
 export Z=capart		OKL		0								both		both		Z=capart 	Z="capart" 
-export 9
-export 9=pour
-export _Z=
+export 9			OK
+export 9=pour		OK
+export _Z=			OK
 
 if Z=
 export Z			OK		0								both		both		Z= 			Z="" 												 								
 export Z=			OKL		0								both		both		Z=  		Z="" 															
 export Z=""			OKL		0								both		both		Z=capart 	Z="" 											
-export Z="capart"	KO		0								both		both		Z=capart 	Z="capart" 					
+export Z="capart"	OK		0								both		both		Z=capart 	Z="capart" 					
 export Z=capart		OKL		0								both		both		Z=capart 	Z="capart"															
 
 if Z=value
 export Z			OK		0								both		both		Z=value		Z="value"											 		 						
 export Z=			OKL		0								both		both		Z=			Z=""													
 export Z=""			OKL		0								both		both		Z=			Z=""														
-export Z="capart"	KO		0								both		both		Z=capart	Z="capart"										
-export Z=""capart""	KO		0								both		both		Z=capart	Z="capart"										
+export Z="capart"	OK		0								both		both		Z=capart	Z="capart"										
+export Z=""capart""	OK		0								both		both		Z=capart	Z="capart"										
 export Z=capart		OKL		0								both		both		Z=capart	Z="capart"														
 
 if Z
@@ -30,7 +30,7 @@ export Z			OKL		0								both		export					Z
 export Z=			OKL		0								both		both		Z=			Z=""													
 export Z=""			OKL		0								both		both		Z=			Z=""													
 export Z=""""		OKL		0								both		both		Z=			Z=""													
-export Z="capart"	KO		0								both		both		Z=capart	Z="capart"														
+export Z="capart"	OKL		0								both		both		Z=capart	Z="capart"														
 export Z=capart		OKL		0								both		both		Z=capart	Z=""
 
 other
@@ -39,3 +39,5 @@ export Z="ca""part"	KO		0								both		both		Z=capart	Z="capart" 	est possible d
 export Z===			OKL		0								both		both		Z===		Z="===" 	
 export Ztest"cap"	KO		0								both		export					Ztestcap	tous les " ont l'air d'etre ignored
 						
+Z=test1iletaitunefois'a'
+Z=test1iletaitunefois'a'

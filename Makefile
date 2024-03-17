@@ -34,7 +34,7 @@ SRC = $(SRC_DIR)main.c \
 	$(PARSER_DIR)quote.c \
 	$(PARSER_DIR)space_in_quote.c \
 	$(PARSER_DIR)redir_out.c \
-	$(PARSER_DIR)test_env.c \
+	$(PARSER_DIR)expansion.c \
 	$(PARSER_DIR)skip.c \
 	$(PARSER_DIR)index_quote.c \
 	$(PARSER_DIR)cmd_next.c \
@@ -45,6 +45,7 @@ SRC = $(SRC_DIR)main.c \
 	$(PARSING_DIR)syntax.c \
 	$(SRC_DIR)env/get_env.c \
 	$(SRC_DIR)expansion/expansion.c \
+	$(SRC_DIR)tools/str/ft_strncpy.c \
 	$(SRC_DIR)tools/str/ft_strcmp.c \
 	$(SRC_DIR)tools/str/ft_strcpy.c \
 	$(SRC_DIR)tools/cd/cd_utils1.c \
