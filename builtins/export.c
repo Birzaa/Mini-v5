@@ -7,6 +7,15 @@ export avec	arg = add the var in env variables , check les cas d'erreur*/
 // export prend &data->env et capart=bonjour
 // export a fix, no arg, faut mettre les values entre ""
 
+void	export_new_add_back(t_env **env, t_env *tmp, char *cmd)
+{
+	tmp = ft_env_new(cmd);
+	if (!tmp)
+		return (perror(""));
+	add_back_env(env, tmp);
+	return ;
+}
+
 void	export_no_arg(t_env *env)
 {
 	t_env	*env_cpy;
@@ -19,13 +28,13 @@ void	export_no_arg(t_env *env)
 	{
 		tmp = ft_env_new(env->content);
 		if (!tmp)
-			return (free_multiple_env(env, env_cpy)) ;
+			return (perror(""), free_multiple_env(env, env_cpy));
 		add_back_env(&env_cpy, tmp);
 		env = env->next;
 	}
 	env_cpy = ft_sort_env(env_cpy, ft_strcmp);
 	tmp = env_cpy;
-	while (tmp->next)
+	while (tmp)
 	{
 		print_export(tmp->content);
 		tmp = tmp->next;
@@ -33,30 +42,42 @@ void	export_no_arg(t_env *env)
 	free_env(env_cpy);
 }
 
-void	export(t_env **env, char *content)
+int	export_exist_capart(t_env *env, char *content)
+{
+	t_env	*tmp;
+	int		len_c;
+	int		len_tmp;
+
+	len_tmp = 0;
+	len_c = get_len_to_equal(content);
+	tmp = env;
+	while (tmp)
+	{
+		len_tmp = get_len_to_equal(tmp->content);
+		if (!ft_strncmp(tmp->content, content, len_c) && len_tmp == len_c)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+void	ft_export(t_env **env, char **cmd)
 {
 	t_env	*tmp;
 
-	/* 	if content est ne chaine de char vide
-		{
-			ft_putstr_fd("bash: export: `': not a valid identifier", 1);
-			//g_ret_value = 1;
-			return ;
-		} */
-	if (ft_export_checking(content))
+	tmp = NULL;
+	if (!cmd[1])
+		return (export_no_arg((*env)));
+	else if (!ft_strncmp("_", cmd[1], 2) || !ft_strncmp("_=", cmd[1], 2))
+		return ;
+	else if (ft_export_checking(cmd[1]))
 	{
-		printf("bash: export: `%s': not a valid identifier\n", content);
-		// 		g_ret_value = 1;
+		printf("bash: export: `%s': not a valid identifier\n", cmd[1]);
+		// 	g_ret_value = 1;
 		return ;
 	}
-	if (!check_export_exist((*env), content))
-	{
-		tmp = ft_env_new(content);
-		if (!tmp)
-			return ;
-		add_back_env(env, tmp);
-		return ;
-	}
+	else if (!export_exist_capart((*env), cmd[1]))
+		export_new_add_back(env, tmp, cmd[1]);
 	else
-		replace_export(env, content);
+		replace_export(env, cmd[1]);
 }
