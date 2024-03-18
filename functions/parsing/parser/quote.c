@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/15 14:29:42 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/18 14:54:25 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	parsing_quote(t_cmd *cmd)
 		{
 			if (tmp_word->next && (tmp_word->state != GENERAL
 					|| (tmp_word->type == WORD
-						&& tmp_word->next->type != WHITE_SPACE))
+						&& (tmp_word->next->type != WHITE_SPACE && !is_redir(tmp_word->next->type))))
 				&& (tmp_word->type == WORD || tmp_word->type == QOUTE
 					|| tmp_word->type == DOUBLE_QUOTE))
 				put_in_one_word(&tmp_word, tmp_word->index);
