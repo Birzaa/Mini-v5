@@ -1,0 +1,14 @@
+echo $HOME/
+echo $HOME*
+echo $HOME-
+echo $HOME+
+echo $HOME%
+echo $HOME$
+echo $HOME#
+echo $HOME@
+echo $HOME!
+echo $HOME~
+echo $HOME~
+echo $HOME959
+echo $HOME/dwqd
+echo $HOME/dwqd

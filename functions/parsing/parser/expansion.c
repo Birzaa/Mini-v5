@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/17 01:47:06 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:51:16 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,18 @@ char	**get_all_comb(char *content)
 	return (tab);
 }
 
-int	ft_check_env_exist_test(char *str, t_env *env)
+int	ft_check_expand_exist(t_env *env, char *str)
 {
 	t_env	*tmp;
 	int		len_c;
 	char	*name_env;
+	int		check;
 
+	check = 0;
 	if (!str)
 		return (0);
+	if (ft_at_least_charset(str, "="))
+		check = 1;
 	len_c = ft_strlen(str);
 	tmp = env;
 	while (tmp)
@@ -59,33 +63,6 @@ int	ft_check_env_exist_test(char *str, t_env *env)
 		tmp = tmp->next;
 	}
 	return (0);
-}
-
-/* ft_check_comb_env(t_env *env, char **comb, char *content)
-{
-	(void)env;
-	(void)comb;
-	(void)content;
-	return;
-} */
-
-int	check_combn(t_env *env, char *content )
-{
-	char	**comb;
-	int		i;
-
-	comb = NULL;
-	i = 0;
-	(void)i;
-	(void)env;
-	comb = get_all_comb(content);
-	if (!comb)
-		return (0);
-	/* else if (ft_check_comb_env(env, comb, content))
-	{
-		return (ft_free_tab(comb), 1);
-	} */
-	return (ft_free_tab(comb), 0);
 }
 
 char	*ft_get_expand_test(char *content, t_env *env)
@@ -110,17 +87,38 @@ char	*ft_get_expand_test(char *content, t_env *env)
 	return (0);
 }
 
+int	ft_check_symbol(char *content)
+{
+	int	i;
+
+	i = 0;
+	while (content[i])
+	{
+		if (!ft_isalnum(content[i]))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	expand(t_cmd_word *cmd, t_data *data)
 {
 	char	*tmp;
+	int		check;
 
+	check = 0;
+	(void)data;
 	cmd = cmd->next;
-	if (!ft_check_env_exist_test(cmd->content, data->env))
+	printf("%s\n", cmd->content);
+	printf("%d\n", check);
+	if (ft_check_symbol(cmd->content) && cmd->state != QOUTE)
+		check = 1;
+	if (!ft_check_expand_exist(data->env, cmd->content) && !check)
 		return ;
-	else if (check_combn(data->env, cmd->content  ))
+	/* else if (check_combn(data->env, cmd->content))
 	{
 		// l'envoyer dans le get expand
-	}
+	} */
 	tmp = ft_get_expand_test(cmd->content, data->env);
 	cmd->content = tmp;
 	return ;
@@ -148,3 +146,26 @@ void	parsing_expand(t_cmd *cmd, t_data *data)
 		head = head->next;
 	}
 }
+/* ft_check_comb_env(t_env *env, char **comb, char *content)
+{
+
+	(void)env;
+	(void)comb;
+	(void)content;
+	return ;
+} */
+/* int	check_combn(t_env *env, char *content)
+{
+	comb = NULL;
+	i = 0;
+	(void)i;
+	(void)env;
+	comb = get_all_comb(content);
+	if (!comb)
+		return (0);
+	else if (ft_check_comb_env(env, comb, content))
+	{
+		return (ft_free_tab(comb), 1);
+	}
+	return (ft_free_tab(comb), 0);
+} */

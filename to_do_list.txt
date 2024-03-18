@@ -43,3 +43,7 @@ leak potentiel
 
 ----> revoir unset et export, ca l'air bizarre maitenant 
 unset et export ont l'air carre 
+
+
+" $HOME "  	if $ is in state 0 ca devient un word 
+"$HOME/ "	contains un non alpha num donc expand et $HOME devient path/
