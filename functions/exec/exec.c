@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/18 23:45:10 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/19 11:22:45 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	child(t_pipex p, char **cmd, char **env, t_data *data)
 		}
 		// Fermeture de tous les descripteurs de fichiers des tuyaux dans le processus enfant
 		close_pipes(&p);
-		if (!is_builtin(cmd[0]))
+		if (!is_builtin(cmd[0]) && cmd)
 			execute_cmd(env, cmd);
 		else
 		{

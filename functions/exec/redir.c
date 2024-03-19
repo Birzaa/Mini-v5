@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:04:14 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/18 23:28:31 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/19 11:27:44 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	here_doc(char *av, t_pipex *pipex)
 	}
 	while (1)
 	{
-		write(1, "heredoc> ", 9);
+		write(1, "\033[1;34m~> \033[0m", 15);
 		buf = get_next_line(0);
 		if (!buf)
 			exit(1);
