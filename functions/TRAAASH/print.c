@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:00:41 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/17 13:56:42 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/19 16:42:18 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,3 +114,4 @@ void print_cmd_list(t_cmd *head) {
 }
 
 //<infile <<eof wc -l > outfile | ls -llllll | ls -a -a -a |echo "''Bonjour' 'tocard''" |ls $HOME > fichier | ls >>'"'finalfile'"'
+//<Makefile cat -e -e       -e | ls -alt |sleep 5 | sleep 10 | <<eof ls |<Makefile cat  >a>>b
