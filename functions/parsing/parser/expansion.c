@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/18 16:51:16 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/18 21:39:07 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_check_expand_exist(t_env *env, char *str)
 	int		len_c;
 	char	*name_env;
 	int		check;
-
+	(void)check;
 	check = 0;
 	if (!str)
 		return (0);
@@ -108,10 +108,11 @@ void	expand(t_cmd_word *cmd, t_data *data)
 
 	check = 0;
 	(void)data;
+	(void)check;
 	cmd = cmd->next;
 	printf("%s\n", cmd->content);
 	printf("%d\n", check);
-	if (ft_check_symbol(cmd->content) && cmd->state != QOUTE)
+	if (ft_check_symbol(cmd->content) && cmd->state != IN_QUOTE)
 		check = 1;
 	if (!ft_check_expand_exist(data->env, cmd->content) && !check)
 		return ;
