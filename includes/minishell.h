@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/17 01:17:13 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:34:49 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,13 @@ char					*ft_strcpy_content_env(char *s1, char *s2, char *n);
 void					replace_content_env(char *oldpwd, char *pwd);
 int						check_value_env(char *var);
 
+// tools/expansion/expansion/expansion_utils1.c
+
+int						ft_check_symbol(char *content);
+int						ft_strlen_symbol(char *str);
+char					*ft_get_symbol_join(char *content);
+char					*ft_get_symbol_expand(char *content);
+
 // tools/export/export_utils1.c
 void					replace_export(t_env **env, char *content);
 void					print_export(char *content);
@@ -233,7 +240,7 @@ int						exp_exist_bis(t_env *env, char *content);
 int						ft_export_checking(char *content);
 
 // tools/str
-char	*ft_strncpy(char *dest, char *src, unsigned int n);
+char					*ft_strncpy(char *dest, char *src, unsigned int n);
 
 int						ft_strcmp(char *s1, char *s2);
 char					*ft_strcpy(char *s1, char *s2);
@@ -348,7 +355,7 @@ int						open_redir_out(t_command *head);
 void					execute_cmd(char **env, char **valid_cmd);
 
 //****************************************************************
-void				parsing_expand(t_cmd *cmd, t_data *data);
+void					parsing_expand(t_cmd *cmd, t_data *data);
 
 void					handle_no_expand(t_cmd_word *actual, t_cmd_word *next);
 

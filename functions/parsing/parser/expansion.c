@@ -6,123 +6,113 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/18 21:39:07 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:05:22 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**get_all_comb(char *content)
-{
-	int		len;
-	int		i;
-	char	**tab;
-
-	len = 0;
-	tab = NULL;
-	i = 0;
-	len = ft_strlen(content);
-	tab = malloc((len + 1) * sizeof(char *));
-	if (!tab)
-		return (NULL);
-	while (i < len)
-	{
-		tab[i] = malloc((i + 2) * sizeof(char));
-		if (!tab[i])
-		{
-			ft_free_tab(tab);
-			return (NULL);
-		}
-		ft_strncpy(tab[i], content, i + 1);
-		tab[i][i + 1] = '\0';
-		i++;
-	}
-	tab[i] = NULL;
-	return (tab);
-}
-
-int	ft_check_expand_exist(t_env *env, char *str)
+char	*ft_expand_symbol_bis(t_env *env, t_cmd_word *cmd, char *tmp_expand)
 {
 	t_env	*tmp;
-	int		len_c;
-	char	*name_env;
-	int		check;
-	(void)check;
-	check = 0;
-	if (!str)
-		return (0);
-	if (ft_at_least_charset(str, "="))
-		check = 1;
-	len_c = ft_strlen(str);
+	char	*tmp_join;
+	char	*full;
+	int		len_var;
+	int		len_expand;
+
 	tmp = env;
+	full = NULL;
+	tmp_join = ft_get_symbol_join(cmd->content);
+	len_expand = ft_strlen(tmp_expand);
 	while (tmp)
 	{
-		name_env = ft_get_name_env(tmp->content);
-		if (!ft_strncmp(name_env, str, len_c))
-			return (1);
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
-char	*ft_get_expand_test(char *content, t_env *env)
-{
-	t_env	*tmp;
-	int		len_c;
-	char	*name_env;
-
-	if (!content)
-		return (0);
-	len_c = ft_strlen(content);
-	tmp = env;
-	while (tmp)
-	{
-		name_env = ft_get_name_env(tmp->content);
-		if (!ft_strncmp(name_env, content, len_c))
+		len_var = get_len_to_equal(tmp->content);
+		if (!ft_strncmp(tmp->content, tmp_expand, len_expand)
+			&& len_var == len_expand)
 		{
-			return (ft_strdup(&tmp->content[len_c + 1]));
+			full = ft_strjoin(&tmp->content[len_var + 1], tmp_join);
+			if (!full)
+				return (NULL);
+			return (full);
 		}
 		tmp = tmp->next;
 	}
+	return (NULL);
+}
+
+int	ft_expand_symbol(t_env *env, t_cmd_word *cmd)
+{
+	char	*tmp_expand;
+	char	*tmp_full;
+	char	*tmp_join;
+
+	tmp_join = ft_get_symbol_join(cmd->content);
+	tmp_expand = ft_get_symbol_expand(cmd->content);
+	if (!tmp_expand)
+	{
+		if (tmp_join)
+			cmd->content = tmp_join;
+		return (0);
+	}
+	tmp_full = ft_expand_symbol_bis(env, cmd, tmp_expand);
+	if (!tmp_full && !tmp_join)
+	{
+		cmd->content = "";
+		return (free(tmp_expand), 1);
+	}
+	else if (!tmp_full && tmp_join)
+	{
+		cmd->content = tmp_join;
+		return (free(tmp_expand), 1);
+	}
+	cmd->content = tmp_full;
+	// probleme ici, on veut free tmp_full
+	free(tmp_expand);
 	return (0);
 }
 
-int	ft_check_symbol(char *content)
+int	ft_expand_exist(t_env *env, t_cmd_word *cmd)
 {
-	int	i;
+	t_env	*tmp;
+	int		len_c;
+	int		len_var;
 
-	i = 0;
-	while (content[i])
+	if (!cmd->content)
+		return (0);
+	len_var = 0;
+	len_c = ft_strlen(cmd->content);
+	tmp = env;
+	while (tmp)
 	{
-		if (!ft_isalnum(content[i]))
+		len_var = get_len_to_equal(tmp->content);
+		if (!ft_strncmp(tmp->content, cmd->content, len_c) && len_var == len_c
+			&& !check_value_env(tmp->content))
+			cmd->content = "";
+		else if (!ft_strncmp(tmp->content, cmd->content, len_c)
+			&& len_var == len_c)
+		{
+			cmd->content = &tmp->content[len_var + 1];
 			return (1);
-		i++;
+		}
+		tmp = tmp->next;
 	}
 	return (0);
 }
 
 void	expand(t_cmd_word *cmd, t_data *data)
 {
-	char	*tmp;
-	int		check;
+	int	check;
 
 	check = 0;
-	(void)data;
-	(void)check;
 	cmd = cmd->next;
-	printf("%s\n", cmd->content);
-	printf("%d\n", check);
 	if (ft_check_symbol(cmd->content) && cmd->state != IN_QUOTE)
 		check = 1;
-	if (!ft_check_expand_exist(data->env, cmd->content) && !check)
-		return ;
-	/* else if (check_combn(data->env, cmd->content))
+	if (!ft_expand_exist(data->env, cmd) && !check)
 	{
-		// l'envoyer dans le get expand
-	} */
-	tmp = ft_get_expand_test(cmd->content, data->env);
-	cmd->content = tmp;
-	return ;
+		cmd->content = "";
+		return ;
+	}
+	ft_expand_symbol(data->env, cmd);
 }
 
 void	parsing_expand(t_cmd *cmd, t_data *data)
@@ -147,26 +137,3 @@ void	parsing_expand(t_cmd *cmd, t_data *data)
 		head = head->next;
 	}
 }
-/* ft_check_comb_env(t_env *env, char **comb, char *content)
-{
-
-	(void)env;
-	(void)comb;
-	(void)content;
-	return ;
-} */
-/* int	check_combn(t_env *env, char *content)
-{
-	comb = NULL;
-	i = 0;
-	(void)i;
-	(void)env;
-	comb = get_all_comb(content);
-	if (!comb)
-		return (0);
-	else if (ft_check_comb_env(env, comb, content))
-	{
-		return (ft_free_tab(comb), 1);
-	}
-	return (ft_free_tab(comb), 0);
-} */

@@ -49,8 +49,139 @@ unset et export ont l'air carre
 "$HOME/ "	contains un non alpha num donc expand et $HOME devient path/
 
 
+si var no exist
 
 si var has no value
-	si var n'a pas de =
-	si apres = il n'y a rien
-return;
+	si var n'a pas de = || si apres = il n'y a rien
+		return;
+si var has a value
+
+
+
+char	**get_all_comb(char *content)
+{
+	int		len;
+	int		i;
+	char	**tab;
+
+	len = 0;
+	tab = NULL;
+	i = 0;
+	len = ft_strlen(content);
+	tab = malloc((len + 1) * sizeof(char *));
+	if (!tab)
+		return (NULL);
+	while (i < len)
+	{
+		tab[i] = malloc((i + 2) * sizeof(char));
+		if (!tab[i])
+		{
+			ft_free_tab(tab);
+			return (NULL);
+		}
+		ft_strncpy(tab[i], content, i + 1);
+		tab[i][i + 1] = '\0';
+		i++;
+	}
+	tab[i] = NULL;
+	return (tab);
+}
+
+
+/* ft_check_comb_env(t_env *env, char **comb, char *content)
+{
+
+	(void)env;
+	(void)comb;
+	(void)content;
+	return ;
+} */
+/* int	check_combn(t_env *env, char *content)
+{
+	comb = NULL;
+	i = 0;
+	(void)i;
+	(void)env;
+	comb = get_all_comb(content);
+	if (!comb)
+		return (0);
+	else if (ft_check_comb_env(env, comb, content))
+	{
+		return (ft_free_tab(comb), 1);
+	}
+	return (ft_free_tab(comb), 0);
+} */
+
+
+si HOME n'a pas de value
+echo "'$HOME'"
+$HOME doit etre destroy
+ca doit afficher "'$HOME'"
+
+
+#include "minishell.h"
+
+char	*ft_strdup_value_env(char *value, int len_n, int len_value)
+{
+	char	*cpy;
+	int		i;
+
+	cpy = malloc(sizeof(char) * len_value + 1);
+	if (!cpy)
+		return (NULL);
+	i = 0;
+	while (value[len_n])
+		cpy[i++] = value[len_n++];
+	cpy[i] = '\0';
+	return (cpy);
+}
+// n = nom de la variable env
+// value = la value de n
+// gne prend data->env et le nombre d'une variable env
+// gne renvoie la value d'une variable d'env correspondante au nom
+// cette variable est freeable et null terminated
+// si aucun nom ne correspond, la fonction renvoie une chaine freeable nullc
+
+char	*get_name_expansion(t_env *env, char *n)
+{
+	int		len_n;
+	int		len_value;
+	char	*name;
+
+	len_value = 0;
+	len_n = ft_strlen(n);
+	while (env)
+	{
+		if (!ft_strncmp(env->content, n, len_n))
+		{
+			if (!ft_at_least_charset(env->content, "="))
+				break ;
+			else if (env->content[len_n] == '=')
+				len_value = ft_strlen(env->content) - len_n;
+			name = ft_strdup_value_env(env->content, len_n + 1, len_value);
+			return (name);
+		}
+		env = env->next;
+	}
+	name = ft_calloc(1, 1);
+	if (!name)
+		return (perror(""), NULL);
+	return (name);
+}
+
+// 2eme version de l'env expand avec directemet name et value
+/* char	*get_name_expansion_bis(t_env *env, char *n)
+{
+	int		len_n;
+	char	*name;
+
+	len_n = ft_strlen(n);
+	while (env)
+	{
+		if (!ft_strncmp(env->name, n, len_n) && env->content[len_n] == '=')
+			return (env->value);
+		env = env->next;
+	}
+	name = ft_calloc(1, 1);
+	return (name);
+} */
