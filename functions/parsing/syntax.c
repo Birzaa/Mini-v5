@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 19:22:15 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 13:11:17 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:07:29 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ int	error_cmd(t_stack *lst)
 		if (node->type == PIPE_LINE)
 		{
 			if (is_invalid_pipe(node))
-				return (ft_perror("minishell: syntax error near\
+				return (ft_perror("minishell: syntax error near \
 unexpected token `|'", NULL));
 		}
 		else if (is_redir(node->type))
 		{
 			if (is_invalid_redir(node))
-				return (ft_perror("minishell: syntax error near\
+				return (ft_perror("minishell: syntax error near \
 unexpected token ", get_redir(node->type)));
 		}
 		else if (node->type == DOUBLE_QUOTE || node->type == QOUTE)

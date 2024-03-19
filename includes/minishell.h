@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/19 14:34:49 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:28:54 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,8 +312,7 @@ t_cmd					*ft_cmd_last(t_cmd *cmd);
 void					add_back_cmd(t_cmd **cmd, t_cmd *new);
 void					print_node(t_node *node);
 void					print_cmd_list(t_cmd *head);
-void					execute_builtin(t_cmd *cmd, char **command,
-							t_data *data);
+void					execute_builtin(char **command, t_data *data);
 int						is_builtin(char *cmd);
 
 //********************************************************
@@ -341,7 +340,7 @@ int						redir_expand(enum e_state *state, char *input,
 void					parse_env(t_cmd_word *cmd, t_data *data);
 void					skip_env(t_cmd *cmd);
 void					parsing_quote(t_cmd *cmd);
-void					init_parse(t_data *data);
+int						init_parse(t_data *data);
 t_command				*init_command(t_command *list);
 t_parsed_cmd			*init_redir(t_parsed_cmd *list);
 void					parse_space_in_quote(t_stack *list);
@@ -349,10 +348,24 @@ void					parse_space_in_quote(t_stack *list);
 void					index_quote(t_stack *list);
 
 //***********************EXECUTION*********************************
-void					execution(t_command *head, char **env);
-int						open_redir_in2(t_command *head);
-int						open_redir_out(t_command *head);
+typedef struct s_pipex
+{
+	int					infile;
+	int					outfile;
+	int					*pipe;
+	int					idx;
+	int					nb_cmd;
+	int					saved_in;
+	int					saved_out;
+	int					h_doc;
+	pid_t				pid;
+}						t_pipex;
+
+void					execution(t_command *head, char **env, t_data *data);
+void					open_redir_in(t_command *head, t_pipex *pipex);
+void					open_redir_out(t_command *head, t_pipex *pipex);
 void					execute_cmd(char **env, char **valid_cmd);
+void					here_doc(char *av, t_pipex *pipex);
 
 //****************************************************************
 void					parsing_expand(t_cmd *cmd, t_data *data);

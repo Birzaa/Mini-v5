@@ -3,91 +3,149 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/16 23:52:40 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:27:10 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_builtin(t_cmd *cmd, char **command, t_data *data)
+void	parent_free(t_pipex *pipex)
 {
-	(void)cmd;
-	if (ft_strcmp(command[0], "cd") == 0)
-		ft_cd(data, command);
-	else if (ft_strcmp(command[0], "pwd") == 0)
-		ft_pwd(data);
-	else if (ft_strcmp(command[0], "export") == 0)
-		ft_export(&data->env, command);
-	else if (ft_strcmp(command[0], "env") == 0)
-		ft_env(data, command);
-	else if (ft_strcmp(command[0], "echo") == 0)
-		ft_echo(command);
-	else if (ft_strcmp(command[0], "unset") == 0)
-		ft_unset(data->env, command);
+	close(pipex->infile);
+	close(pipex->outfile);
+	if (pipex->h_doc)
+		unlink(".heredoc_tmp");
+	free(pipex->pipe);
 }
 
-int	is_builtin(char *cmd)
+void	open_pipes(t_pipex *pipex)
 {
-	if (ft_strcmp(cmd, "cd") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "echo") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "env") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "exit") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "export") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "pwd") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "unset") == 0)
-		return (1);
-	return (0);
-}
+	int	i;
 
-void	pipex(char **cmd, char **env)
-{
-	pid_t	pid;
-	int		p_fd[2];
-
-	if (pipe(p_fd) == -1)
+	i = 0;
+	while (i < pipex->nb_cmd - 1)
 	{
-		printf("FLOP\n");
-		// ERREUR
+		if (pipe(pipex->pipe + 2 * i) < 0)
+		{
+			parent_free(pipex);
+		}
+		i++;
 	}
-	pid = fork();
-	if (!pid)
+}
+
+void	close_pipes(t_pipex *pipex)
+{
+	int	i;
+
+	i = 0;
+	while (i < (2 * (pipex->nb_cmd - 1)))
 	{
-		dup2(p_fd[1], 1);
-		close(p_fd[0]);
-		execute_cmd(env, cmd);
+		close(pipex->pipe[i]);
+		i++;
+	}
+}
+
+void	child(t_pipex p, char **cmd, char **env, t_data *data)
+{
+	p.pid = fork();
+	if (p.pid == -1)
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+	if (p.pid == 0)
+	{
+		if (p.idx == 0)
+		{
+			// Redirection de l'entrée standard pour le premier processus
+			dup2(p.infile, STDIN_FILENO);
+			close(p.infile);
+		}
+		else
+		{
+			// Redirection de l'entrée standard depuis le tuyau précédent
+			if (p.infile != p.saved_in)
+			{
+				dup2(p.infile, STDIN_FILENO);
+				close(p.infile);
+			}
+			else
+			{
+				dup2(p.pipe[2 * (p.idx - 1)], STDIN_FILENO);
+				close(p.pipe[2 * (p.idx - 1)]);
+			}
+		}
+		if (p.idx == p.nb_cmd - 1)
+		{
+			// Redirection de la sortie standard pour le dernier processus
+			dup2(p.outfile, STDOUT_FILENO);
+			close(p.outfile);
+		}
+		else
+		{
+			// Redirection de la sortie standard vers le tuyau actuel
+			if (p.outfile != p.saved_out)
+			{
+				dup2(p.outfile, STDOUT_FILENO);
+				close(p.outfile);
+			}
+			else
+			{
+				dup2(p.pipe[2 * p.idx + 1], STDOUT_FILENO);
+				close(p.pipe[2 * p.idx + 1]);
+			}
+		}
+		// Fermeture de tous les descripteurs de fichiers des tuyaux dans le processus enfant
+		close_pipes(&p);
+		if (!is_builtin(cmd[0]) && cmd)
+			execute_cmd(env, cmd);
+		else
+		{
+			execute_builtin(cmd, data);
+			exit(0);
+		}
+	}
+}
+
+void	execution(t_command *parsed_cmd, char **env, t_data *data)
+{
+	t_pipex pipex;
+	t_command *current_cmd;
+
+	current_cmd = parsed_cmd;
+	pipex.nb_cmd = parsed_cmd->nb_command;
+	pipex.saved_in = dup(STDIN_FILENO);
+	pipex.h_doc = 0;
+	pipex.idx = 0;
+	pipex.saved_out = dup(STDOUT_FILENO);
+	pipex.pipe = (int *)malloc((sizeof(int) * (2 * (pipex.nb_cmd - 1))));
+	if (!pipex.pipe)
+		printf("FLOP"); // modif
+	if (current_cmd->parsed_cmd->full_cmd && pipex.nb_cmd == 1
+		&& is_builtin(current_cmd->parsed_cmd->full_cmd[0]))
+	{
+		execute_builtin(current_cmd->parsed_cmd->full_cmd, data);
 	}
 	else
 	{
-		close(p_fd[1]);
-		dup2(p_fd[0], 0);
+		open_pipes(&pipex);
+		while (pipex.idx < pipex.nb_cmd)
+		{
+			open_redir_in(current_cmd, &pipex);
+			open_redir_out(current_cmd, &pipex);
+			child(pipex, current_cmd->parsed_cmd->full_cmd, env, data);
+			pipex.idx++;
+			current_cmd = current_cmd->next;
+		}
+		close_pipes(&pipex);
+		parent_free(&pipex);
+		while (pipex.idx)
+		{
+			waitpid(-1, NULL, 0);
+			pipex.idx--;
+		}
 	}
 }
-
-/* void	execution(t_command *parsed_cmd, char **env)
-{
-	int	fd_in;
-	int	fd_out;
-	int	i;
-
-	(void)env;
-	(void)i;
-	i = 0;
-	fd_in = open_redir_in2(parsed_cmd);
-	fd_out = open_redir_out(parsed_cmd);
-	while (i < parsed_cmd->nb_command)
-	{
-		pipex(parsed_cmd->parsed_cmd->full_cmd, env);
-		i++;
-		parsed_cmd = parsed_cmd->next;
-	}
-	dup2(fd_out, STDOUT_FILENO);
-} */

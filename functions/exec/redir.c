@@ -3,55 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:04:14 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/15 13:37:15 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:27:44 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	open_redir_in2(t_command *head)
+void	here_doc(char *av, t_pipex *pipex)
 {
-	int	fd;
+	int		file;
+	char	*buf;
 
-	fd = 0;
+	file = open(".heredoc_tmp", O_CREAT | O_WRONLY | O_TRUNC, 0000644);
+	if (file < 0)
+	{
+		// MSG ERREUR
+	}
+	while (1)
+	{
+		write(1, "\033[1;34m~> \033[0m", 15);
+		buf = get_next_line(0);
+		if (!buf)
+			exit(1);
+		if (!ft_strcmp(av, buf))
+			break ;
+		write(file, buf, ft_strlen(buf));
+		write(file, "\n", 1);
+		free(buf);
+	}
+	free(buf);
+	close(file);
+	pipex->infile = open(".heredoc_tmp", O_RDONLY);
+	if (pipex->infile < 0)
+	{
+		unlink(".heredoc_tmp");
+		// MSG ERREUR
+	}
+}
+
+void	open_redir_in(t_command *head, t_pipex *pipex)
+{
+	pipex->infile = pipex->saved_in;
 	while (head->parsed_cmd->r_in)
 	{
 		if (!head->parsed_cmd->r_in->h_doc)
-			fd = open(head->parsed_cmd->r_in->file, O_RDONLY, 0644);
-		if (fd == -1)
+			pipex->infile = open(head->parsed_cmd->r_in->file, O_RDONLY, 0644);
+		else
+		{
+			pipex->h_doc = 1;
+			here_doc(head->parsed_cmd->r_in->file, pipex);
+		}
+		if (pipex->infile == -1)
 		{
 			printf("Impossible de in\n");
 			exit(1);
-			// ERREUR
 		}
 		head->parsed_cmd->r_in = head->parsed_cmd->r_in->next;
 	}
-	return (fd);
 }
 
-int	open_redir_out(t_command *head)
+void	open_redir_out(t_command *head, t_pipex *pipex)
 {
-	int	fd;
-
-	fd = 0;
+	pipex->outfile = pipex->saved_out;
 	while (head->parsed_cmd->r_out)
 	{
 		if (!head->parsed_cmd->r_out->append)
-			fd = open(head->parsed_cmd->r_out->file,
+			pipex->outfile = open(head->parsed_cmd->r_out->file,
 					O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		else
-			fd = open(head->parsed_cmd->r_out->file,
+			pipex->outfile = open(head->parsed_cmd->r_out->file,
 					O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (fd == -1)
+		if (pipex->outfile == -1)
 		{
 			printf("Impossible de out\n");
 			exit(1);
-			// ERREUR
 		}
 		head->parsed_cmd->r_out = head->parsed_cmd->r_out->next;
 	}
-	return (fd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 14:38:07 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:25:24 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,10 @@ int	main(int ac, char **av, char **env)
 			if (!ft_strcmp(input, "exit"))
 				ft_exit(&data);
 			data.lex = lexer(input);
-			// print_list(data.lex);
-			if (!error_cmd(data.lex))
-			{
-				envp = get_tab_env(data.env);
-				init_parse(&data);
-				if (is_builtin(data.parsed_cmd->parsed_cmd->full_cmd[0]))
-					execute_builtin(data.cmd, data.parsed_cmd->parsed_cmd->full_cmd, &data);
-				/* else if (ft_strcmp(data.parsed_cmd->parsed_cmd->full_cmd[0],
-						"cd") == 0)
-					ft_cd(data.parsed_cmd->parsed_cmd->full_cmd[1], &data); */
-				// execution(data.parsed_cmd, env);
-				// exec(data.cmd, envp, &data);
-				ft_free_tab(envp);
-			}
+			envp = get_tab_env(data.env);
+			init_parse(&data);
+			execution(data.parsed_cmd, env, &data);
+			ft_free_tab(envp);
 		}
 	}
 }

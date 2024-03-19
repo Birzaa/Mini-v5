@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:00:41 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 12:46:13 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/17 13:56:42 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,4 +113,4 @@ void print_cmd_list(t_cmd *head) {
     }
 }
 
-//<infile <<eof wc -l > outfile | ls -llllll | ls -a -a -a |echo "''Bonjour' 'tocard''" |ls $HOME > fichier | ls >>finalfile
+//<infile <<eof wc -l > outfile | ls -llllll | ls -a -a -a |echo "''Bonjour' 'tocard''" |ls $HOME > fichier | ls >>'"'finalfile'"'
