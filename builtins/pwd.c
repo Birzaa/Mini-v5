@@ -12,6 +12,7 @@ void	ft_pwd(t_data *data)
 	else if (cwd)
 	{
 		ft_putstr_fd(cwd, 1);
+		ft_putchar_fd('\n', 1);
 		free(cwd);
 		// g_ret_value = 0;
 	}

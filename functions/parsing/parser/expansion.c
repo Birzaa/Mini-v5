@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/19 15:05:22 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/19 20:12:52 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_expand_symbol_bis(t_env *env, t_cmd_word *cmd, char *tmp_expand)
 		{
 			full = ft_strjoin(&tmp->content[len_var + 1], tmp_join);
 			if (!full)
-				return (NULL);
+				return (perror(""), NULL);
 			return (full);
 		}
 		tmp = tmp->next;
@@ -52,7 +52,7 @@ int	ft_expand_symbol(t_env *env, t_cmd_word *cmd)
 	{
 		if (tmp_join)
 			cmd->content = tmp_join;
-		return (0);
+		return (perror(""), 0);
 	}
 	tmp_full = ft_expand_symbol_bis(env, cmd, tmp_expand);
 	if (!tmp_full && !tmp_join)
@@ -65,10 +65,8 @@ int	ft_expand_symbol(t_env *env, t_cmd_word *cmd)
 		cmd->content = tmp_join;
 		return (free(tmp_expand), 1);
 	}
-	cmd->content = tmp_full;
-	// probleme ici, on veut free tmp_full
-	free(tmp_expand);
-	return (0);
+	cmd->content = ft_strcpy(cmd->content, tmp_full);
+	return (free(tmp_full), free(tmp_expand), 0);
 }
 
 int	ft_expand_exist(t_env *env, t_cmd_word *cmd)
@@ -109,6 +107,7 @@ void	expand(t_cmd_word *cmd, t_data *data)
 		check = 1;
 	if (!ft_expand_exist(data->env, cmd) && !check)
 	{
+		cmd->type = WHITE_SPACE;
 		cmd->content = "";
 		return ;
 	}
@@ -126,11 +125,23 @@ void	parsing_expand(t_cmd *cmd, t_data *data)
 		tmp_word = head->words;
 		while (tmp_word)
 		{
-			if (tmp_word->type == ENV && tmp_word->state != 1)
+			if (tmp_word->type == ENV && tmp_word->next && tmp_word->next->type == QOUTE)
 			{
+				printf("test1\n");
+				tmp_word->content = "";
+			}
+			else if (tmp_word->type == ENV && tmp_word->state != 1
+				&& tmp_word->next)
+			{
+				printf("test2\n");
 				tmp_word->type = WHITE_SPACE;
-				tmp_word->content = " ";
+				tmp_word->content = "";
 				expand(tmp_word, data);
+			}
+			else if (tmp_word->type == ENV && (tmp_word->state == 1 || !tmp_word->next || tmp_word->next))
+			{
+				printf("test3\n");
+				tmp_word->type = WORD;
 			}
 			tmp_word = tmp_word->next;
 		}
