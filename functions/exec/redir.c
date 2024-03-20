@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:04:14 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/19 11:27:44 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/20 18:27:54 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,9 @@ void	open_redir_out(t_command *head, t_pipex *pipex)
 		}
 		head->parsed_cmd->r_out = head->parsed_cmd->r_out->next;
 	}
+}
+
+void	create_h_doc()
+{
+	
 }
