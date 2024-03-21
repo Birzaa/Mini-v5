@@ -2,15 +2,21 @@ command					note	code d'erreur	message error
 HOME is set
 
 echo $HOME 			OK
-echo $HOME$HOME				KO  trouve bien les expand mais ne compte pas comme un arg
-echo $HOME/$HOME			KO	trouve bien les expand mais ne compte pas comme un arg
-echo $HOME""$HOME			KO	trouve bien les expand mais ne compte pas comme un arg
-echo $HOME"a"$HOME			KO	trouve bien les expand mais ne compte pas les prochaines expand un meme arg
+echo $HOME$HOME		OK  
+echo $HOME/$HOME	OK	
+echo $HOME""$HOME	OK	
+echo $HOME"a"$HOME	OK	
 echo $HOME/			OK
 echo $HOME/c 		OK 
 echo $HOME/capart   OK
 echo $HOM/capart 	OK
 echo $/capart		OK
+
+echo $_
+echo $+
+echo $\
+echo $/
+echo $
 
 echo "$HOME"/capart
 echo " $HOME "/capart
