@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/21 15:26:43 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/21 17:56:46 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_expand_symbol(t_env *env, t_cmd_word *cmd)
 	return (free(tmp_full), free(tmp_expand), 0);
 }
 
-int	ft_expand_exist(t_env *env, t_cmd_word *cmd)
+int	ft_expand_exist(t_env *env, t_cmd_word *cmd, int *expanded)
 {
 	t_env	*tmp;
 	int		len_c;
@@ -90,6 +90,7 @@ int	ft_expand_exist(t_env *env, t_cmd_word *cmd)
 			&& len_var == len_c)
 		{
 			cmd->content = &tmp->content[len_var + 1];
+			(*expanded) = 1;
 			return (1);
 		}
 		tmp = tmp->next;
@@ -100,19 +101,23 @@ int	ft_expand_exist(t_env *env, t_cmd_word *cmd)
 void	expand(t_cmd_word *cmd, t_data *data)
 {
 	int	check;
+	int	expanded;
 
+	expanded = 0;
 	check = 0;
 	cmd = cmd->next;
 	if (ft_check_symbol(cmd->content) && cmd->state != IN_QUOTE)
 		check = 1;
-	if (!ft_expand_exist(data->env, cmd) && !check)
+	if (!ft_expand_exist(data->env, cmd, &expanded) && !check)
 	{
 		cmd->type = WHITE_SPACE;
 		cmd->content = "";
 		return ;
 	}
-	printf("test 3bisbis : si on veut expand symbol\n");
-	ft_expand_symbol(data->env, cmd);
+	if (!expanded)
+	{
+		ft_expand_symbol(data->env, cmd);
+	}
 }
 
 void	parsing_expand(t_cmd *cmd, t_data *data)
@@ -128,27 +133,26 @@ void	parsing_expand(t_cmd *cmd, t_data *data)
 		tmp_word = head->words;
 		while (tmp_word)
 		{
-			if (tmp_word->type == ENV && (ft_check_symbol(tmp_word->next->content)))
+			if (tmp_word->type == ENV
+				&& (ft_check_sym_first_letter(tmp_word->next->content)))
 			{
-				printf("test 1: si symbole apres un $\n");
-				printf("next content : %s\n",tmp_word->next->content );
 				tmp_word->type = WORD;
 				tmp_word = tmp_word->next;
+				if (tmp_word->next && tmp_word->next->type)
+					check = 1;
 			}
 			if (tmp_word->type == ENV && tmp_word->next
-				&& tmp_word->next->type == QOUTE)
+				&& (tmp_word->next->type == QOUTE
+					|| tmp_word->next->type == DOUBLE_QUOTE))
 			{
-				printf("test 2 : si ' apres nn $ \n");
 				tmp_word->content = "";
 			}
 			else if (tmp_word->type == ENV && tmp_word->state != 1
 				&& tmp_word->next)
 			{
-				printf("test 3: si on veut expand\n");
 				tmp_word->type = WHITE_SPACE;
 				if (check)
 				{
-					printf("test 3bis: si on veut mutliple expand\n");
 					tmp_word->type = WORD;
 				}
 				tmp_word->content = "";
@@ -160,12 +164,10 @@ void	parsing_expand(t_cmd *cmd, t_data *data)
 			else if (tmp_word->type == ENV && (tmp_word->state == 1
 					|| !tmp_word->next || tmp_word->next))
 			{
-				printf("test 4 : si on veut que $ devienne un mot \n");
 				tmp_word->type = WORD;
 			}
 			if (tmp_word->next && tmp_word->next->type == ENV && check)
 			{
-				printf("test 5 : si $ apres une expand\n");
 				check = 1;
 				tmp_word = tmp_word->next;
 				continue ;

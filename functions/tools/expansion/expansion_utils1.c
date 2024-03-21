@@ -63,3 +63,12 @@ int	ft_strlen_symbol(char *str)
 	}
 	return (i);
 }
+
+int	ft_check_sym_first_letter(char *content)
+{
+	if (!content)
+		return (0);
+	else if (!ft_isalpha(content[0]))
+		return (1);
+	return (0);
+}

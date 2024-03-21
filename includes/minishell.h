@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/19 16:28:54 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/21 17:07:22 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,6 +227,7 @@ int						check_value_env(char *var);
 
 // tools/expansion/expansion/expansion_utils1.c
 
+int						ft_check_sym_first_letter(char *content);
 int						ft_check_symbol(char *content);
 int						ft_strlen_symbol(char *str);
 char					*ft_get_symbol_join(char *content);
