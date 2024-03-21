@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/19 16:27:10 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/21 17:41:24 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,21 @@
 
 void	parent_free(t_pipex *pipex)
 {
+	int	i;
+
+	i = 0;
 	close(pipex->infile);
 	close(pipex->outfile);
 	if (pipex->h_doc)
-		unlink(".heredoc_tmp");
+	{
+		while (pipex->h_doc_name[i])
+		{
+			unlink(pipex->h_doc_name[i]);
+			free(pipex->h_doc_name[i]);
+			i++;
+		}
+		free(pipex->h_doc_name);
+	}
 	free(pipex->pipe);
 }
 
@@ -112,8 +123,8 @@ void	child(t_pipex p, char **cmd, char **env, t_data *data)
 
 void	execution(t_command *parsed_cmd, char **env, t_data *data)
 {
-	t_pipex pipex;
-	t_command *current_cmd;
+	t_pipex		pipex;
+	t_command	*current_cmd;
 
 	current_cmd = parsed_cmd;
 	pipex.nb_cmd = parsed_cmd->nb_command;
@@ -124,6 +135,8 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 	pipex.pipe = (int *)malloc((sizeof(int) * (2 * (pipex.nb_cmd - 1))));
 	if (!pipex.pipe)
 		printf("FLOP"); // modif
+	nb_h_doc(current_cmd, &pipex);
+	create_h_doc(current_cmd, &pipex);
 	if (current_cmd->parsed_cmd->full_cmd && pipex.nb_cmd == 1
 		&& is_builtin(current_cmd->parsed_cmd->full_cmd[0]))
 	{
