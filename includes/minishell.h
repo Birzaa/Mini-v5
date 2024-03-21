@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/21 17:07:22 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:00:25 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -360,13 +360,17 @@ typedef struct s_pipex
 	int					saved_out;
 	int					h_doc;
 	pid_t				pid;
+	char				**h_doc_name;
+	int					nb_h_doc;
 }						t_pipex;
 
 void					execution(t_command *head, char **env, t_data *data);
 void					open_redir_in(t_command *head, t_pipex *pipex);
 void					open_redir_out(t_command *head, t_pipex *pipex);
 void					execute_cmd(char **env, char **valid_cmd);
-void					here_doc(char *av, t_pipex *pipex);
+char					*here_doc(char *av, t_pipex *pipex, int index);
+void					create_h_doc(t_command *parsed_cmd, t_pipex *pipex);
+void					nb_h_doc(t_command *parsed_cmd, t_pipex *pipex);
 
 //****************************************************************
 void					parsing_expand(t_cmd *cmd, t_data *data);
