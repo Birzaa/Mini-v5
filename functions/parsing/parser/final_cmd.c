@@ -6,11 +6,13 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/21 18:00:16 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:39:17 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
 
 void	parse_cmd_scnd(t_cmd *cmd, t_command *command)
 {
@@ -83,6 +85,7 @@ t_command	*parse(t_cmd *cmd)
 
 int	init_parse(t_data *data)
 {
+	parsing_status(data->lex);
 	parse_space_in_quote(data->lex);
 	index_quote(data->lex);
 	data->cmd = parser(data->lex);

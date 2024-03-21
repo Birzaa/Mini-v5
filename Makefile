@@ -40,6 +40,7 @@ SRC = $(SRC_DIR)main.c \
 	$(PARSER_DIR)cmd_next.c \
 	$(PARSER_DIR)word.c \
 	$(PARSER_DIR)env.c \
+	$(PARSER_DIR)status.c \
 	$(PARSER_DIR)handle_no_expand.c \
 	$(PARSING_DIR)error_syntax.c \
 	$(PARSING_DIR)syntax.c \

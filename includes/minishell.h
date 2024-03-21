@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/21 18:00:25 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:41:49 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -376,5 +376,6 @@ void					nb_h_doc(t_command *parsed_cmd, t_pipex *pipex);
 void					parsing_expand(t_cmd *cmd, t_data *data);
 
 void					handle_no_expand(t_cmd_word *actual, t_cmd_word *next);
+void					parsing_status(t_stack *list);
 
 #endif
