@@ -23,7 +23,7 @@ echo " $HOME "/capart
 echo "$HOME "/capart
 echo " $HOME"/capart
 
-echo " $HOME""/capart"
+echo " $""/capart"
 echo " $HOME"" /capart "
 echo " $HOME""/capart "
 echo " $HOME"" /capart"
@@ -47,7 +47,25 @@ echo $USER $USER/ "$USER" "$USER/" "/$USER" '$USER' '$USER/' '/$USER' "$"USER $"
 echo $USER""$USER/"""$USER""""$USER/""""/$USER"""'$USER'""'$USER/'""'/$USER'"""$"USER""$"USER""""'$USER'"""'"$USER"'
 echo $USER$USER/"$USER""$USER/""/$USER"'$USER''$USER/''/$USER'"$"USER$"USER""'$USER'"'"$USER"'
 
-echo $USER/$/$USER
-echo $USER/$/$USER
+echo $ $/ "$" "$/" "/$" '$' '$/' '/$' "$" $"" "'$'" '"$"'
+echo $""$/"""$""""$/""""/$"""'$'""'$/'""'/$'"""$"""$"""""'$'"""'"$"'
+echo $""$/"$""$/""/$"'$''$/''/$'"$"$"""'$'"'"$"'
+echo $ $/ " $ " " $/ " " /$ " ' $ ' ' $/ ' ' /$ ' " $ " $"" "' $ '" '" $ "'
+echo $ $/ "$ " "$/ " "/$ " '$ ' '$/ ' '/$ ' "$ " $"" "'$ '" '"$ "'
+echo $ $/ " $" " $/" " /$" ' $' ' $/' ' /$' " $" $"" "' $'" '" $"'
+
+echo $ $/ " $" " $/" " /$" ' $' ' $/' ' /$' " $" $"" "' $'" '" $"'
+echo $""$/"""$""""$/""""/$"""'$'""'$/'""'/$'"""$"""$"""""'$'"""'"$"'$USER""$USER/"""$USER""""$USER/""""/$USER"""'$USER'""'$USER/'""'/$USER'"""$"USER""$"USER""""'$USER'"""'"$USER"' $USER$USER/"$USER""$USER/""/$USER"'$USER''$USER/''/$USER'"$"USER$"USER""'$USER'"'"$USER"' $ $/ " $" " $/" " /$" ' $' ' $/' ' /$' " $" $"" "' $'" '" $"' $ $/ " $ " " $/ " " /$ " ' $ ' ' $/ ' ' /$ ' " $ " $"" "' $ '" '" $ "'$q $q/ " $q" " $q/" " /$q" ' $q' ' $q/' ' /$q' " $q" $q"" "' $q'" '" $q"'
+
+
+echo $q $q/ " $q" " $q/" " /$q" ' $q' ' $q/' ' /$q' " $q" $q"" "' $q'" '" $q"'
+echo $q$q/"$q""$q/""/$q"'$q''$q/''/$q'"$q"$q"""'$q'"'"$q"'
+echo '/$q'"$q"$q"""'$q'"'"$q"'
+$/$$//$$$//$$'$'"$"rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER"
+$/$$//$$$//$$'$'"$"rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER"
+
+
 
 echo '/$USER' "$"USER $"USER" "'$USER'" '"$USER"'
+
+

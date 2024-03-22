@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/18 14:54:25 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:17:40 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,14 @@ void	quote_next_to_quote(t_cmd_word *tmp_word, int check)
 			check = 0;
 		if (tmp_word->type == QOUTE)
 			check = 1;
-		if (tmp_word->next->type == DOUBLE_QUOTE && !check)
+		if (tmp_word->next && tmp_word->next->type == DOUBLE_QUOTE && !check)
 		{
 			tmp_word->type = WHITE_SPACE;
 			tmp_word = tmp_word->next;
 			tmp_word->content = ft_calloc(1, 1);
 			tmp_word->type = WORD;
 		}
-		else if (tmp_word->next->type == QOUTE && check)
+		else if (tmp_word->next && tmp_word->next->type == QOUTE && check)
 		{
 			tmp_word->type = WHITE_SPACE;
 			tmp_word = tmp_word->next;

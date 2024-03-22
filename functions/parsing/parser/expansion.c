@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/22 02:36:18 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:13:59 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	ft_expand_symbol(t_env *env, t_cmd_word *cmd)
 	else if (!tmp_full && tmp_join)
 	{
 		cmd->content = tmp_join;
-		return (free(tmp_expand), 1);
+		return (free(tmp_expand), 0);
 	}
 	cmd->content = ft_strcpy(cmd->content, tmp_full);
 	return (free(tmp_full), free(tmp_expand), 0);
@@ -100,9 +100,11 @@ int	ft_expand_exist(t_env *env, t_cmd_word *cmd, int *expanded)
 
 void	expand(t_cmd_word *cmd, t_data *data)
 {
-	int	check;
-	int	expanded;
+	int			check;
+	int			expanded;
+	t_cmd_word	*tmp;
 
+	tmp = cmd;
 	expanded = 0;
 	check = 0;
 	cmd = cmd->next;
@@ -112,10 +114,19 @@ void	expand(t_cmd_word *cmd, t_data *data)
 	{
 		cmd->type = WHITE_SPACE;
 		cmd->content = "";
+		tmp->type = WHITE_SPACE;
+		tmp->content = "";
 		return ;
 	}
+	if (!expanded && !check)
+		tmp->content = "$";
+	if (expanded && !check)
+		tmp->content = "";
 	if (!expanded)
-		ft_expand_symbol(data->env, cmd);
+	{
+		if (!ft_expand_symbol(data->env, cmd))
+			tmp->content = "";
+	}
 }
 
 void	parsing_expand(t_cmd *cmd, t_data *data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   skip.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:01:09 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 17:43:49 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:45:44 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ void	skip_dr_out(t_cmd *cmd)
 
 void	skip_r_out(t_cmd *cmd)
 {
-	if (cmd->words->type == REDIR_OUT && cmd->words->next)
+	if (cmd->words->next&&cmd->words->type == REDIR_OUT )
 		cmd->words = cmd->words->next;
-	while (cmd->words->type == WHITE_SPACE && cmd->words->next)
+	while (cmd->words&&cmd->words->type == WHITE_SPACE)
 		cmd->words = cmd->words->next;
-	if (cmd->words->type == WORD && cmd->words->next)
+	if (cmd->words&&cmd->words->type == WORD)
 		cmd->words = cmd->words->next;
 }
 

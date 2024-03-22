@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/22 02:35:01 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:49:03 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	parse_cmd(t_cmd *cmd, t_command *command)
 	}
 	if (!is_redir(cmd->words->type))
 		cmd->words = cmd->words->next;
+	//faut break mais chiantos vu que cest pas dqns la bocle
 }
 
 t_command	*parse(t_cmd *cmd)
@@ -96,6 +97,6 @@ int	init_parse(t_data *data)
 } */
 	// print_list(data->lex);
 	// print_cmd_list(data->cmd);
-	// print_parsed_cmd(data->parsed_cmd);
+	print_parsed_cmd(data->parsed_cmd);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_out.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:13:29 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/07 19:13:56 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:44:00 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,13 @@ void	parse_r_out(t_cmd_word *cmd, t_redir_out **r_out, int append)
 {
 	t_redir_out	*tmp;
 
-	cmd = cmd->next;
-	while (cmd->type == WHITE_SPACE)
+	if (cmd->next)
 		cmd = cmd->next;
-	if (cmd->type == WORD)
+	else
+		return ;
+	while (cmd && cmd->type == WHITE_SPACE)
+		cmd = cmd->next;
+	if (cmd && cmd->type == WORD)
 	{
 		tmp = ft_redir_out_new(cmd->content, append);
 		if (!tmp)

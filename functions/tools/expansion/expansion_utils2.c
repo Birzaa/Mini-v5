@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:44:20 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/22 02:44:21 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/22 13:24:30 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	expand_check_quote(t_cmd_word *tmp_word)
 {
 	if (tmp_word->type == ENV && tmp_word->next
 		&& (tmp_word->next->type == QOUTE
-			|| tmp_word->next->type == DOUBLE_QUOTE) && tmp_word->state != 0)
+			|| tmp_word->next->type == DOUBLE_QUOTE) && (tmp_word->state != 0
+			&& tmp_word->state != 1))
 	{
 		tmp_word->content = "";
 	}
@@ -46,7 +47,6 @@ void	expand_check_expand(t_data *data, t_cmd_word *tmp_word, int *check)
 		{
 			tmp_word->type = WORD;
 		}
-		tmp_word->content = "";
 		expand(tmp_word, data);
 		if (tmp_word->next)
 			tmp_word = tmp_word->next;

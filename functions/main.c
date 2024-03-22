@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/21 23:55:32 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:47:43 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ int	main(int ac, char **av, char **env)
 				ft_exit(&data);
 			data.lex = lexer(input);
 			envp = get_tab_env(data.env);
-			init_parse(&data);
-			execution(data.parsed_cmd, env, &data);
+			if (error_cmd(data.lex))
+			{
+				init_parse(&data);
+				execution(data.parsed_cmd, env, &data);
+			}
 			ft_free_tab(envp);
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:26:15 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/17 18:05:33 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/22 15:40:17 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	is_invalid_pipe(t_node *node)
 
 	next = skip_spaces(node->next, 0);
 	prev = skip_spaces(node->prev, 1);
-	if ((!prev || !next) || (next->type != WORD && prev->type != WORD
-			&& !is_redir(next->type)))
+	if ((!prev || !next) || ((next->type != WORD && next->type == DOUBLE_QUOTE
+				&& next->type == QOUTE) && !is_redir(next->type)))
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
@@ -57,7 +57,8 @@ int	is_invalid_redir(t_node *node)
 	t_node	*next;
 
 	next = skip_spaces(node->next, 0);
-	if (!next || (next->type != WORD && next->type != ENV))
+	if (!next || ((next->type != WORD && next->type == DOUBLE_QUOTE
+				&& next->type == QOUTE) && next->type != ENV))
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
