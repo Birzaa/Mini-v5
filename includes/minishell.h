@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/21 18:41:49 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/21 23:14:54 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ typedef struct s_signal
 {
 	int					sigint;
 	int					sigquit;
+	int					status;
 	pid_t				pid;
 }						t_signal;
 
@@ -227,7 +228,7 @@ int						check_value_env(char *var);
 
 // tools/expansion/expansion/expansion_utils1.c
 
-int						ft_check_sym_first_letter(char *content);
+int						first_letter(char *content);
 int						ft_check_symbol(char *content);
 int						ft_strlen_symbol(char *str);
 char					*ft_get_symbol_join(char *content);

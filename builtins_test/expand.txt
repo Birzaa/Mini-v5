@@ -44,8 +44,10 @@ echo " $HOME"" /capart"
 echo " $HOME"" /capart"
 
 echo $USER $USER/ "$USER" "$USER/" "/$USER" '$USER' '$USER/' '/$USER' "$"USER $"USER" "'$USER'" '"$USER"'
-echo $USER$USER/"$USER""$USER/""/$USER"'$USER''$USER/''/$USER'"$"USER$"USER""'$USER'"'"$USER"'
 echo $USER""$USER/"""$USER""""$USER/""""/$USER"""'$USER'""'$USER/'""'/$USER'"""$"USER""$"USER""""'$USER'"""'"$USER"'
+echo $USER$USER/"$USER""$USER/""/$USER"'$USER''$USER/''/$USER'"$"USER$"USER""'$USER'"'"$USER"'
 
 echo $USER/$/$USER
 echo $USER/$/$USER
+
+echo '/$USER' "$"USER $"USER" "'$USER'" '"$USER"'

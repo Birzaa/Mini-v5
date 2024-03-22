@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   final_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/21 19:06:54 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/21 23:54:46 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 void	parse_cmd_scnd(t_cmd *cmd, t_command *command)
 {
@@ -98,6 +96,6 @@ int	init_parse(t_data *data)
 } */
 	print_list(data->lex);
 	// print_cmd_list(data->cmd);
-	// print_parsed_cmd(data->parsed_cmd);
+	print_parsed_cmd(data->parsed_cmd);
 	return (0);
 }

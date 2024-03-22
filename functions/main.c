@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/21 17:21:32 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/21 23:55:32 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int ac, char **av, char **env)
 			data.env = create_env(); */
 	data.env = get_env(env);
 	/* 	init_signals(); */
+	g_sig.status = 0;
 	while (1)
 	{
 		// printf("%d\n", g_sig.pid);
