@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/22 14:13:59 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:29:16 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void	expand(t_cmd_word *cmd, t_data *data)
 		check = 1;
 	if (!ft_expand_exist(data->env, cmd, &expanded) && !check)
 	{
+		printf("go\n");
 		cmd->type = WHITE_SPACE;
 		cmd->content = "";
 		tmp->type = WHITE_SPACE;
@@ -121,11 +122,23 @@ void	expand(t_cmd_word *cmd, t_data *data)
 	if (!expanded && !check)
 		tmp->content = "$";
 	if (expanded && !check)
+	{
+		printf("test 2\n");
 		tmp->content = "";
+	}
 	if (!expanded)
 	{
+		print_test();
 		if (!ft_expand_symbol(data->env, cmd))
-			tmp->content = "";
+		{
+			if (cmd->next && cmd->next->state == 2)
+			{
+				printf("test 5\n");
+				tmp->content = "";
+			}
+			else if (cmd->next && cmd->next->state == 0)
+				tmp->content = "$";
+		}
 	}
 }
 
