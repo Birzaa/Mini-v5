@@ -1,8 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/22 02:43:17 by abougrai          #+#    #+#             */
+/*   Updated: 2024/03/22 02:50:54 by abougrai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-// to do list
-// gerer too many args sur cd
-// gerer l'expand env $
+void	error_cd(char *new_cmd, char *home, char *tmp)
+{
+	printf("bash: cd: %s: No such file or directory\n", new_cmd);
+	return (free(new_cmd), free(home), free(tmp));
+	g_sig.status = 1;
+}
 
 void	ft_cd_tild(t_data *data, char *command)
 {
@@ -25,13 +40,18 @@ void	ft_cd_tild(t_data *data, char *command)
 			return (perror(""), free(home), free(tmp));
 		else if (chdir(new_cmd))
 		{
-			printf("bash: cd: %s: No such file or directory\n", new_cmd);
-			return (free(new_cmd), free(home), free(tmp));
-			// g_ret_value = 1;
+			error_cd(new_cmd, home, tmp);
+			return ;
 		}
 		return (free(new_cmd), free(home), free(tmp));
-		// g_ret_value = 0; */
+		g_sig.status = 0;
 	}
+}
+
+void	home_not_set(void)
+{
+	printf("bash: cd: HOME not set\n");
+	g_sig.status = 1;
 }
 
 void	ft_cd_home(t_data *data, char *command)
@@ -53,17 +73,14 @@ void	ft_cd_home(t_data *data, char *command)
 			if (!tmp)
 				return (perror(""), free(home));
 			printf("bash: cd: %s: No such file or directory\n", tmp);
-			// g_ret_value = 1;
+			g_sig.status = 1;
 			return (free(tmp), free(home));
 		}
 		free(home);
-		// g_ret_value = 0;
+		g_sig.status = 0;
 	}
 	else
-	{
-		printf("bash: cd: HOME not set\n");
-		// g_ret_value = 1;
-	}
+		home_not_set();
 }
 
 void	ft_cd(t_data *data, char **command)
@@ -73,7 +90,7 @@ void	ft_cd(t_data *data, char **command)
 		return ;
 	else if (command[2])
 	{
-		// g_ret_value = 1;
+		g_sig.status = 1;
 		return (ft_putstr_fd("bash: cd: too many arguments", 1));
 	}
 	else if (!ft_strncmp(command[1], "~", 2))
@@ -83,6 +100,6 @@ void	ft_cd(t_data *data, char **command)
 	if (chdir(command[1]) != 0)
 	{
 		printf("bash: cd: %s: No such file or directory\n", command[1]);
-		// g_ret_value = 1;
+		g_sig.status = 1;
 	}
 }

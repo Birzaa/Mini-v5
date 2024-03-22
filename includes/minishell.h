@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/21 23:14:54 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/22 02:34:38 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,9 +182,6 @@ void					ft_echo(char **command);
 // function/env.c
 t_env					*get_env(char **env);
 
-// function/expansion
-char					*get_name_expansion(t_env *env, char *n);
-
 // function/random
 void					print_test(void);
 
@@ -227,12 +224,24 @@ void					replace_content_env(char *oldpwd, char *pwd);
 int						check_value_env(char *var);
 
 // tools/expansion/expansion/expansion_utils1.c
-
 int						first_letter(char *content);
 int						ft_check_symbol(char *content);
 int						ft_strlen_symbol(char *str);
 char					*ft_get_symbol_join(char *content);
 char					*ft_get_symbol_expand(char *content);
+
+// tools/expansion/expansion/expansion_utils2.c
+void					expand_check_letter(t_cmd_word *tmp_word, int *check);
+void					expand_check_quote(t_cmd_word *tmp_word);
+void					expand_check_expand(t_data *data, t_cmd_word *tmp_word,
+							int *check);
+
+// tools/expansion/expansion/expansion_utils3.c
+void					expand_check_word(t_cmd_word *tmp_word);
+void					expand_check_next(t_cmd_word *tmp_word);
+void					expand_continue(t_cmd_word *tmp_word, int *check);
+void					expand(t_cmd_word *cmd, t_data *data);
+void					parsing_status(t_stack *list);
 
 // tools/export/export_utils1.c
 void					replace_export(t_env **env, char *content);
@@ -243,13 +252,12 @@ int						ft_export_checking(char *content);
 
 // tools/str
 char					*ft_strncpy(char *dest, char *src, unsigned int n);
-
-int						ft_strcmp(char *s1, char *s2);
 char					*ft_strcpy(char *s1, char *s2);
+int						ft_strcmp(char *s1, char *s2);
 
 // tools/other
-int						ft_at_least_charset(char *str, char *charset);
 void					ft_nothing(void);
+int						ft_at_least_charset(char *str, char *charset);
 int						ft_charcmp(int c, int d);
 
 // ------------------------> Parsing
@@ -377,6 +385,5 @@ void					nb_h_doc(t_command *parsed_cmd, t_pipex *pipex);
 void					parsing_expand(t_cmd *cmd, t_data *data);
 
 void					handle_no_expand(t_cmd_word *actual, t_cmd_word *next);
-void					parsing_status(t_stack *list);
 
 #endif

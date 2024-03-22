@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/22 02:43:37 by abougrai          #+#    #+#             */
+/*   Updated: 2024/03/22 02:43:38 by abougrai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /* export = add a var in env ; je l'add a la fin parce que c'est pratique
@@ -73,7 +85,7 @@ void	ft_export(t_env **env, char **cmd)
 	else if (ft_export_checking(cmd[1]))
 	{
 		printf("bash: export: `%s': not a valid identifier\n", cmd[1]);
-		// 	g_ret_value = 1;
+		g_sig.status = 1;
 		return ;
 	}
 	else if (!export_exist_capart((*env), cmd[1]))
