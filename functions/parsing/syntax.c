@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 19:22:15 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 16:07:29 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/24 14:27:16 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,21 @@ t_node	*check_unclosed_quotes(t_node **node, enum e_token type)
 	return (*node);
 }
 
+int	error_cmd2(t_stack *lst, t_node	*node)
+{
+	if (lst->size == 1 && node->type == PIPE_LINE)
+		return (ft_perror("minishell: syntax error near \
+unexpected token `|'", NULL));
+	return (EXIT_SUCCESS);
+}
+
 int	error_cmd(t_stack *lst)
 {
 	t_node	*node;
 
 	node = lst->head;
+	if (error_cmd2(lst, node))
+		return (EXIT_FAILURE);
 	while (node)
 	{
 		if (node->type == PIPE_LINE)
@@ -59,10 +69,8 @@ unexpected token `|'", NULL));
 unexpected token ", get_redir(node->type)));
 		}
 		else if (node->type == DOUBLE_QUOTE || node->type == QOUTE)
-		{
 			if (!check_unclosed_quotes(&node, node->type))
 				return (EXIT_FAILURE);
-		}
 		node = node->next;
 	}
 	return (EXIT_SUCCESS);

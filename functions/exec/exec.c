@@ -3,22 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/21 17:41:24 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/24 15:26:55 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parent_free(t_pipex *pipex)
+void	close_h_doc(t_pipex *pipex)
 {
 	int	i;
 
 	i = 0;
-	close(pipex->infile);
-	close(pipex->outfile);
 	if (pipex->h_doc)
 	{
 		while (pipex->h_doc_name[i])
@@ -29,6 +27,12 @@ void	parent_free(t_pipex *pipex)
 		}
 		free(pipex->h_doc_name);
 	}
+}
+
+void	parent_free(t_pipex *pipex)
+{
+	close(pipex->infile);
+	close(pipex->outfile);
 	free(pipex->pipe);
 }
 
@@ -161,4 +165,5 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 			pipex.idx--;
 		}
 	}
+	close_h_doc(&pipex);
 }

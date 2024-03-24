@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:26:15 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/17 18:05:33 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/24 14:16:47 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 t_node	*skip_spaces(t_node *ptr, int opt)
 {
-	while (ptr && ptr->type == WHITE_SPACE)
+	while (ptr && (ptr->type == WHITE_SPACE || ptr->type == QOUTE
+			|| ptr->type == DOUBLE_QUOTE))
 	{
 		if (opt)
 			ptr = ptr->prev;
@@ -37,7 +38,11 @@ int	is_invalid_pipe(t_node *node)
 
 	next = skip_spaces(node->next, 0);
 	prev = skip_spaces(node->prev, 1);
-	if ((!prev || !next) || (next->type != WORD && prev->type != WORD
+	if (!next || !prev)
+	{
+		return (EXIT_FAILURE);
+	}
+	if ((!prev && !next) || (next->type != WORD && prev->type != WORD
 			&& !is_redir(next->type)))
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);

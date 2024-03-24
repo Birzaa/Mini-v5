@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:04:14 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/21 17:45:39 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/24 15:10:51 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,14 @@ void	nb_h_doc(t_command *parsed_cmd, t_pipex *pipex)
 		pipex->idx++;
 		current_cmd = current_cmd->next;
 	}
-	pipex->h_doc_name = malloc(sizeof(char *) * pipex->nb_h_doc + 1);
-	if (!pipex->h_doc_name)
-		return ;
-	pipex->h_doc_name[pipex->nb_h_doc++] = NULL;
+	if (pipex->nb_h_doc)
+	{
+		pipex->h_doc = 1;
+		pipex->h_doc_name = malloc(sizeof(char *) * pipex->nb_h_doc + 1);
+		if (!pipex->h_doc_name)
+			return ;
+		pipex->h_doc_name[pipex->nb_h_doc++] = NULL;
+	}
 	pipex->idx = 0;
 }
 

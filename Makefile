@@ -79,6 +79,7 @@ SRC = $(SRC_DIR)main.c \
 	$(EXECUTION_DIR)builtin.c \
 	$(TOOL_DIR)lst/free.c \
 	$(TOOL_DIR)free/free_parser.c \
+	$(TOOL_DIR)free/free_parser_two.c \
 	$(TOOL_DIR)free/free_lexer.c \
 
 OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
@@ -114,7 +115,7 @@ env : ${NAME}
 	@env -i ./${NAME}
 
 envv : ${NAME}
-	@env -i valgrind --leak-check=full --show-leak-kinds=all --suppressions=supp.supp ./${NAME}
+	@env -i valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all --suppressions=supp.supp ./${NAME}
 
 clean:
 	@rm -rf $(OBJ_DIR)

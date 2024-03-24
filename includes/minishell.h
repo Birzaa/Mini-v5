@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/22 02:34:38 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/24 15:28:45 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,13 +135,6 @@ typedef struct s_command
 }						t_command;
 
 // ------------------------> Data
-
-typedef struct s_redir
-{
-	int					current_file;
-	int					i;
-	int					len;
-}						t_redir;
 
 typedef struct s_data
 {
@@ -289,6 +282,7 @@ int						redir_token(enum e_state *state, char *input,
 //------> Tools
 int						ft_isspace(char c);
 void					free_list(t_stack *list);
+void					free_command(t_command *command);
 
 // ------------------------> Execution
 char					**get_cmd(t_cmd *cmd);
@@ -303,11 +297,6 @@ char					**get_tab_env(t_env *env);
 char					*get_valid_path(char **command);
 
 // ------------------------>TRAAAASH
-void					create_all_file(char **fileNames, int fileCount,
-							t_cmd *shell, int d_redir);
-void					put_in_tab_filename(char **fileNames, t_redir *redir,
-							char *fileName);
-void					free_tab_size(char **tab, size_t size);
 char					*ft_strncpy(char *dest, char *src, unsigned int n);
 
 // ------------------------>TRAAAASH
@@ -343,7 +332,7 @@ void					skip_r_out(t_cmd *cmd);
 void					skip_h_doc(t_cmd *cmd);
 void					skip_r_in(t_cmd *cmd);
 void					skip_word(t_cmd *cmd);
-void					free_parser(t_command *head);
+void					free_parser(t_cmd *head, t_command *command);
 void					free_lexer(t_stack *stack);
 int						redir_expand(enum e_state *state, char *input,
 							t_stack *lst, int i);

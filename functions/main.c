@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/21 23:55:32 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/24 16:57:14 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ int	main(int ac, char **av, char **env)
 
 	envp = NULL;
 	input = NULL;
-	(void)data;
 	(void)av;
-	(void)env;
-	(void)envp;
 	if (ac != 1)
 		return (1);
 	/* 	else if (!*env)
@@ -42,13 +39,18 @@ int	main(int ac, char **av, char **env)
 		else
 		{
 			add_history(input);
-			if (!ft_strcmp(input, "exit"))
-				ft_exit(&data);
 			data.lex = lexer(input);
-			envp = get_tab_env(data.env);
-			init_parse(&data);
-			execution(data.parsed_cmd, env, &data);
-			ft_free_tab(envp);
+			if (!error_cmd(data.lex))
+			{
+				envp = get_tab_env(data.env);
+				init_parse(&data);
+				execution(data.parsed_cmd, env, &data);
+				ft_free_tab(envp);
+				free_parser(data.cmd, data.parsed_cmd);
+				free_lexer(data.lex);
+			}
+			else
+				free_lexer(data.lex);
 		}
 	}
 }
