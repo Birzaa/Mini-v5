@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/25 03:57:48 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/25 19:18:15 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	ft_expand_symbol(t_env *env, t_cmd_word *cmd)
 	}
 	else if (!tmp_full && tmp_join)
 	{
-		printf("test\n");
 		cmd->content = tmp_join;
 		return (free(tmp_expand), 1);
 	}
@@ -186,16 +185,11 @@ int	first_step(t_cmd_word *cmd, t_data *data)
 	word = cmd->next;
 	symbol = ft_check_symbol(word->content);
 	if (ft_strncmp(word->content, "_", 2) && first_letter(word->content))
-	{
 		env->type = WORD;
-	}
 	else if (ft_strncmp(word->content, "_", 2) && symbol)
 	{
 		expanded = ft_expand_symbol(data->env, word);
-		if (expanded && !env->state)
-			env->content = "";
-		printf("test yes\n");
-		printf("new content : %s\n", word->content);
+		env->content = "";
 		return (1);
 	}
 	else if (!symbol)
@@ -203,22 +197,28 @@ int	first_step(t_cmd_word *cmd, t_data *data)
 		expanded = ft_expand_no_symbol(data->env, word);
 		if (!expanded)
 		{
-			env->state = 2;
 			if (!env->state)
-				env->state = 2;
-			printf("test2\n");
+			{
+				env->content = "";
+				env->state = 0;
+				word->content = "";
+				word->state = 0;
+				return (1);
+			}
+			env->state = 2;
+		}
+		else if (expanded && !word->content)
+		{
+			env->state = 2;
+			env->content = "";
 		}
 		else
 		{
-			printf("test5\n");
 			env->content = "";
+			env->state = 0;
 		}
-		printf("test no\n");
-		printf("new content : [%s]\n", word->content);
 		return (1);
 	}
-	printf("no expand\n");
-	printf("new content : %s\n", word->content);
 	return (0);
 }
 
@@ -228,19 +228,25 @@ void	parsing_expand(t_cmd *cmd, t_data *data)
 	t_cmd_word	*tmp_word;
 	int			expanded;
 
-	(void)cmd;
-	(void)data;
 	(void)expanded;
 	head = cmd;
 	while (head)
 	{
+		printf("%s\n", head->words->content);
+		expanded = 0;
 		tmp_word = head->words;
 		while (tmp_word)
 		{
-			expanded = 0;
+			if (tmp_word->type == ENV && !tmp_word->next)
+			{
+			printf("test2\n");
+				tmp_word->type = WORD;
+				break ;
+			}
 			if (tmp_word->type == ENV && tmp_word->next
 				&& tmp_word->next->type == WORD && tmp_word->state != 1)
 			{
+			printf("test3\n");
 				tmp_word->type = WHITE_SPACE;
 				expanded = first_step(tmp_word, data);
 				tmp_word = tmp_word->next;
@@ -250,14 +256,15 @@ void	parsing_expand(t_cmd *cmd, t_data *data)
 					|| tmp_word->next->type == QOUTE
 					|| tmp_word->next->type == WHITE_SPACE))
 			{
-				print_test();
+			printf("test4\n");
 				tmp_word->type = WORD;
 			}
-			if (tmp_word->next && tmp_word->next->type == ENV && expanded)
+			if (tmp_word->next && tmp_word->next->type == ENV)
 			{
+			printf("test5\n");
 				tmp_word = tmp_word->next;
-				printf("infini\n");
-				continue ;
+				tmp_word->state = 1;
+				continue;
 			}
 			tmp_word = tmp_word->next;
 		}

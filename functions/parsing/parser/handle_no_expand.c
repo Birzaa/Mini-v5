@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 17:10:33 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/25 03:56:46 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:57:44 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	handle_no_expand(t_cmd_word *actual, t_cmd_word *next)
 	if (!tmp)
 		return ;
 	next->content = ft_strcpy(next->content, tmp);
+	printf("next content %s\n", next->content);
 	free(tmp);
 	actual->content = " ";
 }

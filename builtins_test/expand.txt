@@ -61,13 +61,13 @@ echo $""$/"""$""""$/""""/$"""'$'""'$/'""'/$'"""$"""$"""""'$'"""'"$"'$USER""$USER
 echo $q $q/ " $q" " $q/" " /$q" ' $q' ' $q/' ' /$q' " $q" $q"" "' $q'" '" $q"'
 echo $q$q/"$q""$q/""/$q"'$q''$q/''/$q'"$q"$q"""'$q'"'"$q"'
 echo /"$q""$q/""/$q"'$q''$q/''/$q'"$q"$q"""'$q'"'"$q"'
-echo /"$q""$q/""/$q"'$q''$q/''/$q
+echo /"$q""$q/""/$q"$q''$q/''/$q
 echo '/$q'"$q"$q"""'$q'"'"$q"'
-$/$$//$$$//$$'$'"$"rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER"
-$/$$//$$$//$$'$'"$"rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER"
+
+echo '/$q'"$q"$q"""'$q'"'"$q"'
 
 echo $q $q/ " $q" " $q/" " /$q" ' $q' ' $q/' ' /$q' " $q" $q"" "' $q'" '" $q"'
-
+echo '/$q'"$q"$q"""'$q'"
 
 
 echo '/$USER' "$"USER $"USER" "'$USER'" '"$USER"'
@@ -77,4 +77,7 @@ on doit
 
 $"USER" faut des
 
-$"" faut des
+$""			ne pas garder le $
+$"dwqd"		il faut garder $
+
+$"USER"  = USER ne pas garde le $
