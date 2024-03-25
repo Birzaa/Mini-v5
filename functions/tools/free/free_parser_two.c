@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_parser_two.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 15:23:04 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/24 19:13:41 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/25 16:29:30 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,26 @@ void	free_parsed_cmd(t_parsed_cmd *parsed_cmd)
 {
 	if (parsed_cmd)
 	{
-		// ft_free_tab(parsed_cmd->full_cmd);
-		/* free_redir_out(parsed_cmd->r_out);
+		ft_free_tab(parsed_cmd->full_cmd);
+		free_redir_out(parsed_cmd->r_out);
 		free_redir_in_2(parsed_cmd->r_in);
-		free(parsed_cmd); */
+		free(parsed_cmd);
 	}
 }
 
 void	free_command(t_command *command)
 {
 	t_command	*next_command;
+	int			i;
 
-	while (command)
+	i = 0;
+	printf("ZZ : %s\n", command->parsed_cmd->full_cmd[0]);
+	while (command->nb_command > i)
 	{
 		next_command = command->next;
 		free_parsed_cmd(command->parsed_cmd);
 		free(command);
 		command = next_command;
+		i++;
 	}
 }

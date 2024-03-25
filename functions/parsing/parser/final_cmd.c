@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   final_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/24 17:00:04 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/25 16:25:56 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,13 @@ t_command	*parse(t_cmd *cmd)
 	command = NULL;
 	i = 0;
 	command = init_command(command);
+	if (!command)
+		return (NULL);
 	head = command;
 	while (cmd)
 	{
 		command->parsed_cmd = init_redir(command->parsed_cmd);
-		if (!command)
+		if (!command->parsed_cmd)
 			return (NULL);
 		while (cmd->words)
 			parse_cmd(cmd, command);

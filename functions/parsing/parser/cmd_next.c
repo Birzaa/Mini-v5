@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_next.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:14:04 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/24 17:07:07 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/25 16:34:17 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ t_command	*init_command(t_command *list)
 	if (!list)
 		return (NULL);
 	list->nb_command = 0;
+	list->current = NULL;
+	list->head = NULL;
 	list->parsed_cmd = NULL;
 	list->next = NULL;
 	return (list);

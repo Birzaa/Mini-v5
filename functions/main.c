@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/24 16:57:14 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/25 16:30:58 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int	main(int ac, char **av, char **env)
 				init_parse(&data);
 				execution(data.parsed_cmd, env, &data);
 				ft_free_tab(envp);
-				free_parser(data.cmd, data.parsed_cmd);
 				free_lexer(data.lex);
+				free_parser(data.cmd, data.parsed_cmd);
 			}
 			else
 				free_lexer(data.lex);
