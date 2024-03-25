@@ -82,3 +82,9 @@ $""			ne pas garder le $
 $"dwqd"		ne pas garder le $
 
 $"USER"  = USER ne pas garde le $
+
+
+echo /"$q""$q/""/$q"$q''$q/''/$q
+echo '/$q'"$q"$q"""'$q'"'"$q"'
+echo '/$USER' "$"USER $"USER" "'$USER'" '"$USER"'
+

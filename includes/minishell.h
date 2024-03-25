@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/22 02:34:38 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/25 20:21:04 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,16 +231,12 @@ char					*ft_get_symbol_join(char *content);
 char					*ft_get_symbol_expand(char *content);
 
 // tools/expansion/expansion/expansion_utils2.c
-void					expand_check_letter(t_cmd_word *tmp_word, int *check);
-void					expand_check_quote(t_cmd_word *tmp_word);
-void					expand_check_expand(t_data *data, t_cmd_word *tmp_word,
-							int *check);
+
 
 // tools/expansion/expansion/expansion_utils3.c
-void					expand_check_word(t_cmd_word *tmp_word);
-void					expand_check_next(t_cmd_word *tmp_word);
-void					expand_continue(t_cmd_word *tmp_word, int *check);
-void					expand(t_cmd_word *cmd, t_data *data);
+
+int	expand(t_cmd_word *cmd, t_data *data);
+
 void					parsing_status(t_stack *list);
 
 // tools/export/export_utils1.c

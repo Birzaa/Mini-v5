@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/25 20:09:40 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/25 20:37:08 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,60 +94,6 @@ int	ft_expand_exist(t_env *env, t_cmd_word *cmd)
 	return (0);
 }
 
-void	expand(t_cmd_word *cmd, t_data *data)
-{
-	int			check;
-	int			expanded;
-	t_cmd_word	*tmp;
-
-	tmp = cmd;
-	expanded = 0;
-	check = 0;
-	cmd = cmd->next;
-	printf("content : %s\n", cmd->content);
-	if (ft_check_symbol(cmd->content) && cmd->state != IN_QUOTE)
-		check = 1;
-	printf("content : %d\n", check);
-	if (!ft_expand_exist(data->env, cmd) && !check)
-	{
-		printf("go\n");
-		cmd->type = WHITE_SPACE;
-		cmd->content = "";
-		tmp->type = WHITE_SPACE;
-		tmp->content = "";
-		return ;
-	}
-	if (!expanded && !check)
-		tmp->content = "$";
-	if (expanded && !check)
-	{
-		printf("test 2\n");
-		tmp->content = "";
-	}
-	if (!expanded)
-	{
-		print_test();
-		if (!ft_expand_symbol(data->env, cmd))
-		{
-			if (cmd->next && cmd->next->state == 2 && cmd->content)
-			{
-				printf("test 5\n");
-				printf("%s\n", cmd->next->content);
-				printf("%s\n", cmd->next->content);
-				printf("%s\n", tmp->content);
-				tmp->content = "";
-			}
-			else if (cmd->next && tmp->next->state == 0 && !cmd->content)
-			{
-				printf("test 6\n");
-				tmp->content = "$";
-			}
-			else
-				tmp->content = "";
-		}
-	}
-}
-
 int	ft_expand_no_symbol(t_env *env, t_cmd_word *word)
 {
 	t_env	*tmp;
@@ -174,18 +120,24 @@ int	ft_expand_no_symbol(t_env *env, t_cmd_word *word)
 	return (0);
 }
 
-int	first_step(t_cmd_word *cmd, t_data *data)
+int	expand(t_cmd_word *cmd, t_data *data)
 {
 	t_cmd_word	*env;
 	t_cmd_word	*word;
 	int			symbol;
 	int			expanded;
 
+	cmd->type = QOUTE;
 	env = cmd;
 	word = cmd->next;
 	symbol = ft_check_symbol(word->content);
 	if (ft_strncmp(word->content, "_", 2) && first_letter(word->content))
 		env->type = WORD;
+	else if (!ft_strncmp(word->content, "_", 2))
+	{
+		expanded = ft_expand_no_symbol(data->env, word);
+		return (1);
+	}
 	else if (ft_strncmp(word->content, "_", 2) && symbol)
 	{
 		expanded = ft_expand_symbol(data->env, word);
@@ -214,7 +166,6 @@ int	first_step(t_cmd_word *cmd, t_data *data)
 		}
 		else
 		{
-			print_test();
 			env->content = "";
 			env->state = 0;
 		}
@@ -227,69 +178,25 @@ void	parsing_expand(t_cmd *cmd, t_data *data)
 {
 	t_cmd		*head;
 	t_cmd_word	*tmp_word;
-	int			expanded;
 
-	(void)expanded;
 	head = cmd;
 	while (head)
 	{
-		expanded = 0;
 		tmp_word = head->words;
 		while (tmp_word)
 		{
 			if (tmp_word->type == ENV && !tmp_word->next)
-			{
 				tmp_word->type = WORD;
-				break ;
-			}
-			if (tmp_word->type == ENV && tmp_word->next
+			else if (tmp_word->type == ENV && tmp_word->next
 				&& tmp_word->next->type == WORD && tmp_word->state != 1)
-			{
-				tmp_word->type = QOUTE;
-				expanded = first_step(tmp_word, data);
-				tmp_word = tmp_word->next;
-			}
+				expand(tmp_word, data);
 			else if (tmp_word->type == ENV && (tmp_word->state == 1
 					|| (tmp_word->next->type == DOUBLE_QUOTE)
 					|| tmp_word->next->type == QOUTE
 					|| tmp_word->next->type == WHITE_SPACE))
-			{
 				tmp_word->type = WORD;
-			}
-			if (tmp_word->next && tmp_word->next->type == ENV)
-			{
-				tmp_word = tmp_word->next;
-				continue ;
-			}
 			tmp_word = tmp_word->next;
 		}
 		head = head->next;
 	}
 }
-
-/* void	parsing_expand(t_cmd *cmd, t_data *data)
-{
-	t_cmd		*head;
-	t_cmd_word	*tmp_word;
-	int			check;
-
-	head = cmd;
-	while (head)
-	{
-		check = 0;
-		tmp_word = head->words;
-		while (tmp_word)
-		{
-			expand_check_next(tmp_word);
-			expand_check_letter(tmp_word, &check);
-			expand_check_quote(tmp_word);
-			expand_check_expand(data, tmp_word, &check);
-			expand_check_word(tmp_word);
-			expand_continue(tmp_word, &check);
-			if (!tmp_word->next)
-				break ;
-			tmp_word = tmp_word->next;
-		}
-		head = head->next;
-	}
-} */
