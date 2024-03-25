@@ -60,6 +60,8 @@ echo $""$/"""$""""$/""""/$"""'$'""'$/'""'/$'"""$"""$"""""'$'"""'"$"'$USER""$USER
 
 echo $q $q/ " $q" " $q/" " /$q" ' $q' ' $q/' ' /$q' " $q" $q"" "' $q'" '" $q"'
 echo $q$q/"$q""$q/""/$q"'$q''$q/''/$q'"$q"$q"""'$q'"'"$q"'
+echo /"$q""$q/""/$q"'$q''$q/''/$q'"$q"$q"""'$q'"'"$q"'
+echo /"$q""$q/""/$q"'$q''$q/''/$q
 echo '/$q'"$q"$q"""'$q'"'"$q"'
 $/$$//$$$//$$'$'"$"rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER"
 $/$$//$$$//$$'$'"$"rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER"
@@ -70,5 +72,9 @@ echo $q $q/ " $q" " $q/" " /$q" ' $q' ' $q/' ' /$q' " $q" $q"" "' $q'" '" $q"'
 
 echo '/$USER' "$"USER $"USER" "'$USER'" '"$USER"'
 
-$/$ //$$$//$$' '"$"rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" $ $/  $   /  /$  $  $/  /$  $  '  ' " $" $ $/     $/   /   $   $/   /$      ' $ ' " $ " /    /  /  $q  $q/  /$q    ' ' " $q"
-$/$$//$$$//$$'$'"$"rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" $ $/  $  $/  /$  $  $/  /$  $  ' $' " $" $ $/  $   $/   /$   $   $/   /$   $   ' $ ' " $ " /    /  /  $q  $q/  /$q    ' ' " $q"
+
+on doit 
+
+$"USER" faut des
+
+$"" faut des
