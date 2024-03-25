@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/25 19:18:15 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/25 20:09:40 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ int	first_step(t_cmd_word *cmd, t_data *data)
 		}
 		else
 		{
+			print_test();
 			env->content = "";
 			env->state = 0;
 		}
@@ -232,39 +233,33 @@ void	parsing_expand(t_cmd *cmd, t_data *data)
 	head = cmd;
 	while (head)
 	{
-		printf("%s\n", head->words->content);
 		expanded = 0;
 		tmp_word = head->words;
 		while (tmp_word)
 		{
 			if (tmp_word->type == ENV && !tmp_word->next)
 			{
-			printf("test2\n");
 				tmp_word->type = WORD;
 				break ;
 			}
 			if (tmp_word->type == ENV && tmp_word->next
 				&& tmp_word->next->type == WORD && tmp_word->state != 1)
 			{
-			printf("test3\n");
-				tmp_word->type = WHITE_SPACE;
+				tmp_word->type = QOUTE;
 				expanded = first_step(tmp_word, data);
 				tmp_word = tmp_word->next;
 			}
 			else if (tmp_word->type == ENV && (tmp_word->state == 1
-					|| tmp_word->next->type == DOUBLE_QUOTE
+					|| (tmp_word->next->type == DOUBLE_QUOTE)
 					|| tmp_word->next->type == QOUTE
 					|| tmp_word->next->type == WHITE_SPACE))
 			{
-			printf("test4\n");
 				tmp_word->type = WORD;
 			}
 			if (tmp_word->next && tmp_word->next->type == ENV)
 			{
-			printf("test5\n");
 				tmp_word = tmp_word->next;
-				tmp_word->state = 1;
-				continue;
+				continue ;
 			}
 			tmp_word = tmp_word->next;
 		}

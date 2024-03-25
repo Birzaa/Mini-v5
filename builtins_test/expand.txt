@@ -72,12 +72,13 @@ echo '/$q'"$q"$q"""'$q'"
 
 echo '/$USER' "$"USER $"USER" "'$USER'" '"$USER"'
 
-
+$/$$//$$$//$$'$'"$"rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" $ $/  $  $/  /$  $  $/  /$  $  ' $' " $" $ $/  $   $/   /$   $   $/   /$   $   ' $ ' " $ " /    /  /  $q  $q/  /$q    ' ' " $q"
+$$/$$//$$$//$$$'$'"$"rayray/rayray//ray$USER$USER//$USER$USER$USER'ray'"$USER" rayray/rayray//ray$USER$USER//$USER$USER$USER'ray'"$USER" $ $/  $  $/  /$  $  $/  /$  $ $ ' $' " $" $ $/  $   $/   /$   $   $/   /$   $  $ ' $ ' " $ " /    /  /  $q  $q/  /$q    ' ' " $q"
 on doit 
 
 $"USER" faut des
 
 $""			ne pas garder le $
-$"dwqd"		il faut garder $
+$"dwqd"		ne pas garder le $
 
 $"USER"  = USER ne pas garde le $
