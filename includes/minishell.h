@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/25 20:21:04 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:22:33 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,13 +231,11 @@ char					*ft_get_symbol_join(char *content);
 char					*ft_get_symbol_expand(char *content);
 
 // tools/expansion/expansion/expansion_utils2.c
-
-
-// tools/expansion/expansion/expansion_utils3.c
-
-int	expand(t_cmd_word *cmd, t_data *data);
-
-void					parsing_status(t_stack *list);
+void					expand_check_no_sym(t_data *data, t_cmd_word *env,
+							t_cmd_word *word, int expanded);
+void					expand(t_cmd_word *cmd, t_data *data);
+void					expand_whitespace(t_cmd_word *tmp_word);
+void					while_expand(t_data *data, t_cmd_word *tmp_word);
 
 // tools/export/export_utils1.c
 void					replace_export(t_env **env, char *content);
@@ -260,6 +258,17 @@ int						ft_charcmp(int c, int d);
 t_stack					*lexer(char *input);
 int						is_charset(char c);
 t_cmd					*parser(t_stack *lst);
+
+// parser/expansion.c
+void					parsing_expand(t_cmd *cmd, t_data *data);
+char					*ft_expand_symbol_bis(t_env *env, t_cmd_word *cmd,
+							char *tmp_expand);
+int						ft_expand_symbol(t_env *env, t_cmd_word *cmd);
+int						ft_expand_exist(t_env *env, t_cmd_word *cmd);
+int						ft_expand_no_symbol(t_env *env, t_cmd_word *word);
+
+// parser/status.c
+void					parsing_status(t_stack *list);
 
 //------> Syntax error
 int						is_invalid_pipe(t_node *node);

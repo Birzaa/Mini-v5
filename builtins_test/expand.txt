@@ -1,16 +1,16 @@
 command					note	code d'erreur	message error							
 HOME is set
 
-echo $HOME 			OK
-echo $HOME$HOME		OK  
-echo $HOME/$HOME	OK	
-echo $HOME""$HOME	OK	
-echo $HOME"a"$HOME	OK	
-echo $HOME/			OK
-echo $HOME/c 		OK 
-echo $HOME/capart   OK
-echo $HOM/capart 	OK
-echo $/capart		OK
+echo $HOME 			
+echo $HOME$HOME		 
+echo $HOME/$HOME		
+echo $HOME""$HOME		
+echo $HOME"a"$HOME		
+echo $HOME/			
+echo $HOME/c 		 
+echo $HOME/capart   
+echo $HOM/capart 	
+echo $/capart		
 
 echo $_
 echo $+
@@ -75,6 +75,14 @@ echo '/$USER' "$"USER $"USER" "'$USER'" '"$USER"'
 $/$$//$$$//$$'$'"$"rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" $ $/  $  $/  /$  $  $/  /$  $  ' $' " $" $ $/  $   $/   /$   $   $/   /$   $   ' $ ' " $ " /    /  /  $q  $q/  /$q    ' ' " $q"
 $$/$$//$$$//$$$'$'"$"rayray/rayray//ray$USER$USER//$USER$USER$USER'ray'"$USER" rayray/rayray//ray$USER$USER//$USER$USER$USER'ray'"$USER" $ $/  $  $/  /$  $  $/  /$  $ $ ' $' " $" $ $/  $   $/   /$   $   $/   /$   $  $ ' $ ' " $ " /    /  /  $q  $q/  /$q    ' ' " $q"
 on doit 
+
+
+
+$/$$//$$$//$$'$'"$"rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" $ $/  $  $/  /$  $  $/  /$  $  ' $' " $" $ $/  $   $/   /$   $   $/   /$   $   ' $ ' " $ " /    /  /  $q  $q/  /$q    ' ' " $q"
+$/$$//$$$//$$'$'"$"rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" $ $/  $  $/  /$  $  $/  /$  $  ' $' " $" $ $/  $   $/   /$   $   $/   /$   $   ' $ ' " $ " /    /  /  $q  $q/  /$q    ' ' " $q"
+$/$$//$$$//$$'$'"$"rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" $ $/  $  $/  /$  $  $/  /$  $  ' $' " $" $ $/  $   $/   /$   $   $/   /$   $   ' $ ' " $ " /    /  /  $q  $q/  /$q    ' ' " $q"
+$/$$//$$$//$$'$'"$"rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" $ $/  $  $/  /$  $  $/  /$  $  ' $' " $" $ $/  $   $/   /$   $   $/   /$   $   ' $ ' " $ " /    /  /  $q  $q/  /$q    ' ' " $q"
+$/$$//$$$//$$'$'"$"rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" $ $/  $  $/  /$  $  $/  /$  $  ' $' " $" $ $/  $   $/   /$   $   $/   /$   $   ' $ ' " $ " /    /  /  $q  $q/  /$q    ' ' " $q"
 
 $"USER" faut des
 

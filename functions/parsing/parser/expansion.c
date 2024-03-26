@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/25 20:37:08 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:20:30 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,60 +120,6 @@ int	ft_expand_no_symbol(t_env *env, t_cmd_word *word)
 	return (0);
 }
 
-int	expand(t_cmd_word *cmd, t_data *data)
-{
-	t_cmd_word	*env;
-	t_cmd_word	*word;
-	int			symbol;
-	int			expanded;
-
-	cmd->type = QOUTE;
-	env = cmd;
-	word = cmd->next;
-	symbol = ft_check_symbol(word->content);
-	if (ft_strncmp(word->content, "_", 2) && first_letter(word->content))
-		env->type = WORD;
-	else if (!ft_strncmp(word->content, "_", 2))
-	{
-		expanded = ft_expand_no_symbol(data->env, word);
-		return (1);
-	}
-	else if (ft_strncmp(word->content, "_", 2) && symbol)
-	{
-		expanded = ft_expand_symbol(data->env, word);
-		env->content = "";
-		return (1);
-	}
-	else if (!symbol)
-	{
-		expanded = ft_expand_no_symbol(data->env, word);
-		if (!expanded)
-		{
-			if (!env->state)
-			{
-				env->content = "";
-				env->state = 0;
-				word->content = "";
-				word->state = 0;
-				return (1);
-			}
-			env->state = 2;
-		}
-		else if (expanded && !word->content)
-		{
-			env->state = 2;
-			env->content = "";
-		}
-		else
-		{
-			env->content = "";
-			env->state = 0;
-		}
-		return (1);
-	}
-	return (0);
-}
-
 void	parsing_expand(t_cmd *cmd, t_data *data)
 {
 	t_cmd		*head;
@@ -185,16 +131,7 @@ void	parsing_expand(t_cmd *cmd, t_data *data)
 		tmp_word = head->words;
 		while (tmp_word)
 		{
-			if (tmp_word->type == ENV && !tmp_word->next)
-				tmp_word->type = WORD;
-			else if (tmp_word->type == ENV && tmp_word->next
-				&& tmp_word->next->type == WORD && tmp_word->state != 1)
-				expand(tmp_word, data);
-			else if (tmp_word->type == ENV && (tmp_word->state == 1
-					|| (tmp_word->next->type == DOUBLE_QUOTE)
-					|| tmp_word->next->type == QOUTE
-					|| tmp_word->next->type == WHITE_SPACE))
-				tmp_word->type = WORD;
+			while_expand(data, tmp_word);
 			tmp_word = tmp_word->next;
 		}
 		head = head->next;
