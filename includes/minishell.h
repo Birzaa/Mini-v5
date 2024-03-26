@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/26 15:22:33 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/26 18:09:18 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ typedef struct s_signal
 	int					sigint;
 	int					sigquit;
 	int					status;
+	char				*input;
 	pid_t				pid;
 }						t_signal;
 
@@ -164,7 +165,7 @@ extern t_signal			g_sig;
 //-----------------------------------------------------> Signal
 void					ctrl_c(int sig);
 void					ctrl_slash(int sig);
-void					ctrl_d(int sig, t_data *data);
+void					ctrl_d(int sig);
 void					init_signals(void);
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~> Builtins
@@ -181,6 +182,7 @@ void					ft_echo(char **command);
 
 // function/env.c
 t_env					*get_env(char **env);
+char					**create_env(void);
 
 // function/random
 void					print_test(void);
@@ -199,7 +201,7 @@ void					add_back_env(t_env **env, t_env *new);
 
 // tools/env/env_utils2.c
 t_env					*ft_sort_env(t_env *env, int (*cmp)(char *, char *));
-void					create_env_part2(t_env **env, int *error);
+void					create_env_part2(t_env **env);
 void					del_node_env(t_env *target, t_env *previous);
 void					swap_content_env(t_env *node1, t_env *node2);
 void					pop_node_env(t_env *env);

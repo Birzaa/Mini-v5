@@ -6,69 +6,62 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:57 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/22 02:45:58 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/26 18:08:47 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ctrl_c(int sig)
+void	minishell_signal(int sig)
 {
 	(void)sig;
-	ft_putstr_fd("\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	if (sig == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	else if (sig == SIGINT)
+	{
+		ft_putstr_fd("\n", 1);
+		rl_replace_line("", 1);
+		rl_on_new_line();
+		rl_redisplay();
+		g_sig.status = 130;
+	}
 }
 
-void	ctrl_slash(int sig)
+void	exec_signal(int sig)
 {
-	(void)sig;
-	if (g_sig.pid != 0)
+	if (sig == SIGQUIT)
 	{
-		kill(g_sig.pid, SIGQUIT);
-		printf("Quit (core dumped)\n");
+		ft_putstr_fd("Quit: (core dumped)\n", 2);
+		g_sig.sigquit = 1;
+		g_sig.status = 131;
 	}
+	else if (sig == SIGINT)
+	{
+		ft_putstr_fd("\n", 2);
+		g_sig.sigint = 1;
+		g_sig.status = 130;
+	}
+}
+
+void	get_signal(int sig)
+{
+	printf("%d\n", sig);
+	printf("%d\n", g_sig.pid);
+	if (g_sig.pid)
+		exec_signal(sig);
 	else
-	{
-		if (rl_end == 0)
-		{
-			rl_forced_update_display(); // Mise à jour de l'affichage readline
-			return ;
-		}
-		return ;
-	}
-	ft_nothing();
+		minishell_signal(sig);
 }
 
-void	ctrl_d(int sig, t_data *data)
+void	init_signals(void)
 {
-	(void)sig;
-	(void)data;
-	ft_exit(data);
-}
-
-/* void	init_signals(void)
-{
-	struct sigaction	sa;
-
-	// Initialisation de la structure t_signal
 	g_sig.sigint = 0;
 	g_sig.sigquit = 0;
 	g_sig.pid = 0;
-	// Configuration du gestionnaire de signal pour SIGINT (Ctrl+C)
-	sa.sa_handler = ctrl_c;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
-	// Configuration du gestionnaire de signal pour SIGQUIT (Ctrl+\)
-	sa.sa_handler = ctrl_slash;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGQUIT, &sa, NULL);
-	// Configuration du gestionnaire de signal pour SIGTERM (Ctrl+D)
-	sa.sa_handler = (void (*)(int))ctrl_d;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGTERM, &sa, NULL);
-} */
+	g_sig.input = NULL;
+	signal(SIGINT, get_signal);
+	signal(SIGQUIT, get_signal);
+}

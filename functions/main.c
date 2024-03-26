@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/26 15:27:20 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/26 17:59:07 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,37 @@
 
 t_signal	g_sig;
 
+
 int	main(int ac, char **av, char **env)
 {
 	t_data	data;
-	char	*input;
 	char	**envp;
 
 	envp = NULL;
-	input = NULL;
 	(void)av;
 	if (ac != 1)
 		return (1);
-	/* 	else if (!*env)
-			data.env = create_env(); */
+	if (!*env)
+		env = create_env();
 	data.env = get_env(env);
-	/* 	init_signals(); */
+	init_signals();
 	g_sig.status = 0;
 	while (1)
 	{
-		// printf("%d\n", g_sig.pid);
-		input = readline(ORANGE "\U0001F58A  ~>: " RESET);
-		if (!*input)
+		g_sig.input = readline(ORANGE "\U0001F58A  ~>: " RESET);
+		if (!g_sig.input)
+		{
+			printf("exit\n");
+			ft_exit(&data);
+		}
+		else if (!*g_sig.input)
 			ft_nothing();
 		else
 		{
-			add_history(input);
-			if (!ft_strcmp(input, "exit"))
+			add_history(g_sig.input);
+			if (!ft_strcmp(g_sig.input, "exit"))
 				ft_exit(&data);
-			data.lex = lexer(input);
+			data.lex = lexer(g_sig.input);
 			envp = get_tab_env(data.env);
 			init_parse(&data);
 			execution(data.parsed_cmd, env, &data);
