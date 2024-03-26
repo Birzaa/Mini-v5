@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_next.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:14:04 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/25 16:34:17 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/25 20:48:20 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@ t_command	*ft_command_new(void)
 	if (!elem)
 		return (NULL);
 	elem->next = NULL;
+	elem->current = NULL;
+	elem->head = NULL;
+	elem->nb_command = 0;
+	elem->parsed_cmd = NULL;
 	return (elem);
 }
 

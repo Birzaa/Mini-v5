@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/24 15:28:45 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/25 19:33:08 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,6 +281,7 @@ int						redir_token(enum e_state *state, char *input,
 
 //------> Tools
 int						ft_isspace(char c);
+void					free_parsed_cmd(t_parsed_cmd *parsed_cmd);
 void					free_list(t_stack *list);
 void					free_command(t_command *command);
 

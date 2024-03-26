@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:29:39 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/24 14:55:32 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/25 21:10:34 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	free_stack(t_stack *stack)
 	t_node	*current;
 	t_node	*next;
 
+	current = NULL;
+	next = NULL;
 	current = stack->head;
 	while (current)
 	{
