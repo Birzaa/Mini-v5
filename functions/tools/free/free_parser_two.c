@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 15:23:04 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/27 18:41:50 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/27 23:43:32 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	free_redir_out(t_redir_out *r_out)
 	while (r_out)
 	{
 		next_out = r_out->next;
-		free(r_out->file);
+		// free(r_out->file);
 		free(r_out);
 		r_out = next_out;
 	}
@@ -34,7 +34,8 @@ void	free_redir_in_2(t_redir_in_2 *r_in)
 	while (r_in)
 	{
 		next_in = r_in->next;
-		free(r_in->file);
+		if(r_in->h_doc)
+			free(r_in->file);
 		free(r_in);
 		r_in = next_in;
 	}
