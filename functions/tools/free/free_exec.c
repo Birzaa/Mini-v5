@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   free_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/08 18:51:54 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/27 15:32:17 by thomas           ###   ########.fr       */
+/*   Created: 2024/03/27 17:14:05 by thomas            #+#    #+#             */
+/*   Updated: 2024/03/27 18:47:47 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	skip_env(t_cmd_word *cmd)
+void	free_exec(t_pipex *pipex)
 {
-	if (cmd->type == WORD && cmd->next)
-		cmd = cmd->next;
+	if (pipex)
+	{
+		if (pipex->h_doc_name)
+		{
+			ft_free_tab(pipex->h_doc_name);
+		}
+	}
 }

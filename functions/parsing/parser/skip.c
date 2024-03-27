@@ -3,64 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   skip.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:01:09 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 17:43:49 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/27 15:48:55 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	skip_dr_out(t_cmd *cmd)
+void	skip_dr_out(t_cmd_word **cmd)
 {
-	if (cmd->words->type == DREDIR_OUT && cmd->words->next)
-		cmd->words = cmd->words->next;
-	while (cmd->words->type == WHITE_SPACE && cmd->words->next)
-		cmd->words = cmd->words->next;
-	if (cmd->words->type == WORD && cmd->words->next)
-		cmd->words = cmd->words->next;
+	if ((*cmd)->type == DREDIR_OUT && (*cmd)->next)
+		(*cmd) = (*cmd)->next;
+	while ((*cmd)->type == WHITE_SPACE && (*cmd)->next)
+		(*cmd) = (*cmd)->next;
+	if ((*cmd)->type == WORD && (*cmd)->next)
+		(*cmd) = (*cmd)->next;
 }
 
-void	skip_r_out(t_cmd *cmd)
+void	skip_r_out(t_cmd_word **cmd)
 {
-	if (cmd->words->type == REDIR_OUT && cmd->words->next)
-		cmd->words = cmd->words->next;
-	while (cmd->words->type == WHITE_SPACE && cmd->words->next)
-		cmd->words = cmd->words->next;
-	if (cmd->words->type == WORD && cmd->words->next)
-		cmd->words = cmd->words->next;
+	if ((*cmd)->type == REDIR_OUT && (*cmd)->next)
+		(*cmd) = (*cmd)->next;
+	while ((*cmd)->type == WHITE_SPACE && (*cmd)->next)
+		(*cmd) = (*cmd)->next;
+	if ((*cmd)->type == WORD && (*cmd)->next)
+		(*cmd) = (*cmd)->next;
 }
 
-void	skip_h_doc(t_cmd *cmd)
+void	skip_h_doc(t_cmd_word **cmd)
 {
-	if (cmd->words->type == HERE_DOC && cmd->words->next)
-		cmd->words = cmd->words->next;
-	while (cmd->words->type == WHITE_SPACE && cmd->words->next)
-		cmd->words = cmd->words->next;
-	if (cmd->words->type == WORD && cmd->words->next)
-		cmd->words = cmd->words->next;
+	if ((*cmd)->type == HERE_DOC && (*cmd)->next)
+		(*cmd) = (*cmd)->next;
+	while ((*cmd)->type == WHITE_SPACE && (*cmd)->next)
+		(*cmd) = (*cmd)->next;
+	if ((*cmd)->type == WORD && (*cmd)->next)
+		(*cmd) = (*cmd)->next;
 }
 
-void	skip_r_in(t_cmd *cmd)
+void	skip_r_in(t_cmd_word **cmd)
 {
-	if (cmd->words->type == REDIR_IN && cmd->words->next)
-		cmd->words = cmd->words->next;
-	while (cmd->words->type == WHITE_SPACE && cmd->words->next)
-		cmd->words = cmd->words->next;
-	if (cmd->words->type == WORD && cmd->words->next)
-		cmd->words = cmd->words->next;
+	if ((*cmd)->type == REDIR_IN && (*cmd)->next)
+		(*cmd) = (*cmd)->next;
+	while ((*cmd)->type == WHITE_SPACE && (*cmd)->next)
+		(*cmd) = (*cmd)->next;
+	if ((*cmd)->type == WORD && (*cmd)->next)
+		(*cmd) = (*cmd)->next;
 }
 
-void	skip_word(t_cmd *cmd)
+void	skip_word(t_cmd_word **cmd)
 {
-	if (cmd->words->type == WORD && cmd->words->next)
-		cmd->words = cmd->words->next;
-	while (cmd->words)
+	if ((*cmd)->type == WORD && (*cmd)->next)
+		(*cmd) = (*cmd)->next;
+	while (cmd)
 	{
-		if ((cmd->words->type == WHITE_SPACE || cmd->words->type == WORD)
-			&& cmd->words->next)
-			cmd->words = cmd->words->next;
+		if (((*cmd)->type == WHITE_SPACE || (*cmd)->type == WORD) && (*cmd)->next)
+			(*cmd) = (*cmd)->next;
 		else
 			break ;
 	}

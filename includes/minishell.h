@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/25 19:33:08 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/27 18:46:21 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,23 @@ typedef struct s_command
 	struct s_command	*next;
 	struct s_command	*current;
 }						t_command;
+
+// ------------------------> Execution
+
+typedef struct s_pipex
+{
+	int					infile;
+	int					outfile;
+	int					*pipe;
+	int					idx;
+	int					nb_cmd;
+	int					saved_in;
+	int					saved_out;
+	int					h_doc;
+	pid_t				pid;
+	char				**h_doc_name;
+	int					nb_h_doc;
+}						t_pipex;
 
 // ------------------------> Data
 
@@ -291,8 +308,8 @@ void					exec(t_cmd *cmd, char **env, t_data *data);
 char					**find_path(char **env);
 char					*valid_path(char **all_paths, char *cmd);
 void					ft_free_tab(char **tab);
-
 char					**get_tab_env(t_env *env);
+void					free_exec(t_pipex *pipex);
 
 // ------------------------> Builtins
 char					*get_valid_path(char **command);
@@ -328,17 +345,17 @@ t_command				*ft_command_last(t_command *cmd);
 t_command				*ft_command_new(void);
 void					add_back_cmd_out(t_command **cmd, t_command *new);
 void					parse_word(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd);
-void					skip_dr_out(t_cmd *cmd);
-void					skip_r_out(t_cmd *cmd);
-void					skip_h_doc(t_cmd *cmd);
-void					skip_r_in(t_cmd *cmd);
-void					skip_word(t_cmd *cmd);
+void					skip_dr_out(t_cmd_word **cmd);
+void					skip_r_out(t_cmd_word **cmd);
+void					skip_h_doc(t_cmd_word **cmd);
+void					skip_r_in(t_cmd_word **cmd);
+void					skip_word(t_cmd_word **cmd);
 void					free_parser(t_cmd *head, t_command *command);
 void					free_lexer(t_stack *stack);
 int						redir_expand(enum e_state *state, char *input,
 							t_stack *lst, int i);
 void					parse_env(t_cmd_word *cmd, t_data *data);
-void					skip_env(t_cmd *cmd);
+void					skip_env(t_cmd_word *cmd);
 void					parsing_quote(t_cmd *cmd);
 int						init_parse(t_data *data);
 t_command				*init_command(t_command *list);
@@ -348,20 +365,6 @@ void					parse_space_in_quote(t_stack *list);
 void					index_quote(t_stack *list);
 
 //***********************EXECUTION*********************************
-typedef struct s_pipex
-{
-	int					infile;
-	int					outfile;
-	int					*pipe;
-	int					idx;
-	int					nb_cmd;
-	int					saved_in;
-	int					saved_out;
-	int					h_doc;
-	pid_t				pid;
-	char				**h_doc_name;
-	int					nb_h_doc;
-}						t_pipex;
 
 void					execution(t_command *head, char **env, t_data *data);
 void					open_redir_in(t_command *head, t_pipex *pipex);

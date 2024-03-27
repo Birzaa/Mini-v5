@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:23:48 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/26 12:21:53 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/27 18:07:51 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ void	free_cmd(t_cmd *cmd)
 	while (current_cmd)
 	{
 		current_word = current_cmd->words;
+		// print_test();
 		while (current_word)
 		{
+			// print_test();
 			next_word = current_word->next;
 			free_cmd_word(current_word);
 			current_word = next_word;

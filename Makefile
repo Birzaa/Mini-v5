@@ -81,6 +81,7 @@ SRC = $(SRC_DIR)main.c \
 	$(TOOL_DIR)free/free_parser.c \
 	$(TOOL_DIR)free/free_parser_two.c \
 	$(TOOL_DIR)free/free_lexer.c \
+	$(TOOL_DIR)free/free_exec.c \
 
 OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC))
 

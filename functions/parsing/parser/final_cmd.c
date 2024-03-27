@@ -6,50 +6,52 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/25 20:47:19 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/27 16:39:57 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parse_cmd_scnd(t_cmd *cmd, t_command *command)
+void	parse_cmd_scnd(t_cmd *cmd, t_command *command, t_cmd_word **zz)
 {
-	if (cmd->words->type == REDIR_IN)
-		parse_r_in(cmd->words, &command->parsed_cmd->r_in, 0, cmd);
-	else if (cmd->words->type == HERE_DOC)
+	if ((*zz)->type == REDIR_IN)
 	{
-		parse_r_in(cmd->words, &command->parsed_cmd->r_in, 1, cmd);
-		skip_h_doc(cmd);
+		parse_r_in((*zz), &command->parsed_cmd->r_in, 0, cmd);
+		skip_r_in((zz));
 	}
-	else if (cmd->words->type == REDIR_OUT)
+	else if ((*zz)->type == HERE_DOC)
 	{
-		parse_r_out(cmd->words, &command->parsed_cmd->r_out, 0);
-		skip_r_out(cmd);
+		parse_r_in((*zz), &command->parsed_cmd->r_in, 1, cmd);
+		skip_h_doc((zz));
 	}
-	else if (cmd->words->type == DREDIR_OUT)
+	else if ((*zz)->type == REDIR_OUT)
 	{
-		parse_r_out(cmd->words, &command->parsed_cmd->r_out, 1);
-		skip_dr_out(cmd);
+		parse_r_out((*zz), &command->parsed_cmd->r_out, 0);
+		skip_r_out((zz));
 	}
-	else if (cmd->words->type == WORD)
+	else if ((*zz)->type == DREDIR_OUT)
 	{
-		parse_word(cmd->words, command->parsed_cmd);
-		skip_word(cmd);
+		parse_r_out((*zz), &command->parsed_cmd->r_out, 1);
+		skip_dr_out((zz));
+	}
+	else if ((*zz)->type == WORD)
+	{
+		parse_word((*zz), command->parsed_cmd);
+		skip_word((zz));
 	}
 }
 
-void	parse_cmd(t_cmd *cmd, t_command *command)
+void	parse_cmd(t_cmd *cmd, t_command *command, t_cmd_word **zz)
 {
-	parse_cmd_scnd(cmd, command);
-	if (cmd->words->type == ENV)
+	parse_cmd_scnd(cmd, command, zz);
+	if ((*zz)->type == ENV)
 	{
-		if (cmd->words->state == IN_QUOTE && cmd->words->next
-			&& cmd->words->next->state == 1)
+		if ((*zz)->state == IN_QUOTE && (*zz)->next && (*zz)->next->state == 1)
 			handle_no_expand(cmd->words, cmd->words->next);
-		skip_env(cmd);
+		skip_env((*zz));
 	}
-	if (!is_redir(cmd->words->type))
-		cmd->words = cmd->words->next;
+	if (!is_redir((*zz)->type))
+		(*zz) = (*zz)->next;
 }
 
 t_command	*parse(t_cmd *cmd)
@@ -57,6 +59,7 @@ t_command	*parse(t_cmd *cmd)
 	t_command	*command;
 	t_command	*head;
 	t_command	*tmp;
+	t_cmd_word	*zz;
 	int			i;
 
 	tmp = NULL;
@@ -71,8 +74,9 @@ t_command	*parse(t_cmd *cmd)
 		command->parsed_cmd = init_redir(command->parsed_cmd);
 		if (!command->parsed_cmd)
 			return (NULL);
-		while (cmd->words)
-			parse_cmd(cmd, command);
+		zz = cmd->words;
+		while (zz)
+			parse_cmd(cmd, command, &zz);
 		tmp = ft_command_new();
 		add_back_cmd_out(&command, tmp);
 		command = command->next;

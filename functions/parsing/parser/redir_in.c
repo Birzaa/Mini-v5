@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:17:01 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/20 18:26:56 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/27 15:28:34 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	parse_r_in(t_cmd_word *cmd, t_redir_in_2 **r_in, int h_doc,
 {
 	t_redir_in_2	*tmp;
 
+	(void)command;
 	cmd = cmd->next;
 	while (cmd->type == WHITE_SPACE)
 		cmd = cmd->next;
@@ -65,7 +66,5 @@ void	parse_r_in(t_cmd_word *cmd, t_redir_in_2 **r_in, int h_doc,
 		add_back_redir(r_in, tmp);
 		cmd = cmd->next;
 	}
-	if (h_doc == 0)
-		skip_r_in(command);
 	return ;
 }

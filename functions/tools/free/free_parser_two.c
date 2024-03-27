@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 15:23:04 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/25 20:43:28 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/27 18:41:50 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,9 @@ void	free_parsed_cmd(t_parsed_cmd *parsed_cmd)
 {
 	if (parsed_cmd)
 	{
-		if (parsed_cmd->full_cmd)
-			ft_free_tab(parsed_cmd->full_cmd);
-		if (parsed_cmd->r_out)
-			free_redir_out(parsed_cmd->r_out);
-		if (parsed_cmd->r_in)
-			free_redir_in_2(parsed_cmd->r_in);
+		ft_free_tab(parsed_cmd->full_cmd);
+		free_redir_in_2(parsed_cmd->r_in);
+		free_redir_out(parsed_cmd->r_out);
 		free(parsed_cmd);
 	}
 }

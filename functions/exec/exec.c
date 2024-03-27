@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/24 15:26:55 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/27 19:08:40 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	close_h_doc(t_pipex *pipex)
 		while (pipex->h_doc_name[i])
 		{
 			unlink(pipex->h_doc_name[i]);
-			free(pipex->h_doc_name[i]);
 			i++;
 		}
 		free(pipex->h_doc_name);
@@ -138,7 +137,7 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 	pipex.saved_out = dup(STDOUT_FILENO);
 	pipex.pipe = (int *)malloc((sizeof(int) * (2 * (pipex.nb_cmd - 1))));
 	if (!pipex.pipe)
-		printf("FLOP"); // modif
+		return ; // modif
 	nb_h_doc(current_cmd, &pipex);
 	create_h_doc(current_cmd, &pipex);
 	if (current_cmd->parsed_cmd->full_cmd && pipex.nb_cmd == 1
