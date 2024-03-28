@@ -107,7 +107,7 @@ run : ${NAME}
 	@./${NAME}
 
 valgrind : ${NAME}
-	@ valgrind --leak-check=full --suppressions=supp.supp ./${NAME}
+	@ valgrind --leak-check=full --show-leak-kinds=all --suppressions=supp.supp ./${NAME}
 
 runv : ${NAME}
 	@ valgrind --leak-check=full --suppressions=supp.supp ./${NAME}

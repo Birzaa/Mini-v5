@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/28 12:11:40 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/28 15:03:28 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,15 @@ void	child(t_pipex p, char **cmd, char **env, t_data *data)
 		// Fermeture de tous les descripteurs de fichiers des tuyaux dans le processus enfant
 		close_pipes(&p);
 		if (!is_builtin(cmd[0]) && cmd)
-			execute_cmd(env, cmd);
+			execute_cmd(env, cmd, data, &p);
 		else
 		{
 			execute_builtin(cmd, data);
+			free_lexer(data->lex);
+			free_parser(data->cmd, data->parsed_cmd);
+			free_env(data->env);
+			ft_free_tab(data->envp);
+			parent_free(&p);
 			exit(0);
 		}
 	}
@@ -140,6 +145,8 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 	if (current_cmd->parsed_cmd->full_cmd && pipex.nb_cmd == 1
 		&& is_builtin(current_cmd->parsed_cmd->full_cmd[0]))
 	{
+		open_redir_in(current_cmd, &pipex);
+		open_redir_out(current_cmd, &pipex);
 		execute_builtin(current_cmd->parsed_cmd->full_cmd, data);
 	}
 	else if (current_cmd->parsed_cmd->full_cmd)

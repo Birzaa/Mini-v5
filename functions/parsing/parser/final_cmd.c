@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/28 12:30:41 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/28 15:17:04 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ int	init_parse(t_data *data)
 	parse_space_in_quote(data->lex);
 	index_quote(data->lex);
 	data->cmd = parser(data->lex);
-	parsing_expand(data->cmd, data);
 	parsing_quote(data->cmd);
+	parsing_expand(data->cmd, data);
 	data->parsed_cmd = parse(data->cmd);
 	// print_list(data->lex);
 	// print_cmd_list(data->cmd);

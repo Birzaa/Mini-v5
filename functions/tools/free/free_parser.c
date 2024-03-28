@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:23:48 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/27 18:07:51 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/28 15:23:45 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	free_cmd_word(t_cmd_word *word)
 {
 	if (word)
 	{
-		free(word->content);
+		if(word->content)
+			free(word->content);
 		free(word);
 	}
 }

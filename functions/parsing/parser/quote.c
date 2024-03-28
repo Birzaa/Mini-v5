@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/28 12:46:18 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/28 13:46:29 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 void	put_in_one_word_two(t_cmd_word *cmd2, char *tmp)
 {
+	int	need_free;
+
+	need_free = 0;
 	if (cmd2->type == WORD)
 	{
+		need_free = 1;
 		tmp = ft_strjoin(tmp, cmd2->content);
 		cmd2->type = WHITE_SPACE;
 		if (cmd2->next)
@@ -23,6 +27,8 @@ void	put_in_one_word_two(t_cmd_word *cmd2, char *tmp)
 	}
 	free(cmd2->content);
 	cmd2->content = ft_strdup(tmp);
+	if(need_free)
+		free(tmp);
 	cmd2->type = WORD;
 }
 
