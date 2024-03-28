@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/28 17:53:02 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/28 23:36:44 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int	ft_expand_exist(t_env *env, t_cmd_word *cmd)
 		}
 		tmp = tmp->next;
 	}
-	cmd->content = "";
 	return (0);
 }
 
@@ -116,7 +115,7 @@ int	ft_expand_no_symbol(t_env *env, t_cmd_word *word)
 		tmp = tmp->next;
 	}
 	word->content = "";
-	word->type = WHITE_SPACE;
+	word->expand = 1;
 	return (0);
 }
 

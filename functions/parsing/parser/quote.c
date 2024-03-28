@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/28 17:50:14 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/28 23:26:30 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,12 @@ void	put_in_one_word_two(t_cmd_word *cmd2, char *tmp)
 		if (cmd2->next)
 			cmd2 = cmd2->next;
 	}
-	free(cmd2->content);
-	cmd2->content = ft_strdup(tmp);
-	if(need_free)
+	if (!cmd2->expand)
+	{
+		free(cmd2->content);
+		cmd2->content = ft_strdup(tmp);
+	}
+	if (need_free)
 		free(tmp);
 	cmd2->type = WORD;
 }

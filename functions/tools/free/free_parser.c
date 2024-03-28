@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:23:48 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/28 15:23:45 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/28 23:56:31 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 
 void	free_cmd_word(t_cmd_word *word)
 {
+	printf("content %s %d\n", word->content, word->expand);
 	if (word)
 	{
-		if(word->content)
+		if ((word->content && !word->expand))
+		{
+			printf("free %s %d\n", word->content, word->expand);
 			free(word->content);
+		}
 		free(word);
 	}
 }

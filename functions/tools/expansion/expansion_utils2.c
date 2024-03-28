@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:44:20 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/28 18:06:14 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/29 00:02:13 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ void	expand_check_no_sym(t_data *data, t_cmd_word *env, t_cmd_word *word,
 	{
 		if (!env->state)
 		{
-			env->content = "";
+			env->content = ft_strdup("");
 			env->state = 0;
 			word->content = "";
+			word->expand = 1;
 			word->state = 0;
 			return ;
 		}
@@ -31,12 +32,14 @@ void	expand_check_no_sym(t_data *data, t_cmd_word *env, t_cmd_word *word,
 	else if (expanded && !word->content)
 	{
 		env->state = 2;
-		env->content = "";
+		env->content = ft_strdup("");
 	}
 	else
 	{
 		env->content = "";
 		env->state = 0;
+	env->expand = 1;
+
 	}
 }
 
@@ -46,6 +49,7 @@ void	expand(t_cmd_word *cmd, t_data *data)
 	t_cmd_word	*word;
 	int			symbol;
 	int			expanded;
+
 	expanded = 0;
 	cmd->type = QOUTE;
 	env = cmd;
@@ -54,19 +58,26 @@ void	expand(t_cmd_word *cmd, t_data *data)
 	if (ft_strncmp(word->content, "_", 2) && first_letter(word->content))
 		env->type = WORD;
 	else if (!ft_strncmp(word->content, "_", 2))
+	{
 		ft_expand_no_symbol(data->env, word);
+		word->expand = 1;
+
+	}
 	else if (ft_strncmp(word->content, "_", 2) && symbol)
 	{
 		ft_expand_symbol(data->env, word);
-		env->content = "";
+		env->content = ft_strdup("");
+		word->expand = 1;
 	}
 	else if (!symbol)
+	{
 		expand_check_no_sym(data, env, word, expanded);
+		word->expand = 1;
+	}
 }
 
 void	expand_whitespace(t_cmd_word *tmp_word)
 {
-	tmp_word->content = "";
 	tmp_word->type = QOUTE;
 }
 
