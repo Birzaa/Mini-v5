@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/27 23:22:13 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/28 12:11:40 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,9 +135,6 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 	pipex.h_doc = 0;
 	pipex.idx = 0;
 	pipex.saved_out = dup(STDOUT_FILENO);
-	pipex.pipe = (int *)malloc((sizeof(int) * (2 * (pipex.nb_cmd - 1))));
-	if (!pipex.pipe)
-		return ; // modif
 	nb_h_doc(current_cmd, &pipex);
 	create_h_doc(current_cmd, &pipex);
 	if (current_cmd->parsed_cmd->full_cmd && pipex.nb_cmd == 1
@@ -145,8 +142,11 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 	{
 		execute_builtin(current_cmd->parsed_cmd->full_cmd, data);
 	}
-	else
+	else if (current_cmd->parsed_cmd->full_cmd)
 	{
+		pipex.pipe = (int *)malloc((sizeof(int) * (2 * (pipex.nb_cmd - 1))));
+		if (!pipex.pipe)
+			return ;
 		open_pipes(&pipex);
 		while (pipex.idx < pipex.nb_cmd)
 		{
