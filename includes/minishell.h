@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/26 18:09:18 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/28 17:50:53 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,14 +134,24 @@ typedef struct s_command
 	struct s_command	*current;
 }						t_command;
 
-// ------------------------> Data
+// ------------------------> Execution
 
-typedef struct s_redir
+typedef struct s_pipex
 {
-	int					current_file;
-	int					i;
-	int					len;
-}						t_redir;
+	int					infile;
+	int					outfile;
+	int					*pipe;
+	int					idx;
+	int					nb_cmd;
+	int					saved_in;
+	int					saved_out;
+	int					h_doc;
+	pid_t				pid;
+	char				**h_doc_name;
+	int					nb_h_doc;
+}						t_pipex;
+
+// ------------------------> Data
 
 typedef struct s_data
 {
@@ -149,6 +159,7 @@ typedef struct s_data
 	t_cmd				*cmd;
 	t_command			*parsed_cmd;
 	t_env				*env;
+	char				**envp;
 }						t_data;
 
 typedef struct s_signal
@@ -295,7 +306,9 @@ int						redir_token(enum e_state *state, char *input,
 
 //------> Tools
 int						ft_isspace(char c);
+void					free_parsed_cmd(t_parsed_cmd *parsed_cmd);
 void					free_list(t_stack *list);
+void					free_command(t_command *command);
 
 // ------------------------> Execution
 char					**get_cmd(t_cmd *cmd);
@@ -303,18 +316,13 @@ void					exec(t_cmd *cmd, char **env, t_data *data);
 char					**find_path(char **env);
 char					*valid_path(char **all_paths, char *cmd);
 void					ft_free_tab(char **tab);
-
 char					**get_tab_env(t_env *env);
+void					free_exec(t_pipex *pipex);
 
 // ------------------------> Builtins
 char					*get_valid_path(char **command);
 
 // ------------------------>TRAAAASH
-void					create_all_file(char **fileNames, int fileCount,
-							t_cmd *shell, int d_redir);
-void					put_in_tab_filename(char **fileNames, t_redir *redir,
-							char *fileName);
-void					free_tab_size(char **tab, size_t size);
 char					*ft_strncpy(char *dest, char *src, unsigned int n);
 
 // ------------------------>TRAAAASH
@@ -345,17 +353,17 @@ t_command				*ft_command_last(t_command *cmd);
 t_command				*ft_command_new(void);
 void					add_back_cmd_out(t_command **cmd, t_command *new);
 void					parse_word(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd);
-void					skip_dr_out(t_cmd *cmd);
-void					skip_r_out(t_cmd *cmd);
-void					skip_h_doc(t_cmd *cmd);
-void					skip_r_in(t_cmd *cmd);
-void					skip_word(t_cmd *cmd);
-void					free_parser(t_command *head);
+void					skip_dr_out(t_cmd_word **cmd);
+void					skip_r_out(t_cmd_word **cmd);
+void					skip_h_doc(t_cmd_word **cmd);
+void					skip_r_in(t_cmd_word **cmd);
+void					skip_word(t_cmd_word **cmd);
+void					free_parser(t_cmd *head, t_command *command);
 void					free_lexer(t_stack *stack);
 int						redir_expand(enum e_state *state, char *input,
 							t_stack *lst, int i);
 void					parse_env(t_cmd_word *cmd, t_data *data);
-void					skip_env(t_cmd *cmd);
+void					skip_env(t_cmd_word *cmd);
 void					parsing_quote(t_cmd *cmd);
 int						init_parse(t_data *data);
 t_command				*init_command(t_command *list);
@@ -365,28 +373,15 @@ void					parse_space_in_quote(t_stack *list);
 void					index_quote(t_stack *list);
 
 //***********************EXECUTION*********************************
-typedef struct s_pipex
-{
-	int					infile;
-	int					outfile;
-	int					*pipe;
-	int					idx;
-	int					nb_cmd;
-	int					saved_in;
-	int					saved_out;
-	int					h_doc;
-	pid_t				pid;
-	char				**h_doc_name;
-	int					nb_h_doc;
-}						t_pipex;
 
 void					execution(t_command *head, char **env, t_data *data);
 void					open_redir_in(t_command *head, t_pipex *pipex);
 void					open_redir_out(t_command *head, t_pipex *pipex);
-void					execute_cmd(char **env, char **valid_cmd);
+void					execute_cmd(char **env, char **valid_cmd, t_data *data, t_pipex *p);
 char					*here_doc(char *av, t_pipex *pipex, int index);
 void					create_h_doc(t_command *parsed_cmd, t_pipex *pipex);
 void					nb_h_doc(t_command *parsed_cmd, t_pipex *pipex);
+void					parent_free(t_pipex *pipex);
 
 //****************************************************************
 void					parsing_expand(t_cmd *cmd, t_data *data);

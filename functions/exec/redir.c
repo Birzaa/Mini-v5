@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:04:14 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/21 17:45:39 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/27 23:36:09 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,78 +17,88 @@ char	*here_doc(char *av, t_pipex *pipex, int index)
 	int		file;
 	char	*buf;
 	char	*name_file;
+	char	*index_str;
 
-	name_file = ft_strjoin(av, ft_itoa(index));
-	pipex->h_doc_name[index] = malloc(ft_strlen(name_file) + 1);
+	index_str = ft_itoa(index);
+	name_file = ft_strjoin(av, index_str);
+	free(index_str);
+	pipex->h_doc_name[index] = ft_strdup(name_file);
 	if (!pipex->h_doc_name[index])
 	{
 		ft_free_tab(pipex->h_doc_name);
+		free(name_file);
 		return (NULL);
 	}
-	pipex->h_doc_name[index] = name_file;
 	file = open(name_file, O_CREAT | O_WRONLY | O_TRUNC, 0000644);
 	if (file < 0)
 	{
-		printf("FLOP");
 		free(name_file);
+		free(pipex->h_doc_name[index]);
 		return (NULL);
-		// MSG ERREUR
 	}
 	while (1)
 	{
-		write(1, "\033[1;34m~> \033[0m", 15);
-		buf = get_next_line(0);
+		buf = readline("\033[1;34m~> \033[0m");
 		if (!buf)
-			exit(1);
+			return (NULL);
 		if (!ft_strcmp(av, buf))
+		{
+			free(buf);
 			break ;
+		}
 		write(file, buf, ft_strlen(buf));
 		write(file, "\n", 1);
 		free(buf);
 	}
-	free(buf);
 	close(file);
-	return (name_file);
+	free(name_file);
+	return (pipex->h_doc_name[index]);
 }
 
 void	open_redir_in(t_command *head, t_pipex *pipex)
 {
+	t_redir_in_2	*tmp;
+
 	pipex->infile = pipex->saved_in;
-	while (head->parsed_cmd->r_in)
+	tmp = head->parsed_cmd->r_in;
+	while (tmp)
 	{
-		if (!head->parsed_cmd->r_in->h_doc)
-			pipex->infile = open(head->parsed_cmd->r_in->file, O_RDONLY, 0644);
+		if (!tmp->h_doc)
+			pipex->infile = open(tmp->file, O_RDONLY, 0644);
 		else
 		{
 			pipex->h_doc = 1;
-			pipex->infile = open(head->parsed_cmd->r_in->file, O_RDONLY, 0644);
+			pipex->infile = open(tmp->file, O_RDONLY, 0644);
 		}
 		if (pipex->infile == -1)
 		{
 			printf("Impossible de in\n");
 			exit(1);
 		}
-		head->parsed_cmd->r_in = head->parsed_cmd->r_in->next;
+		tmp = tmp->next;
 	}
 }
 
 void	open_redir_out(t_command *head, t_pipex *pipex)
 {
+	t_redir_out	*tmp;
+
+	tmp = head->parsed_cmd->r_out;
 	pipex->outfile = pipex->saved_out;
-	while (head->parsed_cmd->r_out)
+	while (tmp)
 	{
-		if (!head->parsed_cmd->r_out->append)
-			pipex->outfile = open(head->parsed_cmd->r_out->file,
+		if (!tmp->append)
+			pipex->outfile = open(tmp->file,
 					O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		else
-			pipex->outfile = open(head->parsed_cmd->r_out->file,
+			pipex->outfile = open(tmp->file,
 					O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (pipex->outfile == -1)
 		{
 			printf("Impossible de out\n");
 			exit(1);
 		}
-		head->parsed_cmd->r_out = head->parsed_cmd->r_out->next;
+		tmp = tmp->next;
 	}
 }
 
@@ -116,10 +126,14 @@ void	nb_h_doc(t_command *parsed_cmd, t_pipex *pipex)
 		pipex->idx++;
 		current_cmd = current_cmd->next;
 	}
-	pipex->h_doc_name = malloc(sizeof(char *) * pipex->nb_h_doc + 1);
-	if (!pipex->h_doc_name)
-		return ;
-	pipex->h_doc_name[pipex->nb_h_doc++] = NULL;
+	if (pipex->nb_h_doc)
+	{
+		pipex->h_doc = 1;
+		pipex->h_doc_name = malloc(sizeof(char *) * ((pipex->nb_h_doc) + 1));
+		if (!pipex->h_doc_name)
+			return ;
+		pipex->h_doc_name[pipex->nb_h_doc++] = NULL;
+	}
 	pipex->idx = 0;
 }
 

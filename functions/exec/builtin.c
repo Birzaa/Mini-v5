@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 17:21:52 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/19 16:30:06 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/24 14:35:03 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	execute_builtin(char **command, t_data *data)
 		ft_cd(data, command);
 	else if (ft_strcmp(command[0], "pwd") == 0)
 		ft_pwd(data);
+	else if (ft_strcmp(command[0], "exit") == 0)
+		ft_exit(data);
 	else if (ft_strcmp(command[0], "export") == 0)
 		ft_export(&data->env, command);
 	else if (ft_strcmp(command[0], "env") == 0)

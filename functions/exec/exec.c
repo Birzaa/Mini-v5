@@ -3,32 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/21 17:41:24 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:03:28 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parent_free(t_pipex *pipex)
+void	close_h_doc(t_pipex *pipex)
 {
 	int	i;
 
 	i = 0;
-	close(pipex->infile);
-	close(pipex->outfile);
 	if (pipex->h_doc)
 	{
 		while (pipex->h_doc_name[i])
 		{
 			unlink(pipex->h_doc_name[i]);
-			free(pipex->h_doc_name[i]);
 			i++;
 		}
 		free(pipex->h_doc_name);
 	}
+}
+
+void	parent_free(t_pipex *pipex)
+{
+	close(pipex->infile);
+	close(pipex->outfile);
 	free(pipex->pipe);
 }
 
@@ -112,10 +115,15 @@ void	child(t_pipex p, char **cmd, char **env, t_data *data)
 		// Fermeture de tous les descripteurs de fichiers des tuyaux dans le processus enfant
 		close_pipes(&p);
 		if (!is_builtin(cmd[0]) && cmd)
-			execute_cmd(env, cmd);
+			execute_cmd(env, cmd, data, &p);
 		else
 		{
 			execute_builtin(cmd, data);
+			free_lexer(data->lex);
+			free_parser(data->cmd, data->parsed_cmd);
+			free_env(data->env);
+			ft_free_tab(data->envp);
+			parent_free(&p);
 			exit(0);
 		}
 	}
@@ -132,18 +140,20 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 	pipex.h_doc = 0;
 	pipex.idx = 0;
 	pipex.saved_out = dup(STDOUT_FILENO);
-	pipex.pipe = (int *)malloc((sizeof(int) * (2 * (pipex.nb_cmd - 1))));
-	if (!pipex.pipe)
-		printf("FLOP"); // modif
 	nb_h_doc(current_cmd, &pipex);
 	create_h_doc(current_cmd, &pipex);
 	if (current_cmd->parsed_cmd->full_cmd && pipex.nb_cmd == 1
 		&& is_builtin(current_cmd->parsed_cmd->full_cmd[0]))
 	{
+		open_redir_in(current_cmd, &pipex);
+		open_redir_out(current_cmd, &pipex);
 		execute_builtin(current_cmd->parsed_cmd->full_cmd, data);
 	}
-	else
+	else if (current_cmd->parsed_cmd->full_cmd)
 	{
+		pipex.pipe = (int *)malloc((sizeof(int) * (2 * (pipex.nb_cmd - 1))));
+		if (!pipex.pipe)
+			return ;
 		open_pipes(&pipex);
 		while (pipex.idx < pipex.nb_cmd)
 		{
@@ -161,4 +171,5 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 			pipex.idx--;
 		}
 	}
+	close_h_doc(&pipex);
 }

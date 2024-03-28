@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:55:20 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/15 13:20:14 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/28 12:39:55 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	add_node(t_node *info, t_cmd **head, t_cmd_word *new_word)
 	t_cmd_word	*current;
 
 	new_word->content = malloc(info->len + 1);
-	strncpy(new_word->content, info->content, info->len);
+	ft_strncpy(new_word->content, info->content, info->len);
 	new_word->content[info->len] = '\0';
 	new_word->type = info->type;
 	new_word->state = info->state;
@@ -40,16 +40,15 @@ void	add_node(t_node *info, t_cmd **head, t_cmd_word *new_word)
 
 void	add_cmd_cmd(t_node *info, t_cmd **head)
 {
-	t_cmd		*new_cmd;
 	t_cmd_word	*new_word;
+	t_cmd		*new_cmd;
 
 	if (*head == NULL)
 	{
 		new_cmd = malloc(sizeof(t_cmd));
 		if (!new_cmd)
 		{
-			fprintf(stderr,
-				"Erreur nouvelle commande.\n");
+			return ;
 		}
 		new_cmd->words = NULL;
 		new_cmd->next = NULL;
@@ -58,8 +57,7 @@ void	add_cmd_cmd(t_node *info, t_cmd **head)
 	new_word = malloc(sizeof(t_cmd_word));
 	if (!new_word)
 	{
-		fprintf(stderr,
-			"Erreur nouveau mot de commande.\n");
+		return ;
 	}
 	add_node(info, head, new_word);
 }
@@ -72,8 +70,7 @@ void	not_a_pipe(t_cmd **current_cmd, t_cmd **new_cmd, t_cmd **cmd,
 		(*new_cmd) = malloc(sizeof(t_cmd));
 		if (!(*new_cmd))
 		{
-			fprintf(stderr, "Erreur commande.\n");
-			exit(EXIT_FAILURE);
+			return ;
 		}
 		(*new_cmd)->words = NULL;
 		(*new_cmd)->next = NULL;
@@ -91,8 +88,7 @@ void	is_a_pipe(t_cmd **new_cmd, t_cmd **current_cmd, t_cmd **cmd)
 	(*new_cmd) = malloc(sizeof(t_cmd));
 	if (!(*new_cmd))
 	{
-		fprintf(stderr, "Erreur commande.\n");
-		exit(EXIT_FAILURE);
+		return ;
 	}
 	(*new_cmd)->words = NULL;
 	(*new_cmd)->next = NULL;

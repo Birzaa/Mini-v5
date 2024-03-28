@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:44:20 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/26 15:19:30 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/28 18:06:14 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	expand(t_cmd_word *cmd, t_data *data)
 	t_cmd_word	*word;
 	int			symbol;
 	int			expanded;
-
 	expanded = 0;
 	cmd->type = QOUTE;
 	env = cmd;
