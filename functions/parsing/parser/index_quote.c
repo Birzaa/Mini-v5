@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   index_quote.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:55:52 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/14 17:46:41 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/30 17:51:06 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	index_quote(t_stack *list)
 	node = list->head;
 	while (i < list->size)
 	{
-		if (node->type == WHITE_SPACE && node->state == 2)
+		if ((node->type == WHITE_SPACE || !is_redir(node->type))
+			&& node->state == 2)
 			node->index = index++;
 		node->index = index;
 		node = node->next;
