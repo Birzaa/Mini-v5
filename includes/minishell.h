@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/30 15:50:46 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/30 19:07:46 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ typedef struct s_pipex
 	int					saved_in;
 	int					saved_out;
 	int					h_doc;
+	int					fd_echo;
 	pid_t				pid;
 	char				**h_doc_name;
 	int					nb_h_doc;

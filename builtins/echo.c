@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:21 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/30 15:59:42 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/30 19:08:44 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,17 @@ void	ft_echo(char **content, t_pipex *p)
 {
 	int	i;
 	int	flag;
+	int fd;
 	(void)p;
 
 	i = 1;
 	flag = 0;
+	if(p->fd_echo == 1)
+		fd = p->outfile;
+	else
+		fd = 1;
 	if (!content[i])
-		return (ft_putstr_fd("\n", 1));
+		return (ft_putstr_fd("\n", fd));
 	while (!ft_strncmp(content[i], "-n", 3))
 	{
 		flag = 1;
@@ -32,11 +37,11 @@ void	ft_echo(char **content, t_pipex *p)
 	while (content[i])
 	{
 		// printf("%s\n",content[i]);
-		ft_putstr_fd(content[i++], 1);
+		ft_putstr_fd(content[i++], fd);
 		if (content[i])
-			ft_putstr_fd(" ", 1);
+			ft_putstr_fd(" ", fd);
 	}
 	if (!flag)
-		ft_putstr_fd("\n", 1);
+		ft_putstr_fd("\n", fd);
 	g_sig.status = 0;
 }

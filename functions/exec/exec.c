@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/30 15:55:19 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/30 19:11:58 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 	if (current_cmd->parsed_cmd->full_cmd && pipex.nb_cmd == 1
 		&& is_builtin(current_cmd->parsed_cmd->full_cmd[0]))
 	{
+		pipex.fd_echo = 1;
 		open_redir_in(current_cmd, &pipex);
 		open_redir_out(current_cmd, &pipex);
 		execute_builtin(current_cmd->parsed_cmd->full_cmd, data, &pipex);
@@ -157,6 +158,7 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 		open_pipes(&pipex);
 		while (pipex.idx < pipex.nb_cmd)
 		{
+			pipex.fd_echo = 0;
 			open_redir_in(current_cmd, &pipex);
 			open_redir_out(current_cmd, &pipex);
 			child(pipex, current_cmd->parsed_cmd->full_cmd, env, data);
