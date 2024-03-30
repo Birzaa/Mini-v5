@@ -6,14 +6,13 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/28 17:51:22 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/30 14:05:13 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_signal	g_sig;
-
 
 int	main(int ac, char **av, char **env)
 {
@@ -30,10 +29,10 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		g_sig.input = readline(ORANGE "\U0001F58A  ~>: " RESET);
-		if (!g_sig.input)
+		if (!g_sig.input || !ft_strcmp(g_sig.input, "exit"))
 		{
 			printf("exit\n");
-			ft_exit(&data);
+			ft_exit_two(&data);
 		}
 		else if (!*g_sig.input)
 			ft_nothing();
@@ -45,15 +44,6 @@ int	main(int ac, char **av, char **env)
 			{
 				data.envp = get_tab_env(data.env);
 				init_parse(&data);
-				if (!strcmp(g_sig.input, "exit"))
-				{
-					free_env(data.env);
-					free_lexer(data.lex);
-					clear_history();
-					ft_free_tab(data.envp);
-					free_parser(data.cmd, data.parsed_cmd);
-					exit(0);
-				}
 				execution(data.parsed_cmd, env, &data);
 				ft_free_tab(data.envp);
 				free_lexer(data.lex);

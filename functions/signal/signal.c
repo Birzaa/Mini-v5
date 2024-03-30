@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:57 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/26 18:53:18 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:36:33 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void	exec_signal(int sig)
 
 void	get_signal(int sig)
 {
-	printf("%d\n", sig);
-	printf("%d\n", g_sig.pid);
 	if (!g_sig.pid)
 		exec_signal(sig);
 	else

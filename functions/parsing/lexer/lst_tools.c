@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_tools.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:03:14 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/14 17:00:47 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:18:02 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_node	*new_node(char *content, int len, enum e_token type, enum e_state state)
 	new_node->len = len;
 	new_node->type = type;
 	new_node->state = state;
+	new_node->no_free = 0;
 	new_node->index = -1;
 	new_node->next = NULL;
 	return (new_node);

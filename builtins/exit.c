@@ -6,17 +6,29 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:41 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/27 16:02:31 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/30 14:02:50 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// free tout ce qu'il y a a free
-void	ft_exit(t_data *data)
+void	ft_exit(t_data *data, t_pipex *p)
 {
-	// free_env(data->env);
+	free_env(data->env);
 	free_lexer(data->lex);
+	clear_history();
+	ft_free_tab(data->envp);
 	free_parser(data->cmd, data->parsed_cmd);
+	parent_free(p);
+	exit(0);
+}
+
+void	ft_exit_two(t_data *data)
+{
+	free_env(data->env);
+	// free_lexer(data->lex);
+	clear_history();
+	// ft_free_tab(data->envp);
+	// free_parser(data->cmd, data->parsed_cmd);
 	exit(0);
 }

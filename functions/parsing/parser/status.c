@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   status.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:58 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/22 02:44:34 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:21:35 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ void	handle_status(t_node *node, char *status)
 			return (perror(""), free(status));
 		node->type = WORD;
 		node->content = "";
+		node->no_free = 1;
 		node->next->type = WORD;
 		node->next->content = ft_strcpy_status(node->next->content, tmp);
+		node->next->no_free = 1;
 		node->next->len = ft_strlen(node->next->content);
 	}
 	return (free(tmp));

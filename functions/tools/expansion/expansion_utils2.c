@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:44:20 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/28 18:06:14 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/30 12:04:23 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ void	expand_check_no_sym(t_data *data, t_cmd_word *env, t_cmd_word *word,
 	{
 		if (!env->state)
 		{
-			env->content = "";
+			free(env->content);
+			env->content = ft_strdup("");
 			env->state = 0;
-			word->content = "";
+			free(word->content);
+			word->content = ft_strdup("");
 			word->state = 0;
 			return ;
 		}
@@ -30,12 +32,14 @@ void	expand_check_no_sym(t_data *data, t_cmd_word *env, t_cmd_word *word,
 	}
 	else if (expanded && !word->content)
 	{
+		free(env->content);
+		env->content = ft_strdup("");
 		env->state = 2;
-		env->content = "";
 	}
 	else
 	{
-		env->content = "";
+		free(env->content);
+		env->content = ft_strdup("");
 		env->state = 0;
 	}
 }
@@ -58,7 +62,8 @@ void	expand(t_cmd_word *cmd, t_data *data)
 	else if (ft_strncmp(word->content, "_", 2) && symbol)
 	{
 		ft_expand_symbol(data->env, word);
-		env->content = "";
+		free(env->content);
+		env->content = ft_strdup("");
 	}
 	else if (!symbol)
 		expand_check_no_sym(data, env, word, expanded);
@@ -66,7 +71,8 @@ void	expand(t_cmd_word *cmd, t_data *data)
 
 void	expand_whitespace(t_cmd_word *tmp_word)
 {
-	tmp_word->content = "";
+	free(tmp_word->content);
+	tmp_word->content = ft_strdup("");
 	tmp_word->type = QOUTE;
 }
 

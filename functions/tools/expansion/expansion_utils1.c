@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_utils1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:44:18 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/24 23:20:06 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/30 12:11:41 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_get_symbol_join(char *content)
 	while (content[i])
 	{
 		if (!ft_isalpha(content[i]))
-			return (&content[i]);
+			return ((content + i));
 		i++;
 	}
 	return (NULL);
@@ -53,14 +53,15 @@ char	*ft_get_symbol_expand(char *content)
 	{
 		if (!ft_isalpha(content[i]))
 		{
-			expand[i + 1] = '\0';
 			return (expand);
 		}
 		expand[i] = content[i];
 		i++;
 	}
+	free(expand);
 	return (NULL);
 }
+
 
 int	ft_strlen_symbol(char *str)
 {

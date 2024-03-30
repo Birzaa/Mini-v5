@@ -6,26 +6,26 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 17:21:52 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/24 14:35:03 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/30 15:50:43 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_builtin(char **command, t_data *data)
+void	execute_builtin(char **command, t_data *data, t_pipex *p)
 {
 	if (ft_strcmp(command[0], "cd") == 0)
 		ft_cd(data, command);
 	else if (ft_strcmp(command[0], "pwd") == 0)
 		ft_pwd(data);
 	else if (ft_strcmp(command[0], "exit") == 0)
-		ft_exit(data);
+		ft_exit(data, p);
 	else if (ft_strcmp(command[0], "export") == 0)
 		ft_export(&data->env, command);
 	else if (ft_strcmp(command[0], "env") == 0)
 		ft_env(data, command);
 	else if (ft_strcmp(command[0], "echo") == 0)
-		ft_echo(command);
+		ft_echo(command, p);
 	else if (ft_strcmp(command[0], "unset") == 0)
 		ft_unset(data->env, command);
 }

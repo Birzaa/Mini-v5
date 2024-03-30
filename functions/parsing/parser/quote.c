@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/28 17:50:14 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/30 15:27:25 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	put_in_one_word_two(t_cmd_word *cmd2, char *tmp)
 	}
 	free(cmd2->content);
 	cmd2->content = ft_strdup(tmp);
-	if(need_free)
+	if (need_free)
 		free(tmp);
 	cmd2->type = WORD;
 }
@@ -75,14 +75,16 @@ void	quote_next_to_quote(t_cmd_word *tmp_word, int check)
 		{
 			tmp_word->type = WHITE_SPACE;
 			tmp_word = tmp_word->next;
-			tmp_word->content = ft_calloc(1, 1);
+			free(tmp_word->content);
+			tmp_word->content = ft_strdup("");
 			tmp_word->type = WORD;
 		}
 		else if (tmp_word->next && tmp_word->next->type == QOUTE && check)
 		{
 			tmp_word->type = WHITE_SPACE;
 			tmp_word = tmp_word->next;
-			tmp_word->content = ft_calloc(1, 1);
+			free(tmp_word->content);
+			tmp_word->content = ft_strdup("");
 			tmp_word->type = WORD;
 		}
 		else

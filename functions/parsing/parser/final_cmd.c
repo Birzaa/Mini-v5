@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/28 17:55:26 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/30 15:32:38 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ int	init_parse(t_data *data)
 	parsing_expand(data->cmd, data);
 	parsing_quote(data->cmd);
 	data->parsed_cmd = parse(data->cmd);
+	// print_cmd_list(data->cmd);
 	// print_list(data->lex);
-	print_cmd_list(data->cmd);
 	// print_parsed_cmd(data->parsed_cmd);
 	return (0);
 }
