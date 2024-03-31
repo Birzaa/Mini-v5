@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/30 17:51:03 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/31 20:34:45 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	put_in_one_word_two(t_cmd_word *cmd2, char *tmp)
 	int	need_free;
 
 	need_free = 0;
-	if (cmd2->type == WORD && is_redir(cmd2->type))
+	if (cmd2->type == WORD)
 	{
 		need_free = 1;
 		tmp = ft_strjoin(tmp, cmd2->content);
