@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/31 20:34:45 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/01 21:35:43 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,12 @@ void	put_in_one_word(t_cmd_word **cmd, int index)
 			cmd2->type = WORD;
 			return ;
 		}
-		cmd2 = cmd2->next;
+		if (!is_redir(cmd2->type) && cmd2->state != 2)
+			cmd2 = cmd2->next;
+		else
+			break ;
 	}
+	// printf("cmd : %s, tmp : %s\n", cmd2->content, tmp);
 	put_in_one_word_two(cmd2, tmp);
 	free(tmp);
 }
@@ -88,7 +92,9 @@ void	quote_next_to_quote(t_cmd_word *tmp_word, int check)
 			tmp_word->type = WORD;
 		}
 		else
+		{
 			tmp_word->type = WHITE_SPACE;
+		}
 	}
 }
 
@@ -105,14 +111,16 @@ void	parsing_quote(t_cmd *cmd)
 		tmp_word = head->words;
 		while (tmp_word)
 		{
-			if (tmp_word->next && (tmp_word->state != GENERAL
-					|| (tmp_word->type == WORD
-						&& (tmp_word->next->type != WHITE_SPACE
-							&& !is_redir(tmp_word->next->type))))
-				&& (tmp_word->type == WORD || tmp_word->type == QOUTE
-					|| tmp_word->type == DOUBLE_QUOTE))
+			if ((tmp_word->next && (tmp_word->state != GENERAL
+						|| (tmp_word->type == WORD
+							&& (tmp_word->next->type != WHITE_SPACE
+								&& !is_redir(tmp_word->next->type))))
+					&& (tmp_word->type == WORD || tmp_word->type == QOUTE
+						|| tmp_word->type == DOUBLE_QUOTE))
+				&& (!is_redir(tmp_word->type) && tmp_word->state != 2))
 				put_in_one_word(&tmp_word, tmp_word->index);
 			quote_next_to_quote(tmp_word, check);
+			// printf("content : %s, type : %d\n",tmp_word->content,tmp_word->type);
 			if (tmp_word->next)
 				tmp_word = tmp_word->next;
 			else
