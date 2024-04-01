@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/28 23:36:44 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/01 06:50:03 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,26 +46,36 @@ int	ft_expand_symbol(t_env *env, t_cmd_word *cmd)
 	char	*tmp_full;
 	char	*tmp_join;
 
-	tmp_join = ft_get_symbol_join(cmd->content);
+	tmp_join = ft_strdup(ft_get_symbol_join(cmd->content));
 	tmp_expand = ft_get_symbol_expand(cmd->content);
 	if (!tmp_expand)
 	{
 		if (tmp_join)
+		{
+			free(cmd->content);
 			cmd->content = tmp_join;
+			free(tmp_join);
+		}
 		return (0);
 	}
 	tmp_full = ft_expand_symbol_bis(env, cmd, tmp_expand);
 	if (!tmp_full && !tmp_join)
 	{
-		cmd->content = "";
+		free(cmd->content);
+		cmd->content = ft_strdup("");
 		return (free(tmp_expand), 0);
 	}
 	else if (!tmp_full && tmp_join)
 	{
-		cmd->content = tmp_join;
+		free(cmd->content);
+		cmd->content = ft_strdup(tmp_join);
+		free(tmp_join);
 		return (free(tmp_expand), 1);
 	}
-	cmd->content = ft_strcpy(cmd->content, tmp_full);
+	if (tmp_join)
+		free(tmp_join);
+	free(cmd->content);
+	cmd->content = ft_strdup(tmp_full);
 	return (free(tmp_full), free(tmp_expand), 0);
 }
 
@@ -85,11 +95,14 @@ int	ft_expand_exist(t_env *env, t_cmd_word *cmd)
 		len_var = get_len_to_equal(tmp->content);
 		if (!ft_strncmp(tmp->content, cmd->content, len_c) && len_var == len_c)
 		{
-			cmd->content = &tmp->content[len_var + 1];
+			free(cmd->content);
+			cmd->content = ft_strdup(&tmp->content[len_var + 1]);
 			return (1);
 		}
 		tmp = tmp->next;
 	}
+	free(cmd->content);
+	cmd->content = ft_strdup("");
 	return (0);
 }
 
@@ -109,20 +122,22 @@ int	ft_expand_no_symbol(t_env *env, t_cmd_word *word)
 		len_var = get_len_to_equal(tmp->content);
 		if (!ft_strncmp(tmp->content, word->content, len_c) && len_var == len_c)
 		{
-			word->content = &tmp->content[len_var + 1];
+			free(word->content);
+			word->content = ft_strdup(&tmp->content[len_var + 1]);
 			return (1);
 		}
 		tmp = tmp->next;
 	}
-	word->content = "";
-	word->expand = 1;
+	free(word->content);
+	word->content = ft_strdup("");
+	word->type = WHITE_SPACE;
 	return (0);
 }
 
 void	parsing_expand(t_cmd *cmd, t_data *data)
 {
-	t_cmd		*head;
-	t_cmd_word	*tmp_word;
+	t_cmd *head;
+	t_cmd_word *tmp_word;
 
 	head = cmd;
 	while (head)

@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:44:20 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/29 00:02:13 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/01 06:50:33 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ void	expand_check_no_sym(t_data *data, t_cmd_word *env, t_cmd_word *word,
 	{
 		if (!env->state)
 		{
+			free(env->content);
 			env->content = ft_strdup("");
 			env->state = 0;
-			word->content = "";
-			word->expand = 1;
+			free(word->content);
+			word->content = ft_strdup("");
 			word->state = 0;
 			return ;
 		}
@@ -31,12 +32,14 @@ void	expand_check_no_sym(t_data *data, t_cmd_word *env, t_cmd_word *word,
 	}
 	else if (expanded && !word->content)
 	{
-		env->state = 2;
+		free(env->content);
 		env->content = ft_strdup("");
+		env->state = 2;
 	}
 	else
 	{
-		env->content = "";
+		free(env->content);
+		env->content = ft_strdup("");
 		env->state = 0;
 	env->expand = 1;
 
@@ -66,8 +69,8 @@ void	expand(t_cmd_word *cmd, t_data *data)
 	else if (ft_strncmp(word->content, "_", 2) && symbol)
 	{
 		ft_expand_symbol(data->env, word);
+		free(env->content);
 		env->content = ft_strdup("");
-		word->expand = 1;
 	}
 	else if (!symbol)
 	{
@@ -78,6 +81,8 @@ void	expand(t_cmd_word *cmd, t_data *data)
 
 void	expand_whitespace(t_cmd_word *tmp_word)
 {
+	free(tmp_word->content);
+	tmp_word->content = ft_strdup("");
 	tmp_word->type = QOUTE;
 }
 

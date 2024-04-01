@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/28 23:26:30 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/01 06:50:14 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,8 @@ void	put_in_one_word_two(t_cmd_word *cmd2, char *tmp)
 		if (cmd2->next)
 			cmd2 = cmd2->next;
 	}
-	if (!cmd2->expand)
-	{
-		free(cmd2->content);
-		cmd2->content = ft_strdup(tmp);
-	}
+	free(cmd2->content);
+	cmd2->content = ft_strdup(tmp);
 	if (need_free)
 		free(tmp);
 	cmd2->type = WORD;
@@ -78,14 +75,16 @@ void	quote_next_to_quote(t_cmd_word *tmp_word, int check)
 		{
 			tmp_word->type = WHITE_SPACE;
 			tmp_word = tmp_word->next;
-			tmp_word->content = ft_calloc(1, 1);
+			free(tmp_word->content);
+			tmp_word->content = ft_strdup("");
 			tmp_word->type = WORD;
 		}
 		else if (tmp_word->next && tmp_word->next->type == QOUTE && check)
 		{
 			tmp_word->type = WHITE_SPACE;
 			tmp_word = tmp_word->next;
-			tmp_word->content = ft_calloc(1, 1);
+			free(tmp_word->content);
+			tmp_word->content = ft_strdup("");
 			tmp_word->type = WORD;
 		}
 		else

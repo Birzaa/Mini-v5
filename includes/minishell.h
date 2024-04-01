@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/28 23:18:15 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/01 06:50:50 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_node
 	enum e_token		type;
 	enum e_state		state;
 	int					index;
+	int					no_free;
 	struct s_node		*next;
 	struct s_node		*prev;
 }						t_node;
@@ -147,6 +148,7 @@ typedef struct s_pipex
 	int					saved_in;
 	int					saved_out;
 	int					h_doc;
+	int					fd_echo;
 	pid_t				pid;
 	char				**h_doc_name;
 	int					nb_h_doc;
@@ -186,9 +188,10 @@ void					ft_export(t_env **env, char **command);
 void					ft_unset(t_env *env, char **command);
 void					ft_env(t_data *data, char **command);
 void					ft_cd(t_data *data, char **command);
-void					ft_exit(t_data *data);
+void					ft_exit(t_data *data, t_pipex *p);
+void					ft_exit_two(t_data *data);
 void					ft_pwd(t_data *data);
-void					ft_echo(char **command);
+void					ft_echo(char **command, t_pipex *p);
 
 // ----------------------------------------------------> Functions...
 
@@ -338,7 +341,8 @@ t_cmd					*ft_cmd_last(t_cmd *cmd);
 void					add_back_cmd(t_cmd **cmd, t_cmd *new);
 void					print_node(t_node *node);
 void					print_cmd_list(t_cmd *head);
-void					execute_builtin(char **command, t_data *data);
+void					execute_builtin(char **command, t_data *data,
+							t_pipex *p);
 int						is_builtin(char *cmd);
 
 //********************************************************
@@ -378,7 +382,8 @@ void					index_quote(t_stack *list);
 void					execution(t_command *head, char **env, t_data *data);
 void					open_redir_in(t_command *head, t_pipex *pipex);
 void					open_redir_out(t_command *head, t_pipex *pipex);
-void					execute_cmd(char **env, char **valid_cmd, t_data *data, t_pipex *p);
+void					execute_cmd(char **env, char **valid_cmd, t_data *data,
+							t_pipex *p);
 char					*here_doc(char *av, t_pipex *pipex, int index);
 void					create_h_doc(t_command *parsed_cmd, t_pipex *pipex);
 void					nb_h_doc(t_command *parsed_cmd, t_pipex *pipex);

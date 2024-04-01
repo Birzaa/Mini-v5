@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:37:01 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/28 14:09:02 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/30 13:33:14 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	ft_free_tab(char **tab)
 {
 	int	i;
+
 	i = 0;
 	while (tab[i])
 	{
@@ -56,6 +57,20 @@ char	**find_path(char **env)
 	return (path);
 }
 
+int	check_only_slash(char *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] != '/')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 char	*valid_path(char **all_paths, char *cmd)
 {
 	int		i;
@@ -66,12 +81,15 @@ char	*valid_path(char **all_paths, char *cmd)
 	full_path = NULL;
 	if (!*cmd)
 		return (cmd);
+	if (!check_only_slash(cmd))
+		return (cmd);
 	valid_cmd = ft_split(cmd, ' ');
 	i = 0;
 	while (all_paths[i])
 	{
 		path = ft_strjoin(all_paths[i], "/");
 		full_path = ft_strjoin(path, valid_cmd[0]);
+		// printf("%s\n", full_path);
 		free(path);
 		if (access(full_path, X_OK | F_OK) == 0)
 		{

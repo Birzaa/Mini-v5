@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 17:22:00 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/28 15:03:37 by thomas           ###   ########.fr       */
+/*   Updated: 2024/03/30 13:14:10 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	execute_cmd(char **env, char **valid_cmd, t_data *data, t_pipex *p)
 {
 	char	*path;
 	char	**find_the_path;
-	(void)p;
 
 	find_the_path = find_path(env);
 	path = valid_path(find_the_path, valid_cmd[0]);

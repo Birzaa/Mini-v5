@@ -3,24 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:21 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/22 02:43:22 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/03/30 19:08:44 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_echo(char **content)
+void	ft_echo(char **content, t_pipex *p)
 {
 	int	i;
 	int	flag;
+	int fd;
+	(void)p;
 
 	i = 1;
 	flag = 0;
+	if(p->fd_echo == 1)
+		fd = p->outfile;
+	else
+		fd = 1;
 	if (!content[i])
-		return (ft_putstr_fd("\n", 1));
+		return (ft_putstr_fd("\n", fd));
 	while (!ft_strncmp(content[i], "-n", 3))
 	{
 		flag = 1;
@@ -30,11 +36,12 @@ void	ft_echo(char **content)
 	}
 	while (content[i])
 	{
-		ft_putstr_fd(content[i++], 1);
+		// printf("%s\n",content[i]);
+		ft_putstr_fd(content[i++], fd);
 		if (content[i])
-			ft_putstr_fd(" ", 1);
+			ft_putstr_fd(" ", fd);
 	}
 	if (!flag)
-		ft_putstr_fd("\n", 1);
+		ft_putstr_fd("\n", fd);
 	g_sig.status = 0;
 }

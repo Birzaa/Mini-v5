@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:52:18 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/08 13:43:43 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/03/31 20:23:18 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	redir_token(enum e_state *state, char *input, t_stack *lst, int i)
 		if (input[i + 1] == '>')
 			lst_add_back(lst, new_node(input + i++, 2, DREDIR_OUT, *state));
 		else
-			lst_add_back(lst, new_node(input + i, 2, REDIR_OUT, *state));
+			lst_add_back(lst, new_node(input + i, 1, REDIR_OUT, *state));
 		i++;
 	}
 	else if (input[i] == '<')
@@ -73,7 +73,7 @@ int	redir_token(enum e_state *state, char *input, t_stack *lst, int i)
 		if (input[i + 1] == '<')
 			lst_add_back(lst, new_node(input + i++, 2, HERE_DOC, *state));
 		else
-			lst_add_back(lst, new_node(input + i, 2, REDIR_IN, *state));
+			lst_add_back(lst, new_node(input + i, 1, REDIR_IN, *state));
 		i++;
 	}
 	return (i - j);
