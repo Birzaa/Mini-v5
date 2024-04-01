@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   status.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:58 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/30 14:21:35 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/01 13:00:14 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int	ft_istoken(int c)
 {
 	if (c == WHITE_SPACE || c == NEW_LINE || c == QOUTE || c == ENV
-		|| c == PIPE_LINE || c == REDIR_IN || c == REDIR_OUT)
+		|| c == PIPE_LINE || c == REDIR_IN || c == REDIR_OUT
+		|| c == DOUBLE_QUOTE || c == DREDIR_OUT || c == HERE_DOC)
 		return (c);
 	return (0);
 }
@@ -34,12 +35,15 @@ char	*ft_strcpy_status(char *s1, char *s2)
 	return (s1);
 }
 
-void	handle_status(t_node *node, char *status)
+void	handle_status(t_node *node, t_node *next, char *status)
 {
 	char	*tmp;
+	char 	*tmp2;
 	char	*content;
 
+	(void)next;
 	tmp = NULL;
+	tmp2 = NULL;
 	content = NULL;
 	if (!ft_strncmp(node->next->content, "?", 1))
 	{
@@ -51,9 +55,15 @@ void	handle_status(t_node *node, char *status)
 		node->content = "";
 		node->no_free = 1;
 		node->next->type = WORD;
-		node->next->content = ft_strcpy_status(node->next->content, tmp);
+		content = ft_strcpy_status(node->next->content, tmp);
+		node->next->content = content;
 		node->next->no_free = 1;
 		node->next->len = ft_strlen(node->next->content);
+		if (node->next->next && node->next->next->type)
+		{
+			node->next->next->type = WHITE_SPACE;
+			node->next->next->content = " ";
+		}
 	}
 	return (free(tmp));
 }
@@ -62,6 +72,7 @@ void	parsing_status(t_stack *list)
 {
 	char	*status;
 	t_node	*node;
+	t_node	*next;
 	int		i;
 
 	i = 0;
@@ -71,9 +82,10 @@ void	parsing_status(t_stack *list)
 	node = list->head;
 	while (i < list->size)
 	{
+		next = node->next;
 		if (node->type == ENV && node->next && !ft_strncmp(node->next->content,
-				"?", 1))
-			handle_status(node, status);
+				"?", 1) && node->state != 1)
+			handle_status(node, next, status);
 		if (!node->next)
 		{
 			free(status);

@@ -6,11 +6,25 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/04/01 06:50:14 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/01 11:04:29 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	next_is_not_a_word(t_cmd_word *cmd2, char *tmp)
+{
+	if ((cmd2->next->type == WHITE_SPACE || is_redir(cmd2->next->type))
+		&& cmd2->next->state == GENERAL)
+	{
+		free(cmd2->content);
+		cmd2->content = ft_strdup(tmp);
+		cmd2->type = WORD;
+		free(tmp);
+		return (1);
+	}
+	return (0);
+}
 
 void	put_in_one_word_two(t_cmd_word *cmd2, char *tmp)
 {
@@ -49,22 +63,19 @@ void	put_in_one_word(t_cmd_word **cmd, int index)
 			free(old_tmp);
 		}
 		cmd2->type = WHITE_SPACE;
-		if (cmd2->next->type == WHITE_SPACE && cmd2->next->state == GENERAL)
-		{
-			free(cmd2->content);
-			cmd2->content = ft_strdup(tmp);
-			free(tmp);
-			cmd2->type = WORD;
+		if (next_is_not_a_word(cmd2, tmp))
 			return ;
-		}
 		cmd2 = cmd2->next;
 	}
 	put_in_one_word_two(cmd2, tmp);
 	free(tmp);
 }
 
-void	quote_next_to_quote(t_cmd_word *tmp_word, int check)
+void	quote_next_to_quote(t_cmd_word *tmp_word)
 {
+	int	check;
+
+	check = 0;
 	if ((tmp_word->type == DOUBLE_QUOTE || tmp_word->type == QOUTE))
 	{
 		if (tmp_word->type == DOUBLE_QUOTE)
@@ -72,21 +83,9 @@ void	quote_next_to_quote(t_cmd_word *tmp_word, int check)
 		if (tmp_word->type == QOUTE)
 			check = 1;
 		if (tmp_word->next && tmp_word->next->type == DOUBLE_QUOTE && !check)
-		{
-			tmp_word->type = WHITE_SPACE;
-			tmp_word = tmp_word->next;
-			free(tmp_word->content);
-			tmp_word->content = ft_strdup("");
-			tmp_word->type = WORD;
-		}
+			quote_case_one(tmp_word);
 		else if (tmp_word->next && tmp_word->next->type == QOUTE && check)
-		{
-			tmp_word->type = WHITE_SPACE;
-			tmp_word = tmp_word->next;
-			free(tmp_word->content);
-			tmp_word->content = ft_strdup("");
-			tmp_word->type = WORD;
-		}
+			quote_case_two(tmp_word);
 		else
 			tmp_word->type = WHITE_SPACE;
 	}
@@ -96,9 +95,7 @@ void	parsing_quote(t_cmd *cmd)
 {
 	t_cmd		*head;
 	t_cmd_word	*tmp_word;
-	int			check;
 
-	check = 0;
 	head = cmd;
 	while (head)
 	{
@@ -112,7 +109,7 @@ void	parsing_quote(t_cmd *cmd)
 				&& (tmp_word->type == WORD || tmp_word->type == QOUTE
 					|| tmp_word->type == DOUBLE_QUOTE))
 				put_in_one_word(&tmp_word, tmp_word->index);
-			quote_next_to_quote(tmp_word, check);
+			quote_next_to_quote(tmp_word);
 			if (tmp_word->next)
 				tmp_word = tmp_word->next;
 			else

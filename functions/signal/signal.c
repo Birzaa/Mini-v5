@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:57 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/30 14:36:33 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/01 08:47:28 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	exec_signal(int sig)
 	}
 }
 
-void	get_signal(int sig)
+void	handle_signal(int sig)
 {
 	if (!g_sig.pid)
 		exec_signal(sig);
@@ -58,6 +58,6 @@ void	init_signals(void)
 	g_sig.sigquit = 0;
 	g_sig.pid = 1;
 	g_sig.input = NULL;
-	signal(SIGINT, get_signal);
-	signal(SIGQUIT, get_signal);
+	signal(SIGINT, handle_signal);
+	signal(SIGQUIT, handle_signal);
 }

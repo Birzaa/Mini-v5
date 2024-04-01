@@ -1,7 +1,7 @@
 command					note	code d'erreur	message error							
 HOME is set
 
-echo $HOME 			
+echo $HOME 		
 echo $HOME$HOME		 
 echo $HOME/$HOME		
 echo $HOME""$HOME		
@@ -69,12 +69,7 @@ echo '/$q'"$q"$q"""'$q'"'"$q"'
 echo $q $q/ " $q" " $q/" " /$q" ' $q' ' $q/' ' /$q' " $q" $q"" "' $q'" '" $q"'
 echo '/$q'"$q"$q"""'$q'"
 
-
 echo '/$USER' "$"USER $"USER" "'$USER'" '"$USER"'
-
-$/$$//$$$//$$'$'"$"rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" rayray/rayray//ray$USER$USER//$USER$USERUSER'ray'"$USER" $ $/  $  $/  /$  $  $/  /$  $  ' $' " $" $ $/  $   $/   /$   $   $/   /$   $   ' $ ' " $ " /    /  /  $q  $q/  /$q    ' ' " $q"
-$$/$$//$$$//$$$'$'"$"rayray/rayray//ray$USER$USER//$USER$USER$USER'ray'"$USER" rayray/rayray//ray$USER$USER//$USER$USER$USER'ray'"$USER" $ $/  $  $/  /$  $  $/  /$  $ $ ' $' " $" $ $/  $   $/   /$   $   $/   /$   $  $ ' $ ' " $ " /    /  /  $q  $q/  /$q    ' ' " $q"
-on doit 
 
 
 
@@ -96,3 +91,4 @@ echo /"$q""$q/""/$q"$q''$q/''/$q
 echo '/$q'"$q"$q"""'$q'"'"$q"'
 echo '/$USER' "$"USER $"USER" "'$USER'" '"$USER"'
 
+echo $""$/"""$""""$/""""/$"""'$'""'$/'""'/$'"""$"""$"""""'$'"""'"$"'$USER""$USER/"""$USER""""$USER/""""/$USER"""'$USER'""'$USER/'""'/$USER'"""$"USER""$"USER""""'$USER'"""'"$USER"' $USER$USER/"$USER""$USER/""/$USER"'$USER''$USER/''/$USER'"$"USER$"USER""'$USER'"'"$USER"' $ $/ " $" " $/" " /$" ' $' ' $/' ' /$' " $" $"" "' $'" '" $"' $ $/ " $ " " $/ " " /$ " ' $ ' ' $/ ' ' /$ ' " $ " $"" "' $ '" '" $ "'$q $q/ " $q" " $q/" " /$q" ' $q' ' $q/' ' /$q' " $q" $q"" "' $q'" '" $q"'>>test1 | echo capart mon pote

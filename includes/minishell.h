@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/01 06:50:50 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/01 09:17:22 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,6 +254,12 @@ void					expand(t_cmd_word *cmd, t_data *data);
 void					expand_whitespace(t_cmd_word *tmp_word);
 void					while_expand(t_data *data, t_cmd_word *tmp_word);
 
+// tools/expansion/expansion/expansion_utils3.c
+int						tmp_expand_null(t_cmd_word *cmd, char *tmp_expand,
+							char *tmp_join);
+int						full_and_join_null(t_cmd_word *cmd, char *tmp_expand,
+							char *tmp_join, char *tmp_full);
+
 // tools/export/export_utils1.c
 void					replace_export(t_env **env, char *content);
 void					print_export(char *content);
@@ -270,6 +276,10 @@ int						ft_strcmp(char *s1, char *s2);
 void					ft_nothing(void);
 int						ft_at_least_charset(char *str, char *charset);
 int						ft_charcmp(int c, int d);
+
+// tools/quote/quote_utils1.c
+void					quote_case_one(t_cmd_word *tmp_word);
+void					quote_case_two(t_cmd_word *tmp_word);
 
 // ------------------------> Parsing
 t_stack					*lexer(char *input);

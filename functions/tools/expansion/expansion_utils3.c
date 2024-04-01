@@ -1,33 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   index_quote.c                                      :+:      :+:    :+:   */
+/*   expansion_utils3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 16:55:52 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/01 08:48:40 by abougrai         ###   ########.fr       */
+/*   Created: 2024/04/01 08:33:56 by abougrai          #+#    #+#             */
+/*   Updated: 2024/04/01 09:26:53 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	index_quote(t_stack *list)
+int	tmp_expand_null(t_cmd_word *cmd, char *tmp_expand, char *tmp_join)
 {
-	t_node	*node;
-	int		i;
-	int		index;
-
-	index = 0;
-	i = 0;
-	node = list->head;
-	while (i < list->size)
+	if (!tmp_expand)
 	{
-		if (((node->type == WHITE_SPACE || is_redir(node->type))
-				&& node->state == 2))
-			node->index = index++;
-		node->index = index;
-		node = node->next;
-		i++;
+		if (tmp_join)
+		{
+			free(cmd->content);
+			cmd->content = tmp_join;
+			free(tmp_join);
+		}
+		return (1);
 	}
+	return (0);
+}
+
+int	full_and_join_null(t_cmd_word *cmd, char *tmp_expand, char *tmp_join,
+		char *tmp_full)
+{
+	if (!tmp_full && !tmp_join)
+	{
+		free(cmd->content);
+		cmd->content = ft_strdup("");
+		return (free(tmp_expand), 1);
+	}
+	return (0);
 }

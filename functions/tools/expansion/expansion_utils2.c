@@ -6,11 +6,21 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:44:20 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/01 06:50:33 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/01 09:22:35 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	else_in_expand_no_sym(t_cmd_word *env)
+{
+	{
+		free(env->content);
+		env->content = ft_strdup("");
+		env->state = 0;
+		env->expand = 1;
+	}
+}
 
 void	expand_check_no_sym(t_data *data, t_cmd_word *env, t_cmd_word *word,
 		int expanded)
@@ -37,13 +47,7 @@ void	expand_check_no_sym(t_data *data, t_cmd_word *env, t_cmd_word *word,
 		env->state = 2;
 	}
 	else
-	{
-		free(env->content);
-		env->content = ft_strdup("");
-		env->state = 0;
-	env->expand = 1;
-
-	}
+		else_in_expand_no_sym(env);
 }
 
 void	expand(t_cmd_word *cmd, t_data *data)
@@ -61,11 +65,7 @@ void	expand(t_cmd_word *cmd, t_data *data)
 	if (ft_strncmp(word->content, "_", 2) && first_letter(word->content))
 		env->type = WORD;
 	else if (!ft_strncmp(word->content, "_", 2))
-	{
 		ft_expand_no_symbol(data->env, word);
-		word->expand = 1;
-
-	}
 	else if (ft_strncmp(word->content, "_", 2) && symbol)
 	{
 		ft_expand_symbol(data->env, word);
@@ -73,10 +73,7 @@ void	expand(t_cmd_word *cmd, t_data *data)
 		env->content = ft_strdup("");
 	}
 	else if (!symbol)
-	{
 		expand_check_no_sym(data, env, word, expanded);
-		word->expand = 1;
-	}
 }
 
 void	expand_whitespace(t_cmd_word *tmp_word)
