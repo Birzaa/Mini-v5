@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:57 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/01 08:47:28 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:14:08 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@ void	exec_signal(int sig)
 {
 	if (sig == SIGQUIT)
 	{
+		print_test();
 		ft_putstr_fd("Quit: (core dumped)\n", 2);
 		g_sig.status = 131;
 	}
 	else if (sig == SIGINT)
 	{
+		print_test();
 		ft_putstr_fd("\n", 2);
 		g_sig.status = 130;
 	}
@@ -46,6 +48,8 @@ void	exec_signal(int sig)
 
 void	handle_signal(int sig)
 {
+	printf("signal : %d",sig);
+	printf("pid : %d",g_sig.pid);
 	if (!g_sig.pid)
 		exec_signal(sig);
 	else

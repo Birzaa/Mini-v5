@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/02 12:28:57 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:35:36 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	close_pipes(t_pipex *pipex)
 
 void	child(t_pipex p, char **cmd, char **env, t_data *data)
 {
+	g_sig.pid = 0;
+	printf("%d\n", g_sig.pid);
 	p.pid = fork();
 	if (p.pid == -1)
 	{
