@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   final_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/01 22:34:54 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/02 14:33:12 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ t_command	*parse(t_cmd *cmd)
 int	init_parse(t_data *data)
 {
 	parsing_status(data->lex);
+	// print_list(data->lex);
 	parse_space_in_quote(data->lex);
 	index_quote(data->lex);
 	data->cmd = parser(data->lex);
@@ -97,7 +98,7 @@ int	init_parse(t_data *data)
 	parsing_quote(data->cmd);
 	data->parsed_cmd = parse(data->cmd);
 	// print_list(data->lex);
-	print_cmd_list(data->cmd);
+	// print_cmd_list(data->cmd);
 	// print_parsed_cmd(data->parsed_cmd);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:17 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/22 02:50:54 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/02 11:55:58 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	error_cd(char *new_cmd, char *home, char *tmp)
 {
 	printf("bash: cd: %s: No such file or directory\n", new_cmd);
-	return (free(new_cmd), free(home), free(tmp));
 	g_sig.status = 1;
+	return (free(new_cmd), free(home), free(tmp));
 }
 
 void	ft_cd_tild(t_data *data, char *command)
@@ -43,8 +43,8 @@ void	ft_cd_tild(t_data *data, char *command)
 			error_cd(new_cmd, home, tmp);
 			return ;
 		}
-		return (free(new_cmd), free(home), free(tmp));
 		g_sig.status = 0;
+		return (free(new_cmd), free(home), free(tmp));
 	}
 }
 
@@ -91,7 +91,7 @@ void	ft_cd(t_data *data, char **command)
 	else if (command[2])
 	{
 		g_sig.status = 1;
-		return (ft_putstr_fd("bash: cd: too many arguments", 1));
+		return (ft_putstr_fd("bash: cd: too many arguments\n", 1));
 	}
 	else if (!ft_strncmp(command[1], "~", 2))
 		return (ft_cd_home(data, command[1]));

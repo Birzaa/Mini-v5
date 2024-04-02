@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/30 19:11:58 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/02 12:28:57 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	child(t_pipex p, char **cmd, char **env, t_data *data)
 			free_env(data->env);
 			ft_free_tab(data->envp);
 			parent_free(&p);
-			exit(0);
+			exit(g_sig.status);
 		}
 	}
 }

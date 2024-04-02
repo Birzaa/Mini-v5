@@ -1,0 +1,7 @@
+ 0 255 exit non defini / osef
+
+
+exit 1 dqwd
+exit wdq dwqdwq
+exit 
+

@@ -1,0 +1,164 @@
+echo "'a'">test
+echo "'b'" >test
+echo "'c'"> test
+echo "'d'" > test
+echo "e">test
+echo "f"> test
+echo "g" >test
+echo "h" > test
+echo 'i'>test
+echo 'j' >test
+echo 'k'> test
+echo 'l' > test
+echo m>test
+echo n >test
+echo o> test
+echo p > test
+echo "'a'">>test
+echo "'b'" >>test
+echo "'c'">> test
+echo "'d'" >> test
+echo "e">>test
+echo "f">> test
+echo "g" >>test
+echo "h" >> test
+echo 'i'>>test
+echo 'j' >>test
+echo 'k'>> test
+echo 'l' >> test
+echo m>>test
+echo n >>test
+echo o>> test
+echo p >> test
+
+echo "'a'">"test"
+echo "'b'" >"test"
+echo "'c'"> "test"
+echo "'d'" > "test"
+echo "e">"test"
+echo "f"> "test"
+echo "g" >"test"
+echo "h" > "test"
+echo 'i'>"test"
+echo 'j' >"test"
+echo 'k'> "test"
+echo 'l' > "test"
+echo m>"test"
+echo n >"test"
+echo o> "test"
+echo p > "test"
+echo "'a'">>"test"
+echo "'b'" >>"test"
+echo "'c'">> "test"
+echo "'d'" >> "test"
+echo "e">>"test"
+echo "f">> "test"
+echo "g" >>"test"
+echo "h" >> "test"
+echo 'i'>>"test"
+echo 'j' >>"test"
+echo 'k'>> "test"
+echo 'l' >> "test"
+echo m>>"test"
+echo n >>"test"
+echo o>> "test"
+echo p >> "test"
+
+echo "'a'">test>a
+echo "'b'" >test>a
+echo "'c'"> test>a
+echo "'d'" > test>a
+echo "e">test>a
+echo "f"> test>a
+echo "g" >test>a
+echo "h" > test>a
+echo 'i'>test>a
+echo 'j' >test>a
+echo 'k'> test>a
+echo 'l' > test>a
+echo m>test>a
+echo n >test>a
+echo o> test>a
+echo p > test>a
+echo "'a'">>test>a
+echo "'b'" >>test>a
+echo "'c'">> test>a
+echo "'d'" >> test>a
+echo "e">>test>a
+echo "f">> test>a
+echo "g" >>test>a
+echo "h" >> test>a
+echo 'i'>>test>a
+echo 'j' >>test>a
+echo 'k'>> test>a
+echo 'l' >> test>a
+echo m>>test>a
+echo n >>test>a
+echo o>> test>a
+echo p >> test>a
+
+echo "'a'">"test">a
+echo "'b'" >"test">a
+echo "'c'"> "test">a
+echo "'d'" > "test">a
+echo "e">"test">a
+echo "f"> "test">a
+echo "g" >"test">a
+echo "h" > "test">a
+echo 'i'>"test">a
+echo 'j' >"test">a
+echo 'k'> "test">a
+echo 'l' > "test">a
+echo m>"test">a
+echo n >"test">a
+echo o> "test">a
+echo p > "test">a
+echo "'a'">>"test">a
+echo "'b'" >>"test">a
+echo "'c'">> "test">a
+echo "'d'" >> "test">a
+echo "e">>"test">a
+echo "f">> "test">a
+echo "g" >>"test">a
+echo "h" >> "test">a
+echo 'i'>>"test">a
+echo 'j' >>"test">a
+echo 'k'>> "test">a
+echo 'l' >> "test">a
+echo m>>"test">a
+echo n >>"test">a
+echo o>> "test">a
+echo p >> "test">a
+
+echo "'a'">"test">>a
+echo "'b'" >"test">>a
+echo "'c'"> "test">>a
+echo "'d'" > "test">>a
+echo "e">"test">>a
+echo "f"> "test">>a
+echo "g" >"test">>a
+echo "h" > "test">>a
+echo 'i'>"test">>a
+echo 'j' >"test">>a
+echo 'k'> "test">>a
+echo 'l' > "test">>a
+echo m>"test">>a
+echo n >"test">>a
+echo o> "test">>a
+echo p > "test">>a
+echo "'>a'">>"test">>a
+echo "'b'" >>"test">>a
+echo "'c'">> "test">>a
+echo "'d'" >> "test">>a
+echo "e">>"test">>a
+echo "f">> "test">>a
+echo "g" >>"test">>a
+echo "h" >> "test">>a
+echo 'i'>>"test">>a
+echo 'j' >>"test">>a
+echo 'k'>> "test">>a
+echo 'l' >> "test">>a
+echo m>>"test">>a
+echo n >>"test">>a
+echo o>> "test">>a
+echo p >> "test">>a

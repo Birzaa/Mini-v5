@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/30 12:14:01 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/01 09:00:24 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,14 @@ int	ft_expand_symbol(t_env *env, t_cmd_word *cmd)
 	char	*tmp_join;
 
 	tmp_join = ft_strdup(ft_get_symbol_join(cmd->content));
+	if (!tmp_join)
+		return (perror(""), 0);
 	tmp_expand = ft_get_symbol_expand(cmd->content);
-	if (!tmp_expand)
-	{
-		if (tmp_join)
-		{
-			free(cmd->content);
-			cmd->content = tmp_join;
-			free(tmp_join);
-		}
+	if (tmp_expand_null(cmd, tmp_expand, tmp_join))
 		return (0);
-	}
 	tmp_full = ft_expand_symbol_bis(env, cmd, tmp_expand);
-	if (!tmp_full && !tmp_join)
-	{
-		free(cmd->content);
-		cmd->content = ft_strdup("");
-		return (free(tmp_expand), 0);
-	}
+	if (full_and_join_null(cmd, tmp_expand, tmp_join, tmp_full))
+		return (0);
 	else if (!tmp_full && tmp_join)
 	{
 		free(cmd->content);
@@ -136,8 +126,8 @@ int	ft_expand_no_symbol(t_env *env, t_cmd_word *word)
 
 void	parsing_expand(t_cmd *cmd, t_data *data)
 {
-	t_cmd *head;
-	t_cmd_word *tmp_word;
+	t_cmd		*head;
+	t_cmd_word	*tmp_word;
 
 	head = cmd;
 	while (head)

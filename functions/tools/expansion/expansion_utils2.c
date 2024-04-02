@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:44:20 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/30 12:04:23 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/01 09:22:35 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	else_in_expand_no_sym(t_cmd_word *env)
+{
+	{
+		free(env->content);
+		env->content = ft_strdup("");
+		env->state = 0;
+		env->expand = 1;
+	}
+}
 
 void	expand_check_no_sym(t_data *data, t_cmd_word *env, t_cmd_word *word,
 		int expanded)
@@ -37,11 +47,7 @@ void	expand_check_no_sym(t_data *data, t_cmd_word *env, t_cmd_word *word,
 		env->state = 2;
 	}
 	else
-	{
-		free(env->content);
-		env->content = ft_strdup("");
-		env->state = 0;
-	}
+		else_in_expand_no_sym(env);
 }
 
 void	expand(t_cmd_word *cmd, t_data *data)
@@ -50,6 +56,7 @@ void	expand(t_cmd_word *cmd, t_data *data)
 	t_cmd_word	*word;
 	int			symbol;
 	int			expanded;
+
 	expanded = 0;
 	cmd->type = QOUTE;
 	env = cmd;
