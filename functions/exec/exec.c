@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/02 15:35:36 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/02 20:12:39 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	close_pipes(t_pipex *pipex)
 void	child(t_pipex p, char **cmd, char **env, t_data *data)
 {
 	g_sig.pid = 0;
-	printf("%d\n", g_sig.pid);
 	p.pid = fork();
 	if (p.pid == -1)
 	{
@@ -126,7 +125,7 @@ void	child(t_pipex p, char **cmd, char **env, t_data *data)
 			free_env(data->env);
 			ft_free_tab(data->envp);
 			parent_free(&p);
-			exit(g_sig.status);
+			exit(0);
 		}
 	}
 }
@@ -135,6 +134,7 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 {
 	t_pipex		pipex;
 	t_command	*current_cmd;
+		int status;
 
 	current_cmd = parsed_cmd;
 	pipex.nb_cmd = parsed_cmd->nb_command;
@@ -171,9 +171,23 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 		parent_free(&pipex);
 		while (pipex.idx)
 		{
-			waitpid(-1, NULL, 0);
+			waitpid(-1, &status, 0);
+			if (WIFEXITED(status))
+				g_sig.status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				break ;
+			else
+				g_sig.status = 127;
 			pipex.idx--;
 		}
+	}
+	else if (current_cmd->parsed_cmd->r_in)
+	{
+		open_redir_in(current_cmd, &pipex);
+	}
+	else if (current_cmd->parsed_cmd->r_out)
+	{
+		open_redir_out(current_cmd, &pipex);
 	}
 	close_h_doc(&pipex);
 }

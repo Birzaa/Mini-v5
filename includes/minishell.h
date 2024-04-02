@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/02 15:22:51 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/02 19:46:56 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ typedef struct s_signal
 	int					sigquit;
 	int					status;
 	char				*input;
+	int					here_doc;
 	pid_t				pid;
 }						t_signal;
 

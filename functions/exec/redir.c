@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:04:14 by thomas            #+#    #+#             */
-/*   Updated: 2024/03/27 23:36:09 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/02 20:11:16 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,29 @@ char	*here_doc(char *av, t_pipex *pipex, int index)
 	char	*buf;
 	char	*name_file;
 	char	*index_str;
+	char	*dest_file;
 
 	index_str = ft_itoa(index);
 	name_file = ft_strjoin(av, index_str);
 	free(index_str);
-	pipex->h_doc_name[index] = ft_strdup(name_file);
+	dest_file = "/tmp";
+	dest_file = ft_strjoin("/tmp/", name_file);
+	pipex->h_doc_name[index] = ft_strdup(dest_file);
 	if (!pipex->h_doc_name[index])
 	{
 		ft_free_tab(pipex->h_doc_name);
 		free(name_file);
 		return (NULL);
 	}
-	file = open(name_file, O_CREAT | O_WRONLY | O_TRUNC, 0000644);
+	int i = 0;
+	while(!access(dest_file, F_OK))
+	{
+		char *idx = ft_itoa(i);
+		dest_file = ft_strjoin(pipex->h_doc_name[index], idx);
+		free(idx);
+		i++;
+	}
+	file = open(dest_file, O_CREAT | O_WRONLY | O_TRUNC, 0000644);
 	if (file < 0)
 	{
 		free(name_file);
@@ -38,10 +49,11 @@ char	*here_doc(char *av, t_pipex *pipex, int index)
 	}
 	while (1)
 	{
+		g_sig.pid = 2;
 		buf = readline("\033[1;34m~> \033[0m");
 		if (!buf)
 			return (NULL);
-		if (!ft_strcmp(av, buf))
+		if (!ft_strcmp(av, buf) || g_sig.here_doc)
 		{
 			free(buf);
 			break ;
@@ -52,6 +64,7 @@ char	*here_doc(char *av, t_pipex *pipex, int index)
 	}
 	close(file);
 	free(name_file);
+	free(dest_file);
 	return (pipex->h_doc_name[index]);
 }
 
@@ -72,7 +85,8 @@ void	open_redir_in(t_command *head, t_pipex *pipex)
 		}
 		if (pipex->infile == -1)
 		{
-			printf("Impossible de in\n");
+			g_sig.status = 1;
+			printf("bash: %s: No such file or directory\n", tmp->file);
 			exit(1);
 		}
 		tmp = tmp->next;
@@ -88,14 +102,15 @@ void	open_redir_out(t_command *head, t_pipex *pipex)
 	while (tmp)
 	{
 		if (!tmp->append)
-			pipex->outfile = open(tmp->file,
-					O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			pipex->outfile = open(tmp->file, O_WRONLY | O_CREAT | O_TRUNC,
+					0644);
 		else
-			pipex->outfile = open(tmp->file,
-					O_WRONLY | O_CREAT | O_APPEND, 0644);
+			pipex->outfile = open(tmp->file, O_WRONLY | O_CREAT | O_APPEND,
+					0644);
 		if (pipex->outfile == -1)
 		{
-			printf("Impossible de out\n");
+			g_sig.status = 1;
+			printf("bash: %s: Permission denied\n", tmp->file);
 			exit(1);
 		}
 		tmp = tmp->next;
