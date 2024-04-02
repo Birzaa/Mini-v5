@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_lexer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:29:39 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/02 12:46:02 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/02 14:57:02 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	free_stack(t_stack *stack)
 	current = stack->head;
 	if (current->content && !current->no_free)
 		free(current->content);
-	if (current->status_free)
-		free(current->content);
 	while (current)
 	{
+		if (current->status_free)
+			free(current->content);
 		next = current->next;
 		free_node(current);
 		current = next;

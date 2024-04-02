@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   status.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:58 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/02 13:06:55 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:02:57 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,36 +35,40 @@ char	*ft_strcpy_status(char *s1, char *s2)
 	return (s1);
 }
 
+void	change_status(t_node *node, char *wanted, char *status, char *tmp)
+{
+	wanted = ft_strcpy(wanted, node->next->content);
+	tmp = ft_strjoin(status, &wanted[1]);
+	if (!tmp)
+		return (perror(""), free(status), free(wanted));
+	wanted = ft_strcpy_status(wanted, tmp);
+	node->type = WORD;
+	node->content = "";
+	node->no_free = 1;
+	node->next->type = WORD;
+	node->next->status_free = 1;
+	node->next->content = wanted;
+	node->next->no_free = 0;
+	node->next->len = ft_strlen(wanted);
+	free(tmp);
+}
+
 void	handle_status(t_node *node, char *status)
 {
 	char	*tmp;
 	char	*wanted;
+	int		i;
 
+	i = 0;
+	if (node->next->content)
+		i = ft_strlen(node->next->content);
 	(void)status;
-	wanted = malloc(ft_strlen(node->next->content) + 8);
+	wanted = malloc(i + 8);
 	if (!wanted)
 		return ;
 	tmp = NULL;
 	if (!ft_strncmp(node->next->content, "?", 1))
-	{
-		wanted = ft_strcpy(wanted, node->next->content);
-		tmp = ft_strjoin(status, &wanted[1]);
-		if (!tmp)
-			return (perror(""), free(status), free(wanted));
-		wanted = ft_strcpy_status(wanted, tmp);
-		printf("tmp :%s\n", tmp);
-		printf("wanted :%s\n", wanted);
-		/* free(wanted); */
-		node->type = WORD;
-		node->content = "";
-		node->no_free = 1;
-		node->next->type = WORD;
-		node->next->status_free = 1;
-		node->next->content = wanted;
-		node->next->no_free = 1;
-		node->next->len = 0;
-	}
-	return (free(tmp));
+		change_status(node, wanted, status, tmp);
 }
 
 void	parsing_status(t_stack *list)
