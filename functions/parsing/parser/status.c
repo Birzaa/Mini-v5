@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:58 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/01 13:00:14 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/02 03:16:10 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	handle_status(t_node *node, t_node *next, char *status)
 	char	*content;
 
 	(void)next;
+	(void)tmp2;
 	tmp = NULL;
 	tmp2 = NULL;
 	content = NULL;
