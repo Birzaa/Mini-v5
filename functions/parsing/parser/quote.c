@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:28:17 by thomas            #+#    #+#             */
-/*   Updated: 2024/04/01 11:04:29 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/02 12:33:54 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ void	parsing_quote(t_cmd *cmd)
 						&& (tmp_word->next->type != WHITE_SPACE
 							&& !is_redir(tmp_word->next->type))))
 				&& (tmp_word->type == WORD || tmp_word->type == QOUTE
-					|| tmp_word->type == DOUBLE_QUOTE))
+					|| tmp_word->type == DOUBLE_QUOTE
+					|| tmp_word->type == PIPE_LINE || is_redir(tmp_word->type)))
 				put_in_one_word(&tmp_word, tmp_word->index);
 			quote_next_to_quote(tmp_word);
 			if (tmp_word->next)

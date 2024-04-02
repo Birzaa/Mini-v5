@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/01 09:17:22 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/02 12:40:27 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_node
 	enum e_state		state;
 	int					index;
 	int					no_free;
+	int					status_free;
 	struct s_node		*next;
 	struct s_node		*prev;
 }						t_node;
@@ -188,7 +189,7 @@ void					ft_export(t_env **env, char **command);
 void					ft_unset(t_env *env, char **command);
 void					ft_env(t_data *data, char **command);
 void					ft_cd(t_data *data, char **command);
-void					ft_exit(t_data *data, t_pipex *p);
+void					ft_exit(t_data *data, t_pipex *p, char **command);
 void					ft_exit_two(t_data *data);
 void					ft_pwd(t_data *data);
 void					ft_echo(char **command, t_pipex *p);

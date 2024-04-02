@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:55:20 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/28 23:19:18 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/02 12:40:46 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ t_cmd	*parser(t_stack *lst)
 	current_node = lst->head;
 	while (current_node)
 	{
-		if (current_node->type != PIPE_LINE)
+		if (current_node->type != PIPE_LINE || (current_node->type == PIPE_LINE
+				&& current_node->state != 2))
 		{
 			not_a_pipe(&current_cmd, &new_cmd, &cmd, &current_node);
 		}

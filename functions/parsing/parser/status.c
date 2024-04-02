@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:58 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/01 13:00:14 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:05:22 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,35 +35,34 @@ char	*ft_strcpy_status(char *s1, char *s2)
 	return (s1);
 }
 
-void	handle_status(t_node *node, t_node *next, char *status)
+void	handle_status(t_node *node, char *status)
 {
 	char	*tmp;
-	char 	*tmp2;
-	char	*content;
+	char	*wanted;
 
-	(void)next;
+	(void)status;
+	wanted = malloc(ft_strlen(node->next->content) + 8);
+	if (!wanted)
+		return ;
 	tmp = NULL;
-	tmp2 = NULL;
-	content = NULL;
 	if (!ft_strncmp(node->next->content, "?", 1))
 	{
-		content = ft_strchr(node->next->content, '?');
-		tmp = ft_strjoin(status, ++content);
+		wanted = ft_strcpy(wanted, node->next->content);
+		tmp = ft_strjoin(status, &wanted[1]);
 		if (!tmp)
-			return (perror(""), free(status));
+			return (perror(""), free(status), free(wanted));
+		wanted = ft_strcpy_status(wanted, tmp);
+		printf("tmp :%s\n", tmp);
+		printf("wanted :%s\n", wanted);
+		/* free(wanted); */
 		node->type = WORD;
 		node->content = "";
 		node->no_free = 1;
 		node->next->type = WORD;
-		content = ft_strcpy_status(node->next->content, tmp);
-		node->next->content = content;
+		node->next->status_free = 1;
+		node->next->content = wanted;
 		node->next->no_free = 1;
-		node->next->len = ft_strlen(node->next->content);
-		if (node->next->next && node->next->next->type)
-		{
-			node->next->next->type = WHITE_SPACE;
-			node->next->next->content = " ";
-		}
+		node->next->len = 0;
 	}
 	return (free(tmp));
 }
@@ -85,7 +84,7 @@ void	parsing_status(t_stack *list)
 		next = node->next;
 		if (node->type == ENV && node->next && !ft_strncmp(node->next->content,
 				"?", 1) && node->state != 1)
-			handle_status(node, next, status);
+			handle_status(node, status);
 		if (!node->next)
 		{
 			free(status);

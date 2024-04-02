@@ -5,6 +5,7 @@ remove : 	int expand dans struct t_cmd_word ne sert plus a rien
 error :		conditional jump quand on envoit ||
 error :		"exit_code ->0user ->abougrai home -> /home/abougrai" cette command cree des leaks
 error : 	token dans guillement fait tout crash
+error : 	$? fait tout crash maintenant
 
 fixed :		index est censer remarcher
 fixed :		redirr colle a des quotes
