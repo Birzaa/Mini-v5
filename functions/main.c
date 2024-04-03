@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/02 15:21:32 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/03 13:30:07 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,12 @@ int	main(int ac, char **av, char **env)
 	if (!*env)
 		env = create_env();
 	data.env = get_env(env);
+	data.nb_input = 0;
 	init_signals();
 	g_sig.status = 0;
 	while (1)
 	{
+		data.nb_input++;
 		g_sig.input = readline(ORANGE "\U0001F58A  ~>: " RESET);
 		if (!g_sig.input || !ft_strcmp(g_sig.input, "exit"))
 		{

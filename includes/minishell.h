@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/03 12:38:54 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:08:19 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ typedef struct s_data
 	t_command			*parsed_cmd;
 	t_env				*env;
 	char				**envp;
+	int					nb_input;
 }						t_data;
 
 typedef struct s_signal
@@ -402,8 +403,8 @@ void					open_redir_in(t_command *head, t_pipex *pipex);
 void					open_redir_out(t_command *head, t_pipex *pipex);
 void					execute_cmd(char **env, char **valid_cmd, t_data *data,
 							t_pipex *p);
-char					*here_doc(char *av, t_pipex *pipex, int index);
-void					create_h_doc(t_command *parsed_cmd, t_pipex *pipex);
+char					*here_doc(char *av, t_pipex *pipex, int index, char **tab, t_data *data);
+void					create_h_doc(t_command *parsed_cmd, t_pipex *pipex, char **tab,t_data *data);
 void					nb_h_doc(t_command *parsed_cmd, t_pipex *pipex);
 void					parent_free(t_pipex *pipex);
 

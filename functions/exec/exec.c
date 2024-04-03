@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/03 12:06:57 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:30:32 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,15 +138,12 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 
 	current_cmd = parsed_cmd;
 	pipex.nb_cmd = parsed_cmd->nb_command;
-	pipex.pipe = (int *)malloc((sizeof(int) * (2 * (pipex.nb_cmd - 1))));
-	if (!pipex.pipe)
-		return ;
 	pipex.saved_in = dup(STDIN_FILENO);
 	pipex.h_doc = 0;
 	pipex.idx = 0;
 	pipex.saved_out = dup(STDOUT_FILENO);
 	nb_h_doc(current_cmd, &pipex);
-	create_h_doc(current_cmd, &pipex);
+	create_h_doc(current_cmd, &pipex, current_cmd->parsed_cmd->full_cmd, data);
 	if (current_cmd->parsed_cmd->full_cmd && pipex.nb_cmd == 1
 		&& is_builtin(current_cmd->parsed_cmd->full_cmd[0]))
 	{
@@ -157,6 +154,9 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 	}
 	else if (current_cmd->parsed_cmd->full_cmd)
 	{
+		pipex.pipe = (int *)malloc((sizeof(int) * (2 * (pipex.nb_cmd - 1))));
+		if (!pipex.pipe)
+			return ;
 		open_pipes(&pipex);
 		while (pipex.idx < pipex.nb_cmd)
 		{

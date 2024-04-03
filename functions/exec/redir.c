@@ -6,20 +6,24 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:04:14 by thomas            #+#    #+#             */
-/*   Updated: 2024/04/03 12:42:25 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:19:35 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*here_doc(char *av, t_pipex *pipex, int index)
+char	*here_doc(char *av, t_pipex *pipex, int index, char **tab, t_data *data)
 {
 	int		file;
 	char	*buf;
 	char	*name_file;
 	char	*index_str;
 	char	*dest_file;
+	int		i;
+	char	*idx;
 
+	(void)tab;
+	(void)data;
 	index_str = ft_itoa(index);
 	name_file = ft_strjoin(av, index_str);
 	free(index_str);
@@ -32,10 +36,10 @@ char	*here_doc(char *av, t_pipex *pipex, int index)
 		free(name_file);
 		return (NULL);
 	}
-	int i = 0;
-	while(!access(dest_file, F_OK))
+	i = 0;
+	while (!access(dest_file, F_OK))
 	{
-		char *idx = ft_itoa(i);
+		idx = ft_itoa(i);
 		dest_file = ft_strjoin(pipex->h_doc_name[index], idx);
 		free(idx);
 		i++;
@@ -47,13 +51,26 @@ char	*here_doc(char *av, t_pipex *pipex, int index)
 		free(pipex->h_doc_name[index]);
 		return (NULL);
 	}
+	signal(SIGINT, &exec_here_doc);
 	while (1)
 	{
-		g_sig.pid = 2;
 		buf = readline("\033[1;34m~> \033[0m");
 		if (!buf)
-			return (NULL);
-		if (!ft_strcmp(av, buf) || g_sig.here_doc)
+		{
+			if (g_sig.status == 130)
+			{
+				close(file);
+				free(name_file);
+				free(dest_file);
+				return NULL;
+			}
+			printf("bash: warning: here-document at line \
+%d delimited by end-of-file (wanted `%s')\n",
+					data->nb_input,
+					av);
+			break ;
+		}
+		if (!ft_strcmp(av, buf))
 		{
 			free(buf);
 			break ;
@@ -87,7 +104,7 @@ void	open_redir_in(t_command *head, t_pipex *pipex)
 		{
 			g_sig.status = 1;
 			printf("bash: %s: No such file or directory\n", tmp->file);
-			return;
+			return ;
 		}
 		tmp = tmp->next;
 	}
@@ -111,7 +128,7 @@ void	open_redir_out(t_command *head, t_pipex *pipex)
 		{
 			g_sig.status = 1;
 			printf("bash: %s: Permission denied\n", tmp->file);
-			return;
+			return ;
 		}
 		tmp = tmp->next;
 	}
@@ -152,7 +169,8 @@ void	nb_h_doc(t_command *parsed_cmd, t_pipex *pipex)
 	pipex->idx = 0;
 }
 
-void	create_h_doc(t_command *parsed_cmd, t_pipex *pipex)
+void	create_h_doc(t_command *parsed_cmd, t_pipex *pipex, char **tab,
+		t_data *data)
 {
 	t_command		*current_cmd;
 	t_redir_in_2	*r_in;
@@ -169,7 +187,9 @@ void	create_h_doc(t_command *parsed_cmd, t_pipex *pipex)
 			{
 				if (r_in->h_doc)
 				{
-					r_in->file = here_doc(r_in->file, pipex, index);
+					r_in->file = here_doc(r_in->file, pipex, index, tab, data);
+					if(!r_in->file)
+						return ;
 					index++;
 				}
 				r_in = r_in->next;
