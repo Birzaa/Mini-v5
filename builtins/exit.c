@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:41 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/03 10:20:28 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:34:06 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	ft_exit(t_data *data, t_pipex *p, char **command)
 {
 	int	i;
 
+	g_sig.status = 0;
 	i = ft_tab_len(command);
 	if (i > 2 && !ft_exit_non_digit(command[1])
 		&& ft_exit_non_digit(command[2]))
@@ -55,8 +56,12 @@ void	ft_exit(t_data *data, t_pipex *p, char **command)
 		return ((void)printf("bash: exit: too many arguments\n"));
 	}
 	else if (i > 1 && ft_exit_non_digit(command[1]))
+	{
 		printf("bash: exit: %s: numeric argument required\n", command[1]);
-	g_sig.status = ft_get_exit_atoi(command[1]);
+		g_sig.status = 1;
+	}
+	if (command[1])
+		g_sig.status = ft_get_exit_atoi(command[1]);
 	free_env(data->env);
 	free_lexer(data->lex);
 	clear_history();
