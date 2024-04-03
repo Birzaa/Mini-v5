@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/02 19:46:56 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/03 05:53:53 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,6 +278,7 @@ int						ft_strcmp(char *s1, char *s2);
 void					ft_nothing(void);
 int						ft_at_least_charset(char *str, char *charset);
 int						ft_charcmp(int c, int d);
+int						ft_tab_len(char **tab);
 
 // tools/quote/quote_utils1.c
 void					quote_case_one(t_cmd_word *tmp_word);

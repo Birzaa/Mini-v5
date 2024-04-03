@@ -1,14 +1,55 @@
-Note AVRIL 1
+Note AVRIL 3
 
-remove : 	int expand dans struct t_cmd_word ne sert plus a rien
 
-error :		conditional jump quand on envoit ||
-error :		"exit_code ->0user ->abougrai home -> /home/abougrai" cette command cree des leaks
-error : 	token dans guillement fait tout crash
-error : 	$? fait tout crash maintenant
+error :					conditional jump quand on envoit ||
+error : 				conditional jump quand on envoit exit fiewjfew
 
-fixed :		index est censer remarcher
-fixed :		redirr colle a des quotes
 
-improve :	peaufiner l'exit
-improve :	implementer signaux dans exec
+
+add :					syntax error put status at 2
+improved :				peaufiner l'exit
+partially improved :	implementer signaux dans exec	
+
+
+conditional :
+
+🖊  ~>: | echo 1
+==2488775== Conditional jump or move depends on uninitialised value(s)
+==2488775==    at 0x404055: skip_spaces (in /home/abougrai/minishell/minishell)
+==2488775==    by 0x404160: is_invalid_pipe (in /home/abougrai/minishell/minishell)
+==2488775==    by 0x4044EF: error_cmd (in /home/abougrai/minishell/minishell)
+==2488775==    by 0x4013F9: main (in /home/abougrai/minishell/minishell)
+==2488775== 
+==2488775== Conditional jump or move depends on uninitialised value(s)
+==2488775==    at 0x404175: is_invalid_pipe (in /home/abougrai/minishell/minishell)
+==2488775==    by 0x4044EF: error_cmd (in /home/abougrai/minishell/minishell)
+==2488775==    by 0x4013F9: main (in /home/abougrai/minishell/minishell)
+==2488775== 
+minishell: syntax error near unexpected token `|'
+
+SEGFAULT : 
+🖊  ~>: | dwqdqw
+make: *** [Makefile:109: run] Segmentation fault (core dumped)
+
+🖊  ~>: ||
+make: *** [Makefile:109: run] Segmentation fault (core dumped)
+
+
+cat < file1 > file2						ne devrait pas creer file2
+cat < file1 > file2 > file3 >> file4  	ne devrait pas creer file2
+cat > file1 < file2						ne devrait pas creer file2
+cat file1 < /etc/passwd > file1 > file2 > file3 > file4 ne comprend pk marche pas
+
+bash-5.1$ ./not_executable_file
+bash: ./not_executable_file: No such file or directory
+bash-5.1$ $?
+bash: 127: command not found
+
+
+bash: syntax error near unexpected token `||'
+bash-5.1$ |
+bash: syntax error near unexpected token `|'
+bash-5.1$ ||
+
+
+| detruit le mimishell
