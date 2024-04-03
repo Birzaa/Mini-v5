@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:44:49 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/22 02:44:50 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/03 13:25:25 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,3 +48,18 @@ char	*ft_getenv(t_env *env, char *n)
 	}
 	return (NULL);
 }
+
+void	ft_error_cd(char *tmp, char *command, char *home)
+{
+	tmp = ft_strjoin(&home[5], command);
+	if (!tmp)
+		return (perror(""), free(home));
+	printf("bash: cd: %s: No such file or directory\n", tmp);
+	g_sig.status = 1;
+	return (free(tmp), free(home));
+}
+
+/* void	cd_no_arg(void)
+{
+	
+} */

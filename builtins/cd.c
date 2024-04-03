@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:17 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/02 11:55:58 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/03 13:30:43 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_cd_tild(t_data *data, char *command)
 		home = ft_getenv(data->env, "HOME");
 		if (!home)
 			return (perror(""));
-		tmp = ft_strjoin(&home[5], command);
+		tmp = ft_strjoin(&home[5], ++command);
 		if (!tmp)
 			return (perror(""), free(home));
 		new_cmd = ft_strjoin(new_cmd, tmp);
@@ -59,6 +59,7 @@ void	ft_cd_home(t_data *data, char *command)
 	char	*home;
 	char	*tmp;
 
+	tmp = NULL;
 	home = NULL;
 	if ((ft_is_home_set(data->env)))
 	{
@@ -68,14 +69,9 @@ void	ft_cd_home(t_data *data, char *command)
 		if (!check_value_env(home))
 			return (free(home));
 		else if (chdir(&home[5]))
-		{
-			tmp = ft_strjoin(&home[5], command);
-			if (!tmp)
-				return (perror(""), free(home));
-			printf("bash: cd: %s: No such file or directory\n", tmp);
-			g_sig.status = 1;
-			return (free(tmp), free(home));
-		}
+			ft_error_cd(tmp, command, home);
+		else if (!command)
+			chdir(home);
 		free(home);
 		g_sig.status = 0;
 	}
@@ -87,7 +83,10 @@ void	ft_cd(t_data *data, char **command)
 {
 	refresh_env(data->env, 1);
 	if (!command[1] || command[1][0] == '\0')
+	{
+		ft_cd_home(data, command[1]);
 		return ;
+	}
 	else if (command[2])
 	{
 		g_sig.status = 1;

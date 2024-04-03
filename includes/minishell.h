@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/03 12:43:07 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/03 13:25:15 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,7 @@ void					print_test(void);
 // tools/cd/cd_utils1.c
 int						ft_is_home_set(t_env *env);
 char					*ft_getenv(t_env *env, char *name);
+void					ft_error_cd(char *tmp, char *command, char *home);
 
 // tools/env/env_utils1.c
 t_env					*create_env_part1(t_env *env);
