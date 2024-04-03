@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/03 06:20:00 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:30:32 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 {
 	t_pipex		pipex;
 	t_command	*current_cmd;
-		int status;
+	int			status;
 
 	current_cmd = parsed_cmd;
 	pipex.nb_cmd = parsed_cmd->nb_command;
@@ -143,7 +143,7 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 	pipex.idx = 0;
 	pipex.saved_out = dup(STDOUT_FILENO);
 	nb_h_doc(current_cmd, &pipex);
-	create_h_doc(current_cmd, &pipex);
+	create_h_doc(current_cmd, &pipex, current_cmd->parsed_cmd->full_cmd, data);
 	if (current_cmd->parsed_cmd->full_cmd && pipex.nb_cmd == 1
 		&& is_builtin(current_cmd->parsed_cmd->full_cmd[0]))
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 19:22:15 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/03 10:07:39 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:28:22 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,23 @@ t_node	*check_unclosed_quotes(t_node **node, enum e_token type)
 			break ;
 	}
 	if (!*node)
+	{
+		g_sig.status = 2;
 		write(STDERR_FILENO, "minishell: unclosed quotes detected.\n",
 			ft_strlen("minishell: unclosed quotes detected.\n"));
+	}
 	return (*node);
 }
 
-int	error_cmd2(t_stack *lst, t_node	*node)
+int	error_cmd2(t_stack *lst, t_node *node)
 {
 	if (lst->size == 1 && node->type == PIPE_LINE)
+	{
+		g_sig.status = 2;
 		return (ft_perror("minishell: syntax error near \
-unexpected token `|'", NULL));
+unexpected token `|'",
+							NULL));
+	}
 	return (EXIT_SUCCESS);
 }
 
@@ -60,13 +67,15 @@ int	error_cmd(t_stack *lst)
 		{
 			if (is_invalid_pipe(node))
 				return (ft_perror("minishell: syntax error near \
-unexpected token `|'", NULL));
+unexpected token `|'",
+									NULL));
 		}
 		else if (is_redir(node->type))
 		{
 			if (is_invalid_redir(node))
 				return (ft_perror("minishell: syntax error near \
-unexpected token ", get_redir(node->type)));
+unexpected token ",
+									get_redir(node->type)));
 		}
 		else if (node->type == DOUBLE_QUOTE || node->type == QOUTE)
 			if (!check_unclosed_quotes(&node, node->type))
