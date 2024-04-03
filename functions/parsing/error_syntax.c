@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:26:15 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/28 17:51:58 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/03 12:36:10 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,19 @@ int	is_redir(enum e_token type)
 
 int	is_invalid_pipe(t_node *node)
 {
-	t_node	*next;
-	t_node	*prev;
+	/* t_node	*next;
+	t_node	*prev; */
 
-	next = skip_spaces(node->next, 0);
+	if (node->type == PIPE_LINE)
+	{
+		node = node->next;
+		while (node && (node->type == WHITE_SPACE || node->type == QOUTE
+				|| node->type == DOUBLE_QUOTE || is_redir(node->type)))
+			node = node->next;
+		if (node->type != WORD)
+			return (EXIT_FAILURE);
+	}
+	/* next = skip_spaces(node->next, 0);
 	prev = skip_spaces(node->prev, 1);
 	if (!next || !prev)
 	{
@@ -44,7 +53,7 @@ int	is_invalid_pipe(t_node *node)
 	}
 	if ((!prev && !next) || (next->type != WORD && prev->type != WORD
 			&& !is_redir(next->type)))
-		return (EXIT_FAILURE);
+		return (EXIT_FAILURE); */
 	return (EXIT_SUCCESS);
 }
 

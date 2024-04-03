@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:41 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/03 10:20:28 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:04:36 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	ft_exit(t_data *data, t_pipex *p, char **command)
 	ft_free_tab(data->envp);
 	free_parser(data->cmd, data->parsed_cmd);
 	parent_free(p);
+	(void)p;
 	exit(g_sig.status);
 }
 
