@@ -1,14 +1,130 @@
-Note AVRIL 1
+Note AVRIL 3
 
-remove : 	int expand dans struct t_cmd_word ne sert plus a rien
 
-error :		conditional jump quand on envoit ||
-error :		"exit_code ->0user ->abougrai home -> /home/abougrai" cette command cree des leaks
-error : 	token dans guillement fait tout crash
-error : 	$? fait tout crash maintenant
+error :					conditional jump quand on envoit ||
+error : 				conditional jump quand on envoit exit fiewjfew
 
-fixed :		index est censer remarcher
-fixed :		redirr colle a des quotes
 
-improve :	peaufiner l'exit
-improve :	implementer signaux dans exec
+
+add :					syntax error put status at 2
+improved :				peaufiner l'exit
+partially improved :	implementer signaux dans exec	
+
+
+conditional :
+
+🖊  ~>: | echo 1
+==2488775== Conditional jump or move depends on uninitialised value(s)
+==2488775==    at 0x404055: skip_spaces (in /home/abougrai/minishell/minishell)
+==2488775==    by 0x404160: is_invalid_pipe (in /home/abougrai/minishell/minishell)
+==2488775==    by 0x4044EF: error_cmd (in /home/abougrai/minishell/minishell)
+==2488775==    by 0x4013F9: main (in /home/abougrai/minishell/minishell)
+==2488775== 
+==2488775== Conditional jump or move depends on uninitialised value(s)
+==2488775==    at 0x404175: is_invalid_pipe (in /home/abougrai/minishell/minishell)
+==2488775==    by 0x4044EF: error_cmd (in /home/abougrai/minishell/minishell)
+==2488775==    by 0x4013F9: main (in /home/abougrai/minishell/minishell)
+==2488775== 
+minishell: syntax error near unexpected token `|'
+
+SEGFAULT : 
+🖊  ~>: | dwqdqw
+make: *** [Makefile:109: run] Segmentation fault (core dumped)
+
+🖊  ~>: ||
+make: *** [Makefile:109: run] Segmentation fault (core dumped)
+
+
+cat < file1 > file2						ne devrait pas creer file2
+cat < file1 > file2 > file3 >> file4  	ne devrait pas creer file2
+cat > file1 < file2						ne devrait pas creer file2
+cat file1 < /etc/passwd > file1 > file2 > file3 > file4 ne comprend pk marche pas
+
+bash-5.1$ ./not_executable_file
+bash: ./not_executable_file: No such file or directory
+bash-5.1$ $?
+bash: 127: command not found
+
+
+bash: syntax error near unexpected token `||'
+bash-5.1$ |
+bash: syntax error near unexpected token `|'
+bash-5.1$ ||
+
+
+| detruit le mimishell
+
+
+unset LANGUAGE
+unset USER       
+unset GIT_ASKPASS     
+unset XDG_SESSION_TYPE       
+unset SHLVL       
+unset LD_LIBRARY_PATH      
+unset OLDPWD      
+unset CHROME_DESKTOP     
+unset LESS      
+unset HOME       
+unset DESKTOP_SESSION      
+unset TERM_PROGRAM_VERSION     
+unset LSCOLORS      
+unset ZSH      
+unset VSCODE_GIT_ASKPASS_MAIN      
+unset XDG_SEAT_PATH       
+unset GTK_MODULES      
+unset PAGER      
+unset VSCODE_GIT_ASKPASS_NODE       
+unset MAKEFLAGS      
+unset DBUS_SESSION_BUS_ADDRESS           
+unset SYSTEMD_EXEC_PID      
+unset LIBVIRT_DEFAULT_URI     
+unset COLORTERM       
+unset MAKE_TERMERR       
+unset GTK_IM_MODULE       
+unset LOGNAME      
+unset LD_PRELOAD       
+unset USER_ZDOTDIR       
+unset XDG_SESSION_CLASS     
+unset TERM       
+unset GNOME_DESKTOP_SESSION_ID     
+unset PATH     
+unset GDM_LANG       
+unset SESSION_MANAGER      
+unset GDK_BACKEND      
+unset XDG_SESSION_PATH      
+unset GNOME_TERMINAL_SCREEN       
+unset XDG_RUNTIME_DIR      
+unset XDG_MENU_PREFIX       
+unset MAKELEVEL     
+unset GLIBCPP_FORCE_NEW      
+unset DISPLAY      
+unset VSCODE_INJECTION       
+unset LANG      
+unset XDG_CURRENT_DESKTOP       
+unset XAUTHORITY      
+unset GNOME_TERMINAL_SERVICE       
+unset XDG_SESSION_DESKTOP      
+unset XMODIFIERS           
+unset VSCODE_GIT_IPC_HANDLE       
+unset TERM_PROGRAM      
+unset LS_COLORS      
+unset SSH_AGENT_LAUNCHER      
+unset SSH_AUTH_SOCK       
+unset ORIGINAL_XDG_CURRENT_DESKTOP       
+unset XDG_GREETER_DATA_DIR    
+unset KRB5CCNAME       
+unset SHELL       
+unset QT_ACCESSIBILITY       
+unset MAKE_TERMOUT      
+unset GDMSESSION      
+unset DOCKER_HOST       
+unset GPG_AGENT_INFO       
+unset VSCODE_GIT_ASKPASS_EXTRA_ARGS      
+unset QT_IM_MODULE       
+unset PWD      
+unset XDG_DATA_DIRS     
+unset XDG_CONFIG_DIRS       
+unset ZDOTDIR       
+unset MFLAGS      
+unset VTE_VERSION       
+unset GLIBCXX_FORCE_NEW      

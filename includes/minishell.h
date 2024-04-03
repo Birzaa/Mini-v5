@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/02 19:46:56 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/03 10:57:08 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,10 @@ int						export_exist(t_env *env, char *content);
 int						exp_exist_bis(t_env *env, char *content);
 int						ft_export_checking(char *content);
 
+// tools/export/export_utils2.c
+int						ft_export_add_checking(char *cmd);
+int						ft_export_op(t_env *env, char *content);
+
 // tools/str
 char					*ft_strncpy(char *dest, char *src, unsigned int n);
 char					*ft_strcpy(char *s1, char *s2);
@@ -278,6 +282,7 @@ int						ft_strcmp(char *s1, char *s2);
 void					ft_nothing(void);
 int						ft_at_least_charset(char *str, char *charset);
 int						ft_charcmp(int c, int d);
+int						ft_tab_len(char **tab);
 
 // tools/quote/quote_utils1.c
 void					quote_case_one(t_cmd_word *tmp_word);

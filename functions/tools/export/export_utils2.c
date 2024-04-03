@@ -1,39 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_tab_env.c                                      :+:      :+:    :+:   */
+/*   export_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/22 02:43:12 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/03 11:17:36 by abougrai         ###   ########.fr       */
+/*   Created: 2024/04/03 10:30:22 by abougrai          #+#    #+#             */
+/*   Updated: 2024/04/03 10:56:56 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**get_tab_env(t_env *env)
+int	ft_export_add_checking(char *cmd)
 {
-	char	**tab_env;
-	char	*temp;
-	t_env	*tmp;
-	int		tab_size;
-	int		i;
+	int	i;
+	int	operation;
+	int	first_letter;
 
 	i = 0;
-	tmp = env;
-	tab_size = ft_envsize(env);
-	tab_env = malloc((tab_size + 1) * sizeof(char *));
-	if (!tab_env)
-		return (NULL);
-	while (tmp)
+	operation = 0;
+	first_letter = 0;
+	if (cmd[0] != '=' && cmd[0] != '+')
 	{
-		temp = ft_strdup(tmp->content);
-		if (!temp)
-			return (ft_free_tab(tab_env), NULL);
-		tab_env[i++] = temp;
-		tmp = tmp->next;
+		first_letter = 1;
+		i = 1;
 	}
-	tab_env[i] = NULL;
-	return (tab_env);
+	while (cmd[i])
+	{
+		if (cmd[i] == '+' && cmd[i + 1] == '=')
+		{
+			operation = 1;
+			break ;
+		}
+		i++;
+	}
+	if (first_letter && operation)
+		return (1);
+	return (0);
+}
+
+int	ft_export_op(t_env *env, char *content)
+{
+	(void)env;
+	(void)content;
+	return (0);
 }

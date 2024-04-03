@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:04:14 by thomas            #+#    #+#             */
-/*   Updated: 2024/04/02 20:11:16 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/03 08:09:31 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	open_redir_in(t_command *head, t_pipex *pipex)
 		{
 			g_sig.status = 1;
 			printf("bash: %s: No such file or directory\n", tmp->file);
-			exit(1);
+			return;
 		}
 		tmp = tmp->next;
 	}
@@ -111,7 +111,7 @@ void	open_redir_out(t_command *head, t_pipex *pipex)
 		{
 			g_sig.status = 1;
 			printf("bash: %s: Permission denied\n", tmp->file);
-			exit(1);
+			return;
 		}
 		tmp = tmp->next;
 	}

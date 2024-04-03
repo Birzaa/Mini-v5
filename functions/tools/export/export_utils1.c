@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:18 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/01 08:53:45 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/03 11:36:40 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int	exp_exist_bis(t_env *env, char *content)
 
 void	print_export(char *content)
 {
+	if (!content)
+		return;
 	int	i;
 
 	i = 0;

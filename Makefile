@@ -58,9 +58,11 @@ SRC = $(SRC_DIR)main.c \
 	$(SRC_DIR)tools/expansion/expansion_utils2.c \
 	$(SRC_DIR)tools/expansion/expansion_utils3.c\
 	$(SRC_DIR)tools/export/export_utils1.c \
+	$(SRC_DIR)tools/export/export_utils2.c \
 	$(SRC_DIR)tools/other/ft_at_least_equal.c\
 	$(SRC_DIR)tools/other/ft_nothing.c\
 	$(SRC_DIR)tools/other/ft_charcmp.c\
+	$(SRC_DIR)tools/other/ft_tab_len.c\
 	$(SRC_DIR)tools/quote/quote_utils1.c\
 	$(SRC_DIR)signal/signal.c\
 	$(BUILTINS_DIR)env.c \

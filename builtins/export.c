@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:37 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/22 02:43:38 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/03 11:56:24 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,13 @@ void	ft_export(t_env **env, char **cmd)
 		printf("bash: export: `%s': not a valid identifier\n", cmd[1]);
 		g_sig.status = 1;
 		return ;
+	}
+	else if (ft_export_add_checking(cmd[1]))
+	{
+		if (ft_export_op((*env), cmd[1]))
+			return ;
+		else 
+			ft_nothing();
 	}
 	else if (!export_exist_capart((*env), cmd[1]))
 		export_new_add_back(env, tmp, cmd[1]);

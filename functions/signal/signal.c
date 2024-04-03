@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:57 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/02 19:48:23 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/03 10:25:20 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	minishell_signal(int sig)
 
 void	exec_here_doc(int sig)
 {
-	if (sig == SIGQUIT) // ctrl d
+	if (sig == SIGQUIT)
 	{
 		g_sig.here_doc = 1;
 		return ;
