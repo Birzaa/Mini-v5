@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/03 05:53:53 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/03 10:57:08 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,6 +268,10 @@ void					print_export(char *content);
 int						export_exist(t_env *env, char *content);
 int						exp_exist_bis(t_env *env, char *content);
 int						ft_export_checking(char *content);
+
+// tools/export/export_utils2.c
+int						ft_export_add_checking(char *cmd);
+int						ft_export_op(t_env *env, char *content);
 
 // tools/str
 char					*ft_strncpy(char *dest, char *src, unsigned int n);
