@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/03 15:36:43 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/03 18:59:13 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,8 @@ typedef struct s_pipex
 	pid_t				pid;
 	char				**h_doc_name;
 	int					nb_h_doc;
+	int					need_free;
+	int					need_exec;
 }						t_pipex;
 
 // ------------------------> Data
@@ -405,12 +407,16 @@ void					index_quote(t_stack *list);
 void					execution(t_command *head, char **env, t_data *data);
 void					open_redir_in(t_command *head, t_pipex *pipex);
 void					open_redir_out(t_command *head, t_pipex *pipex);
+void					close_h_doc(t_pipex *pipex);
 void					execute_cmd(char **env, char **valid_cmd, t_data *data,
 							t_pipex *p);
-char					*here_doc(char *av, t_pipex *pipex, int index, char **tab, t_data *data);
-void					create_h_doc(t_command *parsed_cmd, t_pipex *pipex, char **tab,t_data *data);
+char					*here_doc(char *av, t_pipex *pipex, int index,
+							char **tab, t_data *data);
+void					create_h_doc(t_command *parsed_cmd, t_pipex *pipex,
+							char **tab, t_data *data);
 void					nb_h_doc(t_command *parsed_cmd, t_pipex *pipex);
 void					parent_free(t_pipex *pipex);
+void					handle_signal(int sig);
 
 //****************************************************************
 void					parsing_expand(t_cmd *cmd, t_data *data);

@@ -6,11 +6,12 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/03 15:30:32 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/03 19:12:34 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+void	close_pipes(t_pipex *pipex);
 
 void	close_h_doc(t_pipex *pipex)
 {
@@ -22,6 +23,10 @@ void	close_h_doc(t_pipex *pipex)
 		while (pipex->h_doc_name[i])
 		{
 			unlink(pipex->h_doc_name[i]);
+			if (pipex->need_free)
+			{
+				free(pipex->h_doc_name[i]);
+			}
 			i++;
 		}
 		free(pipex->h_doc_name);
@@ -137,6 +142,8 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 	int			status;
 
 	current_cmd = parsed_cmd;
+	pipex.need_exec = 0;
+	pipex.need_free = 0;
 	pipex.nb_cmd = parsed_cmd->nb_command;
 	pipex.saved_in = dup(STDIN_FILENO);
 	pipex.h_doc = 0;
@@ -152,7 +159,7 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 		open_redir_out(current_cmd, &pipex);
 		execute_builtin(current_cmd->parsed_cmd->full_cmd, data, &pipex);
 	}
-	else if (current_cmd->parsed_cmd->full_cmd)
+	else if (current_cmd->parsed_cmd->full_cmd && !pipex.need_exec)
 	{
 		pipex.pipe = (int *)malloc((sizeof(int) * (2 * (pipex.nb_cmd - 1))));
 		if (!pipex.pipe)

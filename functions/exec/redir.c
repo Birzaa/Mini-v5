@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:04:14 by thomas            #+#    #+#             */
-/*   Updated: 2024/04/03 15:19:35 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/03 19:00:58 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,14 @@ char	*here_doc(char *av, t_pipex *pipex, int index, char **tab, t_data *data)
 		{
 			if (g_sig.status == 130)
 			{
+				printf("\n");
 				close(file);
 				free(name_file);
 				free(dest_file);
-				return NULL;
+				pipex->need_free = 1;
+				pipex->need_exec = 1;
+				dup2(pipex->saved_in, STDIN_FILENO);
+				return (NULL);
 			}
 			printf("bash: warning: here-document at line \
 %d delimited by end-of-file (wanted `%s')\n",
@@ -98,7 +102,8 @@ void	open_redir_in(t_command *head, t_pipex *pipex)
 		else
 		{
 			pipex->h_doc = 1;
-			pipex->infile = open(tmp->file, O_RDONLY, 0644);
+			if (tmp->file)
+				pipex->infile = open(tmp->file, O_RDONLY, 0644);
 		}
 		if (pipex->infile == -1)
 		{
@@ -188,7 +193,7 @@ void	create_h_doc(t_command *parsed_cmd, t_pipex *pipex, char **tab,
 				if (r_in->h_doc)
 				{
 					r_in->file = here_doc(r_in->file, pipex, index, tab, data);
-					if(!r_in->file)
+					if (!r_in->file)
 						return ;
 					index++;
 				}
