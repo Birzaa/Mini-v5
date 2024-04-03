@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:18 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/03 11:36:40 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:43:43 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	replace_export(t_env **env, char *content)
 			if (!check && ft_at_least_charset(tmp->content, "="))
 				return ;
 			else if (check)
-				tmp->content = content;
+				handle_replace_export(tmp, content);
 		}
 		tmp = tmp->next;
 	}
@@ -85,8 +85,6 @@ int	exp_exist_bis(t_env *env, char *content)
 
 void	print_export(char *content)
 {
-	if (!content)
-		return;
 	int	i;
 
 	i = 0;
@@ -112,18 +110,7 @@ void	print_export(char *content)
 int	ft_export_checking(char *content)
 {
 	int	i;
-	int	check;
 
-	check = 0;
-	i = 0;
-	while (content[i])
-	{
-		if (content[i] == '=')
-			check = 1;
-		if (content[i] == '-' && !check)
-			return (1);
-		i++;
-	}
 	i = 0;
 	if (!isalpha(content[i]) && !ft_charcmp(content[i], '_'))
 		return (1);

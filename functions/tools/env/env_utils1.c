@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:30 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/22 02:45:31 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:19:36 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_env	*ft_env_new(void *content)
 		return (NULL);
 	elem->content = content;
 	elem->next = NULL;
+	elem->exported = 0;
 	return (elem);
 }
 
@@ -77,6 +78,8 @@ void	free_env(t_env *env)
 		return ;
 	while (env)
 	{
+		if (env->exported)
+			free(env->content);
 		tmp = env;
 		env = env->next;
 		free(tmp);

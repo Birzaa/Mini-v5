@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:37 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/03 11:56:24 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:20:31 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ export avec	arg = add the var in env variables , check les cas d'erreur*/
 
 void	export_new_add_back(t_env **env, t_env *tmp, char *cmd)
 {
-	tmp = ft_env_new(cmd);
+	tmp = ft_env_new_export(cmd);
 	if (!tmp)
 		return (perror(""));
 	add_back_env(env, tmp);

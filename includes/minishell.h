@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/03 10:57:08 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:43:07 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_stack
 typedef struct s_env
 {
 	char				*content;
+	int					exported;
 	int					size;
 	struct s_env		*next;
 
@@ -241,6 +242,7 @@ char					*ft_strcpy_content_env(char *s1, char *s2, char *n);
 // tools/env/env_utils5.c
 void					replace_content_env(char *oldpwd, char *pwd);
 int						check_value_env(char *var);
+t_env					*ft_env_new_export(void *content);
 
 // tools/expansion/expansion/expansion_utils1.c
 int						first_letter(char *content);
@@ -272,6 +274,7 @@ int						ft_export_checking(char *content);
 // tools/export/export_utils2.c
 int						ft_export_add_checking(char *cmd);
 int						ft_export_op(t_env *env, char *content);
+void					handle_replace_export(t_env *tmp, char *content);
 
 // tools/str
 char					*ft_strncpy(char *dest, char *src, unsigned int n);

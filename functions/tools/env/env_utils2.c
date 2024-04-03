@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:21 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/22 02:45:22 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:39:31 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,15 @@ void	del_node_env(t_env *target, t_env *previous)
 	if (!target->next)
 	{
 		previous->next = NULL;
+		if (target->exported)
+			free(target->content);
 		free(target);
 	}
 	else
 	{
 		previous->next = target->next;
+		if (target->exported)
+			free(target->content);
 		free(target);
 	}
 }
@@ -64,7 +68,11 @@ void	del_node_env(t_env *target, t_env *previous)
 void	swap_content_env(t_env *node1, t_env *node2)
 {
 	char	*tmp;
+	int		exported;
 
+	exported = node1->exported;
+	node1->exported = node2->exported;
+	node2->exported = exported;
 	tmp = node1->content;
 	node1->content = node2->content;
 	node2->content = tmp;

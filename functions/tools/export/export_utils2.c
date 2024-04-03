@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 10:30:22 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/03 10:56:56 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:42:55 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,12 @@ int	ft_export_op(t_env *env, char *content)
 	(void)env;
 	(void)content;
 	return (0);
+}
+
+void	handle_replace_export(t_env *tmp, char *content)
+{
+	if (tmp->exported)
+		free(tmp->content);
+	tmp->exported = 1;
+	tmp->content = ft_strdup(content);
 }
