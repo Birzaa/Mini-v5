@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/03 15:30:32 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:37:04 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 	t_pipex		pipex;
 	t_command	*current_cmd;
 	int			status;
+		pipex.pipe = NULL;
 
 	current_cmd = parsed_cmd;
 	pipex.nb_cmd = parsed_cmd->nb_command;
@@ -152,7 +153,7 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 		open_redir_out(current_cmd, &pipex);
 		execute_builtin(current_cmd->parsed_cmd->full_cmd, data, &pipex);
 	}
-	else if (current_cmd->parsed_cmd->full_cmd)
+	else if (current_cmd->parsed_cmd->full_cmd && ft_getenv_check_tab(data->envp, "PATH=")) 
 	{
 		pipex.pipe = (int *)malloc((sizeof(int) * (2 * (pipex.nb_cmd - 1))));
 		if (!pipex.pipe)

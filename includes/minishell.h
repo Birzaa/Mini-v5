@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/03 15:36:43 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:08:14 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,6 +246,8 @@ char					*ft_strcpy_content_env(char *s1, char *s2, char *n);
 void					replace_content_env(char *oldpwd, char *pwd);
 int						check_value_env(char *var);
 t_env					*ft_env_new_export(void *content);
+int						ft_getenv_check(t_env *env, char *n);
+int						ft_getenv_check_tab(char **tab, char *path);
 
 // tools/expansion/expansion/expansion_utils1.c
 int						first_letter(char *content);
@@ -407,8 +409,10 @@ void					open_redir_in(t_command *head, t_pipex *pipex);
 void					open_redir_out(t_command *head, t_pipex *pipex);
 void					execute_cmd(char **env, char **valid_cmd, t_data *data,
 							t_pipex *p);
-char					*here_doc(char *av, t_pipex *pipex, int index, char **tab, t_data *data);
-void					create_h_doc(t_command *parsed_cmd, t_pipex *pipex, char **tab,t_data *data);
+char					*here_doc(char *av, t_pipex *pipex, int index,
+							char **tab, t_data *data);
+void					create_h_doc(t_command *parsed_cmd, t_pipex *pipex,
+							char **tab, t_data *data);
 void					nb_h_doc(t_command *parsed_cmd, t_pipex *pipex);
 void					parent_free(t_pipex *pipex);
 

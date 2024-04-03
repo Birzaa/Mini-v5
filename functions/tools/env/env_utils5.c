@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:35 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/03 12:20:13 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:40:41 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,38 @@ t_env	*ft_env_new_export(void *content)
 	elem->next = NULL;
 	elem->exported = 1;
 	return (elem);
+}
+
+int	ft_getenv_check(t_env *env, char *n)
+{
+	t_env	*tmp;
+	char	*content;
+	int		len_n;
+
+	content = NULL;
+	tmp = env;
+	len_n = ft_strlen(n);
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->content, n, len_n))
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+int	ft_getenv_check_tab(char **tab, char *path)
+{
+	int	i;
+	int	len_path;
+
+	i = 0;
+	len_path = ft_strlen(path);
+	while (tab[i])
+	{
+		if (!ft_strncmp(tab[i], path, len_path))
+			return (1);
+		i++;
+	}
+	return (0);
 }
