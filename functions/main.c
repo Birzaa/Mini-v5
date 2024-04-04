@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/04 11:05:32 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/04 12:49:40 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int ac, char **av, char **env)
 	g_sig.status = 0;
 	while (1)
 	{
-	init_signals();
+		init_signals();
 		data.nb_input++;
 		g_sig.input = readline(ORANGE "\U0001F58A  ~>: " RESET);
 		if (!g_sig.input || !ft_strcmp(g_sig.input, "exit"))
