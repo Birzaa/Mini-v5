@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/03 16:08:14 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/04 10:33:33 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,9 +243,9 @@ int						get_len_to_equal(char *content);
 char					*ft_strcpy_content_env(char *s1, char *s2, char *n);
 
 // tools/env/env_utils5.c
+t_env					*ft_env_new_export(void *content);
 void					replace_content_env(char *oldpwd, char *pwd);
 int						check_value_env(char *var);
-t_env					*ft_env_new_export(void *content);
 int						ft_getenv_check(t_env *env, char *n);
 int						ft_getenv_check_tab(char **tab, char *path);
 
@@ -277,9 +277,23 @@ int						exp_exist_bis(t_env *env, char *content);
 int						ft_export_checking(char *content);
 
 // tools/export/export_utils2.c
+void					handle_replace_export(t_env *tmp, char *content);
+char					*ft_get_real_export_name(char *content, char *cpy);
 int						ft_export_add_checking(char *cmd);
 int						ft_export_op(t_env *env, char *content);
-void					handle_replace_export(t_env *tmp, char *content);
+int						ft_export_exist_for_add(t_env *env, char *content);
+
+// tools/export/export_utils3.c
+t_env					*ft_get_target_export(t_env *env, char *content);
+t_env					*ft_env_new_export_add(void *join);
+void					export_new_add_back_add(t_env **env, char *join);
+char					*ft_export_join_content(t_env *env, char *content);
+
+// tools/export/export_utils4.c
+int						ft_export_add_case_one(t_env *env, char *join,
+							char *name, char *value);
+int						ft_export_add_case_two(t_env *env, char *name,
+							char *value);
 
 // tools/str
 char					*ft_strncpy(char *dest, char *src, unsigned int n);

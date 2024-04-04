@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:21 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/03 12:39:31 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/04 08:25:31 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	del_node_env(t_env *target, t_env *previous)
 	if (!target->next)
 	{
 		previous->next = NULL;
-		if (target->exported)
+		if (target->exported && target->content)
 			free(target->content);
 		free(target);
 	}

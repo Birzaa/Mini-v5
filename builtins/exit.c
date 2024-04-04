@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:41 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/03 15:35:53 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/04 10:43:45 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ void	ft_exit(t_data *data, t_pipex *p, char **command)
 void	ft_exit_two(t_data *data)
 {
 	free_env(data->env);
-	// free_lexer(data->lex);
 	clear_history();
-	// ft_free_tab(data->envp);
-	// free_parser(data->cmd, data->parsed_cmd);
 	exit(g_sig.status);
 }
+// free_lexer(data->lex);
+// ft_free_tab(data->envp);
+// free_parser(data->cmd, data->parsed_cmd);

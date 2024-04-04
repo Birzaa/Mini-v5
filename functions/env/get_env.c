@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:16:30 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/03 16:51:49 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/04 10:42:48 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	**create_env(void)
 	if (!envp[0])
 		return (ft_free_tab(envp), (NULL));
 	envp[1] = ft_strdup(_ENV);
-		return (ft_free_tab(envp), (NULL));
+	return (ft_free_tab(envp), (NULL));
 	envp[2] = NULL;
 	return (envp);
 }

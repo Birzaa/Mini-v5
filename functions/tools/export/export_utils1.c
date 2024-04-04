@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:18 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/03 12:43:43 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/04 10:43:05 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,19 @@ void	print_export(char *content)
 int	ft_export_checking(char *content)
 {
 	int	i;
+	int	check;
 
+	check = 0;
 	i = 0;
 	if (!isalpha(content[i]) && !ft_charcmp(content[i], '_'))
 		return (1);
+	while (content[i])
+	{
+		if (content[i] == '=')
+			check = 1;
+		else if (content[i] == '-' && !check)
+			return (1);
+		i++;
+	}
 	return (0);
 }

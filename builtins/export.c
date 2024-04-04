@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:37 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/03 13:31:41 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/04 10:42:41 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ void	ft_export(t_env **env, char **cmd)
 	else if (ft_export_add_checking(cmd[1]))
 	{
 		if (ft_export_op((*env), cmd[1]))
-			return ;
+			printf("il y a eu un probleme dans le op\n");
 		else
-			ft_nothing();
+			printf("no probleme dans le op et ajout realise\n");
 	}
 	else if (!export_exist_capart((*env), cmd[1]))
 		export_new_add_back(env, tmp, cmd[1]);

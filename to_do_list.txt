@@ -127,4 +127,13 @@ unset XDG_CONFIG_DIRS
 unset ZDOTDIR       
 unset MFLAGS      
 unset VTE_VERSION       
-unset GLIBCXX_FORCE_NEW      
+unset GLIBCXX_FORCE_NEW 
+
+export ZZ=test1
+export Z
+export Z+=capart
+export ZZ+=capart
+export ZZZ+=capart
+export Z+=
+export ZZ+=
+export ZZZ+=
