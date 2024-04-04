@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:41 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/04 10:43:45 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/04 10:49:23 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	ft_exit(t_data *data, t_pipex *p, char **command)
 {
 	int	i;
 
+	(void)p;
 	g_sig.status = 0;
 	i = ft_tab_len(command);
 	if (i > 2 && !ft_exit_non_digit(command[1])
@@ -68,7 +69,6 @@ void	ft_exit(t_data *data, t_pipex *p, char **command)
 	ft_free_tab(data->envp);
 	free_parser(data->cmd, data->parsed_cmd);
 	parent_free(p);
-	(void)p;
 	exit(g_sig.status);
 }
 
