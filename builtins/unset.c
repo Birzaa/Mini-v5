@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:24 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/22 02:43:25 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:32:06 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,25 @@ void	unset_del(t_env *env, char *s)
 	}
 }
 
-void	ft_unset(t_env *env, char **command)
+void	while_unset(t_env *env, char *command)
 {
-	if (!command[1])
-		return ;
-	else if (!ft_strncmp("_", command[1], 2))
+	if (!ft_strncmp("_", command, 2))
 		return ;
 	else if (ft_envsize(env) == 1)
 		return ;
 	else
-		unset_del(env, command[1]);
+		unset_del(env, command);
+}
+
+void	ft_unset(t_env *env, char **command)
+{
+	int	i;
+
+	i = 1;
+	if (!command[i])
+		return ;
+	else if (command[i])
+		while (command[i])
+			while_unset(env, command[i++]);
+	g_sig.status = 0;
 }

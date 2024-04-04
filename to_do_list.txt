@@ -4,3 +4,5 @@ Note AVRIL 4
 </dev/random valgrind --leak-check=full --trace-children=yes --track-fds=yes --suppressions=../supp.supp ./minishell
 
 
+ن]ʹ`>|p
+

@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/04 12:50:10 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/04 13:31:51 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_env
 	int					exported;
 	int					size;
 	struct s_env		*next;
+	char				**envp;
 
 }						t_env;
 

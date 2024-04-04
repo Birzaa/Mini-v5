@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/04 12:49:40 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:45:24 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int ac, char **av, char **env)
 			ft_exit_two(&data);
 		}
 		else if (!*g_sig.input)
-			ft_nothing();
+			continue;
 		else
 		{
 			add_history(g_sig.input);

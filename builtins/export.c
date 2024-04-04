@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:37 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/04 10:42:41 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:53:19 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,30 +73,34 @@ int	export_exist_capart(t_env *env, char *content)
 	return (0);
 }
 
-void	ft_export(t_env **env, char **cmd)
+void	while_export(t_env **env, t_env *tmp, char *cmd)
 {
-	t_env	*tmp;
-
-	tmp = NULL;
-	if (!cmd[1])
-		return (export_no_arg((*env)));
-	else if (!ft_strncmp("_", cmd[1], 2) || !ft_strncmp("_=", cmd[1], 2))
+	if (!ft_strncmp("_", cmd, 2) || !ft_strncmp("_=", cmd, 2))
 		return ;
-	else if (ft_export_checking(cmd[1]))
+	else if (ft_export_checking(cmd))
 	{
-		printf("bash: export: `%s': not a valid identifier\n", cmd[1]);
+		printf("bash: export: `%s': not a valid identifier\n", cmd);
 		g_sig.status = 1;
 		return ;
 	}
-	else if (ft_export_add_checking(cmd[1]))
-	{
-		if (ft_export_op((*env), cmd[1]))
-			printf("il y a eu un probleme dans le op\n");
-		else
-			printf("no probleme dans le op et ajout realise\n");
-	}
-	else if (!export_exist_capart((*env), cmd[1]))
-		export_new_add_back(env, tmp, cmd[1]);
+	else if (ft_export_add_checking(cmd))
+		ft_export_op((*env), cmd);
+	else if (!export_exist_capart((*env), cmd))
+		export_new_add_back(env, tmp, cmd);
 	else
-		replace_export(env, cmd[1]);
+		replace_export(env, cmd);
+}
+
+void	ft_export(t_env **env, char **cmd)
+{
+	t_env	*tmp;
+	int		i;
+
+	i = 1;
+	tmp = NULL;
+	if (!cmd[1])
+		return (export_no_arg((*env)));
+	else if (cmd[i])
+		while (cmd[i])
+			while_export(env, tmp, cmd[i++]);
 }

@@ -115,7 +115,7 @@ valgrind : ${NAME}
 	@ valgrind --leak-check=full --show-leak-kinds=all --suppressions=supp.supp ./${NAME}
 
 runv : ${NAME}
-	@ valgrind --leak-check=full --suppressions=supp.supp ./${NAME}
+	@ valgrind --leak-check=full --suppressions=supp.supp --trace-children=yes --track-fds=yes ./${NAME}
 
 env : ${NAME}
 	@env -i ./${NAME}
