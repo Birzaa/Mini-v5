@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:26:15 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/03 12:36:10 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:28:10 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,20 @@ int	is_redir(enum e_token type)
 
 int	is_invalid_pipe(t_node *node)
 {
-	/* t_node	*next;
-	t_node	*prev; */
+	/* t_node	*next;*/
 
+	t_node *prev = node;
 	if (node->type == PIPE_LINE)
 	{
+		prev = prev->prev;
+		while(prev && (prev->type == WHITE_SPACE || prev->type == QOUTE
+				|| prev->type == DOUBLE_QUOTE || prev->type == ENV))
+			prev = prev->prev;
+		if (prev->type != WORD)
+			return (EXIT_FAILURE);
 		node = node->next;
 		while (node && (node->type == WHITE_SPACE || node->type == QOUTE
-				|| node->type == DOUBLE_QUOTE || is_redir(node->type)))
+				|| node->type == DOUBLE_QUOTE || is_redir(node->type) || node->type == ENV))
 			node = node->next;
 		if (node->type != WORD)
 			return (EXIT_FAILURE);

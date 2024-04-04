@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:23:48 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/03 19:09:21 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:00:19 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_cmd_word(t_cmd_word *word)
 	{
 		if ((word->content))
 		{
-			// printf("free %s %d\n", word->content, word->expand);
+			// printf("free : %s\n", word->content);
 			free(word->content);
 		}
 		free(word);

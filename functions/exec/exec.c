@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/04 12:49:08 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:57:41 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,8 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 	pipex.saved_out = dup(STDOUT_FILENO);
 	nb_h_doc(current_cmd, &pipex);
 	create_h_doc(current_cmd, &pipex, current_cmd->parsed_cmd->full_cmd, data);
+	if(g_sig.status == 130)
+		caca(current_cmd, &pipex, current_cmd->parsed_cmd->full_cmd, data);
 	if (current_cmd->parsed_cmd->full_cmd && pipex.nb_cmd == 1
 		&& is_builtin(current_cmd->parsed_cmd->full_cmd[0]))
 	{
@@ -170,10 +172,12 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 		open_pipes(&pipex);
 		while (pipex.idx < pipex.nb_cmd)
 		{
+			g_sig.status = 0;
 			pipex.fd_echo = 0;
 			open_redir_in(current_cmd, &pipex);
 			open_redir_out(current_cmd, &pipex);
-			child(pipex, current_cmd->parsed_cmd->full_cmd, env, data);
+			if(g_sig.status != 1)
+				child(pipex, current_cmd->parsed_cmd->full_cmd, env, data);
 			pipex.idx++;
 			current_cmd = current_cmd->next;
 		}

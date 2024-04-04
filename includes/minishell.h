@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/04 12:50:10 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:03:51 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define _ENV "_=/usr/bin/env"
 
 # include "../libft/includes/libft.h"
+# include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
@@ -434,9 +435,13 @@ void					nb_h_doc(t_command *parsed_cmd, t_pipex *pipex);
 void					parent_free(t_pipex *pipex);
 void					handle_signal(int sig);
 
+void					caca(t_command *parsed_cmd, t_pipex *pipex, char **tab,
+							t_data *data);
+
 //****************************************************************
 void					parsing_expand(t_cmd *cmd, t_data *data);
 
 void					handle_no_expand(t_cmd_word *actual, t_cmd_word *next);
+void					handle_error(char *s1, char *s2);
 
 #endif

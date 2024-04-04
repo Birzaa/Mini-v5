@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:04:14 by thomas            #+#    #+#             */
-/*   Updated: 2024/04/03 19:00:58 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:05:47 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ char	*here_doc(char *av, t_pipex *pipex, int index, char **tab, t_data *data)
 		return (NULL);
 	}
 	signal(SIGINT, &exec_here_doc);
+	if (g_sig.status == 130)
+		g_sig.status = 0;
 	while (1)
 	{
 		buf = readline("\033[1;34m~> \033[0m");
@@ -108,7 +110,7 @@ void	open_redir_in(t_command *head, t_pipex *pipex)
 		if (pipex->infile == -1)
 		{
 			g_sig.status = 1;
-			printf("bash: %s: No such file or directory\n", tmp->file);
+			handle_error(tmp->file, strerror(errno));
 			return ;
 		}
 		tmp = tmp->next;
@@ -132,7 +134,7 @@ void	open_redir_out(t_command *head, t_pipex *pipex)
 		if (pipex->outfile == -1)
 		{
 			g_sig.status = 1;
-			printf("bash: %s: Permission denied\n", tmp->file);
+			handle_error(tmp->file, strerror(errno));
 			return ;
 		}
 		tmp = tmp->next;
@@ -166,7 +168,8 @@ void	nb_h_doc(t_command *parsed_cmd, t_pipex *pipex)
 	if (pipex->nb_h_doc)
 	{
 		pipex->h_doc = 1;
-		pipex->h_doc_name = malloc(sizeof(char *) * ((pipex->nb_h_doc) + 1));
+		pipex->h_doc_name = calloc(pipex->nb_h_doc + 1, sizeof(char *));
+		// pipex->h_doc_name = malloc(sizeof(char *) * ((pipex->nb_h_doc) + 1));
 		if (!pipex->h_doc_name)
 			return ;
 		pipex->h_doc_name[pipex->nb_h_doc++] = NULL;
@@ -190,6 +193,7 @@ void	create_h_doc(t_command *parsed_cmd, t_pipex *pipex, char **tab,
 			r_in = current_cmd->parsed_cmd->r_in;
 			while (r_in)
 			{
+				// printf("file : %s\n", r_in->file);
 				if (r_in->h_doc)
 				{
 					r_in->file = here_doc(r_in->file, pipex, index, tab, data);
@@ -204,4 +208,6 @@ void	create_h_doc(t_command *parsed_cmd, t_pipex *pipex, char **tab,
 		current_cmd = current_cmd->next;
 	}
 	pipex->idx = 0;
+	(void)tab;
+	(void)data;
 }
