@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/04 17:59:39 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:43:49 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ int	init_parse(t_data *data)
 	parsing_expand(data->cmd, data);
 	parsing_quote(data->cmd);
 	data->parsed_cmd = parse(data->cmd);
-	print_list(data->lex);
+	// print_list(data->lex);
 	// print_cmd_list(data->cmd);
-	print_parsed_cmd(data->parsed_cmd);
+	// print_parsed_cmd(data->parsed_cmd);
 	return (0);
 }

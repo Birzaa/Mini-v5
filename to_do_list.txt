@@ -6,3 +6,8 @@ Note AVRIL 4
 
 ن]ʹ`>|p
 
+// node expand null = index
+// syntax error status
+// command in " ls" n'est plus une commande
+ 
+
