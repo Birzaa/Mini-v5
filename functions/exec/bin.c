@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 17:22:00 by thomas            #+#    #+#             */
-/*   Updated: 2024/04/04 20:06:31 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:00:36 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	execute_cmd(char **env, char **valid_cmd, t_data *data, t_pipex *p)
 
 	find_the_path = find_path(env);
 	path = valid_path(find_the_path, valid_cmd[0]);
-	print_tab(valid_cmd);
 	if (execve(path, valid_cmd, env) == -1)
 	{
 		ft_putstr_fd("Command not found : ", 2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:37:01 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/30 13:33:14 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/05 12:59:26 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,28 +77,29 @@ char	*valid_path(char **all_paths, char *cmd)
 	char	*path;
 	char	**valid_cmd;
 	char	*full_path;
+	(void)valid_cmd;
 
 	full_path = NULL;
 	if (!*cmd)
 		return (cmd);
 	if (!check_only_slash(cmd))
 		return (cmd);
-	valid_cmd = ft_split(cmd, ' ');
+	// valid_cmd = ft_split(cmd, ' ');
 	i = 0;
 	while (all_paths[i])
 	{
 		path = ft_strjoin(all_paths[i], "/");
-		full_path = ft_strjoin(path, valid_cmd[0]);
+		full_path = ft_strjoin(path, cmd);
 		// printf("%s\n", full_path);
 		free(path);
 		if (access(full_path, X_OK | F_OK) == 0)
 		{
-			ft_free_tab(valid_cmd);
+			// ft_free_tab(valid_cmd);
 			return (full_path);
 		}
 		free(full_path);
 		i++;
 	}
-	ft_free_tab(valid_cmd);
+	// ft_free_tab(valid_cmd);
 	return (cmd);
 }
