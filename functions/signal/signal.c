@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:57 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/04 17:44:37 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:02:59 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ void	exec_here_doc(int sig)
 	if (sig == SIGINT)
 	{
 		g_sig.status = 130;
-		g_sig.sigint = 1;
-		g_sig.sigquit = 1;
 		close(STDIN_FILENO);
 		return ;
 	}

@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:26:15 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/03 12:36:10 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/05 12:45:02 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,26 @@ int	is_redir(enum e_token type)
 
 int	is_invalid_pipe(t_node *node)
 {
-	/* t_node	*next;
-	t_node	*prev; */
+	t_node	*prev;
 
+	/* t_node	*next;*/
+	prev = node;
 	if (node->type == PIPE_LINE)
 	{
+		if (!prev->prev)
+			return (EXIT_FAILURE);
+		prev = prev->prev;
+		while (prev->prev && (prev->type == WHITE_SPACE || prev->type == QOUTE
+				|| prev->type == DOUBLE_QUOTE || prev->type == ENV))
+			prev = prev->prev;
+		if (prev->type != WORD)
+			return (EXIT_FAILURE);
+		if (!node->next)
+			return (EXIT_FAILURE);
 		node = node->next;
-		while (node && (node->type == WHITE_SPACE || node->type == QOUTE
-				|| node->type == DOUBLE_QUOTE || is_redir(node->type)))
+		while (node->next && (node->type == WHITE_SPACE || node->type == QOUTE
+				|| node->type == DOUBLE_QUOTE || is_redir(node->type)
+				|| node->type == ENV))
 			node = node->next;
 		if (node->type != WORD)
 			return (EXIT_FAILURE);
