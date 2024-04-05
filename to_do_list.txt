@@ -4,9 +4,7 @@ Note AVRIL 4
 </dev/random valgrind --leak-check=full --trace-children=yes --track-fds=yes --suppressions=../supp.supp ./minishell
 
 
-ن]ʹ`>|p
 
-// node expand null = index neg
 // syntax error status
 // command in " ls" n'est plus une commande
  
