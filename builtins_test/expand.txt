@@ -46,6 +46,7 @@ echo " $HOME"" /capart"
 echo $USER $USER/ "$USER" "$USER/" "/$USER" '$USER' '$USER/' '/$USER' "$"USER $"USER" "'$USER'" '"$USER"'
 echo $USER""$USER/"""$USER""""$USER/""""/$USER"""'$USER'""'$USER/'""'/$USER'"""$"USER""$"USER""""'$USER'"""'"$USER"'
 echo $USER$USER/"$USER""$USER/""/$USER"'$USER''$USER/''/$USER'"$"USER$"USER""'$USER'"'"$USER"'
+$USER$USER$PWD$J$USER$USER$CAPART$USER$$$$/$/$/$/$$USER$PWD$go$$$PWD$USER$GO
 
 echo $ $/ "$" "$/" "/$" '$' '$/' '/$' "$" $"" "'$'" '"$"'
 echo $""$/"""$""""$/""""/$"""'$'""'$/'""'/$'"""$"""$"""""'$'"""'"$"'
@@ -91,4 +92,5 @@ echo /"$q""$q/""/$q"$q''$q/''/$q
 echo '/$q'"$q"$q"""'$q'"'"$q"'
 echo '/$USER' "$"USER $"USER" "'$USER'" '"$USER"'
 
-echo $""$/"""$""""$/""""/$"""'$'""'$/'""'/$'"""$"""$"""""'$'"""'"$"'$USER""$USER/"""$USER""""$USER/""""/$USER"""'$USER'""'$USER/'""'/$USER'"""$"USER""$"USER""""'$USER'"""'"$USER"' $USER$USER/"$USER""$USER/""/$USER"'$USER''$USER/''/$USER'"$"USER$"USER""'$USER'"'"$USER"' $ $/ " $" " $/" " /$" ' $' ' $/' ' /$' " $" $"" "' $'" '" $"' $ $/ " $ " " $/ " " /$ " ' $ ' ' $/ ' ' /$ ' " $ " $"" "' $ '" '" $ "'$q $q/ " $q" " $q/" " /$q" ' $q' ' $q/' ' /$q' " $q" $q"" "' $q'" '" $q"'>>test1 | echo capart mon pote
+
+echo $""$/"""$""""$/""""/$"""'$'""'$/'""'/$'"""$"""$"""""'$'"""'"$"'$USER""$USER/"""$USER""""$USER/""""/$USER"""'$USER'""'$USER/'""'/$USER'"""$"USER""$"USER""""'$USER'"""'"$USER"' $USER$USER/"$USER""$USER/""/$USER"'$USER''$USER/''/$USER'"$"USER$"USER""'$USER'"'"$USER"' $ $/ " $" " $/" " /$" ' $' ' $/' ' /$' " $" $"" "' $'" '" $"' $ $/ " $ " " $/ " " /$ " ' $ ' ' $/ ' ' /$ ' " $ " $"" "' $ '" '" $ "'$q $q/ " $q" " $q/" " /$q" ' $q' ' $q/' ' /$q' " $q" $q"" "' $q'" '" $q"'$USER$USER$PWD$J$USER$USER$CAPART$USER$/$?+$?$/$/$/$/$?$USER$PWD$go$/$/$PWD$USER$GO >>test1 | echo capart mon pote

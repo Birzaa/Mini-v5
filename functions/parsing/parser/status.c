@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   status.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:58 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/02 15:02:57 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/05 09:58:14 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	parsing_status(t_stack *list)
 {
 	char	*status;
 	t_node	*node;
-	t_node	*next;
 	int		i;
 
 	i = 0;
@@ -85,7 +84,6 @@ void	parsing_status(t_stack *list)
 	node = list->head;
 	while (i < list->size)
 	{
-		next = node->next;
 		if (node->type == ENV && node->next && !ft_strncmp(node->next->content,
 				"?", 1) && node->state != 1)
 			handle_status(node, status);

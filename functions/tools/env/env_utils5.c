@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:35 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/04 10:04:14 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/05 09:58:27 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,8 @@ t_env	*ft_env_new_export(void *content)
 int	ft_getenv_check(t_env *env, char *n)
 {
 	t_env	*tmp;
-	char	*content;
 	int		len_n;
 
-	content = NULL;
 	tmp = env;
 	len_n = ft_strlen(n);
 	while (tmp)
