@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:24 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/04 17:32:06 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/05 18:29:25 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ void	ft_unset(t_env *env, char **command)
 	int	i;
 
 	i = 1;
+	g_sig.status = 0;
 	if (!command[i])
 		return ;
 	else if (command[i])
 		while (command[i])
 			while_unset(env, command[i++]);
-	g_sig.status = 0;
 }
