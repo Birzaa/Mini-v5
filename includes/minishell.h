@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/05 14:20:21 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:40:50 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ typedef struct s_data
 	t_env				*env;
 	char				**envp;
 	int					nb_input;
+	int					nb_cmd;
 }						t_data;
 
 typedef struct s_signal
@@ -391,7 +392,7 @@ int						is_builtin(char *cmd);
 
 //********************************************************
 
-t_command				*parse(t_cmd *cmd);
+t_command				*parse(t_cmd *cmd, t_data *data);
 void					parse_r_in(t_cmd_word *cmd, t_redir_in_2 **r_in,
 							int h_doc, t_cmd *command);
 
@@ -401,7 +402,7 @@ void					parse_r_out(t_cmd_word *cmd, t_redir_out **r_out,
 t_command				*ft_command_last(t_command *cmd);
 t_command				*ft_command_new(void);
 void					add_back_cmd_out(t_command **cmd, t_command *new);
-void					parse_word(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd);
+void					parse_word(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd, t_data *data);
 void					skip_dr_out(t_cmd_word **cmd);
 void					skip_r_out(t_cmd_word **cmd);
 void					skip_h_doc(t_cmd_word **cmd);

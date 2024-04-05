@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/04 18:57:41 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:41:41 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,8 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 	t_command	*current_cmd;
 	int			status;
 
+	if(!data->nb_cmd)
+		return ;
 	pipex.pipe = NULL;
 	current_cmd = parsed_cmd;
 	pipex.need_exec = 0;

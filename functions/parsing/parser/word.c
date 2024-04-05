@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 00:32:29 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/05 15:10:53 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:37:39 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	get_number_of_flags(t_cmd_word *cmd)
 	current = cmd;
 	while (current)
 	{
-		if (current->type == WORD && current->expanded)
+		if (current->type == WORD && current->expanded == 1)
 		{
 			count += c_words(current->content, ' ');
 			if (current->next)
@@ -45,23 +45,20 @@ int	get_number_of_flags(t_cmd_word *cmd)
 	return (count);
 }
 
-int	put_word_in_tab(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd, int i)
+int	put_word_in_tab(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd, int i, t_data *data)
 {
 	int		j;
 	char	**r;
 
-	printf("content : %s, type : %d, expanded : %d\n", cmd->content, cmd->type,
-		cmd->expanded);
 	if (cmd->type == WORD)
 	{
-		if (cmd->expanded)
+		if (cmd->expanded == 1)
 		{
 			j = 0;
 			r = ft_split(cmd->content, ' ');
 			while (r[j])
 			{
 				parsed_cmd->full_cmd[i] = malloc(ft_strlen(r[j]) + 1);
-				// printf("tab[%d] : %s\n",j, r[j]);
 				if (!parsed_cmd->full_cmd[i])
 				{
 					ft_free_tab(parsed_cmd->full_cmd);
@@ -73,7 +70,7 @@ int	put_word_in_tab(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd, int i)
 			}
 			ft_free_tab(r);
 		}
-		else
+		else if (cmd->expanded != 2 && cmd->expanded != 1)
 		{
 			parsed_cmd->full_cmd[i] = malloc(ft_strlen(cmd->content) + 1);
 			if (!parsed_cmd->full_cmd[i])
@@ -84,11 +81,16 @@ int	put_word_in_tab(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd, int i)
 			ft_strcpy(parsed_cmd->full_cmd[i], cmd->content);
 			i++;
 		}
+		else
+		{
+			
+		}
 	}
+	data->nb_cmd+= i;
 	return (i);
 }
 
-void	parse_word(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd)
+void	parse_word(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd, t_data *data)
 {
 	int	i;
 
@@ -106,7 +108,7 @@ void	parse_word(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd)
 			cmd = cmd->next;
 		if (cmd->type != WORD)
 			break ;
-		i = put_word_in_tab(cmd, parsed_cmd, i);
+		i = put_word_in_tab(cmd, parsed_cmd, i, data);
 		if (cmd->next)
 			cmd = cmd->next;
 		else

@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 10:39:43 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/21 15:12:52 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:17:18 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ char	*ft_get_line(char *buffer)
 		line[i] = buffer[i];
 		i++;
 	}
-	/* if (buffer[i] && buffer[i] == '\n')
-		line[i++] = '\n'; */
+	if (buffer[i] && buffer[i] == '\n')
+		line[i++] = '\n';
 	line[i] = '\0';
 	return (line);
 }

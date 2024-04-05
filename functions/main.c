@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/05 14:02:27 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:44:43 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int ac, char **av, char **env)
 	g_sig.status = 0;
 	while (1)
 	{
+		data.nb_cmd = 0;
 		init_signals();
 		data.nb_input++;
 		g_sig.input = readline(ORANGE "\U0001F58A  ~>: " RESET);
@@ -37,7 +38,7 @@ int	main(int ac, char **av, char **env)
 			ft_exit_two(&data);
 		}
 		else if (!*g_sig.input)
-			continue;
+			continue ;
 		else
 		{
 			add_history(g_sig.input);
