@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/05 10:09:55 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:23:10 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	ft_expand_symbol(t_env *env, t_cmd_word *cmd)
 	{
 		free(cmd->content);
 		cmd->content = ft_strdup(tmp_join);
+		cmd->expanded = 1;
 		free(tmp_join);
 		return (free(tmp_expand), 1);
 	}
@@ -66,6 +67,7 @@ int	ft_expand_symbol(t_env *env, t_cmd_word *cmd)
 		free(tmp_join);
 	free(cmd->content);
 	cmd->content = ft_strdup(tmp_full);
+	cmd->expanded = 1;
 	return (free(tmp_full), free(tmp_expand), 0);
 }
 
@@ -87,6 +89,7 @@ int	ft_expand_exist(t_env *env, t_cmd_word *cmd)
 		{
 			free(cmd->content);
 			cmd->content = ft_strdup(&tmp->content[len_var + 1]);
+			cmd->expanded = 1;
 			return (1);
 		}
 		tmp = tmp->next;
@@ -113,6 +116,7 @@ int	ft_expand_no_symbol(t_env *env, t_cmd_word *word)
 		if (!ft_strncmp(tmp->content, word->content, len_c) && len_var == len_c)
 		{
 			free(word->content);
+			word->expanded = 1;
 			word->content = ft_strdup(&tmp->content[len_var + 1]);
 			return (1);
 		}

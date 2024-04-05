@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:26:15 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/05 12:45:02 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:18:47 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	is_invalid_pipe(t_node *node)
 {
 	t_node	*prev;
 
-	/* t_node	*next;*/
 	prev = node;
+	(void)prev;
 	if (node->type == PIPE_LINE)
 	{
 		if (!prev->prev)
@@ -57,15 +57,6 @@ int	is_invalid_pipe(t_node *node)
 		if (node->type != WORD)
 			return (EXIT_FAILURE);
 	}
-	/* next = skip_spaces(node->next, 0);
-	prev = skip_spaces(node->prev, 1);
-	if (!next || !prev)
-	{
-		return (EXIT_FAILURE);
-	}
-	if ((!prev && !next) || (next->type != WORD && prev->type != WORD
-			&& !is_redir(next->type)))
-		return (EXIT_FAILURE); */
 	return (EXIT_SUCCESS);
 }
 
