@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:17 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/06 21:29:06 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/07 01:21:01 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	ft_cd_tild(t_data *data, char *command)
 
 	home = NULL;
 	new_cmd = "";
+	g_sig.status = 0;
 	if ((ft_is_home_set(data->env)))
 	{
 		home = ft_getenv(data->env, "HOME");
@@ -43,7 +44,6 @@ void	ft_cd_tild(t_data *data, char *command)
 			error_cd(new_cmd, home, tmp);
 			return ;
 		}
-		g_sig.status = 0;
 		return (free(new_cmd), free(home), free(tmp));
 	}
 }
@@ -81,6 +81,7 @@ void	ft_cd_home(t_data *data, char *command)
 
 void	ft_cd(t_data *data, char **command)
 {
+	g_sig.status = 0;
 	refresh_env(data->env, 1);
 	if (!command[1] || command[1][0] == '\0')
 	{
