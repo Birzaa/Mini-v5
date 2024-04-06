@@ -6,19 +6,20 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:44:20 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/03 09:55:18 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/06 21:18:47 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	else_in_expand_no_sym(t_cmd_word *env)
+void	else_in_expand_no_sym(t_cmd_word *env, t_cmd_word *word)
 {
 	{
 		free(env->content);
 		env->content = ft_strdup("");
 		env->state = 0;
 		env->expand = 1;
+		word->need_split = 1;
 	}
 }
 
@@ -47,7 +48,7 @@ void	expand_check_no_sym(t_data *data, t_cmd_word *env, t_cmd_word *word,
 		env->state = 2;
 	}
 	else
-		else_in_expand_no_sym(env);
+		else_in_expand_no_sym(env, word);
 }
 
 void	expand(t_cmd_word *cmd, t_data *data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils5.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:35 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/05 20:31:25 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/06 21:30:15 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ t_env	*ft_env_new_export(void *content)
 int	ft_getenv_check(t_env *env, char *n)
 {
 	t_env	*tmp;
-	char	*content; (void)content;
+	char	*content;
 	int		len_n;
 
+	(void)content;
 	content = NULL;
 	tmp = env;
 	len_n = ft_strlen(n);

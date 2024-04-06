@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   status.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:58 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/05 20:31:14 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/06 21:29:28 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,10 @@ void	parsing_status(t_stack *list)
 {
 	char	*status;
 	t_node	*node;
-	t_node	*next; (void)next;
+	t_node	*next;
 	int		i;
 
+	(void)next;
 	i = 0;
 	status = ft_itoa(g_sig.status);
 	if (!status)

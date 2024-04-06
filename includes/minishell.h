@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/06 18:05:48 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/06 21:11:11 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -447,5 +447,6 @@ void					handle_no_expand(t_cmd_word *actual, t_cmd_word *next);
 void					handle_error(char *s1, char *s2);
 void					handle_error_cd(char *s1, char *s2);
 void					handle_error_export(char *s1);
+int						c_words(char const *str, char set);
 
 #endif

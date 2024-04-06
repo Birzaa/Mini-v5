@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:17 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/06 13:03:25 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/06 21:29:06 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ void	ft_cd(t_data *data, char **command)
 	if (chdir(command[1]) != 0)
 	{
 		handle_error_cd(command[1], strerror(errno));
-		// printf("bash: cd: %s: No such file or directory\n", command[1]);
 		g_sig.status = 1;
 	}
 }

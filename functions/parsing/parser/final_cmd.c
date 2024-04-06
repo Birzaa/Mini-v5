@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   final_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/06 12:15:14 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/06 20:52:22 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,13 @@ void	parse_cmd_scnd(t_cmd *cmd, t_command *command, t_cmd_word **zz,
 	}
 	else if ((*zz)->type == WORD)
 	{
-		if (!data->tab_created)
+		if (!data->tab_created && (*zz)->need_split == -1) // condition pour skip les $jdwdwqdwq en debut de commande mais pas pendant
+		{
+			if ((*zz)->next)
+				(*zz) = (*zz)->next;
+			return ;
+		}
+		else if (!data->tab_created)
 		{
 			parse_word((*zz), command->parsed_cmd);
 			data->tab_created = 1;
@@ -102,8 +108,8 @@ int	init_parse(t_data *data)
 	data->cmd = parser(data->lex);
 	parsing_expand(data->cmd, data);
 	parsing_quote(data->cmd);
-	data->parsed_cmd = parse(data->cmd, data);
 	// print_list(data->lex);
+	data->parsed_cmd = parse(data->cmd, data);
 	// print_cmd_list(data->cmd);
 	// print_parsed_cmd(data->parsed_cmd);
 	return (0);

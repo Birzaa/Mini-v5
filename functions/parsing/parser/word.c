@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   word.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 00:32:29 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/06 12:25:47 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/06 21:33:04 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,15 @@ int	get_number_of_flags(t_cmd_word *cmd)
 	current = cmd;
 	while (current)
 	{
-		if (current->type == WORD)
+		if (current->type == WORD && current->need_split)
+		{
+			count += c_words(current->content, ' ');
+			if (current->next)
+				current = current->next;
+			else
+				break ;
+		}
+		else if (current->type == WORD)
 		{
 			count++;
 			if (current->next)
@@ -56,7 +64,29 @@ int	get_number_of_flags(t_cmd_word *cmd)
 
 int	put_word_in_tab(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd, int i)
 {
-	if (cmd->type == WORD)
+	int		j;
+	char	**r;
+
+	r = NULL;
+	if (cmd->type == WORD && cmd->need_split)
+	{
+		j = 0;
+		r = ft_split(cmd->content, ' ');
+		while (r[j])
+		{
+			parsed_cmd->full_cmd[i] = malloc(ft_strlen(r[j]) + 1);
+			if (!parsed_cmd->full_cmd[i])
+			{
+				ft_free_tab(parsed_cmd->full_cmd);
+				return (i);
+			}
+			ft_strcpy(parsed_cmd->full_cmd[i], r[j]);
+			i++;
+			j++;
+		}
+		ft_free_tab(r);
+	}
+	else if (cmd->type == WORD)
 	{
 		parsed_cmd->full_cmd[i] = malloc(strlen(cmd->content) + 1);
 		if (!parsed_cmd->full_cmd[i])

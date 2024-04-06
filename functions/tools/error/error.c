@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:00:43 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/06 13:22:54 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/06 21:32:06 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ void	handle_error_export(char *s1)
 	ft_putstr_fd("bash: export: `", 2);
 	ft_putstr_fd(s1, 2);
 	ft_putstr_fd("': ", 2);
-	ft_putstr_fd("not a valid identifier\n",2);
+	ft_putstr_fd("not a valid identifier\n", 2);
 }

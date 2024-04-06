@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:27 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/06 13:11:48 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/06 21:28:26 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_env(t_data *data, char **content)
 		ft_putstr_fd(content[1], 2);
 		ft_putstr_fd("‘ ", 2);
 		ft_putstr_fd("No such file or directory\n", 2);
-		// ft_printf("env: ’%s’: No such file or directory\n", content[1]);
 		g_sig.status = 1;
 	}
 }
+// ft_printf("env: ’%s’: No such file or directory\n", content[1]);
