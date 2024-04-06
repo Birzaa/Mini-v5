@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:41 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/06 17:08:52 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/06 23:24:24 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_exit(t_data *data, t_pipex *p, char **command)
 	g_sig.status = 0;
 	i = ft_tab_len(command);
 	if (i > 2 && !ft_exit_non_digit(command[1])
-		&& ft_exit_non_digit(command[2]))
+		&& command[2])
 	{
 		g_sig.status = 1;
 		return ((void)ft_putstr_fd("bash: exit: too many arguments\n", 2));

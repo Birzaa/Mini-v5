@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/05 14:03:04 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/06 23:25:34 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdio.h>
+# include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-
 // ------------------------------------------------------> Structure
 
 // ------------------------> Lexer
@@ -99,6 +99,7 @@ typedef struct s_cmd_word
 	enum e_token		type;
 	int					index;
 	int					expand;
+	int					need_split;
 	enum e_state		state;
 	struct s_cmd_word	*next;
 }						t_cmd_word;
@@ -170,6 +171,7 @@ typedef struct s_data
 	t_env				*env;
 	char				**envp;
 	int					nb_input;
+	int					tab_created;
 }						t_data;
 
 typedef struct s_signal
@@ -390,7 +392,7 @@ int						is_builtin(char *cmd);
 
 //********************************************************
 
-t_command				*parse(t_cmd *cmd);
+t_command				*parse(t_cmd *cmd, t_data *data);
 void					parse_r_in(t_cmd_word *cmd, t_redir_in_2 **r_in,
 							int h_doc, t_cmd *command);
 
@@ -444,5 +446,8 @@ void					parsing_expand(t_cmd *cmd, t_data *data);
 
 void					handle_no_expand(t_cmd_word *actual, t_cmd_word *next);
 void					handle_error(char *s1, char *s2);
+void					handle_error_cd(char *s1, char *s2);
+void					handle_error_export(char *s1);
+int						c_words(char const *str, char set);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/05 14:02:27 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/06 23:25:03 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	main(int ac, char **av, char **env)
 	{
 		init_signals();
 		data.nb_input++;
+		data.tab_created = 0;
 		g_sig.input = readline(ORANGE "\U0001F58A  ~>: " RESET);
 		if (!g_sig.input || !ft_strcmp(g_sig.input, "exit"))
 		{
@@ -37,7 +38,7 @@ int	main(int ac, char **av, char **env)
 			ft_exit_two(&data);
 		}
 		else if (!*g_sig.input)
-			continue;
+			continue ;
 		else
 		{
 			add_history(g_sig.input);

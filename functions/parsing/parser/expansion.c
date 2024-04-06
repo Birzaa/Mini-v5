@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/05 10:09:55 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/06 23:25:27 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	ft_expand_symbol(t_env *env, t_cmd_word *cmd)
 		free(tmp_join);
 	free(cmd->content);
 	cmd->content = ft_strdup(tmp_full);
+	cmd->need_split = 1;
 	return (free(tmp_full), free(tmp_expand), 0);
 }
 
@@ -114,6 +115,8 @@ int	ft_expand_no_symbol(t_env *env, t_cmd_word *word)
 		{
 			free(word->content);
 			word->content = ft_strdup(&tmp->content[len_var + 1]);
+			if (word->content[0] == '\0')
+				word->need_split = -1;
 			return (1);
 		}
 		tmp = tmp->next;
@@ -121,6 +124,7 @@ int	ft_expand_no_symbol(t_env *env, t_cmd_word *word)
 	free(word->content);
 	word->content = ft_strdup("");
 	word->type = QOUTE;
+	word->need_split = -1;
 	return (0);
 }
 

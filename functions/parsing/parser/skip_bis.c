@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   skip_bis.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/13 11:00:39 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/06 11:56:06 by thomas           ###   ########.fr       */
+/*   Created: 2024/04/06 12:00:26 by thomas            #+#    #+#             */
+/*   Updated: 2024/04/06 12:02:47 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "minishell.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+void	skip(t_cmd_word *cmd)
 {
-	if (!lst || !new)
-		return ;
-	new->next = *lst;
-	*lst = new;
+	if (cmd->type == DREDIR_OUT && cmd->next)
+		cmd = cmd->next;
+	while (cmd->type == WHITE_SPACE && cmd->next)
+		cmd = cmd->next;
+	if (cmd->type == WORD && cmd->next)
+		cmd = cmd->next;
 }

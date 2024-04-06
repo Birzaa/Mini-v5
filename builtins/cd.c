@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:17 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/03 13:30:43 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/06 21:29:06 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	error_cd(char *new_cmd, char *home, char *tmp)
 {
-	printf("bash: cd: %s: No such file or directory\n", new_cmd);
+	handle_error_cd(new_cmd, strerror(errno));
 	g_sig.status = 1;
 	return (free(new_cmd), free(home), free(tmp));
 }
@@ -50,7 +50,7 @@ void	ft_cd_tild(t_data *data, char *command)
 
 void	home_not_set(void)
 {
-	printf("bash: cd: HOME not set\n");
+	ft_putstr_fd("bash: cd: HOME not set\n", 2);
 	g_sig.status = 1;
 }
 
@@ -90,7 +90,7 @@ void	ft_cd(t_data *data, char **command)
 	else if (command[2])
 	{
 		g_sig.status = 1;
-		return (ft_putstr_fd("bash: cd: too many arguments\n", 1));
+		return (ft_putstr_fd("bash: cd: too many arguments\n", 2));
 	}
 	else if (!ft_strncmp(command[1], "~", 2))
 		return (ft_cd_home(data, command[1]));
@@ -98,7 +98,7 @@ void	ft_cd(t_data *data, char **command)
 		return (ft_cd_tild(data, command[1]));
 	if (chdir(command[1]) != 0)
 	{
-		printf("bash: cd: %s: No such file or directory\n", command[1]);
+		handle_error_cd(command[1], strerror(errno));
 		g_sig.status = 1;
 	}
 }
