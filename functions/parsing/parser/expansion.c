@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/01 09:00:24 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/06 18:36:35 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,8 @@ int	ft_expand_no_symbol(t_env *env, t_cmd_word *word)
 	}
 	free(word->content);
 	word->content = ft_strdup("");
-	word->type = WHITE_SPACE;
+	word->type = QOUTE;
+	// word->type = WHITE_SPACE;
 	return (0);
 }
 

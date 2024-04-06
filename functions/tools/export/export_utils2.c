@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 10:30:22 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/04 10:35:00 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/06 17:33:11 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ char	*ft_get_real_export_name(char *content, char *cpy)
 	int	i;
 
 	i = 0;
-	printf("content avant : %s\n", content);
 	while (content[i] != '+')
 	{
 		cpy[i] = content[i];
@@ -25,7 +24,6 @@ char	*ft_get_real_export_name(char *content, char *cpy)
 	}
 	cpy[i++] = '=';
 	cpy[i] = '\0';
-	printf("content apres : %s\n", cpy);
 	return (cpy);
 }
 
