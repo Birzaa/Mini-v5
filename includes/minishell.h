@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/06 13:22:58 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/06 14:05:32 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdio.h>
+# include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-
 // ------------------------------------------------------> Structure
 
 // ------------------------> Lexer
