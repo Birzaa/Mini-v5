@@ -9,3 +9,5 @@ Note AVRIL 4
 // command in " ls" n'est plus une commande
  
 
+ //rajoueter dollar export not valgrind
+
