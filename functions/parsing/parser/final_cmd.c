@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   final_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/05 13:03:11 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/06 12:15:14 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parse_cmd_scnd(t_cmd *cmd, t_command *command, t_cmd_word **zz)
+void	parse_cmd_scnd(t_cmd *cmd, t_command *command, t_cmd_word **zz,
+		t_data *data)
 {
 	if ((*zz)->type == REDIR_IN)
 	{
@@ -36,14 +37,18 @@ void	parse_cmd_scnd(t_cmd *cmd, t_command *command, t_cmd_word **zz)
 	}
 	else if ((*zz)->type == WORD)
 	{
-		parse_word((*zz), command->parsed_cmd);
+		if (!data->tab_created)
+		{
+			parse_word((*zz), command->parsed_cmd);
+			data->tab_created = 1;
+		}
 		skip_word((zz));
 	}
 }
 
-void	parse_cmd(t_cmd *cmd, t_command *command, t_cmd_word **zz)
+void	parse_cmd(t_cmd *cmd, t_command *command, t_cmd_word **zz, t_data *data)
 {
-	parse_cmd_scnd(cmd, command, zz);
+	parse_cmd_scnd(cmd, command, zz, data);
 	if ((*zz)->type == ENV)
 	{
 		if ((*zz)->state == IN_QUOTE && (*zz)->next && (*zz)->next->state == 1)
@@ -54,7 +59,7 @@ void	parse_cmd(t_cmd *cmd, t_command *command, t_cmd_word **zz)
 		(*zz) = (*zz)->next;
 }
 
-t_command	*parse(t_cmd *cmd)
+t_command	*parse(t_cmd *cmd, t_data *data)
 {
 	t_command	*command;
 	t_command	*head;
@@ -76,12 +81,13 @@ t_command	*parse(t_cmd *cmd)
 			return (NULL);
 		zz = cmd->words;
 		while (zz)
-			parse_cmd(cmd, command, &zz);
+			parse_cmd(cmd, command, &zz, data);
 		tmp = ft_command_new();
 		add_back_cmd_out(&command, tmp);
 		command = command->next;
 		i++;
 		cmd = cmd->next;
+		data->tab_created = 0;
 	}
 	head->nb_command = i;
 	return (head);
@@ -96,7 +102,7 @@ int	init_parse(t_data *data)
 	data->cmd = parser(data->lex);
 	parsing_expand(data->cmd, data);
 	parsing_quote(data->cmd);
-	data->parsed_cmd = parse(data->cmd);
+	data->parsed_cmd = parse(data->cmd, data);
 	// print_list(data->lex);
 	// print_cmd_list(data->cmd);
 	// print_parsed_cmd(data->parsed_cmd);

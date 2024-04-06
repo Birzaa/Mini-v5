@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   skip_bis.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/22 02:43:27 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/06 13:11:48 by thomas           ###   ########.fr       */
+/*   Created: 2024/04/06 12:00:26 by thomas            #+#    #+#             */
+/*   Updated: 2024/04/06 12:02:47 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_env(t_data *data, char **content)
+void	skip(t_cmd_word *cmd)
 {
-	if (!content[1])
-	{
-		print_env(data->env);
-		g_sig.status = 0;
-	}
-	else if (content[1])
-	{
-		ft_putstr_fd("env: ", 2);
-		ft_putstr_fd("‘", 2);
-		ft_putstr_fd(content[1], 2);
-		ft_putstr_fd("‘ ", 2);
-		ft_putstr_fd("No such file or directory\n", 2);
-		// ft_printf("env: ’%s’: No such file or directory\n", content[1]);
-		g_sig.status = 1;
-	}
+	if (cmd->type == DREDIR_OUT && cmd->next)
+		cmd = cmd->next;
+	while (cmd->type == WHITE_SPACE && cmd->next)
+		cmd = cmd->next;
+	if (cmd->type == WORD && cmd->next)
+		cmd = cmd->next;
 }

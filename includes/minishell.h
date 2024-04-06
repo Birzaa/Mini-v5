@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/04 19:03:51 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/06 13:22:58 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ typedef struct s_data
 	t_env				*env;
 	char				**envp;
 	int					nb_input;
+	int					tab_created;
 }						t_data;
 
 typedef struct s_signal
@@ -389,7 +390,7 @@ int						is_builtin(char *cmd);
 
 //********************************************************
 
-t_command				*parse(t_cmd *cmd);
+t_command				*parse(t_cmd *cmd, t_data *data);
 void					parse_r_in(t_cmd_word *cmd, t_redir_in_2 **r_in,
 							int h_doc, t_cmd *command);
 
@@ -443,5 +444,7 @@ void					parsing_expand(t_cmd *cmd, t_data *data);
 
 void					handle_no_expand(t_cmd_word *actual, t_cmd_word *next);
 void					handle_error(char *s1, char *s2);
+void					handle_error_cd(char *s1, char *s2);
+void					handle_error_export(char *s1);
 
 #endif

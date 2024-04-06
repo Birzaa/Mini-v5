@@ -6,11 +6,24 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 00:32:29 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/18 23:35:48 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/06 12:25:47 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	skip(t_cmd_word **cmd)
+{
+	if (is_redir((*cmd)->type) && (*cmd)->next)
+		(*cmd) = (*cmd)->next;
+	while ((*cmd)->type == WHITE_SPACE && (*cmd)->next)
+		(*cmd) = (*cmd)->next;
+	if ((*cmd)->type == WORD && (*cmd)->next)
+		(*cmd) = (*cmd)->next;
+	else
+		return (1);
+	return (0);
+}
 
 int	get_number_of_flags(t_cmd_word *cmd)
 {
@@ -29,6 +42,10 @@ int	get_number_of_flags(t_cmd_word *cmd)
 			else
 				break ;
 		}
+		while (current->type == WHITE_SPACE && current->next)
+			current = current->next;
+		if (is_redir(current->type))
+			(skip(&current));
 		while (current->type == WHITE_SPACE && current->next)
 			current = current->next;
 		if (current->type != WORD)
@@ -67,6 +84,11 @@ void	parse_word(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd)
 	}
 	while (cmd)
 	{
+		while (cmd->type == WHITE_SPACE && cmd->next)
+			cmd = cmd->next;
+		if (is_redir(cmd->type))
+			if (skip(&cmd))
+				break ;
 		while (cmd->type == WHITE_SPACE && cmd->next)
 			cmd = cmd->next;
 		if (cmd->type != WORD)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:37 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/04 10:42:41 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/06 13:22:44 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ void	ft_export(t_env **env, char **cmd)
 		return ;
 	else if (ft_export_checking(cmd[1]))
 	{
-		printf("bash: export: `%s': not a valid identifier\n", cmd[1]);
+		handle_error_export(cmd[1]);
+		// printf("bash: export: `%s': not a valid identifier\n", cmd[1]);
 		g_sig.status = 1;
 		return ;
 	}
