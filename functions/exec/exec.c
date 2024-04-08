@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/08 18:02:25 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/08 19:20:29 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 		open_redir_out(current_cmd, &pipex);
 		execute_builtin(current_cmd->parsed_cmd->full_cmd, data, &pipex);
 	}
-	else if ((current_cmd->parsed_cmd->full_cmd) && !pipex.need_exec
+	else if ((current_cmd->parsed_cmd->full_cmd || pipex.jss_a_terre) && !pipex.need_exec
 		&& ft_getenv_check_tab(data->envp, "PATH="))
 	{
 		pipex.pipe = (int *)malloc((sizeof(int) * (2 * (pipex.nb_cmd - 1))));
