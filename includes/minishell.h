@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/06 21:11:11 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:38:19 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ typedef struct s_parsed_cmd
 	char				**full_cmd;
 	t_redir_in_2		*r_in;
 	t_redir_out			*r_out;
+	int					nb_cmd;
 }						t_parsed_cmd;
 
 typedef struct s_command
@@ -158,6 +159,7 @@ typedef struct s_pipex
 	int					nb_h_doc;
 	int					need_free;
 	int					need_exec;
+	int					jss_a_terre;
 }						t_pipex;
 
 // ------------------------> Data

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_next.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:14:04 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/25 20:48:20 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/08 17:00:34 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_parsed_cmd	*init_redir(t_parsed_cmd *list)
 		return (NULL);
 	list->r_in = NULL;
 	list->r_out = NULL;
+	list->nb_cmd = 0;
 	list->full_cmd = NULL;
 	return (list);
 }

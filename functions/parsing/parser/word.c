@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   word.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 00:32:29 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/06 21:33:04 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:25:53 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	put_word_in_tab(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd, int i)
 				ft_free_tab(parsed_cmd->full_cmd);
 				return (i);
 			}
+			parsed_cmd->nb_cmd++;
 			ft_strcpy(parsed_cmd->full_cmd[i], r[j]);
 			i++;
 			j++;
@@ -94,6 +95,7 @@ int	put_word_in_tab(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd, int i)
 			ft_free_tab(parsed_cmd->full_cmd);
 			return (i);
 		}
+		parsed_cmd->nb_cmd++;
 		strcpy(parsed_cmd->full_cmd[i], cmd->content);
 		i++;
 	}
