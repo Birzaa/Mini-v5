@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/09 17:03:51 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:55:42 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ void	child(t_pipex p, char **cmd, char **env, t_data *data)
 			free_env(data->env);
 			ft_free_tab(data->envp);
 			parent_free(&p);
+			if (p.nb_h_doc)
+				free(p.h_doc_name);
 			exit(0);
 		}
 	}
@@ -138,10 +140,10 @@ void	child(t_pipex p, char **cmd, char **env, t_data *data)
 
 void	cmd_pipe_h_doc(t_command *parsed_cmd, t_pipex *pipex)
 {
-	t_command	*current_cmd;
-	t_redir_in_2 *r_in ;
-	int			i;
-	int			count;
+	t_command		*current_cmd;
+	t_redir_in_2	*r_in;
+	int				i;
+	int				count;
 
 	count = 0;
 	i = 0;
@@ -167,7 +169,7 @@ void	cmd_pipe_h_doc(t_command *parsed_cmd, t_pipex *pipex)
 	if (count > 0)
 		pipex->jss_a_terre = 1;
 	else
-		pipex->jss_a_terre =0;
+		pipex->jss_a_terre = 0;
 }
 
 void	execution(t_command *parsed_cmd, char **env, t_data *data)
@@ -198,7 +200,8 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 		open_redir_out(current_cmd, &pipex);
 		execute_builtin(current_cmd->parsed_cmd->full_cmd, data, &pipex);
 	}
-	else if ((current_cmd->parsed_cmd->full_cmd || pipex.jss_a_terre) && !pipex.need_exec
+	else if ((current_cmd->parsed_cmd->full_cmd || pipex.jss_a_terre
+			|| pipex.nb_cmd > 1) && !pipex.need_exec
 		&& ft_getenv_check_tab(data->envp, "PATH="))
 	{
 		pipex.pipe = (int *)malloc((sizeof(int) * (2 * (pipex.nb_cmd - 1))));
