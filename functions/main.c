@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/06 21:29:16 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:18:28 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int ac, char **av, char **env)
 		init_signals();
 		data.nb_input++;
 		data.tab_created = 0;
-		g_sig.input = readline(ORANGE "\U0001F58A  ~>: " RESET);
+		g_sig.input = readline( "~~>: " );
 		if (!g_sig.input || !ft_strcmp(g_sig.input, "exit"))
 		{
 			printf("exit\n");

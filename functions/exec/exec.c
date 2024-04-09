@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/08 19:20:29 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/09 17:03:51 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,7 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 		}
 		close_pipes(&pipex);
 		parent_free(&pipex);
+		status = 0;
 		while (pipex.idx)
 		{
 			waitpid(-1, &status, 0);
