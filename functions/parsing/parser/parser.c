@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:55:20 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/05 14:30:46 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:35:08 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	add_node(t_node *info, t_cmd **head, t_cmd_word *new_word)
 	new_word->state = info->state;
 	new_word->index = info->index;
 	new_word->expand = 0;
-	new_word->expanded = 0;
+	new_word->need_split = 0;
 	new_word->next = NULL;
 	if ((*head)->words == NULL)
 	{

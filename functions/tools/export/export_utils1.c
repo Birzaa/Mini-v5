@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:18 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/04 10:43:05 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/07 00:05:31 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,9 @@ int	ft_export_checking(char *content)
 	{
 		if (content[i] == '=')
 			check = 1;
-		else if (content[i] == '-' && !check)
+		else if (content[i] == '+' && content[i + 1] != '=' && !check)
+			return (1);
+		else if ((content[i] == '-' || content[i] == '$') && !check)
 			return (1);
 		i++;
 	}

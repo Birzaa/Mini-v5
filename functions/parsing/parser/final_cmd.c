@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   final_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/05 18:40:44 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:43:22 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parse_cmd_scnd(t_cmd *cmd, t_command *command, t_cmd_word **zz, t_data *data)
+void	parse_cmd_scnd(t_cmd *cmd, t_command *command, t_cmd_word **zz,
+		t_data *data)
 {
 	if ((*zz)->type == REDIR_IN)
 	{
@@ -36,7 +37,17 @@ void	parse_cmd_scnd(t_cmd *cmd, t_command *command, t_cmd_word **zz, t_data *dat
 	}
 	else if ((*zz)->type == WORD)
 	{
-		parse_word((*zz), command->parsed_cmd, data);
+		if (!data->tab_created && (*zz)->need_split == -1) // condition pour skip les $jdwdwqdwq en debut de commande mais pas pendant
+		{
+			if ((*zz)->next)
+				(*zz) = (*zz)->next;
+			return ;
+		}
+		else if (!data->tab_created)
+		{
+			parse_word((*zz), command->parsed_cmd);
+			data->tab_created = 1;
+		}
 		skip_word((zz));
 	}
 }
@@ -82,6 +93,7 @@ t_command	*parse(t_cmd *cmd, t_data *data)
 		command = command->next;
 		i++;
 		cmd = cmd->next;
+		data->tab_created = 0;
 	}
 	head->nb_command = i;
 	return (head);
@@ -96,9 +108,9 @@ int	init_parse(t_data *data)
 	data->cmd = parser(data->lex);
 	parsing_expand(data->cmd, data);
 	parsing_quote(data->cmd);
-	data->parsed_cmd = parse(data->cmd, data);
 	// print_list(data->lex);
+	data->parsed_cmd = parse(data->cmd, data);
 	// print_cmd_list(data->cmd);
-	print_parsed_cmd(data->parsed_cmd);
+	// print_parsed_cmd(data->parsed_cmd);
 	return (0);
 }

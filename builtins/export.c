@@ -6,18 +6,11 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:37 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/04 17:53:19 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/06 23:24:46 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* export = add a var in env ; je l'add a la fin parce que c'est pratique
-export sans	arg = write all env variables sorted with "export " at front
-export avec	arg = add the var in env variables , check les cas d'erreur*/
-
-// export prend &data->env et capart=bonjour
-// export a fix, no arg, faut mettre les values entre ""
 
 void	export_new_add_back(t_env **env, t_env *tmp, char *cmd)
 {
@@ -52,6 +45,7 @@ void	export_no_arg(t_env *env)
 		tmp = tmp->next;
 	}
 	free_env(env_cpy);
+	g_sig.status = 0;
 }
 
 int	export_exist_capart(t_env *env, char *content)
@@ -73,15 +67,15 @@ int	export_exist_capart(t_env *env, char *content)
 	return (0);
 }
 
-void	while_export(t_env **env, t_env *tmp, char *cmd)
+void	while_export(t_env **env, t_env *tmp, char *cmd, int *error)
 {
 	if (!ft_strncmp("_", cmd, 2) || !ft_strncmp("_=", cmd, 2))
 		return ;
 	else if (ft_export_checking(cmd))
 	{
-		printf("bash: export: `%s': not a valid identifier\n", cmd);
+		*error = 1;
 		g_sig.status = 1;
-		return ;
+		return (handle_error_export(cmd));
 	}
 	else if (ft_export_add_checking(cmd))
 		ft_export_op((*env), cmd);
@@ -95,12 +89,16 @@ void	ft_export(t_env **env, char **cmd)
 {
 	t_env	*tmp;
 	int		i;
+	int		error;
 
 	i = 1;
+	error = 0;
 	tmp = NULL;
 	if (!cmd[1])
 		return (export_no_arg((*env)));
 	else if (cmd[i])
 		while (cmd[i])
-			while_export(env, tmp, cmd[i++]);
+			while_export(env, tmp, cmd[i++], &error);
+	if (g_sig.status && !error)
+		g_sig.status = 0;
 }

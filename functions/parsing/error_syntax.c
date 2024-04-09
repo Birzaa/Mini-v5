@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:26:15 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/05 14:18:47 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:34:34 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,11 @@ int	is_invalid_pipe(t_node *node)
 	{
 		if (!prev->prev)
 			return (EXIT_FAILURE);
-		prev = prev->prev;
-		while (prev->prev && (prev->type == WHITE_SPACE || prev->type == QOUTE
+		if (prev->prev)
+			prev = prev->prev;
+		else
+			return (EXIT_FAILURE);
+		while (prev && (prev->type == WHITE_SPACE || prev->type == QOUTE
 				|| prev->type == DOUBLE_QUOTE || prev->type == ENV))
 			prev = prev->prev;
 		if (prev->type != WORD)

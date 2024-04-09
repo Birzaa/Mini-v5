@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/05 16:40:50 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:44:32 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdio.h>
+# include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-
 // ------------------------------------------------------> Structure
 
 // ------------------------> Lexer
@@ -100,6 +100,7 @@ typedef struct s_cmd_word
 	int					index;
 	int					expanded;
 	int					expand;
+	int					need_split;
 	enum e_state		state;
 	struct s_cmd_word	*next;
 }						t_cmd_word;
@@ -130,6 +131,7 @@ typedef struct s_parsed_cmd
 	char				**full_cmd;
 	t_redir_in_2		*r_in;
 	t_redir_out			*r_out;
+	int					nb_cmd;
 }						t_parsed_cmd;
 
 typedef struct s_command
@@ -159,6 +161,7 @@ typedef struct s_pipex
 	int					nb_h_doc;
 	int					need_free;
 	int					need_exec;
+	int					jss_a_terre;
 }						t_pipex;
 
 // ------------------------> Data
@@ -171,7 +174,7 @@ typedef struct s_data
 	t_env				*env;
 	char				**envp;
 	int					nb_input;
-	int					nb_cmd;
+	int					tab_created;
 }						t_data;
 
 typedef struct s_signal
@@ -402,7 +405,7 @@ void					parse_r_out(t_cmd_word *cmd, t_redir_out **r_out,
 t_command				*ft_command_last(t_command *cmd);
 t_command				*ft_command_new(void);
 void					add_back_cmd_out(t_command **cmd, t_command *new);
-void					parse_word(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd, t_data *data);
+void					parse_word(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd);
 void					skip_dr_out(t_cmd_word **cmd);
 void					skip_r_out(t_cmd_word **cmd);
 void					skip_h_doc(t_cmd_word **cmd);
@@ -446,5 +449,8 @@ void					parsing_expand(t_cmd *cmd, t_data *data);
 
 void					handle_no_expand(t_cmd_word *actual, t_cmd_word *next);
 void					handle_error(char *s1, char *s2);
+void					handle_error_cd(char *s1, char *s2);
+void					handle_error_export(char *s1);
+int						c_words(char const *str, char set);
 
 #endif
