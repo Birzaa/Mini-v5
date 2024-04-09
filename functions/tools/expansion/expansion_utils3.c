@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 08:33:56 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/06 21:25:15 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/09 19:14:25 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,21 @@ int	full_and_join_null(t_cmd_word *cmd, char *tmp_expand, char *tmp_join,
 		cmd->content = ft_strdup("");
 		return (free(tmp_expand), 1);
 	}
+	return (0);
+}
+
+void	ft_expand_symbol_short(t_cmd_word *cmd, char *tmp_full)
+{
+	free(cmd->content);
+	cmd->content = ft_strdup(tmp_full);
+	cmd->need_split = 1;
+}
+
+int	ft_expand_no_symbol_short(t_cmd_word *word)
+{
+	free(word->content);
+	word->content = ft_strdup("");
+	word->type = QOUTE;
+	word->need_split = -1;
 	return (0);
 }

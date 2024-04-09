@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/09 18:11:55 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/09 19:13:55 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,6 +276,9 @@ int						tmp_expand_null(t_cmd_word *cmd, char *tmp_expand,
 							char *tmp_join);
 int						full_and_join_null(t_cmd_word *cmd, char *tmp_expand,
 							char *tmp_join, char *tmp_full);
+int						ft_expand_no_symbol_short(t_cmd_word *word);
+void					ft_expand_symbol_short(t_cmd_word *cmd, char *tmp_full);
+int						ft_expand_no_symbol_short(t_cmd_word *word);
 
 // tools/export/export_utils1.c
 void					replace_export(t_env **env, char *content);
