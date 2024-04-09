@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:26:15 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/05 12:45:02 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:38:24 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,16 @@ int	is_invalid_pipe(t_node *node)
 {
 	t_node	*prev;
 
-	/* t_node	*next;*/
 	prev = node;
 	if (node->type == PIPE_LINE)
 	{
 		if (!prev->prev)
 			return (EXIT_FAILURE);
-		prev = prev->prev;
-		while (prev->prev && (prev->type == WHITE_SPACE || prev->type == QOUTE
+		if (prev->prev)
+			prev = prev->prev;
+		else
+			return (EXIT_FAILURE);
+		while (prev && (prev->type == WHITE_SPACE || prev->type == QOUTE
 				|| prev->type == DOUBLE_QUOTE || prev->type == ENV))
 			prev = prev->prev;
 		if (prev->type != WORD)
@@ -57,15 +59,6 @@ int	is_invalid_pipe(t_node *node)
 		if (node->type != WORD)
 			return (EXIT_FAILURE);
 	}
-	/* next = skip_spaces(node->next, 0);
-	prev = skip_spaces(node->prev, 1);
-	if (!next || !prev)
-	{
-		return (EXIT_FAILURE);
-	}
-	if ((!prev && !next) || (next->type != WORD && prev->type != WORD
-			&& !is_redir(next->type)))
-		return (EXIT_FAILURE); */
 	return (EXIT_SUCCESS);
 }
 

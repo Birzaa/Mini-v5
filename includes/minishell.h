@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/06 23:25:34 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:11:55 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ typedef struct s_parsed_cmd
 	char				**full_cmd;
 	t_redir_in_2		*r_in;
 	t_redir_out			*r_out;
+	int					nb_cmd;
 }						t_parsed_cmd;
 
 typedef struct s_command
@@ -159,6 +160,7 @@ typedef struct s_pipex
 	int					nb_h_doc;
 	int					need_free;
 	int					need_exec;
+	int					jss_a_terre;
 }						t_pipex;
 
 // ------------------------> Data
