@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/09 18:44:32 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/09 19:18:51 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# define GREEN "\033[1;32m"
-# define ORANGE "\033[38;5;216m"
-# define RESET "\033[0m"
-# define BLUE "\033[1;34m"
+# define GREEN "\1\033[1;32m\2"
+# define ORANGE "\1\033[38;5;216m\2"
+# define RESET "\1\033[0m\2"
+# define BLUE "\1\033[1;34m\2"
 # define EQUAL 0
 
 # define OLDPWD_ENV "OLDPWD="

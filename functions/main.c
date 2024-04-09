@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/09 18:41:22 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/09 19:21:45 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int ac, char **av, char **env)
 		init_signals();
 		data.nb_input++;
 		data.tab_created = 0;
-		g_sig.input = readline( "~~>: " );
+		g_sig.input = readline(ORANGE "~~>: " RESET);
 		if (!g_sig.input || !ft_strcmp(g_sig.input, "exit"))
 		{
 			printf("exit\n");

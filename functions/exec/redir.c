@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:04:14 by thomas            #+#    #+#             */
-/*   Updated: 2024/04/09 18:34:24 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/09 19:22:09 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*here_doc(char *av, t_pipex *pipex, int index, char **tab, t_data *data)
 		g_sig.status = 0;
 	while (1)
 	{
-		buf = readline("~> ");
+		buf = readline(BLUE"~> " RESET);
 		if (!buf)
 		{
 			if (g_sig.status == 130)
