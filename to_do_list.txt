@@ -2,6 +2,8 @@ Note AVRIL 4
 
 
 </dev/random valgrind --leak-check=full --trace-children=yes --track-fds=yes --suppressions=../supp.supp ./minishell
+</dev/random valgrind --quiet --leak-check=full --trace-children=yes  --suppressions=../supp.supp ./minishell
+</dev/random valgrind --quiet --leak-check=full  --suppressions=../supp.supp ./minishell
 
 
 
