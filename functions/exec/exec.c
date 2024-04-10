@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/10 14:19:48 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:34:19 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,11 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 	{
 		exec_cmd_pipe(&pipex, data, current_cmd, env);
 		wait_child(&pipex);
+	}
+	else if (current_cmd->parsed_cmd->r_in && current_cmd->parsed_cmd->r_out)
+	{
+		open_redir_in(current_cmd, &pipex);
+		open_redir_out(current_cmd, &pipex);
 	}
 	else if (current_cmd->parsed_cmd->r_in)
 		open_redir_in(current_cmd, &pipex);
