@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   h_doc.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:30:06 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/10 09:24:32 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/10 11:05:33 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,72 @@ int	while_h_r_in(t_redir_in_2 *r_in, int index)
 	return (index);
 }
 
-void	caca(t_command *parsed_cmd, t_pipex *pipex, char **tab, t_data *data)
+char	*error_hdoc_name(t_pipex *pipex, char *name_file)
 {
-	t_command		*current_cmd;
-	t_redir_in_2	*r_in;
-	int				index;
+	ft_free_tab(pipex->h_doc_name);
+	free(name_file);
+	return (NULL);
+}
 
-	(void)tab;
-	(void)data;
-	index = 0;
-	current_cmd = parsed_cmd;
-	while (pipex->idx < pipex->nb_cmd)
+char	*create_dest_file(t_pipex *pipex, int index, char *av)
+{
+	char	*index_str;
+	char	*name_file;
+	char	*dest_file;
+	char	*idx;
+	int		i;
+
+	index_str = ft_itoa(index);
+	name_file = ft_strjoin(av, index_str);
+	free(index_str);
+	dest_file = "/tmp";
+	dest_file = ft_strjoin("/tmp/", name_file);
+	pipex->h_doc_name[index] = ft_strdup(dest_file);
+	if (!pipex->h_doc_name[index])
+		if (!error_hdoc_name(pipex, name_file))
+			return (NULL);
+	i = 0;
+	while (!access(dest_file, F_OK))
 	{
-		if (current_cmd->parsed_cmd->r_in)
-		{
-			r_in = current_cmd->parsed_cmd->r_in;
-			index += while_h_r_in(r_in, index);
-		}
-		pipex->idx++;
-		current_cmd = current_cmd->next;
+		idx = ft_itoa(i);
+		dest_file = ft_strjoin(pipex->h_doc_name[index], idx);
+		free(idx);
+		i++;
 	}
-	pipex->idx = 0;
+	free(name_file);
+	return (dest_file);
+}
+
+char	*hdoc_signal(int file, t_pipex *pipex)
+{
+	printf("\n");
+	close(file);
+	pipex->need_free = 1;
+	pipex->need_exec = 1;
+	dup2(pipex->saved_in, STDIN_FILENO);
+	return (NULL);
+}
+
+void	reading_hdoc(int file, t_pipex *pipex, t_data *data, char *av)
+{
+	char	*buf;
+
+	while (1)
+	{
+		buf = readline(BLUE "~> " RESET);
+		if (!buf)
+		{
+			if (g_sig.status == 130)
+				hdoc_signal(file, pipex);
+			printf("bash: warning: here-document at line \
+%d delimited by end-of-file (wanted `%s')\n", data->nb_input, av);
+			break ;
+		}
+		if (!ft_strcmp(av, buf))
+		{
+			free(buf);
+			break ;
+		}
+		(write(file, buf, ft_strlen(buf)), write(file, "\n", 1), free(buf));
+	}
 }

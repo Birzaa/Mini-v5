@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/10 09:56:07 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/10 12:48:27 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,8 @@ typedef struct s_data
 	char				**envp;
 	int					nb_input;
 	int					tab_created;
+	int					i;
+	int					count;
 }						t_data;
 
 typedef struct s_signal
@@ -408,7 +410,8 @@ void					parse_r_out(t_cmd_word *cmd, t_redir_out **r_out,
 t_command				*ft_command_last(t_command *cmd);
 t_command				*ft_command_new(void);
 void					add_back_cmd_out(t_command **cmd, t_command *new);
-void					parse_word(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd);
+void					parse_word(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd,
+							t_data *data);
 void					skip_dr_out(t_cmd_word **cmd);
 void					skip_r_out(t_cmd_word **cmd);
 void					skip_h_doc(t_cmd_word **cmd);
@@ -425,7 +428,8 @@ int						init_parse(t_data *data);
 t_command				*init_command(t_command *list);
 t_parsed_cmd			*init_redir(t_parsed_cmd *list);
 void					parse_space_in_quote(t_stack *list);
-
+int						skip_one_node(t_cmd_word **current, t_data *data,
+							int check);
 void					index_quote(t_stack *list);
 
 //***********************EXECUTION*********************************
@@ -437,15 +441,31 @@ void					close_h_doc(t_pipex *pipex);
 void					execute_cmd(char **env, char **valid_cmd, t_data *data,
 							t_pipex *p);
 char					*here_doc(char *av, t_pipex *pipex, int index,
-							char **tab, t_data *data);
+							t_data *data);
 void					create_h_doc(t_command *parsed_cmd, t_pipex *pipex,
-							char **tab, t_data *data);
+							t_data *data);
 void					nb_h_doc(t_command *parsed_cmd, t_pipex *pipex);
 void					parent_free(t_pipex *pipex);
 void					handle_signal(int sig);
 
 void					caca(t_command *parsed_cmd, t_pipex *pipex, char **tab,
 							t_data *data);
+void					reading_hdoc(int file, t_pipex *pipex, t_data *data,
+							char *av);
+char					*hdoc_signal(int file, t_pipex *pipex);
+char					*create_dest_file(t_pipex *pipex, int index, char *av);
+char					*error_hdoc_name(t_pipex *pipex, char *name_file);
+int						while_h_r_in(t_redir_in_2 *r_in, int index);
+void					child(t_pipex p, char **cmd, char **env, t_data *data);
+void					exec_child(char **cmd, char **env, t_data *data,
+							t_pipex *p);
+void					dup_fd_child(t_pipex *p);
+void					dup_fd_child_bis(t_pipex *p);
+void					close_h_doc(t_pipex *pipex);
+void					parent_free(t_pipex *pipex);
+void					open_pipes(t_pipex *pipex);
+void					close_pipes(t_pipex *pipex);
+void					cmd_pipe_h_doc(t_command *parsed_cmd, t_pipex *pipex);
 
 //****************************************************************
 void					parsing_expand(t_cmd *cmd, t_data *data);

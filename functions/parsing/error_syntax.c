@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:26:15 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/09 18:34:34 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/10 11:04:47 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,12 @@ int	is_invalid_pipe(t_node *node)
 	t_node	*prev;
 
 	prev = node;
-	(void)prev;
 	if (node->type == PIPE_LINE)
 	{
 		if (!prev->prev)
 			return (EXIT_FAILURE);
 		if (prev->prev)
 			prev = prev->prev;
-		else
-			return (EXIT_FAILURE);
 		while (prev && (prev->type == WHITE_SPACE || prev->type == QOUTE
 				|| prev->type == DOUBLE_QUOTE || prev->type == ENV))
 			prev = prev->prev;
@@ -65,6 +62,7 @@ int	is_invalid_pipe(t_node *node)
 
 int	ft_perror(char *str, char *option)
 {
+	g_sig.status = 2;
 	write(STDERR_FILENO, str, ft_strlen(str));
 	if (option)
 		write(STDERR_FILENO, option, ft_strlen(option));

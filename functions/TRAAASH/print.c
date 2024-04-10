@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:00:41 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/10 09:56:52 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/10 11:01:54 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_node(t_node *node);
+/* void	print_node(t_node *node);
 
 void	print_tab(char **tab)
 {
@@ -120,3 +120,4 @@ void	print_cmd_list(t_cmd *head)
 		printf("\n");
 	}
 }
+ */
