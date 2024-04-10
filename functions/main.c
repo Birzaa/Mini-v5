@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/10 09:55:15 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/10 12:19:43 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 
-	(void)av;
-	if (ac != 1)
+	(void)av;	
+	if (ac != 1 || !isatty(0))
 		return (1);
 	if (!*env)
 		env = create_env();
