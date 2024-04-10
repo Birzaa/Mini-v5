@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bin.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 17:22:00 by thomas            #+#    #+#             */
-/*   Updated: 2024/04/10 13:08:36 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:48:20 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	not_found_cmd(t_data *data, t_pipex *p, char **valid_cmd,
 {
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(valid_cmd[0], 2);
-	ft_putstr_fd(" command not found\n", 2);
+	ft_putstr_fd(": command not found\n", 2);
 	free_lexer(data->lex);
 	free_parser(data->cmd, data->parsed_cmd);
 	free_env(data->env);
