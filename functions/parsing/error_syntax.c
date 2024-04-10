@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:26:15 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/09 17:38:24 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:34:34 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	is_invalid_pipe(t_node *node)
 	t_node	*prev;
 
 	prev = node;
+	(void)prev;
 	if (node->type == PIPE_LINE)
 	{
 		if (!prev->prev)

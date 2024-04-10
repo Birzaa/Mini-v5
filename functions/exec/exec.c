@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/09 18:15:03 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:45:04 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 	t_command	*current_cmd;
 	int			status;
 
+	
 	pipex.pipe = NULL;
 	current_cmd = parsed_cmd;
 	pipex.need_exec = 0;

@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:04:14 by thomas            #+#    #+#             */
-/*   Updated: 2024/04/10 09:24:08 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/10 09:54:31 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*here_doc(char *av, t_pipex *pipex, int index, char **tab, t_data *data)
 		g_sig.status = 0;
 	while (1)
 	{
-		buf = readline("~> ");
+		buf = readline(BLUE"~> " RESET);
 		if (!buf)
 		{
 			if (g_sig.status == 130)

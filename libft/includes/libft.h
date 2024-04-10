@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:25:45 by thenwood          #+#    #+#             */
-/*   Updated: 2024/03/27 20:06:55 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/05 15:05:36 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ char				*ft_get_next_line(char *buffer);
 void				*ft_read_file(int fd, char *res);
 char				*ft_strchr_gnl(char *s, int c);
 char				*get_next_line_multiples_fd(int fd);
+int					c_words(char const *str, char set);
 
 #endif

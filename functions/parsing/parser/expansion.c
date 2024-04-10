@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:27:16 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/09 19:13:42 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/10 09:55:25 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	ft_expand_symbol(t_env *env, t_cmd_word *cmd)
 	{
 		free(cmd->content);
 		cmd->content = ft_strdup(tmp_join);
+		cmd->expanded = 1;
 		free(tmp_join);
 		return (free(tmp_expand), 1);
 	}
@@ -86,6 +87,7 @@ int	ft_expand_exist(t_env *env, t_cmd_word *cmd)
 		{
 			free(cmd->content);
 			cmd->content = ft_strdup(&tmp->content[len_var + 1]);
+			cmd->expanded = 1;
 			return (1);
 		}
 		tmp = tmp->next;
@@ -112,6 +114,7 @@ int	ft_expand_no_symbol(t_env *env, t_cmd_word *word)
 		if (!ft_strncmp(tmp->content, word->content, len_c) && len_var == len_c)
 		{
 			free(word->content);
+			word->expanded = 1;
 			word->content = ft_strdup(&tmp->content[len_var + 1]);
 			if (word->content[0] == '\0')
 				word->need_split = -1;

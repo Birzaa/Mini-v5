@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:44:20 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/06 23:26:48 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:35:38 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	expand_check_no_sym(t_data *data, t_cmd_word *env, t_cmd_word *word,
 			word->state = 0;
 			return ;
 		}
+		if (env->state == 2)
+			word->expanded = 1;
 		env->state = 2;
 	}
 	else if (expanded && !word->content)

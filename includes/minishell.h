@@ -6,16 +6,16 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/10 09:29:50 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/10 09:56:07 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# define GREEN "\033[1;32m"
-# define ORANGE "\033[38;5;216m"
-# define RESET "\033[0m"
-# define BLUE "\033[1;34m"
+# define GREEN "\1\033[1;32m\2"
+# define ORANGE "\1\033[38;5;216m\2"
+# define RESET "\1\033[0m\2"
+# define BLUE "\1\033[1;34m\2"
 # define EQUAL 0
 
 # define OLDPWD_ENV "OLDPWD="
@@ -98,6 +98,7 @@ typedef struct s_cmd_word
 	char				*content;
 	enum e_token		type;
 	int					index;
+	int					expanded;
 	int					expand;
 	int					need_split;
 	enum e_state		state;
