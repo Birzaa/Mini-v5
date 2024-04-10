@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_lexer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:29:39 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/02 14:57:02 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/10 08:54:34 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 void	free_node(t_node *node)
 {
 	if (node)
-	{
-		// free(node->content);
 		free(node);
-	}
 }
 
 void	free_stack(t_stack *stack)

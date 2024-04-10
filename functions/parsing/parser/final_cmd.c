@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:19:26 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/06 23:26:12 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/10 09:17:13 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	parse_cmd_scnd(t_cmd *cmd, t_command *command, t_cmd_word **zz,
 	}
 	else if ((*zz)->type == WORD)
 	{
-		if (!data->tab_created && (*zz)->need_split == -1) // condition pour skip les $jdwdwqdwq en debut de commande mais pas pendant
+		if (!data->tab_created && (*zz)->need_split == -1)
 		{
 			if ((*zz)->next)
 				(*zz) = (*zz)->next;
@@ -102,15 +102,16 @@ t_command	*parse(t_cmd *cmd, t_data *data)
 int	init_parse(t_data *data)
 {
 	parsing_status(data->lex);
-	// print_list(data->lex);
 	parse_space_in_quote(data->lex);
 	index_quote(data->lex);
 	data->cmd = parser(data->lex);
 	parsing_expand(data->cmd, data);
 	parsing_quote(data->cmd);
-	// print_list(data->lex);
 	data->parsed_cmd = parse(data->cmd, data);
-	// print_cmd_list(data->cmd);
-	// print_parsed_cmd(data->parsed_cmd);
 	return (0);
 }
+
+	// print_list(data->lex);
+	// print_list(data->lex);
+	// print_cmd_list(data->cmd);
+	// print_parsed_cmd(data->parsed_cmd);

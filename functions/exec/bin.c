@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bin.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 17:22:00 by thomas            #+#    #+#             */
-/*   Updated: 2024/04/08 16:49:39 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/10 09:02:08 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	execute_cmd(char **env, char **valid_cmd, t_data *data, t_pipex *p)
 			ft_free_tab(data->envp);
 			ft_free_tab(find_the_path);
 			parent_free(p);
-			if(p->nb_h_doc)
+			if (p->nb_h_doc)
 				free(p->h_doc_name);
 			exit(127);
 		}
@@ -49,7 +49,7 @@ void	execute_cmd(char **env, char **valid_cmd, t_data *data, t_pipex *p)
 			ft_free_tab(data->envp);
 			ft_free_tab(find_the_path);
 			parent_free(p);
-			if(p->nb_h_doc)
+			if (p->nb_h_doc)
 				free(p->h_doc_name);
 			exit(126);
 		}
@@ -64,7 +64,7 @@ void	execute_cmd(char **env, char **valid_cmd, t_data *data, t_pipex *p)
 			ft_free_tab(data->envp);
 			ft_free_tab(find_the_path);
 			parent_free(p);
-			if(p->nb_h_doc)
+			if (p->nb_h_doc)
 				free(p->h_doc_name);
 			exit(127);
 		}

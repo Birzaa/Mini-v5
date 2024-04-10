@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   skip.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:01:09 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/01 21:21:31 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/10 08:54:15 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	skip_word(t_cmd_word **cmd)
 		(*cmd) = (*cmd)->next;
 	while (cmd)
 	{
-		if (((*cmd)->type == WHITE_SPACE || (*cmd)->type == WORD) && (*cmd)->next)
+		if (((*cmd)->type == WHITE_SPACE || (*cmd)->type == WORD)
+			&& (*cmd)->next)
 			(*cmd) = (*cmd)->next;
 		else
 			break ;

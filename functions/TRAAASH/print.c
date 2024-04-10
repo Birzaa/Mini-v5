@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:00:41 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/04 19:07:01 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/10 08:52:25 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	print_node(t_node *node)
 	printf(", token: %i", node->type);
 	printf(", index: %i\n", node->index);
 }
+
 void	print_parsed_cmd(t_command *head)
 {
 	int	fdp;
@@ -96,22 +97,29 @@ void	print_parsed_cmd(t_command *head)
 	}
 }
 
-void print_cmd_list(t_cmd *head) {
-    t_cmd *current = head;
-    int i = 0;
+void	print_cmd_list(t_cmd *head)
+{
+	t_cmd		*current;
+	int			i;
+	t_cmd_word	*word;
 
-    while (current) {
-        t_cmd_word *word = current->words;
-        printf("CMD[%d]:\n", i);
-        while (word) {
-            printf("Content: %s, Type: %d, State: %d\n", word->content, word->type, word->state);
-            word = word->next;
-        }
-        i++;
-        current = current->next;
-        printf("\n");
-    }
+	current = head;
+	i = 0;
+	while (current)
+	{
+		word = current->words;
+		printf("CMD[%d]:\n", i);
+		while (word)
+		{
+			printf("Content: %s, Type: %d, State: %d\n", word->content,
+				word->type, word->state);
+			word = word->next;
+		}
+		i++;
+		current = current->next;
+		printf("\n");
+	}
 }
 
-//<Makefile <<eof wc -l > outfile | ls -llllll | ls -a -a -a |echo "''Bonjour' 'tocard''" |ls $HOME > fichier | ls >>'"'c'"'
-//<Makefile cat -e -e       -e | ls -alt |sleep 5 | sleep 10 | <<eof ls |<Makefile cat  >a>>b
+//<Makefile <<eof wc -l > outfile | ls -llllll | ls -a -a-a |echo "''Bonjour' 'tocard''" |ls $HOME > fichier | ls >>'"'c'"'
+//<Makefile cat -e -e       -e | ls-alt |sleep 5 | sleep 10 | <<eof ls |<Makefile cat  >a>>b

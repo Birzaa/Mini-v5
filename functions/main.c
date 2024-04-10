@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:30:40 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/09 18:11:47 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/10 09:07:51 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ int	main(int ac, char **av, char **env)
 		init_signals();
 		data.nb_input++;
 		data.tab_created = 0;
-		g_sig.input = readline( "~~>: " );
-		if (!g_sig.input || !ft_strcmp(g_sig.input, "exit"))
+		g_sig.input = readline("~~>: ");
+		if (!g_sig.input)
 		{
+			ft_putstr_fd("exit\n", 2);
 			ft_exit_two(&data);
 		}
 		else if (!*g_sig.input)
