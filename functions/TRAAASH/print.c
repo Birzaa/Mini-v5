@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 15:00:41 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/10 09:54:01 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/10 09:56:52 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,3 @@ void	print_cmd_list(t_cmd *head)
 		printf("\n");
 	}
 }
-
-//<Makefile <<eof wc -l > outfile | ls -llllll | ls -a
-	-a-a |echo "''Bonjour' 'tocard''" |ls $HOME > fichier | ls >>'"'c'"'
-//<Makefile cat -e -e      
-	-e | ls-alt |sleep 5 | sleep 10 | <<eof ls |<Makefile cat  >a>>b
