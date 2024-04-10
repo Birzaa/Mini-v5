@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 19:22:15 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/09 19:01:02 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/10 11:03:57 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ int	error_cmd2(t_stack *lst, t_node *node)
 	{
 		g_sig.status = 2;
 		return (ft_perror("minishell: syntax error near \
-unexpected token `|'",
-							NULL));
+unexpected token `|'", NULL));
 	}
 	return (EXIT_SUCCESS);
 }
@@ -66,22 +65,14 @@ int	error_cmd(t_stack *lst)
 		if (node->type == PIPE_LINE)
 		{
 			if (is_invalid_pipe(node))
-			{
-				g_sig.status = 2;
 				return (ft_perror("minishell: syntax error near \
-unexpected token `|'",
-									NULL));
-			}
+unexpected token `|'", NULL));
 		}
 		else if (is_redir(node->type))
 		{
 			if (is_invalid_redir(node))
-			{
-				g_sig.status = 2;
 				return (ft_perror("minishell: syntax error near \
-unexpected token ",
-									get_redir(node->type)));
-			}
+unexpected token ", get_redir(node->type)));
 		}
 		else if (node->type == DOUBLE_QUOTE || node->type == QOUTE)
 			if (!check_unclosed_quotes(&node, node->type))

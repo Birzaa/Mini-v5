@@ -3,248 +3,112 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/09 18:45:04 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:34:19 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	close_pipes(t_pipex *pipex);
-
-void	close_h_doc(t_pipex *pipex)
+void	init_pipex(t_pipex *pipex, t_command *parsed_cmd, t_data *data,
+		t_command *current_cmd)
 {
-	int	i;
-
-	i = 0;
-	if (pipex->h_doc)
-	{
-		while (pipex->h_doc_name[i])
-		{
-			unlink(pipex->h_doc_name[i]);
-			if (pipex->need_free)
-			{
-				free(pipex->h_doc_name[i]);
-			}
-			i++;
-		}
-		free(pipex->h_doc_name);
-	}
+	pipex->pipe = NULL;
+	pipex->need_exec = 0;
+	pipex->need_free = 0;
+	pipex->jss_a_terre = 0;
+	pipex->nb_cmd = parsed_cmd->nb_command;
+	cmd_pipe_h_doc(parsed_cmd, pipex);
+	pipex->saved_in = dup(STDIN_FILENO);
+	pipex->h_doc = 0;
+	pipex->idx = 0;
+	pipex->saved_out = dup(STDOUT_FILENO);
+	nb_h_doc(current_cmd, pipex);
+	pipex->idx = 0;
+	create_h_doc(current_cmd, pipex, data);
+	if (g_sig.status == 130)
+		caca(current_cmd, pipex, current_cmd->parsed_cmd->full_cmd, data);
+	pipex->idx = 0;
 }
 
-void	parent_free(t_pipex *pipex)
+void	exec_bultins(t_pipex *pipex, t_data *data, t_command *current_cmd)
 {
-	close(pipex->infile);
-	close(pipex->outfile);
-	free(pipex->pipe);
+	pipex->fd_echo = 1;
+	open_redir_in(current_cmd, pipex);
+	open_redir_out(current_cmd, pipex);
+	execute_builtin(current_cmd->parsed_cmd->full_cmd, data, pipex);
 }
 
-void	open_pipes(t_pipex *pipex)
+void	exec_cmd_pipe(t_pipex *pipex, t_data *data, t_command *current_cmd,
+		char **env)
 {
-	int	i;
-
-	i = 0;
-	while (i < pipex->nb_cmd - 1)
+	pipex->pipe = (int *)malloc((sizeof(int) * (2 * (pipex->nb_cmd - 1))));
+	if (!pipex->pipe)
+		return ;
+	open_pipes(pipex);
+	while (pipex->idx < pipex->nb_cmd)
 	{
-		if (pipe(pipex->pipe + 2 * i) < 0)
+		g_sig.status = 0;
+		pipex->fd_echo = 0;
+		open_redir_in(current_cmd, pipex);
+		open_redir_out(current_cmd, pipex);
+		if (current_cmd->parsed_cmd->nb_cmd)
 		{
-			parent_free(pipex);
+			if (g_sig.status != 1)
+				child(*pipex, current_cmd->parsed_cmd->full_cmd, env, data);
 		}
-		i++;
+		pipex->idx++;
+		current_cmd = current_cmd->next;
 	}
+	close_pipes(pipex);
+	parent_free(pipex);
 }
 
-void	close_pipes(t_pipex *pipex)
+void	wait_child(t_pipex *pipex)
 {
-	int	i;
+	int	status;
 
-	i = 0;
-	while (i < (2 * (pipex->nb_cmd - 1)))
+	status = 1;
+	while (pipex->idx)
 	{
-		close(pipex->pipe[i]);
-		i++;
-	}
-}
-
-void	child(t_pipex p, char **cmd, char **env, t_data *data)
-{
-	g_sig.pid = 0;
-	p.pid = fork();
-	if (p.pid == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-	if (p.pid == 0)
-	{
-		if (p.idx == 0)
-		{
-			// Redirection de l'entrée standard pour le premier processus
-			dup2(p.infile, STDIN_FILENO);
-			close(p.infile);
-		}
-		else
-		{
-			// Redirection de l'entrée standard depuis le tuyau précédent
-			if (p.infile != p.saved_in)
-			{
-				dup2(p.infile, STDIN_FILENO);
-				close(p.infile);
-			}
-			else
-			{
-				dup2(p.pipe[2 * (p.idx - 1)], STDIN_FILENO);
-				close(p.pipe[2 * (p.idx - 1)]);
-			}
-		}
-		if (p.idx == p.nb_cmd - 1)
-		{
-			// Redirection de la sortie standard pour le dernier processus
-			dup2(p.outfile, STDOUT_FILENO);
-			close(p.outfile);
-		}
-		else
-		{
-			// Redirection de la sortie standard vers le tuyau actuel
-			if (p.outfile != p.saved_out)
-			{
-				dup2(p.outfile, STDOUT_FILENO);
-				close(p.outfile);
-			}
-			else
-			{
-				dup2(p.pipe[2 * p.idx + 1], STDOUT_FILENO);
-				close(p.pipe[2 * p.idx + 1]);
-			}
-		}
-		// Fermeture de tous les descripteurs de fichiers des tuyaux dans le processus enfant
-		close_pipes(&p);
-		if (!is_builtin(cmd[0]) && cmd)
-			execute_cmd(env, cmd, data, &p);
-		else
-		{
-			execute_builtin(cmd, data, &p);
-			free_lexer(data->lex);
-			free_parser(data->cmd, data->parsed_cmd);
-			free_env(data->env);
-			ft_free_tab(data->envp);
-			parent_free(&p);
-			if (p.nb_h_doc)
-				free(p.h_doc_name);
-			exit(0);
-		}
-	}
-}
-
-void	cmd_pipe_h_doc(t_command *parsed_cmd, t_pipex *pipex)
-{
-	t_command		*current_cmd;
-	t_redir_in_2	*r_in;
-	int				i;
-	int				count;
-
-	count = 0;
-	i = 0;
-	current_cmd = parsed_cmd;
-	while (i < pipex->nb_cmd)
-	{
-		if (i > 0)
-		{
-			r_in = current_cmd->parsed_cmd->r_in;
-			while (r_in)
-			{
-				if (r_in->h_doc)
-					count++;
-				r_in = r_in->next;
-			}
-		}
-		i++;
-		if (current_cmd->next)
-			current_cmd = current_cmd->next;
-		else
+		waitpid(-1, &status, 0);
+		if (WIFEXITED(status))
+			g_sig.status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
 			break ;
+		else
+			g_sig.status = 127;
+		pipex->idx--;
 	}
-	if (count > 0)
-		pipex->jss_a_terre = 1;
-	else
-		pipex->jss_a_terre = 0;
 }
 
 void	execution(t_command *parsed_cmd, char **env, t_data *data)
 {
 	t_pipex		pipex;
 	t_command	*current_cmd;
-	int			status;
 
-	
-	pipex.pipe = NULL;
 	current_cmd = parsed_cmd;
-	pipex.need_exec = 0;
-	pipex.need_free = 0;
-	pipex.nb_cmd = parsed_cmd->nb_command;
-	cmd_pipe_h_doc(parsed_cmd, &pipex);
-	pipex.saved_in = dup(STDIN_FILENO);
-	pipex.h_doc = 0;
-	pipex.idx = 0;
-	pipex.saved_out = dup(STDOUT_FILENO);
-	nb_h_doc(current_cmd, &pipex);
-	create_h_doc(current_cmd, &pipex, current_cmd->parsed_cmd->full_cmd, data);
-	if (g_sig.status == 130)
-		caca(current_cmd, &pipex, current_cmd->parsed_cmd->full_cmd, data);
+	init_pipex(&pipex, parsed_cmd, data, current_cmd);
 	if (current_cmd->parsed_cmd->full_cmd && pipex.nb_cmd == 1
 		&& is_builtin(current_cmd->parsed_cmd->full_cmd[0]))
-	{
-		pipex.fd_echo = 1;
-		open_redir_in(current_cmd, &pipex);
-		open_redir_out(current_cmd, &pipex);
-		execute_builtin(current_cmd->parsed_cmd->full_cmd, data, &pipex);
-	}
+		exec_bultins(&pipex, data, current_cmd);
 	else if ((current_cmd->parsed_cmd->full_cmd || pipex.jss_a_terre
 			|| pipex.nb_cmd > 1) && !pipex.need_exec
 		&& ft_getenv_check_tab(data->envp, "PATH="))
 	{
-		pipex.pipe = (int *)malloc((sizeof(int) * (2 * (pipex.nb_cmd - 1))));
-		if (!pipex.pipe)
-			return ;
-		open_pipes(&pipex);
-		while (pipex.idx < pipex.nb_cmd)
-		{
-			g_sig.status = 0;
-			pipex.fd_echo = 0;
-			open_redir_in(current_cmd, &pipex);
-			open_redir_out(current_cmd, &pipex);
-			if (current_cmd->parsed_cmd->nb_cmd)
-			{
-				if (g_sig.status != 1)
-					child(pipex, current_cmd->parsed_cmd->full_cmd, env, data);
-			}
-			pipex.idx++;
-			current_cmd = current_cmd->next;
-		}
-		close_pipes(&pipex);
-		parent_free(&pipex);
-		status = 1;
-		while (pipex.idx)
-		{
-			waitpid(-1, &status, 0);
-			if (WIFEXITED(status))
-				g_sig.status = WEXITSTATUS(status);
-			else if (WIFSIGNALED(status))
-				break ;
-			else
-				g_sig.status = 127;
-			pipex.idx--;
-		}
+		exec_cmd_pipe(&pipex, data, current_cmd, env);
+		wait_child(&pipex);
 	}
-	else if (current_cmd->parsed_cmd->r_in)
+	else if (current_cmd->parsed_cmd->r_in && current_cmd->parsed_cmd->r_out)
 	{
 		open_redir_in(current_cmd, &pipex);
-	}
-	else if (current_cmd->parsed_cmd->r_out)
-	{
 		open_redir_out(current_cmd, &pipex);
 	}
+	else if (current_cmd->parsed_cmd->r_in)
+		open_redir_in(current_cmd, &pipex);
+	else if (current_cmd->parsed_cmd->r_out)
+		open_redir_out(current_cmd, &pipex);
 	close_h_doc(&pipex);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   word.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 00:32:29 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/10 09:55:47 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/10 12:48:08 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,21 @@ int	skip(t_cmd_word **cmd)
 	return (0);
 }
 
-int	get_number_of_flags(t_cmd_word *cmd)
+void	get_number_of_flags(t_cmd_word *cmd, t_data *data)
 {
-	int			count;
 	t_cmd_word	*current;
 
-	count = 0;
 	current = cmd;
 	while (current)
 	{
 		if (current->type == WORD && current->need_split)
 		{
-			count += c_words(current->content, ' ');
-			if (current->next)
-				current = current->next;
-			else
+			if (skip_one_node(&current, data, 1))
 				break ;
 		}
 		else if (current->type == WORD)
 		{
-			count++;
-			if (current->next)
-				current = current->next;
-			else
+			if (skip_one_node(&current, data, 0))
 				break ;
 		}
 		while (current->type == WHITE_SPACE && current->next)
@@ -59,33 +51,38 @@ int	get_number_of_flags(t_cmd_word *cmd)
 		if (current->type != WORD)
 			break ;
 	}
-	return (count);
 }
 
-int	put_word_in_tab(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd, int i)
+int	put_word_in_tab_bis(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd, int i)
 {
 	int		j;
 	char	**r;
 
 	r = NULL;
+	j = 0;
+	r = ft_split(cmd->content, ' ');
+	while (r[j])
+	{
+		parsed_cmd->full_cmd[i] = malloc(ft_strlen(r[j]) + 1);
+		if (!parsed_cmd->full_cmd[i])
+		{
+			ft_free_tab(parsed_cmd->full_cmd);
+			return (i);
+		}
+		parsed_cmd->nb_cmd++;
+		ft_strcpy(parsed_cmd->full_cmd[i], r[j]);
+		i++;
+		j++;
+	}
+	ft_free_tab(r);
+	return (i);
+}
+
+int	put_word_in_tab(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd, int i)
+{
 	if (cmd->type == WORD && cmd->need_split)
 	{
-		j = 0;
-		r = ft_split(cmd->content, ' ');
-		while (r[j])
-		{
-			parsed_cmd->full_cmd[i] = malloc(ft_strlen(r[j]) + 1);
-			if (!parsed_cmd->full_cmd[i])
-			{
-				ft_free_tab(parsed_cmd->full_cmd);
-				return (i);
-			}
-			parsed_cmd->nb_cmd++;
-			ft_strcpy(parsed_cmd->full_cmd[i], r[j]);
-			i++;
-			j++;
-		}
-		ft_free_tab(r);
+		return (put_word_in_tab_bis(cmd, parsed_cmd, i));
 	}
 	else if (cmd->type == WORD)
 	{
@@ -102,13 +99,13 @@ int	put_word_in_tab(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd, int i)
 	return (i);
 }
 
-void	parse_word(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd)
+void	parse_word(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd, t_data *data)
 {
 	int	i;
 
 	i = 0;
-	parsed_cmd->full_cmd = malloc(sizeof(char *) * (get_number_of_flags(cmd)
-				+ 1));
+	get_number_of_flags(cmd, data);
+	parsed_cmd->full_cmd = malloc(sizeof(char *) * (data->count + 1));
 	if (!parsed_cmd->full_cmd)
 	{
 		free(parsed_cmd->full_cmd);
@@ -126,10 +123,7 @@ void	parse_word(t_cmd_word *cmd, t_parsed_cmd *parsed_cmd)
 		if (cmd->type != WORD)
 			break ;
 		i = put_word_in_tab(cmd, parsed_cmd, i);
-		if (cmd->next)
-			cmd = cmd->next;
-		else
-			break ;
+		cmd = cmd->next;
 	}
 	parsed_cmd->full_cmd[i] = NULL;
 }

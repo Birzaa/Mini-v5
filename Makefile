@@ -39,6 +39,7 @@ SRC = $(SRC_DIR)main.c \
 	$(PARSER_DIR)index_quote.c \
 	$(PARSER_DIR)cmd_next.c \
 	$(PARSER_DIR)word.c \
+	$(PARSER_DIR)word_bis.c \
 	$(PARSER_DIR)env.c \
 	$(PARSER_DIR)status.c \
 	$(PARSER_DIR)handle_no_expand.c \
@@ -81,8 +82,11 @@ SRC = $(SRC_DIR)main.c \
 	$(EXECUTION_DIR)exec.c \
 	$(EXECUTION_DIR)redir.c \
 	$(EXECUTION_DIR)bin.c \
+	$(EXECUTION_DIR)child.c \
 	$(EXECUTION_DIR)builtin.c \
+	$(EXECUTION_DIR)clean_exec.c \
 	$(EXECUTION_DIR)h_doc.c \
+	$(EXECUTION_DIR)h_doc_bis.c \
 	$(TOOL_DIR)lst/free.c \
 	$(TOOL_DIR)free/free_parser.c \
 	$(TOOL_DIR)free/free_parser_two.c \
