@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/10 12:48:27 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/10 13:09:00 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -450,7 +450,7 @@ void					handle_signal(int sig);
 
 void					caca(t_command *parsed_cmd, t_pipex *pipex, char **tab,
 							t_data *data);
-void					reading_hdoc(int file, t_pipex *pipex, t_data *data,
+char					*reading_hdoc(int file, t_pipex *pipex, t_data *data,
 							char *av);
 char					*hdoc_signal(int file, t_pipex *pipex);
 char					*create_dest_file(t_pipex *pipex, int index, char *av);

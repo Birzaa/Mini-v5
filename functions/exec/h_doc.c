@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:30:06 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/10 11:05:33 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/10 13:14:38 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*hdoc_signal(int file, t_pipex *pipex)
 	return (NULL);
 }
 
-void	reading_hdoc(int file, t_pipex *pipex, t_data *data, char *av)
+char	*reading_hdoc(int file, t_pipex *pipex, t_data *data, char *av)
 {
 	char	*buf;
 
@@ -82,7 +82,8 @@ void	reading_hdoc(int file, t_pipex *pipex, t_data *data, char *av)
 		if (!buf)
 		{
 			if (g_sig.status == 130)
-				hdoc_signal(file, pipex);
+				if (!hdoc_signal(file, pipex))
+					return (NULL);
 			printf("bash: warning: here-document at line \
 %d delimited by end-of-file (wanted `%s')\n", data->nb_input, av);
 			break ;
@@ -94,4 +95,5 @@ void	reading_hdoc(int file, t_pipex *pipex, t_data *data, char *av)
 		}
 		(write(file, buf, ft_strlen(buf)), write(file, "\n", 1), free(buf));
 	}
+	return ("");
 }

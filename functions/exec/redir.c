@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:04:14 by thomas            #+#    #+#             */
-/*   Updated: 2024/04/10 11:10:56 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/10 13:13:59 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ char	*here_doc(char *av, t_pipex *pipex, int index, t_data *data)
 	signal(SIGINT, &exec_here_doc);
 	if (g_sig.status == 130)
 		g_sig.status = 0;
-	reading_hdoc(file, pipex, data, av);
+	if (!reading_hdoc(file, pipex, data, av))
+	{
+		free(dest_file);
+		return (NULL);
+	}
 	close(file);
 	free(dest_file);
 	return (pipex->h_doc_name[index]);

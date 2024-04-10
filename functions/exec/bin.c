@@ -6,7 +6,7 @@
 /*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 17:22:00 by thomas            #+#    #+#             */
-/*   Updated: 2024/04/10 11:19:47 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/10 13:08:36 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	execute_cmd(char **env, char **valid_cmd, t_data *data, t_pipex *p)
 	path = valid_path(find_the_path, valid_cmd[0]);
 	if (execve(path, valid_cmd, env) == -1)
 	{
-		if (access(valid_cmd[0], F_OK | X_OK) == -1 && !ft_strncmp(valid_cmd[0],
+		if (access(valid_cmd[0], F_OK | X_OK) == 1 && !ft_strncmp(valid_cmd[0],
 				"./", 2))
 			(handle_error(valid_cmd[0], strerror(errno)), not_found_file(data,
 					p, find_the_path));
