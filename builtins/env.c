@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:27 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/11 05:34:33 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/11 11:58:40 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ void	ft_env(t_data *data, t_pipex *p, char **content)
 {
 	int	fd;
 
-	fd = 1;
-	if (p->fd_echo == 1)
-		fd = p->outfile;
+	fd = p->outfile;
+	
 	if (!content[1])
 	{
 		print_env(data->env, fd);

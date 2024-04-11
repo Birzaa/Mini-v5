@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:37 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/11 06:29:47 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/11 13:03:34 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	export_no_arg(t_env *env, int fd)
 {
 	t_env	*env_cpy;
 	t_env	*tmp;
-
+printf("%d\n\n\n", fd);
 	tmp = NULL;
 	env_cpy = NULL;
 	refresh_env(env, 2);

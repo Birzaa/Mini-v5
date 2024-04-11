@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils4.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:19:53 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/11 06:05:42 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/11 12:44:27 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_export_add_case_two(t_env *env, char *name, char *value)
 void	ft_putstr_fd_before(char *s, int fd, char c)
 {
 	int	i;
-
+	
 	if (!s)
 		return ;
 	i = 0;
