@@ -6,7 +6,7 @@
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:30 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/11 12:05:01 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/11 18:59:35 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ void	print_env(t_env *env, int fd)
 			ft_nothing();
 		else
 		{
-			ft_putstr(env->content);
-			ft_putchar('\n');
+			printf("%s\n",env->content);
+			// ft_putstr(env->content);
+			// ft_putchar('\n');
 		}
 		env = env->next;
 	}
