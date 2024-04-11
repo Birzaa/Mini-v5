@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:37 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/06 23:24:46 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/11 06:29:47 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	export_new_add_back(t_env **env, t_env *tmp, char *cmd)
 	return ;
 }
 
-void	export_no_arg(t_env *env)
+void	export_no_arg(t_env *env, int fd)
 {
 	t_env	*env_cpy;
 	t_env	*tmp;
 
 	tmp = NULL;
 	env_cpy = NULL;
-	refresh_env(env, 0);
+	refresh_env(env, 2);
 	while (env)
 	{
 		tmp = ft_env_new(env->content);
@@ -41,7 +41,7 @@ void	export_no_arg(t_env *env)
 	tmp = env_cpy;
 	while (tmp)
 	{
-		print_export(tmp->content);
+		print_export(tmp->content, fd);
 		tmp = tmp->next;
 	}
 	free_env(env_cpy);
@@ -85,17 +85,22 @@ void	while_export(t_env **env, t_env *tmp, char *cmd, int *error)
 		replace_export(env, cmd);
 }
 
-void	ft_export(t_env **env, char **cmd)
+void	ft_export(t_env **env, t_pipex *p, char **cmd)
 {
 	t_env	*tmp;
 	int		i;
 	int		error;
+	int		fd;
 
 	i = 1;
 	error = 0;
 	tmp = NULL;
+	if (p->fd_echo == 1)
+		fd = p->outfile;
+	else
+		fd = 1;
 	if (!cmd[1])
-		return (export_no_arg((*env)));
+		return (export_no_arg((*env), fd));
 	else if (cmd[i])
 		while (cmd[i])
 			while_export(env, tmp, cmd[i++], &error);

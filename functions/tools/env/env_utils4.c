@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:24 by abougrai          #+#    #+#             */
-/*   Updated: 2024/03/22 02:45:25 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/11 04:46:59 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ft_strcpy_content_env(char *s1, char *s2, char *n)
 	return (s1);
 }
 
-void	print_pwd_env(void)
+void	print_pwd_env(int fd)
 {
 	char	*pwd;
 
@@ -53,10 +53,10 @@ void	print_pwd_env(void)
 	{
 		pwd = getcwd(NULL, 0);
 		if (!pwd)
-			return (perror(""));
-		ft_putstr_fd("PWD=", 1);
-		ft_putstr_fd(pwd, 1);
-		ft_putchar_fd('\n', 1);
+			return ;
+		ft_putstr_fd("PWD=", fd);
+		ft_putstr_fd(pwd, fd);
+		ft_putchar_fd('\n', fd);
 		free(pwd);
 	}
 }

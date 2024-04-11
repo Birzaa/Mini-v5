@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 10:19:53 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/04 10:38:10 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/11 06:05:42 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,36 @@ int	ft_export_add_case_two(t_env *env, char *name, char *value)
 		return (free(name), free(value), 1);
 	export_new_add_back_add(&env, tmp);
 	return (0);
+}
+
+void	ft_putstr_fd_before(char *s, int fd, char c)
+{
+	int	i;
+
+	if (!s)
+		return ;
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
+			return ;
+		write(fd, &s[i], 1);
+		i++;
+	}
+}
+
+void	ft_putstr_fd_from(char *s, int fd, char c)
+{
+	int	i;
+
+	if (!s)
+		return ;
+	i = 0;
+	while (s[i] != c)
+		i++;
+	while (s[i])
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
 }

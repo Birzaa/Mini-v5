@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/10 14:19:40 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/11 06:05:56 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,9 +200,9 @@ void					exec_here_doc(int sig);
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~> Builtins
 
-void					ft_export(t_env **env, char **command);
+void					ft_export(t_env **env, t_pipex *p, char **command);
 void					ft_unset(t_env *env, char **command);
-void					ft_env(t_data *data, char **command);
+void					ft_env(t_data *data, t_pipex *p, char **command);
 void					ft_cd(t_data *data, char **command);
 void					ft_exit(t_data *data, t_pipex *p, char **command);
 void					ft_exit_two(t_data *data);
@@ -227,7 +227,7 @@ void					ft_error_cd(char *tmp, char *command, char *home);
 t_env					*create_env_part1(t_env *env);
 t_env					*ft_env_last(t_env *env);
 t_env					*ft_env_new(void *content);
-void					print_env(t_env *env);
+void					print_env(t_env *env, int fd);
 void					free_env(t_env *env);
 void					add_back_env(t_env **env, t_env *new);
 
@@ -248,7 +248,7 @@ char					*ft_get_value_env(char *content);
 
 // tools/env/env_utils4.c
 void					free_multiple_env(t_env *env1, t_env *env2);
-void					print_pwd_env(void);
+void					print_pwd_env(int fd);
 int						get_len_name(char *n);
 int						get_len_to_equal(char *content);
 char					*ft_strcpy_content_env(char *s1, char *s2, char *n);
@@ -285,7 +285,7 @@ int						ft_expand_no_symbol_short(t_cmd_word *word);
 
 // tools/export/export_utils1.c
 void					replace_export(t_env **env, char *content);
-void					print_export(char *content);
+void					print_export(char *content, int fd);
 int						export_exist(t_env *env, char *content);
 int						exp_exist_bis(t_env *env, char *content);
 int						ft_export_checking(char *content);
@@ -308,6 +308,8 @@ int						ft_export_add_case_one(t_env *env, char *join,
 							char *name, char *value);
 int						ft_export_add_case_two(t_env *env, char *name,
 							char *value);
+void					ft_putstr_fd_before(char *s, int fd, char c);
+void					ft_putstr_fd_from(char *s, int fd, char c);
 
 // tools/str
 char					*ft_strncpy(char *dest, char *src, unsigned int n);

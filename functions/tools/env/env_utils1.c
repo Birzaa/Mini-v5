@@ -6,27 +6,25 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:30 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/03 12:19:36 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/11 04:46:47 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_env(t_env *env)
+void	print_env(t_env *env, int fd)
 {
 	refresh_env(env, 0);
 	if (!env->content && !env->next)
 		return ;
 	while (env)
 	{
-		if (!ft_strncmp(env->content, "PWD", 3))
-			print_pwd_env();
-		else if (!ft_at_least_charset(env->content, "="))
+		if (!ft_at_least_charset(env->content, "="))
 			ft_nothing();
 		else
 		{
-			ft_putstr_fd(env->content, 1);
-			ft_putchar_fd('\n', 1);
+			ft_putstr_fd(env->content, fd);
+			ft_putchar_fd('\n', fd);
 		}
 		env = env->next;
 	}

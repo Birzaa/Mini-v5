@@ -6,7 +6,7 @@
 /*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:45:18 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/07 00:05:31 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/11 06:26:35 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,28 +83,23 @@ int	exp_exist_bis(t_env *env, char *content)
 	return (0);
 }
 
-void	print_export(char *content)
+void	print_export(char *content, int fd)
 {
-	int	i;
-
-	i = 0;
 	if (!ft_strncmp("_=", content, 2))
 		return ;
 	else if (!ft_at_least_charset(content, "="))
 	{
-		ft_putstr_fd("export ", 1);
-		ft_putstr_fd(content, 1);
-		ft_putchar_fd('\n', 1);
+		ft_putstr_fd("export ", fd);
+		ft_putstr_fd(content, fd);
+		ft_putstr_fd("\n", fd);
 		return ;
 	}
-	ft_putstr_fd("export ", 1);
-	while (content[i] != '=')
-		write(1, &content[i++], 1);
-	write(1, &content[i++], 1);
-	write(1, "\"", 1);
-	while (content[i])
-		write(1, &content[i++], 1);
-	write(1, "\"\n", 2);
+	ft_putstr_fd("export ", fd);
+	ft_putstr_fd_before(content, fd, '=');
+	ft_putchar_fd('\"', fd);
+	ft_putstr_fd_from(content, fd, '=');
+	ft_putchar_fd('\"', fd);
+	ft_putchar_fd('\n', fd);
 }
 
 int	ft_export_checking(char *content)
