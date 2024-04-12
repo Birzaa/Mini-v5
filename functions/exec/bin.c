@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bin.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 17:22:00 by thomas            #+#    #+#             */
-/*   Updated: 2024/04/10 14:48:20 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/12 13:13:46 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	not_found_file(t_data *data, t_pipex *p, char **find_the_path)
 void	not_found_file_bis(t_data *data, t_pipex *p, char **valid_cmd,
 		char **find_the_path)
 {
-	ft_putstr_fd("bash: ", 2);
-	ft_putstr_fd(valid_cmd[0], 2);
-	ft_putstr_fd(" Is a directory\n", 2);
+	ft_putstr_fd("bash: ", STDERR_FILENO);
+	ft_putstr_fd(valid_cmd[0], STDERR_FILENO);
+	ft_putstr_fd(" Is a directory\n", STDERR_FILENO);
 	free_lexer(data->lex);
 	free_parser(data->cmd, data->parsed_cmd);
 	free_env(data->env);
@@ -45,9 +45,9 @@ void	not_found_file_bis(t_data *data, t_pipex *p, char **valid_cmd,
 void	not_found_cmd(t_data *data, t_pipex *p, char **valid_cmd,
 		char **find_the_path)
 {
-	ft_putstr_fd("bash: ", 2);
-	ft_putstr_fd(valid_cmd[0], 2);
-	ft_putstr_fd(": command not found\n", 2);
+	ft_putstr_fd("bash: ", STDERR_FILENO);
+	ft_putstr_fd(valid_cmd[0], STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	free_lexer(data->lex);
 	free_parser(data->cmd, data->parsed_cmd);
 	free_env(data->env);

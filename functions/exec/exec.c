@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/11 12:00:11 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/12 14:25:27 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,21 @@ void	exec_cmd_pipe(t_pipex *pipex, t_data *data, t_command *current_cmd,
 			if (g_sig.status != 1)
 				child(*pipex, current_cmd->parsed_cmd->full_cmd, env, data);
 		}
+		
+		/* if(pipex->infile)
+			close(pipex->infile);
+		if(pipex->outfile)
+			close(pipex->outfile); */
+		// close(pipex->saved_in);
+		// close(pipex->saved_out);
 		pipex->idx++;
 		current_cmd = current_cmd->next;
 	}
 	close_pipes(pipex);
 	parent_free(pipex);
+	// close(pipex->saved_in);
+	// close(pipex->saved_out);
+	// free(pipex->pipe);
 }
 
 void	wait_child(t_pipex *pipex)
@@ -111,4 +121,6 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 	else if (current_cmd->parsed_cmd->r_out)
 		open_redir_out(current_cmd, &pipex);
 	close_h_doc(&pipex);
+	close(pipex.saved_in);
+	close(pipex.saved_out);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 10:42:05 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/11 12:03:12 by thomas           ###   ########.fr       */
+/*   Updated: 2024/04/12 13:55:28 by thenwood         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 void	exec_child(char **cmd, char **env, t_data *data, t_pipex *p)
 {
 	if (!is_builtin(cmd[0]) && cmd)
+	{
+		close(p->saved_in);
+		close(p->saved_out);
 		execute_cmd(env, cmd, data, p);
+	}
 	else
 	{
 		execute_builtin(cmd, data, p);
