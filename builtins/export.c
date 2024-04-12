@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 02:43:37 by abougrai          #+#    #+#             */
-/*   Updated: 2024/04/12 12:59:34 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/12 19:13:12 by abougrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	ft_export(t_env **env, t_pipex *p, char **cmd)
 		fd = p->outfile;
 	else
 		fd = 1;
-	if (!cmd[1])
+	if (!cmd[1] && p->nb_cmd <= 1)
 		return (export_no_arg((*env), fd));
 	else if (cmd[i])
 		while (cmd[i])
