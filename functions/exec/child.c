@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 10:42:05 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/12 13:55:28 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/14 14:11:41 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	exec_child(char **cmd, char **env, t_data *data, t_pipex *p)
 	}
 	else
 	{
+		close(p->saved_in);
+		close(p->saved_out);
 		execute_builtin(cmd, data, p);
 		free_lexer(data->lex);
 		free_parser(data->cmd, data->parsed_cmd);

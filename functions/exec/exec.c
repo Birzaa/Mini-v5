@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:48:07 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/12 14:25:27 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/14 14:37:47 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,12 @@ void	init_pipex(t_pipex *pipex, t_command *parsed_cmd, t_data *data,
 		t_command *current_cmd)
 {
 	pipex->pipe = NULL;
+	pipex->infile = 0;
+	pipex->outfile = 0;
 	pipex->need_exec = 0;
 	pipex->need_free = 0;
+	pipex->need_close_in = 0;
+	pipex->need_close_out = 0;
 	pipex->jss_a_terre = 0;
 	pipex->nb_cmd = parsed_cmd->nb_command;
 	cmd_pipe_h_doc(parsed_cmd, pipex);
@@ -39,6 +43,10 @@ void	exec_bultins(t_pipex *pipex, t_data *data, t_command *current_cmd)
 	open_redir_in(current_cmd, pipex);
 	open_redir_out(current_cmd, pipex);
 	execute_builtin(current_cmd->parsed_cmd->full_cmd, data, pipex);
+	if (pipex->need_close_in)
+		close(pipex->infile);
+	if (pipex->need_close_out)
+		close(pipex->outfile);
 }
 
 void	exec_cmd_pipe(t_pipex *pipex, t_data *data, t_command *current_cmd,
@@ -50,30 +58,24 @@ void	exec_cmd_pipe(t_pipex *pipex, t_data *data, t_command *current_cmd,
 	open_pipes(pipex);
 	while (pipex->idx < pipex->nb_cmd)
 	{
+		pipex->need_close_in = 0;
+		pipex->need_close_out = 0;
 		g_sig.status = 0;
 		pipex->fd_echo = 0;
 		open_redir_in(current_cmd, pipex);
 		open_redir_out(current_cmd, pipex);
 		if (current_cmd->parsed_cmd->nb_cmd)
-		{
 			if (g_sig.status != 1)
 				child(*pipex, current_cmd->parsed_cmd->full_cmd, env, data);
-		}
-		
-		/* if(pipex->infile)
+		if (pipex->need_close_in)
 			close(pipex->infile);
-		if(pipex->outfile)
-			close(pipex->outfile); */
-		// close(pipex->saved_in);
-		// close(pipex->saved_out);
+		if (pipex->need_close_out)
+			close(pipex->outfile);
 		pipex->idx++;
 		current_cmd = current_cmd->next;
 	}
 	close_pipes(pipex);
 	parent_free(pipex);
-	// close(pipex->saved_in);
-	// close(pipex->saved_out);
-	// free(pipex->pipe);
 }
 
 void	wait_child(t_pipex *pipex)
@@ -107,19 +109,16 @@ void	execution(t_command *parsed_cmd, char **env, t_data *data)
 	else if ((current_cmd->parsed_cmd->full_cmd || pipex.jss_a_terre
 			|| pipex.nb_cmd > 1) && !pipex.need_exec
 		&& ft_getenv_check_tab(data->envp, "PATH="))
-	{
-		exec_cmd_pipe(&pipex, data, current_cmd, env);
-		wait_child(&pipex);
-	}
+		(exec_cmd_pipe(&pipex, data, current_cmd, env), wait_child(&pipex));
 	else if (current_cmd->parsed_cmd->r_in && current_cmd->parsed_cmd->r_out)
 	{
-		open_redir_in(current_cmd, &pipex);
-		open_redir_out(current_cmd, &pipex);
+		(open_redir_in(current_cmd, &pipex), open_redir_out(current_cmd,
+				&pipex), close(pipex.infile), close(pipex.outfile));
 	}
 	else if (current_cmd->parsed_cmd->r_in)
-		open_redir_in(current_cmd, &pipex);
+		(open_redir_in(current_cmd, &pipex), close(pipex.infile));
 	else if (current_cmd->parsed_cmd->r_out)
-		open_redir_out(current_cmd, &pipex);
+		(open_redir_out(current_cmd, &pipex), close(pipex.outfile));
 	close_h_doc(&pipex);
 	close(pipex.saved_in);
 	close(pipex.saved_out);

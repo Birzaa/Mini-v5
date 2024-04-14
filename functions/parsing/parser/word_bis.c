@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   word_bis.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 12:47:48 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/10 12:48:13 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/13 13:18:59 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,10 @@ int	skip_one_node(t_cmd_word **current, t_data *data, int check)
 	else
 		return (1);
 	return (0);
+}
+
+void	skip_space(t_cmd_word **cmd)
+{
+	while ((*cmd)->next && (*cmd)->type == WHITE_SPACE)
+		(*cmd) = (*cmd)->next;
 }

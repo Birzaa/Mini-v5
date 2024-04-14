@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thenwood <thenwood@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:04:14 by thomas            #+#    #+#             */
-/*   Updated: 2024/04/12 14:25:04 by thenwood         ###   ########.fr       */
+/*   Updated: 2024/04/14 13:52:24 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	open_redir_in(t_command *head, t_pipex *pipex)
 			handle_error(tmp->file, strerror(errno));
 			return ;
 		}
+		else
+			pipex->need_close_in = 1;
 		tmp = tmp->next;
 	}
 }
@@ -83,6 +85,8 @@ void	open_redir_out(t_command *head, t_pipex *pipex)
 			handle_error(tmp->file, strerror(errno));
 			return ;
 		}
+		else
+			pipex->need_close_out = 1;
 		tmp = tmp->next;
 	}
 }

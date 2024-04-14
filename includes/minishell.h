@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abougrai <abougrai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:53:28 by thenwood          #+#    #+#             */
-/*   Updated: 2024/04/11 06:05:56 by abougrai         ###   ########.fr       */
+/*   Updated: 2024/04/14 13:50:14 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,8 @@ typedef struct s_pipex
 	int					need_free;
 	int					need_exec;
 	int					jss_a_terre;
+	int					need_close_in;
+	int					need_close_out;
 }						t_pipex;
 
 // ------------------------> Data
@@ -433,6 +435,7 @@ void					parse_space_in_quote(t_stack *list);
 int						skip_one_node(t_cmd_word **current, t_data *data,
 							int check);
 void					index_quote(t_stack *list);
+void					skip_space(t_cmd_word **cmd);
 
 //***********************EXECUTION*********************************
 
